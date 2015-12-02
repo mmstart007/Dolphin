@@ -43,11 +43,27 @@ class PODPreviewTableViewCell : UITableViewCell {
     
     func addUserImages(pod: POD) {
         for (var i = 0; (i < pod.podUsers?.count && i < 5); i++) {
-            let userAvatarImageView = UIImageView(frame: CGRect(x: CGFloat(i) * ((podUsersContainerView.frame.size.width / 6) + podUsersContainerView.frame.size.width / 24), y: 0, width: podUsersContainerView.frame.size.width / 6, height: podUsersContainerView.frame.size.width / 6))
-            userAvatarImageView.sd_setImageWithURL(NSURL(string: (pod.podUsers![i].userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
-            userAvatarImageView.layer.cornerRadius = userAvatarImageView.frame.size.width / 2.0
-            userAvatarImageView.layer.masksToBounds = true
-            podUsersContainerView.addSubview(userAvatarImageView)
+            if i == 0 && pod.podUsers?.count > 5 {
+                // Add Label that shows number of remaining users in POD
+                let x: CGFloat = podUsersContainerView.frame.size.width - podUsersContainerView.frame.size.width / 6 - (CGFloat(i) * (podUsersContainerView.frame.size.width / 6 + podUsersContainerView.frame.size.width / 24))
+                let otherUsersLabel = UILabel(frame: CGRect(x: x, y: 0, width: podUsersContainerView.frame.size.width / 6, height: podUsersContainerView.frame.size.width / 6))
+                otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
+                otherUsersLabel.textColor = UIColor.lightTextColor()
+                otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
+                otherUsersLabel.layer.masksToBounds = true
+                otherUsersLabel.text = String(format: "+%li", arguments: [(pod.podUsers?.count)! - 4])
+                otherUsersLabel.textAlignment = .Center
+                otherUsersLabel.font = UIFont.systemFontOfSize(12)
+                podUsersContainerView.addSubview(otherUsersLabel)
+            } else {
+                // Sow image of user in POD
+                let x: CGFloat = podUsersContainerView.frame.size.width - podUsersContainerView.frame.size.width / 6 - (CGFloat(i) * (podUsersContainerView.frame.size.width / 6 + podUsersContainerView.frame.size.width / 24))
+                let userAvatarImageView = UIImageView(frame: CGRect(x: x, y: 0, width: podUsersContainerView.frame.size.width / 6, height: podUsersContainerView.frame.size.width / 6))
+                userAvatarImageView.sd_setImageWithURL(NSURL(string: (pod.podUsers![i].userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+                userAvatarImageView.layer.cornerRadius = userAvatarImageView.frame.size.width / 2.0
+                userAvatarImageView.layer.masksToBounds = true
+                podUsersContainerView.addSubview(userAvatarImageView)
+            }
         }
     }
     
