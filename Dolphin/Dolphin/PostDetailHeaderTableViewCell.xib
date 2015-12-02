@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PostDetailHeaderTableViewCell" customModule="Dolphin" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="337"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iC8-hr-9mU">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="iC8-hr-9mU" secondAttribute="height" multiplier="5:2" id="QrJ-ZL-xjQ"/>
+                    </constraints>
+                </imageView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfA-9c-vKn">
+                    <rect key="frame" x="0.0" y="150" width="375" height="123"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ViewsGlassHollowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="UDj-s5-sFD">
+                    <rect key="frame" x="269" y="281" width="25" height="25"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="UDj-s5-sFD" secondAttribute="height" multiplier="1:1" id="4Eb-Eb-Bty"/>
+                        <constraint firstAttribute="width" constant="25" id="btC-G0-557"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="elW-LJ-2GX">
+                    <rect key="frame" x="312" y="286.5" width="55" height="14.5"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.10588235294117647" green="0.23921568627450979" blue="0.40784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CommentsTitleImage" translatesAutoresizingMaskIntoConstraints="NO" id="h3G-yE-2re">
+                    <rect key="frame" x="132" y="307" width="110" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="h3G-yE-2re" secondAttribute="height" multiplier="9:2" constant="-25" id="3Tk-rV-ONl"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="iC8-hr-9mU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0be-ib-U0V"/>
+                <constraint firstItem="UDj-s5-sFD" firstAttribute="top" secondItem="qfA-9c-vKn" secondAttribute="bottom" constant="8" id="3Vb-zu-2SS"/>
+                <constraint firstAttribute="bottom" secondItem="h3G-yE-2re" secondAttribute="bottom" id="Idb-K6-EPV"/>
+                <constraint firstItem="elW-LJ-2GX" firstAttribute="leading" secondItem="UDj-s5-sFD" secondAttribute="trailing" constant="18" id="Nib-nm-c9d"/>
+                <constraint firstAttribute="trailing" secondItem="elW-LJ-2GX" secondAttribute="trailing" constant="8" id="NqT-G5-A9U"/>
+                <constraint firstItem="h3G-yE-2re" firstAttribute="top" secondItem="UDj-s5-sFD" secondAttribute="bottom" constant="1" id="UUV-cC-TBb"/>
+                <constraint firstItem="h3G-yE-2re" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="cb2-bE-ekw"/>
+                <constraint firstItem="h3G-yE-2re" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="90:337" constant="20" id="e72-s0-oFx"/>
+                <constraint firstItem="qfA-9c-vKn" firstAttribute="top" secondItem="iC8-hr-9mU" secondAttribute="bottom" id="ggS-k9-8ps"/>
+                <constraint firstItem="UDj-s5-sFD" firstAttribute="centerY" secondItem="elW-LJ-2GX" secondAttribute="centerY" id="i1H-jB-ojJ"/>
+                <constraint firstItem="iC8-hr-9mU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="k0d-2c-KJ4"/>
+                <constraint firstAttribute="trailing" secondItem="qfA-9c-vKn" secondAttribute="trailing" id="kTO-A1-Byz"/>
+                <constraint firstAttribute="trailing" secondItem="iC8-hr-9mU" secondAttribute="trailing" id="kc8-aY-3ms"/>
+                <constraint firstItem="elW-LJ-2GX" firstAttribute="width" secondItem="UDj-s5-sFD" secondAttribute="height" multiplier="11:5" id="qjv-gM-Llb"/>
+                <constraint firstItem="qfA-9c-vKn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wSL-Lb-iRJ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="postImageView" destination="iC8-hr-9mU" id="nZv-jc-ykM"/>
+                <outlet property="postNumberOfViewsLabel" destination="elW-LJ-2GX" id="s3H-A2-sIJ"/>
+                <outlet property="postTextView" destination="qfA-9c-vKn" id="2Ob-cG-nok"/>
+            </connections>
+            <point key="canvasLocation" x="336.5" y="286.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="CommentsTitleImage" width="158" height="26"/>
+        <image name="ViewsGlassHollowIcon" width="51" height="18"/>
+    </resources>
+</document>

@@ -1,0 +1,8 @@
+# platform :ios, ‘8.0’
+
+target 'Dolphin' do
+    pod 'SDWebImage', '~>3.7'
+    pod 'NSDate+TimeAgo'
+    pod 'Fabric'
+    pod 'Crashlytics'
+end
