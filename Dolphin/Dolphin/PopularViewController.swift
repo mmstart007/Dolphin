@@ -73,7 +73,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             if cell == nil {
                 cell = PopularTrendingTopicsTableViewCell()
             }
-            (cell as? PopularTrendingTopicsTableViewCell)!.configureWithDataSource(self, delegate: self)
+            (cell as? PopularTrendingTopicsTableViewCell)!.configureWithDataSource(self, delegate: self, centerAligned: true)
         } else if indexPath.section == 1 {
             cell = tableView.dequeueReusableCellWithIdentifier("PopularPODsTableViewCell") as? PopularPODsTableViewCell
             if cell == nil {

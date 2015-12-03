@@ -13,12 +13,10 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
-    @IBOutlet weak var postNumberOfViewsLabel: UILabel!
     
     func configureWithPost(post: Post) {
         postImageView.sd_setImageWithURL(NSURL(string: (post.postImageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         postTextView.text = post.postText
-        postNumberOfViewsLabel.text = String(format: "%li", arguments: [post.postNumberOfViews!])
         backgroundColor = UIColor.clearColor()
     }
     
