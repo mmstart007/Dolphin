@@ -24,11 +24,29 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KXV-LU-Szl">
                     <rect key="frame" x="0.0" y="400" width="375" height="267"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9G-IL-mdD" userLabel="Post Link Button">
-                            <rect key="frame" x="8" y="89" width="90" height="115"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQL-Ez-GmZ" userLabel="Close Button">
+                            <rect key="frame" x="8" y="8" width="15" height="15"/>
                             <animations/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="w9G-IL-mdD" secondAttribute="height" multiplier="1:1" constant="-25" id="tlx-1D-Pix"/>
+                                <constraint firstAttribute="width" secondItem="tQL-Ez-GmZ" secondAttribute="height" multiplier="1:1" id="Qsr-oX-1ms"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="CloseOverlayIcon"/>
+                            <connections>
+                                <action selector="closeNewPostViewButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="Gvy-xI-Dmt"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post to Dolphin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2S-rv-l78" userLabel="Title Label">
+                            <rect key="frame" x="61" y="5" width="253" height="20.5"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9G-IL-mdD" userLabel="Post Link Button">
+                            <rect key="frame" x="8" y="76" width="90" height="115"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="w9G-IL-mdD" secondAttribute="height" multiplier="18:23" id="3KT-aC-CzO"/>
                             </constraints>
                             <state key="normal" backgroundImage="URLPostIcon"/>
                             <connections>
@@ -36,39 +54,21 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQx-yB-vvJ" userLabel="Post Photo Button">
-                            <rect key="frame" x="142" y="89" width="90" height="115"/>
+                            <rect key="frame" x="142" y="76" width="90" height="115"/>
                             <animations/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="rQx-yB-vvJ" secondAttribute="height" multiplier="1:1" constant="-25" id="HMf-dS-vvD"/>
+                                <constraint firstAttribute="width" secondItem="rQx-yB-vvJ" secondAttribute="height" multiplier="18:23" id="TbH-A6-Nbr"/>
                             </constraints>
                             <state key="normal" backgroundImage="PhotoPostIcon"/>
                             <connections>
                                 <action selector="postPhotoButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="bn5-aj-JkE"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQL-Ez-GmZ" userLabel="Close Button">
-                            <rect key="frame" x="8" y="8" width="15" height="15"/>
-                            <animations/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="tQL-Ez-GmZ" secondAttribute="height" multiplier="1:1" id="zne-RQ-nT8"/>
-                            </constraints>
-                            <state key="normal" backgroundImage="CloseOverlayIcon"/>
-                            <connections>
-                                <action selector="closeNewPostViewButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="Gvy-xI-Dmt"/>
-                            </connections>
-                        </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post to Dolphin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2S-rv-l78">
-                            <rect key="frame" x="61" y="5" width="253" height="20.5"/>
-                            <animations/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnx-Ay-Ree" userLabel="Post Text Button">
-                            <rect key="frame" x="277" y="89" width="90" height="115"/>
+                            <rect key="frame" x="277" y="76" width="90" height="115"/>
                             <animations/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="dnx-Ay-Ree" secondAttribute="height" multiplier="1:1" constant="-25" id="Enh-Lo-mwX"/>
+                                <constraint firstAttribute="width" secondItem="dnx-Ay-Ree" secondAttribute="height" multiplier="18:23" id="mqg-k0-eLU"/>
                             </constraints>
                             <state key="normal" backgroundImage="TextPostIcon"/>
                             <connections>
@@ -79,35 +79,35 @@
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="rQx-yB-vvJ" firstAttribute="centerY" secondItem="KXV-LU-Szl" secondAttribute="centerY" constant="13" id="1Lz-ig-FQG"/>
-                        <constraint firstItem="K2S-rv-l78" firstAttribute="top" secondItem="KXV-LU-Szl" secondAttribute="top" constant="5" id="77y-1K-ZBH"/>
-                        <constraint firstItem="w9G-IL-mdD" firstAttribute="centerY" secondItem="KXV-LU-Szl" secondAttribute="centerY" constant="13" id="9jA-kP-luv"/>
-                        <constraint firstItem="dnx-Ay-Ree" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="90:217" constant="-20.737327188940085" id="BGw-pT-YAb"/>
-                        <constraint firstItem="K2S-rv-l78" firstAttribute="centerX" secondItem="KXV-LU-Szl" secondAttribute="centerX" id="BlH-aM-Icm"/>
-                        <constraint firstItem="tQL-Ez-GmZ" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="24:217" constant="-14.529953917050694" id="LXU-PU-kqD"/>
-                        <constraint firstItem="w9G-IL-mdD" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="90:217" constant="-20.737327188940085" id="RqK-ba-jrM"/>
-                        <constraint firstItem="rQx-yB-vvJ" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="90:217" constant="-20.737327188940085" id="TuL-N4-Jkh"/>
-                        <constraint firstItem="rQx-yB-vvJ" firstAttribute="centerX" secondItem="KXV-LU-Szl" secondAttribute="centerX" id="dfu-h8-OSb"/>
-                        <constraint firstAttribute="trailing" secondItem="dnx-Ay-Ree" secondAttribute="trailing" constant="8" id="lEo-yn-1Pw"/>
-                        <constraint firstItem="tQL-Ez-GmZ" firstAttribute="leading" secondItem="KXV-LU-Szl" secondAttribute="leading" constant="8" id="syo-3s-SFC"/>
-                        <constraint firstItem="dnx-Ay-Ree" firstAttribute="centerY" secondItem="KXV-LU-Szl" secondAttribute="centerY" constant="13" id="t1A-oT-dxF"/>
-                        <constraint firstItem="K2S-rv-l78" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="253:267" id="w52-iC-IqB"/>
-                        <constraint firstItem="tQL-Ez-GmZ" firstAttribute="top" secondItem="KXV-LU-Szl" secondAttribute="top" constant="8" id="xWY-lJ-xcv"/>
-                        <constraint firstItem="w9G-IL-mdD" firstAttribute="leading" secondItem="KXV-LU-Szl" secondAttribute="leading" constant="8" id="xi0-8v-ghS"/>
+                        <constraint firstAttribute="trailing" secondItem="dnx-Ay-Ree" secondAttribute="trailing" constant="8" id="79a-ju-3xh"/>
+                        <constraint firstItem="rQx-yB-vvJ" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="30:89" id="9IF-jX-c7V"/>
+                        <constraint firstItem="w9G-IL-mdD" firstAttribute="centerY" secondItem="KXV-LU-Szl" secondAttribute="centerY" id="A45-rZ-ChG"/>
+                        <constraint firstItem="tQL-Ez-GmZ" firstAttribute="leading" secondItem="KXV-LU-Szl" secondAttribute="leading" constant="8" id="AG0-ZY-Mm1"/>
+                        <constraint firstItem="rQx-yB-vvJ" firstAttribute="centerY" secondItem="KXV-LU-Szl" secondAttribute="centerY" id="Eu1-Yj-IFY"/>
+                        <constraint firstItem="K2S-rv-l78" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="253:267" id="In0-cO-U39"/>
+                        <constraint firstItem="rQx-yB-vvJ" firstAttribute="centerX" secondItem="KXV-LU-Szl" secondAttribute="centerX" id="K0W-Wz-LMB"/>
+                        <constraint firstItem="K2S-rv-l78" firstAttribute="top" secondItem="KXV-LU-Szl" secondAttribute="top" constant="5.5" id="TDF-bu-IOC"/>
+                        <constraint firstItem="w9G-IL-mdD" firstAttribute="leading" secondItem="KXV-LU-Szl" secondAttribute="leading" constant="8" id="TQ3-8g-lOS"/>
+                        <constraint firstItem="K2S-rv-l78" firstAttribute="centerX" secondItem="KXV-LU-Szl" secondAttribute="centerX" id="UdD-gF-RfZ"/>
+                        <constraint firstItem="w9G-IL-mdD" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="30:89" id="WlR-2S-EE3"/>
+                        <constraint firstItem="tQL-Ez-GmZ" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="5:89" id="qBE-rd-GU6"/>
+                        <constraint firstItem="dnx-Ay-Ree" firstAttribute="centerY" secondItem="KXV-LU-Szl" secondAttribute="centerY" id="qIx-gf-EZ7"/>
+                        <constraint firstItem="dnx-Ay-Ree" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="30:89" id="toi-Ss-dcb"/>
+                        <constraint firstItem="tQL-Ez-GmZ" firstAttribute="top" secondItem="KXV-LU-Szl" secondAttribute="top" constant="8" id="yX4-KS-Vgn"/>
                     </constraints>
                 </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="KXV-LU-Szl" firstAttribute="top" secondItem="Pjx-q7-9V1" secondAttribute="bottom" constant="-1" id="1oy-3H-aIO"/>
-                <constraint firstItem="Pjx-q7-9V1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2Ae-hs-T75"/>
-                <constraint firstAttribute="bottom" secondItem="KXV-LU-Szl" secondAttribute="bottom" id="69H-eR-qV0"/>
-                <constraint firstItem="KXV-LU-Szl" firstAttribute="width" secondItem="Pjx-q7-9V1" secondAttribute="height" multiplier="75:79" constant="-5.6962025316455538" id="8IH-OG-hN1"/>
-                <constraint firstAttribute="trailing" secondItem="Pjx-q7-9V1" secondAttribute="trailing" id="Ihx-JM-YC4"/>
-                <constraint firstItem="KXV-LU-Szl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KWI-Au-9g8"/>
-                <constraint firstItem="Pjx-q7-9V1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ejy-yG-qIZ"/>
-                <constraint firstAttribute="trailing" secondItem="KXV-LU-Szl" secondAttribute="trailing" id="mXi-2o-mnV"/>
+                <constraint firstItem="KXV-LU-Szl" firstAttribute="width" secondItem="Pjx-q7-9V1" secondAttribute="height" multiplier="375:401" id="OrP-aR-2Wl"/>
+                <constraint firstItem="Pjx-q7-9V1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Un0-Ll-V0E"/>
+                <constraint firstAttribute="trailing" secondItem="Pjx-q7-9V1" secondAttribute="trailing" id="Wk0-rY-4AD"/>
+                <constraint firstItem="Pjx-q7-9V1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YPf-re-UMh"/>
+                <constraint firstItem="KXV-LU-Szl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fwO-mQ-PO9"/>
+                <constraint firstItem="KXV-LU-Szl" firstAttribute="top" secondItem="Pjx-q7-9V1" secondAttribute="bottom" constant="-1" id="qk7-TV-1Zj"/>
+                <constraint firstAttribute="trailing" secondItem="KXV-LU-Szl" secondAttribute="trailing" id="teu-l4-uCE"/>
+                <constraint firstAttribute="bottom" secondItem="KXV-LU-Szl" secondAttribute="bottom" id="vfC-Fr-tcq"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="336.5" y="292.5"/>
