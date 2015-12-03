@@ -5,4 +5,5 @@ target 'Dolphin' do
     pod 'NSDate+TimeAgo'
     pod 'Fabric'
     pod 'Crashlytics'
+    pod 'KTCenterFlowLayout'
 end

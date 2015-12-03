@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4AE1C0F6D7300692668 /* TopicCollectionViewCell.swift */; };
+		360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B01C0F6DC400692668 /* TopicCollectionViewCell.xib */; };
+		360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4B21C0F6F1400692668 /* PopularViewController.swift */; };
+		360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B41C0F6F3A00692668 /* PopularViewController.xib */; };
+		360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */; };
+		360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */; };
 		361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE191C0CE8DE007EE366 /* TriangleView.swift */; };
 		361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE1B1C0CF36E007EE366 /* PostDetailsViewController.swift */; };
 		361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361FFE1D1C0CF381007EE366 /* PostDetailsViewController.xib */; };
@@ -24,6 +30,10 @@
 		3689ECE21C0E58CE0087F828 /* PODsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECE11C0E58CE0087F828 /* PODsListViewController.swift */; };
 		3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECE31C0E58EF0087F828 /* PODsListViewController.xib */; };
 		3689ECE61C0E62E40087F828 /* POD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECE51C0E62E40087F828 /* POD.swift */; };
+		36B1F41A1C0FA7780091A1B3 /* PopularPODsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F4191C0FA7780091A1B3 /* PopularPODsTableViewCell.swift */; };
+		36B1F41C1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */; };
+		36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */; };
+		36B1F4201C0FA97D0091A1B3 /* PODCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B1F41F1C0FA97D0091A1B3 /* PODCollectionViewCell.xib */; };
 		36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BE4CCB1C061524002E52D9 /* AppDelegate.swift */; };
 		36BE4CD11C061524002E52D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CCF1C061524002E52D9 /* Main.storyboard */; };
 		36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CD21C061524002E52D9 /* Assets.xcassets */; };
@@ -65,6 +75,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		360EA4AE1C0F6D7300692668 /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
+		360EA4B01C0F6DC400692668 /* TopicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicCollectionViewCell.xib; sourceTree = "<group>"; };
+		360EA4B21C0F6F1400692668 /* PopularViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
+		360EA4B41C0F6F3A00692668 /* PopularViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularViewController.xib; sourceTree = "<group>"; };
+		360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularTrendingTopicsTableViewCell.swift; sourceTree = "<group>"; };
+		360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTrendingTopicsTableViewCell.xib; sourceTree = "<group>"; };
 		361FFE191C0CE8DE007EE366 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		361FFE1B1C0CF36E007EE366 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
 		361FFE1D1C0CF381007EE366 /* PostDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsViewController.xib; sourceTree = "<group>"; };
@@ -82,6 +98,10 @@
 		3689ECE11C0E58CE0087F828 /* PODsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODsListViewController.swift; sourceTree = "<group>"; };
 		3689ECE31C0E58EF0087F828 /* PODsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODsListViewController.xib; sourceTree = "<group>"; };
 		3689ECE51C0E62E40087F828 /* POD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POD.swift; sourceTree = "<group>"; };
+		36B1F4191C0FA7780091A1B3 /* PopularPODsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularPODsTableViewCell.swift; sourceTree = "<group>"; };
+		36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularPODsTableViewCell.xib; sourceTree = "<group>"; };
+		36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODCollectionViewCell.swift; sourceTree = "<group>"; };
+		36B1F41F1C0FA97D0091A1B3 /* PODCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODCollectionViewCell.xib; sourceTree = "<group>"; };
 		36BE4CC81C061524002E52D9 /* Dolphin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dolphin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36BE4CCB1C061524002E52D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36BE4CD01C061524002E52D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -156,6 +176,14 @@
 				36D0C69B1C08AC5F0002AE35 /* PostTableViewCell.xib */,
 				3689ECDF1C0E45D40087F828 /* PODPreviewTableViewCell.swift */,
 				3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */,
+				360EA4AE1C0F6D7300692668 /* TopicCollectionViewCell.swift */,
+				360EA4B01C0F6DC400692668 /* TopicCollectionViewCell.xib */,
+				360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */,
+				360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */,
+				36B1F4191C0FA7780091A1B3 /* PopularPODsTableViewCell.swift */,
+				36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */,
+				36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */,
+				36B1F41F1C0FA97D0091A1B3 /* PODCollectionViewCell.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -264,6 +292,8 @@
 				361FFE1D1C0CF381007EE366 /* PostDetailsViewController.xib */,
 				3689ECE11C0E58CE0087F828 /* PODsListViewController.swift */,
 				3689ECE31C0E58EF0087F828 /* PODsListViewController.xib */,
+				360EA4B21C0F6F1400692668 /* PopularViewController.swift */,
+				360EA4B41C0F6F3A00692668 /* PopularViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -434,7 +464,10 @@
 			files = (
 				3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */,
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
+				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
+				360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */,
+				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
 				361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */,
 				3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */,
 				36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */,
@@ -445,7 +478,9 @@
 				361FFE221C0CFAD1007EE366 /* PostDetailHeaderTableViewCell.xib in Resources */,
 				36BE4D0A1C06250B002E52D9 /* HomeViewController.xib in Resources */,
 				36D0C6981C07A0F50002AE35 /* NewPostMenu.xib in Resources */,
+				36B1F4201C0FA97D0091A1B3 /* PODCollectionViewCell.xib in Resources */,
 				361FFE261C0D0BBE007EE366 /* PostCommentOddTableViewCell.xib in Resources */,
+				36B1F41C1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib in Resources */,
 				361FFE2C1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +567,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */,
 				36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */,
 				36D0C6A11C08D0990002AE35 /* Post.swift in Sources */,
 				361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */,
@@ -540,8 +576,12 @@
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
 				36BE4D0C1C062668002E52D9 /* SidebarViewController.swift in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
+				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
+				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,
 				36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */,
+				36B1F41A1C0FA7780091A1B3 /* PopularPODsTableViewCell.swift in Sources */,
+				36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */,
 				36D0C6A41C08D0E40002AE35 /* User.swift in Sources */,
 				3689ECE61C0E62E40087F828 /* POD.swift in Sources */,
 				361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */,

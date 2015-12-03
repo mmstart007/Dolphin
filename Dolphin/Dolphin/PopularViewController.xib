@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PopularViewController" customModule="Dolphin" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="9IR-HK-jKx" id="aIs-gh-GOp"/>
+                <outlet property="view" destination="iN0-l3-epB" id="l7w-je-M0Z"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9IR-HK-jKx">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Tdp-sd-gdb"/>
+                        <outlet property="delegate" destination="-1" id="k7f-Mb-N0K"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="9IR-HK-jKx" secondAttribute="bottom" id="0a9-0I-Lc6"/>
+                <constraint firstAttribute="trailing" secondItem="9IR-HK-jKx" secondAttribute="trailing" id="8Lh-8y-Yg9"/>
+                <constraint firstItem="9IR-HK-jKx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="FUd-Nz-NV0"/>
+                <constraint firstItem="9IR-HK-jKx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ryS-Oz-F26"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="336.5" y="230.5"/>
+        </view>
+    </objects>
+</document>

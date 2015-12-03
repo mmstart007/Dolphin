@@ -50,7 +50,7 @@ class HomeViewController : DolphinTabBarViewController {
         let controller1 = FeedViewController()
         let controller2 = FeedViewController()
         let controller3 = UIViewController()
-        let controller4 = UIViewController()
+        let controller4 = PopularViewController()
         let controller5 = PODsListViewController()
         
         controller1.tabBarItem = UITabBarItem(title: "Latest", image: UIImage(named: "TabbarLatestIcon"), selectedImage: UIImage(named: "TabbarLatestIcon"))
