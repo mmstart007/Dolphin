@@ -132,6 +132,16 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         }
     }
     
+    // MARK: Tableview delegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 2 {
+            let postCommentsVC  = PostCommentsViewController()
+            postCommentsVC.post = post
+            navigationController?.pushViewController(postCommentsVC, animated: true)
+        }
+    }
+    
     // MARK: CollectionView Datasource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

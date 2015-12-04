@@ -23,6 +23,8 @@
 		361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE271C0D0C46007EE366 /* PostComment.swift */; };
 		361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE291C0D1792007EE366 /* PostCommentEvenTableViewCell.swift */; };
 		361FFE2C1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361FFE2B1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib */; };
+		3641405F1C110F770022D1BE /* PostCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3641405E1C110F770022D1BE /* PostCommentsViewController.swift */; };
+		364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140601C110F900022D1BE /* PostCommentsViewController.xib */; };
 		3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECD71C0E3F330087F828 /* DolphinViewController.swift */; };
 		3689ECDA1C0E42A20087F828 /* PostActionsMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */; };
 		3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */; };
@@ -91,6 +93,8 @@
 		361FFE271C0D0C46007EE366 /* PostComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostComment.swift; sourceTree = "<group>"; };
 		361FFE291C0D1792007EE366 /* PostCommentEvenTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCommentEvenTableViewCell.swift; sourceTree = "<group>"; };
 		361FFE2B1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCommentEvenTableViewCell.xib; sourceTree = "<group>"; };
+		3641405E1C110F770022D1BE /* PostCommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCommentsViewController.swift; sourceTree = "<group>"; };
+		364140601C110F900022D1BE /* PostCommentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCommentsViewController.xib; sourceTree = "<group>"; };
 		3689ECD71C0E3F330087F828 /* DolphinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DolphinViewController.swift; sourceTree = "<group>"; };
 		3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostActionsMenu.xib; sourceTree = "<group>"; };
 		3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODPreviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -294,6 +298,8 @@
 				3689ECE31C0E58EF0087F828 /* PODsListViewController.xib */,
 				360EA4B21C0F6F1400692668 /* PopularViewController.swift */,
 				360EA4B41C0F6F3A00692668 /* PopularViewController.xib */,
+				3641405E1C110F770022D1BE /* PostCommentsViewController.swift */,
+				364140601C110F900022D1BE /* PostCommentsViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -463,6 +469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */,
+				364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */,
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
@@ -591,6 +598,7 @@
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */,
 				3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */,
+				3641405F1C110F770022D1BE /* PostCommentsViewController.swift in Sources */,
 				36BE4D031C0620AD002E52D9 /* DolphinTabBarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
