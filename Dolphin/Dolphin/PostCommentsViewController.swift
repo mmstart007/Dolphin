@@ -9,21 +9,56 @@
 import Foundation
 import UIKit
 
-class PostCommentsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {
+class PostCommentsViewController : DolphinViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var writeCommentBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak var chosenImageContainer: UIView!
+    @IBOutlet weak var chosenImageView: UIImageView!
+
+    let picker = UIImagePickerController()
     
-    var post: Post? = nil
+    let commentTextViewPlaceHolder: String! = "Write a comment..."
+    
+    var post: Post?
+    var chosenImage: UIImage? = nil
+    
+    init(post: Post) {
+        super.init()
+        self.post = post
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = .None
         
-        title = "Dolphin"
-        setBackButton()
+        setAppearance()
         tableView.registerNib(UINib(nibName: "PostCommentOddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentOddTableViewCell")
         tableView.registerNib(UINib(nibName: "PostCommentEvenTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentEvenTableViewCell")
         tableView.separatorStyle = .None
+        
+        addKeyboardObservers()
+    }
+    
+    func setAppearance() {
+        self.edgesForExtendedLayout = .None
+        title = "Dolphin"
+        setBackButton()
+        chosenImageContainer.hidden         = true
+        commentTextView.layer.cornerRadius  = 10
+        commentTextView.layer.masksToBounds = true
+        commentTextView.layer.borderWidth   = 1
+        commentTextView.layer.borderColor   = UIColor.lightGrayColor().CGColor
+        commentTextView.backgroundColor     = UIColor.lightTextColor()
+        commentTextView.delegate            = self
+        commentTextView.text                = commentTextViewPlaceHolder
+        commentTextView.textColor           = UIColor.darkGrayColor()
+        let viewTapRecognizer = UITapGestureRecognizer(target: self, action: "viewTapped")
+        view.addGestureRecognizer(viewTapRecognizer)
     }
     
     // MARK: TableView DataSource
@@ -86,6 +121,109 @@ class PostCommentsViewController : DolphinViewController, UITableViewDataSource,
         headerImage.image = UIImage(named: "CommentsTitleImage")
         headerView.addSubview(headerImage)
         return headerView
+    }
+    
+    // MARK: Keyboard management
+    
+    func addKeyboardObservers() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillAppear:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillAppear(sender: NSNotification) {
+        print("Keyboard appeared")
+        if let userInfo = sender.userInfo {
+            if let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+                writeCommentBottomConstraint.constant = keyboardSize.height
+                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                    self.view.layoutIfNeeded()
+                })
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        print("Keyboard hidden")
+        writeCommentBottomConstraint.constant = 0
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+        })
+
+    }
+    
+    func viewTapped() {
+        commentTextView.resignFirstResponder()
+    }
+    
+    // MARK UItextViewDelegate
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == commentTextViewPlaceHolder {
+            textView.text = ""
+        }
+        textView.becomeFirstResponder()
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text == "" {
+            textView.text = commentTextViewPlaceHolder
+        }
+        textView.resignFirstResponder()
+    }
+    
+    // Photo actions
+    
+    @IBAction func selectImageButtonTouchUpInside(sender: AnyObject) {
+        
+        picker.delegate = self
+        let alert = UIAlertController(title: "Lets get a picture", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let libButton = UIAlertAction(title: "Select photo from library", style: UIAlertActionStyle.Default) { (alert) -> Void in
+            self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            self.picker.navigationBar.translucent = false
+            self.picker.navigationBar.barTintColor = UIColor.blueDolphin()
+            self.presentViewController(self.picker, animated: true, completion: nil)
+        }
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
+            let cameraButton = UIAlertAction(title: "Take a picture", style: UIAlertActionStyle.Default) { (alert) -> Void in
+                print("Take Photo")
+                self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+                self.presentViewController(self.picker, animated: true, completion: nil)
+                
+            }
+            alert.addAction(cameraButton)
+        } else {
+            print("Camera not available")
+            
+        }
+        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+            print("Cancel Pressed")
+        }
+        
+        alert.addAction(libButton)
+        alert.addAction(cancelButton)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func removeImageFromCommentButtonTouchUpInside(sender: AnyObject) {
+        
+        chosenImage = nil
+        chosenImageView.image = nil
+        chosenImageContainer.hidden = true
+    }
+    
+    //MARK: Images Delegates
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        print("didFinishPickingMediaWithInfo")
+        chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        chosenImageContainer.hidden = false
+        chosenImageView.image = chosenImage!
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        print("imagePickerControllerDidCancel")
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 }

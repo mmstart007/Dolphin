@@ -136,8 +136,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 2 {
-            let postCommentsVC  = PostCommentsViewController()
-            postCommentsVC.post = post
+            let postCommentsVC  = PostCommentsViewController(post: post!)
             navigationController?.pushViewController(postCommentsVC, animated: true)
         }
     }
