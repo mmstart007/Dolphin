@@ -18,9 +18,13 @@ class PostTableViewCell : UITableViewCell {
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var numberOfViewsLabel: UILabel!
     @IBOutlet weak var numberOfCommentsLabel: UILabel!
-    
-    
-    
+    @IBOutlet weak var linkTypePostContainer: UIView!
+    @IBOutlet weak var linkPostTitleLabel: UILabel!
+    @IBOutlet weak var linkPostURLLabel: UILabel!
+    @IBOutlet weak var postTextToTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var linkInfoContainerHeightConstraint: NSLayoutConstraint!
+
     override var frame: CGRect {
         get {
             return super.frame
@@ -39,16 +43,33 @@ class PostTableViewCell : UITableViewCell {
     func configureWithPost(post: Post) {
         postImageView.sd_setImageWithURL(NSURL(string: (post.postImageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         postuserImageView.sd_setImageWithURL(NSURL(string: (post.postUser?.userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+        postText.text = post.postText
         self.layer.cornerRadius               = 5
         postImageView.layer.cornerRadius      = 5
         postImageView.layer.masksToBounds     = true
         postuserImageView.layer.cornerRadius  = postuserImageView.frame.size.width / 2.0
         postuserImageView.layer.masksToBounds = true
-        postText.text                         = post.postText
+        
         postUserNameLabel.text                = String(format: "Posted by %@", arguments: [(post.postUser?.userName)!])
         postDateLabel.text                    = post.postDate?.timeAgo()
         numberOfViewsLabel.text               = String(format: "%li", arguments: [post.postNumberOfViews!])
         numberOfCommentsLabel.text            = String(format: "%li", arguments: [post.postNumberOfComments!])
+        if post.postType == .URL {
+            linkPostTitleLabel.text = post.postText
+            linkPostURLLabel.text   = post.postHeader
+            self.linkInfoContainerHeightConstraint.constant = 50
+        } else {
+            linkTypePostContainer.hidden = true
+            let fixedWidth = postText.frame.size.width
+            postText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+            let newSize = postText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+            self.textHeightConstraint.constant = newSize.height
+        }
+        if post.postType == .Text {
+            linkTypePostContainer.hidden = true
+            postImageView.hidden         = true
+            self.postTextToTopConstraint.constant = 0
+        }
     }
     
     func adjustCellViews(post: Post) {

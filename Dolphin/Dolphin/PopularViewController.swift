@@ -26,6 +26,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         tableView.registerNib(UINib(nibName: "PopularPODsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PopularPODsTableViewCell")
         tableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
         tableView.separatorStyle = .None
+        tableView.estimatedRowHeight = 10
         
         // Populate data for testing layout purposes
         let user1 = User(name: "John Doe", imageURL: "")
@@ -36,7 +37,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         let comment4 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
         let comment5 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
         
-        let post1 = Post(user: user1, imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcST_xQTg85n6JpUIc2Qp_yJixrbamfyXHI33AzsIYTSL7_gP4n4", type: .URL, header: "", text: "This is the text of this awesome post!!!", date: NSDate(), numberOfViews: 1228, numberOfComments: 43, comments:[comment1, comment2, comment3, comment4, comment5])
+        let post1 = Post(user: user1, imageURL: "https://anprak.files.wordpress.com/2014/01/thevergebanner.png?w=630&h=189", type: .URL, header: "https://www.theverge.com/", text: "This is an awesome site!", date: NSDate(), numberOfViews: 1228, numberOfComments: 43, comments:[comment1, comment2, comment3, comment4, comment5])
         let post2 = Post(user: user1, imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRz1WiFnk8nU7JnT1KikESbt-SNIecF6GU1smWteRhyWWEaji9v", type: .Text, header: "", text: "This is the text of this awesome post!!!", date: NSDate(), numberOfViews: 8, numberOfComments: 3, comments:[comment1, comment2, comment3, comment4, comment5])
         let post3 = Post(user: user1, imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbUgMAg6ImQKs-nRmUnecDp_z-5SZjXbi2rxDot8LcV4eLQb8eIg", type: .Photo, header: "", text: "This is the text of this awesome post!!!", date: NSDate(), numberOfViews: 1928, numberOfComments: 115, comments:[comment1, comment2, comment3, comment4, comment5])
         posts = [post1, post2, post3]
@@ -99,7 +100,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         } else if indexPath.section == 1 {
             return self.view.frame.size.width / 3
         } else {
-            return 230
+            return UITableViewAutomaticDimension
         }
     }
     
