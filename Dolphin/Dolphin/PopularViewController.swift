@@ -26,7 +26,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         tableView.registerNib(UINib(nibName: "PopularPODsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PopularPODsTableViewCell")
         tableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
         tableView.separatorStyle = .None
-        tableView.estimatedRowHeight = 10
+        tableView.estimatedRowHeight = 1000
         
         // Populate data for testing layout purposes
         let user1 = User(name: "John Doe", imageURL: "")

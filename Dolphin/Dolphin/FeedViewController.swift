@@ -21,7 +21,7 @@ class FeedViewController : UIViewController, UITableViewDataSource, UITableViewD
         self.edgesForExtendedLayout = .None
         postsTableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
         postsTableView.separatorStyle = .None
-        postsTableView.estimatedRowHeight = 100
+        postsTableView.estimatedRowHeight = 1000
         
         // Populate data for testing layout purposes
         let user1 = User(name: "John Doe", imageURL: "")
