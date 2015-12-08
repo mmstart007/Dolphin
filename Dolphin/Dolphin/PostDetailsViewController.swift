@@ -27,6 +27,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         tableView.registerNib(UINib(nibName: "PostCommentEvenTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentEvenTableViewCell")
         tableView.registerNib(UINib(nibName: "PopularTrendingTopicsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PopularTrendingTopicsTableViewCell")
         tableView.separatorStyle = .None
+        tableView.estimatedRowHeight = 10
         
         // Test data
         topics = ["ECONOMICS", "POLITICS", "COMPUTER SCIENCE", "SYRIA", "K-12"]
@@ -89,7 +90,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         } else if indexPath.section == 1 {
             return 40
         } else {
-            return 80
+            return UITableViewAutomaticDimension
         }
         
     }

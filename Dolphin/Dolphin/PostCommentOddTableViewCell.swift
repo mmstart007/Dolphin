@@ -15,6 +15,7 @@ class PostCommentOddTableViewCell : UITableViewCell {
     @IBOutlet weak var postCommentTextView: UITextView!
     @IBOutlet weak var postCommentUserNameLabel: UILabel!
     @IBOutlet weak var postCommentDateLabel: UILabel!
+    @IBOutlet weak var postCommentTextViewHeightConstraint: NSLayoutConstraint!
     
     override var frame: CGRect {
         get {
@@ -40,6 +41,11 @@ class PostCommentOddTableViewCell : UITableViewCell {
         postCommentUserImageView.layer.cornerRadius  = postCommentUserImageView.frame.size.width / 2.0
         postCommentUserImageView.layer.masksToBounds = true
         postCommentTextView.textColor                = UIColor.lightGrayColor()
+        let fixedWidth = postCommentTextView.frame.size.width
+        postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        let newSize = postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        let newHeight = max(newSize.height, 40)
+        self.postCommentTextViewHeightConstraint.constant = newHeight + 10
     }
     
     func adjustCellViews() {

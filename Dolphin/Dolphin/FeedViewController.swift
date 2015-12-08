@@ -27,10 +27,10 @@ class FeedViewController : UIViewController, UITableViewDataSource, UITableViewD
         let user1 = User(name: "John Doe", imageURL: "")
         
         let comment1 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-        let comment2 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-        let comment3 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-        let comment4 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-        let comment5 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
+        let comment2 = PostComment(user: user1, text: "I'll say!", date: NSDate())
+        let comment3 = PostComment(user: user1, text: "This is a larger comment than the previos one, I just want to test the cell height!", date: NSDate())
+        let comment4 = PostComment(user: user1, text: "This comment is even larger than the other one, and it is loooooooooooooooooooooooooooooooooooooooooooooooooooooong", date: NSDate())
+        let comment5 = PostComment(user: user1, text: "Great, the layout on the comments looks awesome!", date: NSDate())
         
         let post1 = Post(user: user1, imageURL: "https://anprak.files.wordpress.com/2014/01/thevergebanner.png?w=630&h=189", type: .URL, header: "https://www.theverge.com/", text: "This is an awesome site!", date: NSDate(), numberOfViews: 1228, numberOfComments: 43, comments:[comment1, comment2, comment3, comment4, comment5])
         let post2 = Post(user: user1, imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRz1WiFnk8nU7JnT1KikESbt-SNIecF6GU1smWteRhyWWEaji9v", type: .Text, header: "", text: "This is the text of this awesome post!!!", date: NSDate(), numberOfViews: 8, numberOfComments: 3, comments:[comment1, comment2, comment3, comment4, comment5])

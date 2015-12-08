@@ -40,6 +40,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         tableView.registerNib(UINib(nibName: "PostCommentOddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentOddTableViewCell")
         tableView.registerNib(UINib(nibName: "PostCommentEvenTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentEvenTableViewCell")
         tableView.separatorStyle = .None
+        tableView.estimatedRowHeight = 10
         
         addKeyboardObservers()
     }
@@ -93,7 +94,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80
+        return UITableViewAutomaticDimension
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
