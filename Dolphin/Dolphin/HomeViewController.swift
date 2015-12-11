@@ -105,7 +105,9 @@ class HomeViewController : DolphinTabBarViewController {
     }
     
     @IBAction func postLinkButtonTouchUpInside(sender: AnyObject) {
-        
+        let createLinkPostVC = CreateURLPostViewController()
+        navigationController?.pushViewController(createLinkPostVC, animated: true)
+        actionMenu?.removeFromSuperview()
         print("Post link button pressed")
         
     }

@@ -6,4 +6,5 @@ target 'Dolphin' do
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'KTCenterFlowLayout'
+    pod 'hpple'
 end

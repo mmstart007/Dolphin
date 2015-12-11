@@ -2,6 +2,7 @@ PODS:
   - Crashlytics (3.4.1):
     - Fabric (~> 1.6.0)
   - Fabric (1.6.1)
+  - hpple (0.2.0)
   - KTCenterFlowLayout (1.1.1)
   - NSDate+TimeAgo (1.0.3)
   - SDWebImage (3.7.3):
@@ -11,6 +12,7 @@ PODS:
 DEPENDENCIES:
   - Crashlytics
   - Fabric
+  - hpple
   - KTCenterFlowLayout
   - NSDate+TimeAgo
   - SDWebImage (~> 3.7)
@@ -18,6 +20,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
   Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
+  hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
   KTCenterFlowLayout: eded079c349450dea12f7cf94b424d1bc3205519
   NSDate+TimeAgo: 416f55d2696d3744c313091c5a9280d47f8238fe
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84

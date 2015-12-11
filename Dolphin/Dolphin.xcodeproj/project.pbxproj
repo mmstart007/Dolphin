@@ -13,6 +13,10 @@
 		360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B41C0F6F3A00692668 /* PopularViewController.xib */; };
 		360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */; };
 		360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */; };
+		3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */; };
+		3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */; };
+		3615B7011C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B7001C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift */; };
+		3615B7031C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B7021C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib */; };
 		361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE191C0CE8DE007EE366 /* TriangleView.swift */; };
 		361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE1B1C0CF36E007EE366 /* PostDetailsViewController.swift */; };
 		361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361FFE1D1C0CF381007EE366 /* PostDetailsViewController.xib */; };
@@ -25,6 +29,8 @@
 		361FFE2C1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361FFE2B1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib */; };
 		3641405F1C110F770022D1BE /* PostCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3641405E1C110F770022D1BE /* PostCommentsViewController.swift */; };
 		364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140601C110F900022D1BE /* PostCommentsViewController.xib */; };
+		364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364140641C173B810022D1BE /* CreateURLPostViewController.swift */; };
+		364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */; };
 		3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECD71C0E3F330087F828 /* DolphinViewController.swift */; };
 		3689ECDA1C0E42A20087F828 /* PostActionsMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */; };
 		3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */; };
@@ -83,6 +89,10 @@
 		360EA4B41C0F6F3A00692668 /* PopularViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularViewController.xib; sourceTree = "<group>"; };
 		360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularTrendingTopicsTableViewCell.swift; sourceTree = "<group>"; };
 		360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTrendingTopicsTableViewCell.xib; sourceTree = "<group>"; };
+		3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostChooseImageViewController.swift; sourceTree = "<group>"; };
+		3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostChooseImageViewController.xib; sourceTree = "<group>"; };
+		3615B7001C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostChooseImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		3615B7021C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostChooseImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		361FFE191C0CE8DE007EE366 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		361FFE1B1C0CF36E007EE366 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
 		361FFE1D1C0CF381007EE366 /* PostDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsViewController.xib; sourceTree = "<group>"; };
@@ -95,6 +105,8 @@
 		361FFE2B1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCommentEvenTableViewCell.xib; sourceTree = "<group>"; };
 		3641405E1C110F770022D1BE /* PostCommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCommentsViewController.swift; sourceTree = "<group>"; };
 		364140601C110F900022D1BE /* PostCommentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCommentsViewController.xib; sourceTree = "<group>"; };
+		364140641C173B810022D1BE /* CreateURLPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostViewController.swift; sourceTree = "<group>"; };
+		364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostViewController.xib; sourceTree = "<group>"; };
 		3689ECD71C0E3F330087F828 /* DolphinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DolphinViewController.swift; sourceTree = "<group>"; };
 		3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostActionsMenu.xib; sourceTree = "<group>"; };
 		3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODPreviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -165,6 +177,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3615B6FF1C19CAC7006BB8B4 /* CreatePost */ = {
+			isa = PBXGroup;
+			children = (
+				3615B7001C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift */,
+				3615B7021C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib */,
+			);
+			name = CreatePost;
+			sourceTree = "<group>";
+		};
 		361FFE181C0CE8AA007EE366 /* Aux Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +321,10 @@
 				360EA4B41C0F6F3A00692668 /* PopularViewController.xib */,
 				3641405E1C110F770022D1BE /* PostCommentsViewController.swift */,
 				364140601C110F900022D1BE /* PostCommentsViewController.xib */,
+				364140641C173B810022D1BE /* CreateURLPostViewController.swift */,
+				364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */,
+				3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */,
+				3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -324,6 +349,7 @@
 		36D0C69A1C08AC420002AE35 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				3615B6FF1C19CAC7006BB8B4 /* CreatePost */,
 				3689ECDB1C0E45760087F828 /* Home */,
 				3689ECDC1C0E45800087F828 /* Post Details */,
 				361FFE181C0CE8AA007EE366 /* Aux Views */,
@@ -472,8 +498,11 @@
 				364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */,
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
+				3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
 				360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */,
+				3615B7031C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib in Resources */,
+				364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */,
 				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
 				361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */,
 				3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */,
@@ -581,6 +610,8 @@
 				36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */,
 				36BE4D081C062404002E52D9 /* HomeViewController.swift in Sources */,
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
+				3615B7011C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift in Sources */,
+				3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */,
 				36BE4D0C1C062668002E52D9 /* SidebarViewController.swift in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
@@ -598,6 +629,7 @@
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */,
 				3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */,
+				364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */,
 				3641405F1C110F770022D1BE /* PostCommentsViewController.swift in Sources */,
 				36BE4D031C0620AD002E52D9 /* DolphinTabBarViewController.swift in Sources */,
 			);
@@ -744,7 +776,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Dolphin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -762,7 +794,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Dolphin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";

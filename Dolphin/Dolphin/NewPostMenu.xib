@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -18,7 +18,6 @@
             <subviews>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pjx-q7-9V1" userLabel="Transparent View">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="401"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KXV-LU-Szl">
@@ -26,7 +25,6 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQL-Ez-GmZ" userLabel="Close Button">
                             <rect key="frame" x="8" y="8" width="15" height="15"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="tQL-Ez-GmZ" secondAttribute="height" multiplier="1:1" id="Qsr-oX-1ms"/>
                             </constraints>
@@ -37,46 +35,44 @@
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post to Dolphin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2S-rv-l78" userLabel="Title Label">
                             <rect key="frame" x="61" y="5" width="253" height="20.5"/>
-                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9G-IL-mdD" userLabel="Post Link Button">
-                            <rect key="frame" x="8" y="76" width="90" height="115"/>
-                            <animations/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="w9G-IL-mdD" secondAttribute="height" multiplier="18:23" id="3KT-aC-CzO"/>
-                            </constraints>
-                            <state key="normal" backgroundImage="URLPostIcon"/>
-                            <connections>
-                                <action selector="postLinkButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="y2R-j1-XKB"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQx-yB-vvJ" userLabel="Post Photo Button">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQx-yB-vvJ" userLabel="Post Photo Button">
                             <rect key="frame" x="142" y="76" width="90" height="115"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="rQx-yB-vvJ" secondAttribute="height" multiplier="18:23" id="TbH-A6-Nbr"/>
                             </constraints>
                             <state key="normal" backgroundImage="PhotoPostIcon"/>
+                            <state key="highlighted" backgroundImage="PhotoPostIcon"/>
                             <connections>
                                 <action selector="postPhotoButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="bn5-aj-JkE"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnx-Ay-Ree" userLabel="Post Text Button">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnx-Ay-Ree" userLabel="Post Text Button">
                             <rect key="frame" x="277" y="76" width="90" height="115"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="dnx-Ay-Ree" secondAttribute="height" multiplier="18:23" id="mqg-k0-eLU"/>
                             </constraints>
                             <state key="normal" backgroundImage="TextPostIcon"/>
+                            <state key="highlighted" backgroundImage="TextPostIcon"/>
                             <connections>
                                 <action selector="postTextButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="cwU-QL-FYC"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9G-IL-mdD" userLabel="Post Link Button">
+                            <rect key="frame" x="8" y="76" width="90" height="115"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="w9G-IL-mdD" secondAttribute="height" multiplier="18:23" id="3KT-aC-CzO"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="URLPostIcon"/>
+                            <state key="highlighted" backgroundImage="URLPostIcon"/>
+                            <connections>
+                                <action selector="postLinkButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="y2R-j1-XKB"/>
+                            </connections>
+                        </button>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="dnx-Ay-Ree" secondAttribute="trailing" constant="8" id="79a-ju-3xh"/>
@@ -97,7 +93,6 @@
                     </constraints>
                 </view>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="KXV-LU-Szl" firstAttribute="width" secondItem="Pjx-q7-9V1" secondAttribute="height" multiplier="375:401" id="OrP-aR-2Wl"/>
