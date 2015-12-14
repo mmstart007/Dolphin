@@ -27,6 +27,8 @@
 		361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE271C0D0C46007EE366 /* PostComment.swift */; };
 		361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE291C0D1792007EE366 /* PostCommentEvenTableViewCell.swift */; };
 		361FFE2C1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361FFE2B1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib */; };
+		362D4BDC1C1F334800F065E5 /* CreateImagePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D4BDB1C1F334800F065E5 /* CreateImagePostViewController.swift */; };
+		362D4BDE1C1F336100F065E5 /* CreateImagePostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 362D4BDD1C1F336100F065E5 /* CreateImagePostViewController.xib */; };
 		3636F9641C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3636F9631C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift */; };
 		3636F9661C1EF79C00999200 /* MyPODPreviewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3636F9651C1EF79C00999200 /* MyPODPreviewCollectionViewCell.xib */; };
 		3641405F1C110F770022D1BE /* PostCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3641405E1C110F770022D1BE /* PostCommentsViewController.swift */; };
@@ -105,6 +107,8 @@
 		361FFE271C0D0C46007EE366 /* PostComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostComment.swift; sourceTree = "<group>"; };
 		361FFE291C0D1792007EE366 /* PostCommentEvenTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCommentEvenTableViewCell.swift; sourceTree = "<group>"; };
 		361FFE2B1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCommentEvenTableViewCell.xib; sourceTree = "<group>"; };
+		362D4BDB1C1F334800F065E5 /* CreateImagePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateImagePostViewController.swift; sourceTree = "<group>"; };
+		362D4BDD1C1F336100F065E5 /* CreateImagePostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateImagePostViewController.xib; sourceTree = "<group>"; };
 		3636F9631C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPODPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		3636F9651C1EF79C00999200 /* MyPODPreviewCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPODPreviewCollectionViewCell.xib; sourceTree = "<group>"; };
 		3641405E1C110F770022D1BE /* PostCommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCommentsViewController.swift; sourceTree = "<group>"; };
@@ -331,6 +335,8 @@
 				364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */,
 				3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */,
 				3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */,
+				362D4BDB1C1F334800F065E5 /* CreateImagePostViewController.swift */,
+				362D4BDD1C1F336100F065E5 /* CreateImagePostViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -504,6 +510,7 @@
 				364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */,
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
+				362D4BDE1C1F336100F065E5 /* CreateImagePostViewController.xib in Resources */,
 				3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
 				360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */,
@@ -618,6 +625,7 @@
 				36BE4D081C062404002E52D9 /* HomeViewController.swift in Sources */,
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
 				3615B7011C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift in Sources */,
+				362D4BDC1C1F334800F065E5 /* CreateImagePostViewController.swift in Sources */,
 				3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */,
 				36BE4D0C1C062668002E52D9 /* SidebarViewController.swift in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,

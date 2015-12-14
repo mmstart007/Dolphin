@@ -36,4 +36,10 @@ class DolphinViewController : UIViewController {
         navigationItem.rightBarButtonItem = rightButton;
     }
     
+    func setRightButtonItemWithText(text: String, target: AnyObject?, action: Selector) {
+        let rightButton = UIBarButtonItem(title: text, style: .Plain, target: target, action: action)
+        rightButton.tintColor = UIColor.whiteColor()
+        navigationItem.rightBarButtonItem = rightButton;
+    }
+    
 }

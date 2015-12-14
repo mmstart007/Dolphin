@@ -113,6 +113,9 @@ class HomeViewController : DolphinTabBarViewController {
     }
     @IBAction func postPhotoButtonTouchUpInside(sender: AnyObject) {
         
+        let createImagePostVC = CreateImagePostViewController()
+        navigationController?.pushViewController(createImagePostVC, animated: true)
+        actionMenu?.removeFromSuperview()
         print("Post photo button pressed")
         
     }
