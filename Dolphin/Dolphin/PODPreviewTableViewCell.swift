@@ -37,13 +37,13 @@ class PODPreviewTableViewCell : UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         if pod != nil {
-            let triangleView                = TriangleView()
-            triangleView.frame              = CGRect(x: self.frame.size.width - 60, y: 0, width: 60, height: 60)
-            triangleView.color              = pod!.podColor()
-            triangleView.backgroundColor    = UIColor.clearColor()
-            triangleView.layer.cornerRadius = 5
-            self.addSubview(triangleView)
             if pod!.podIsPrivate {
+                let triangleView                = TriangleView()
+                triangleView.frame              = CGRect(x: self.frame.size.width - 60, y: 0, width: 60, height: 60)
+                triangleView.color              = pod!.podColor()
+                triangleView.backgroundColor    = UIColor.clearColor()
+                triangleView.layer.cornerRadius = 5
+                self.addSubview(triangleView)
                 triangleView.addImage("PrivatePODIcon")
             }
         }

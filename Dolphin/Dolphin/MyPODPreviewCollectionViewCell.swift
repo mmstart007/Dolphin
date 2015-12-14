@@ -14,6 +14,7 @@ class MyPODPreviewCollectionViewCell : UICollectionViewCell {
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var podTitleLabel: UILabel!
     @IBOutlet weak var userImagesContainerView: UIView!
+    @IBOutlet weak var lastPostDateLabel: UILabel!
     
     var pod: POD?
     
@@ -36,12 +37,6 @@ class MyPODPreviewCollectionViewCell : UICollectionViewCell {
         if pod != nil {
             addUserImages(pod!)
         }
-        let triangleView                = TriangleView()
-        triangleView.frame              = CGRect(x: self.frame.size.width - 30, y: 0, width: 30, height: 30)
-        triangleView.color              = (pod?.podColor())!
-        triangleView.backgroundColor    = UIColor.clearColor()
-        triangleView.layer.cornerRadius = 5
-        self.addSubview(triangleView)
     }
     
     func configureWithPOD(pod: POD) {
@@ -51,31 +46,18 @@ class MyPODPreviewCollectionViewCell : UICollectionViewCell {
         podImageView.layer.masksToBounds = true
         podImageView.sd_setImageWithURL(NSURL(string: pod.podImageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         podTitleLabel.text = pod.podName
+        lastPostDateLabel.text = pod.podLastPostDate?.timeAgo()
     }
     
     func addUserImages(pod: POD) {
-        for (var i = 0; (i < pod.podUsers?.count && i < 5); i++) {
-            if i == 0 && pod.podUsers?.count > 5 {
-                // Add Label that shows number of remaining users in POD
-                let x: CGFloat = userImagesContainerView.frame.size.width - userImagesContainerView.frame.size.width / 6 - (CGFloat(i) * (userImagesContainerView.frame.size.width / 6 + userImagesContainerView.frame.size.width / 24))
-                let otherUsersLabel = UILabel(frame: CGRect(x: x, y: 0, width: userImagesContainerView.frame.size.width / 6, height: userImagesContainerView.frame.size.width / 6))
-                otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
-                otherUsersLabel.textColor = UIColor.lightTextColor()
-                otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
-                otherUsersLabel.layer.masksToBounds = true
-                otherUsersLabel.text = String(format: "+%li", arguments: [(pod.podUsers?.count)! - 4])
-                otherUsersLabel.textAlignment = .Center
-                otherUsersLabel.font = UIFont.systemFontOfSize(12)
-                userImagesContainerView.addSubview(otherUsersLabel)
-            } else {
-                // Sow image of user in POD
-                let x: CGFloat = userImagesContainerView.frame.size.width - userImagesContainerView.frame.size.width / 6 - (CGFloat(i) * (userImagesContainerView.frame.size.width / 6 + userImagesContainerView.frame.size.width / 24))
-                let userAvatarImageView = UIImageView(frame: CGRect(x: x, y: 0, width: userImagesContainerView.frame.size.width / 6, height: userImagesContainerView.frame.size.width / 6))
-                userAvatarImageView.sd_setImageWithURL(NSURL(string: (pod.podUsers![i].userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
-                userAvatarImageView.layer.cornerRadius = userAvatarImageView.frame.size.width / 2.0
-                userAvatarImageView.layer.masksToBounds = true
-                userImagesContainerView.addSubview(userAvatarImageView)
-            }
-        }
+        let otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userImagesContainerView.frame.size.width, height: userImagesContainerView.frame.size.height))
+        otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
+        otherUsersLabel.textColor = UIColor.lightTextColor()
+        otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
+        otherUsersLabel.layer.masksToBounds = true
+        otherUsersLabel.text = String(format: "+%li", arguments: [(pod.podUsers?.count)!])
+        otherUsersLabel.textAlignment = .Center
+        otherUsersLabel.font = UIFont.systemFontOfSize(12)
+        userImagesContainerView.addSubview(otherUsersLabel)
     }
 }
