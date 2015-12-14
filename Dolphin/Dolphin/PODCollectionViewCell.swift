@@ -23,6 +23,7 @@ class PODCollectionViewCell : UICollectionViewCell {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         self.podImageView.layer.cornerRadius = self.podImageView.frame.size.width / 2.0
         podImageView.clipsToBounds           = true
         podImageView.layer.masksToBounds     = true

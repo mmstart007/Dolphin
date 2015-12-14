@@ -32,4 +32,11 @@ class TriangleView : UIView {
         CGContextFillPath(ctx);
     }
     
+    func addImage(name: String) {
+        let image = UIImage(named: name)
+        let imageView = UIImageView(frame: CGRect(x: self.frame.size.width * (5 / 9), y: self.frame.size.height * (1 / 5), width: self.frame.size.width / 3, height: self.frame.size.width / 3))
+        imageView.image = image
+        addSubview(imageView)
+    }
+    
 }
