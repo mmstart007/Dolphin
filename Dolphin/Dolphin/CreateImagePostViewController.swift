@@ -8,99 +8,132 @@
 
 import Foundation
 import UIKit
+import Photos
 
-class CreateImagePostViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+class CreateImagePostViewController : DolphinViewController, UINavigationControllerDelegate, UIGestureRecognizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    @IBOutlet weak var imagePreviewImageView: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
     var tapToChooseImageLabel: UILabel?
     
-    let picker = UIImagePickerController()
     var chosenImage: UIImage? = nil
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if chosenImage != nil {
-            navigationItem.rightBarButtonItem?.enabled = true
-        } else {
-            if tapToChooseImageLabel == nil {
-                tapToChooseImageLabel = UILabel(frame: CGRect(x: 0, y: (self.view.frame.size.height / 2) - 25, width: self.view.frame.size.width, height: 50))
-                tapToChooseImageLabel?.font          = UIFont.systemFontOfSize(18)
-                tapToChooseImageLabel?.textAlignment = .Center
-                tapToChooseImageLabel?.textColor     = UIColor.lightGrayColor()
-                tapToChooseImageLabel?.text          = "Tap on the screen to choose an Image"
-                self.view.addSubview(tapToChooseImageLabel!)
-            }
-        }
-    }
+    var images: [UIImage]! = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView.registerNib(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
         title = "New Post"
-        setRightButtonItemWithText("Post", target: self, action: "postImage:")
         navigationItem.rightBarButtonItem?.enabled = false
         self.edgesForExtendedLayout = .None
-        imagePreviewImageView.backgroundColor = UIColor.clearColor()
-        imagePreviewImageView.contentMode = .ScaleAspectFit
-        let imageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "openImagePicker")
-        self.view.addGestureRecognizer(imageTapGestureRecognizer)
         setBackButton()
+        fetchPhotos()
     }
     
-    // Photo actions
+    // Fetch Images from Camera Roll
     
-    func openImagePicker() {
+    func fetchPhotos () {
         
-        picker.delegate = self
-        let alert = UIAlertController(title: "Lets get a picture", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let libButton = UIAlertAction(title: "Select photo from library", style: UIAlertActionStyle.Default) { (alert) -> Void in
-            self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            self.picker.navigationBar.translucent = false
-            self.picker.navigationBar.barTintColor = UIColor.blueDolphin()
-            self.presentViewController(self.picker, animated: true, completion: nil)
-        }
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
-            let cameraButton = UIAlertAction(title: "Take a picture", style: UIAlertActionStyle.Default) { (alert) -> Void in
-                print("Take Photo")
-                self.picker.sourceType = UIImagePickerControllerSourceType.Camera
-                self.presentViewController(self.picker, animated: true, completion: nil)
-                
-            }
-            alert.addAction(cameraButton)
-        } else {
-            print("Camera not available")
+        let imgManager = PHImageManager.defaultManager()
+        
+        // Note that if the request is not set to synchronous
+        // the requestImageForAsset will return both the image
+        // and thumbnail; by setting synchronous to true it
+        // will return just the thumbnail
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.synchronous = true
+        
+        // Sort the images by creation date
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
+        
+        if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
             
+            for (var i = 0; i < fetchResult.count; i++) {
+                let asset = fetchResult.objectAtIndex(i)
+                // Perform the image request
+                let options = PHImageRequestOptions()
+                options.resizeMode = .None
+                options.synchronous = false
+                imgManager.requestImageForAsset(asset as! PHAsset, targetSize: CGSizeMake(UIScreen.mainScreen().bounds.width / 3.0 - 30, view.frame.size.width / 3.0 - 30), contentMode: PHImageContentMode.AspectFit, options: requestOptions, resultHandler: { (image, _) in
+                    
+                    // Add the returned image to your array
+                    self.images.append(image!)
+                })
+            }
         }
-        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
-            print("Cancel Pressed")
+    }
+    
+    // MARK: CollectionView Datasource
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if images!.count > 0 {
+            return images!.count + 1
+        } else {
+            return 0
         }
-        
-        alert.addAction(libButton)
-        alert.addAction(cancelButton)
-        self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    //MARK: Images Delegates
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        print("didFinishPickingMediaWithInfo")
-        chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage
-        imagePreviewImageView.image = chosenImage!
-        imagePreviewImageView.backgroundColor = UIColor.clearColor()
-        tapToChooseImageLabel?.removeFromSuperview()
-        dismissViewControllerAnimated(true, completion: nil)
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        var cell: CreatePostChooseImageCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("CreatePostChooseImageCollectionViewCell", forIndexPath: indexPath) as? CreatePostChooseImageCollectionViewCell
+        if cell == nil {
+            cell = CreatePostChooseImageCollectionViewCell()
+        }
+        if indexPath.row == 0 {
+            cell?.configureWithImage(UIImage(named: "CameratakePictureImage")!)
+        } else {
+            cell?.configureWithImage(images![indexPath.row - 1])
+        }
+        return cell!
     }
     
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        print("imagePickerControllerDidCancel")
-        dismissViewControllerAnimated(true, completion: nil)
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
-    // MARK: Post image
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSizeMake(UIScreen.mainScreen().bounds.width / 3.0 - 30, view.frame.size.width / 3.0 - 30)
+    }
     
-    func postImage(sender: AnyObject?) {
-        print("Post image button touched")
+    // MARK: CollectionView Delegate
+    
+    func collectionView(collectionView: UICollectionView,
+        didSelectItemAtIndexPath indexPath: NSIndexPath) {
+            
+            if indexPath.row == 0 {
+                if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
+                    let finishImagePostVC = CreateImagePostFinishPostingViewController(image: nil)
+                    self.navigationController?.pushViewController(finishImagePostVC, animated: true)
+                }
+            } else {
+                let imgManager = PHImageManager.defaultManager()
+                
+                // Note that if the request is not set to synchronous
+                // the requestImageForAsset will return both the image
+                // and thumbnail; by setting synchronous to true it
+                // will return just the thumbnail
+                let requestOptions = PHImageRequestOptions()
+                requestOptions.synchronous = true
+                
+                // Sort the images by creation date
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
+                
+                if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
+                    
+                    let options = PHImageRequestOptions()
+                    options.resizeMode = .None
+                    options.synchronous = true
+                    imgManager.requestImageDataForAsset(fetchResult.objectAtIndex(indexPath.row) as! PHAsset, options: options, resultHandler: { (data, dataUTI, orientation, info) -> Void in
+                        let image = UIImage(data: data!)!
+                        let finishImagePostVC = CreateImagePostFinishPostingViewController(image: image)
+                        self.navigationController?.pushViewController(finishImagePostVC, animated: true)
+                    })
+                }
+            }
     }
     
 }

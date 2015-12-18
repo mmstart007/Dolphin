@@ -15,8 +15,8 @@
 		360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */; };
 		3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */; };
 		3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */; };
-		3615B7011C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B7001C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift */; };
-		3615B7031C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B7021C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib */; };
+		3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */; };
+		3615B7031C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B7021C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib */; };
 		361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE191C0CE8DE007EE366 /* TriangleView.swift */; };
 		361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361FFE1B1C0CF36E007EE366 /* PostDetailsViewController.swift */; };
 		361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361FFE1D1C0CF381007EE366 /* PostDetailsViewController.xib */; };
@@ -66,6 +66,9 @@
 		36D0C6A41C08D0E40002AE35 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0C6A31C08D0E40002AE35 /* User.swift */; };
 		36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */; };
 		36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36D0C6A71C08E3790002AE35 /* FeedViewController.xib */; };
+		36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E998211C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift */; };
+		36E998241C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36E998231C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib */; };
+		36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */; };
 		F9F6A1903E9BDD72DB8D25A4 /* libPods-Dolphin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62422A3802E1BB94341C6291 /* libPods-Dolphin.a */; };
 /* End PBXBuildFile section */
 
@@ -95,8 +98,8 @@
 		360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTrendingTopicsTableViewCell.xib; sourceTree = "<group>"; };
 		3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostChooseImageViewController.swift; sourceTree = "<group>"; };
 		3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostChooseImageViewController.xib; sourceTree = "<group>"; };
-		3615B7001C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostChooseImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		3615B7021C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostChooseImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostChooseImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		3615B7021C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostChooseImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		361FFE191C0CE8DE007EE366 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		361FFE1B1C0CF36E007EE366 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailsViewController.swift; sourceTree = "<group>"; };
 		361FFE1D1C0CF381007EE366 /* PostDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsViewController.xib; sourceTree = "<group>"; };
@@ -154,6 +157,9 @@
 		36D0C6A31C08D0E40002AE35 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		36D0C6A71C08E3790002AE35 /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
+		36E998211C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateImagePostFinishPostingViewController.swift; sourceTree = "<group>"; };
+		36E998231C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateImagePostFinishPostingViewController.xib; sourceTree = "<group>"; };
+		36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+ScaleAndCrop.swift"; sourceTree = "<group>"; };
 		62422A3802E1BB94341C6291 /* libPods-Dolphin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dolphin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9E99804B93529D712BC626 /* Pods-Dolphin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.debug.xcconfig"; sourceTree = "<group>"; };
 		DCFBF776029220B30C3A087B /* Pods-Dolphin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.release.xcconfig"; sourceTree = "<group>"; };
@@ -188,8 +194,8 @@
 		3615B6FF1C19CAC7006BB8B4 /* CreatePost */ = {
 			isa = PBXGroup;
 			children = (
-				3615B7001C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift */,
-				3615B7021C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib */,
+				3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */,
+				3615B7021C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib */,
 			);
 			name = CreatePost;
 			sourceTree = "<group>";
@@ -337,6 +343,8 @@
 				3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */,
 				362D4BDB1C1F334800F065E5 /* CreateImagePostViewController.swift */,
 				362D4BDD1C1F336100F065E5 /* CreateImagePostViewController.xib */,
+				36E998211C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift */,
+				36E998231C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -345,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				36BE4D051C06217D002E52D9 /* UIColor+DolphinAdditions.swift */,
+				36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -508,13 +517,14 @@
 			files = (
 				3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */,
 				364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */,
+				36E998241C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib in Resources */,
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
 				362D4BDE1C1F336100F065E5 /* CreateImagePostViewController.xib in Resources */,
 				3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
 				360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */,
-				3615B7031C19CAF6006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.xib in Resources */,
+				3615B7031C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib in Resources */,
 				364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */,
 				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
 				361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */,
@@ -624,11 +634,13 @@
 				36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */,
 				36BE4D081C062404002E52D9 /* HomeViewController.swift in Sources */,
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
-				3615B7011C19CADF006BB8B4 /* CreateURLPostChooseImageCollectionViewCell.swift in Sources */,
+				3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */,
 				362D4BDC1C1F334800F065E5 /* CreateImagePostViewController.swift in Sources */,
 				3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */,
 				36BE4D0C1C062668002E52D9 /* SidebarViewController.swift in Sources */,
+				36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
+				36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */,
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,

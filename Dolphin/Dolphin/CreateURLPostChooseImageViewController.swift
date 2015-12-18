@@ -30,7 +30,7 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
         
         setBackButton()
         title = "Pick an Image"
-        collectionView.registerNib(UINib(nibName: "CreateURLPostChooseImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "CreateURLPostChooseImageCollectionViewCell")
+        collectionView.registerNib(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
     }
     
     // MARK: CollectionView Datasource
@@ -44,9 +44,9 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: CreateURLPostChooseImageCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("CreateURLPostChooseImageCollectionViewCell", forIndexPath: indexPath) as? CreateURLPostChooseImageCollectionViewCell
+        var cell: CreatePostChooseImageCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("CreatePostChooseImageCollectionViewCell", forIndexPath: indexPath) as? CreatePostChooseImageCollectionViewCell
         if cell == nil {
-            cell = CreateURLPostChooseImageCollectionViewCell()
+            cell = CreatePostChooseImageCollectionViewCell()
         }
         cell?.configureWithImageURL(imageURLs![indexPath.row])
         return cell!
