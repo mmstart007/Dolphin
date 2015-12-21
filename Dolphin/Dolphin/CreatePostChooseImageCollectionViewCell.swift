@@ -19,7 +19,7 @@ class CreatePostChooseImageCollectionViewCell : UICollectionViewCell {
     }
     
     func configureWithImage(image: UIImage) {
-        imageView.image = image
+        imageView.image = image.imageByScalingAndCroppingForSize(imageView.frame.size)
         imageView.contentMode = .ScaleAspectFit
     }
 }

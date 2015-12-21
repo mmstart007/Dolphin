@@ -127,7 +127,7 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
                     let options = PHImageRequestOptions()
                     options.resizeMode = .None
                     options.synchronous = true
-                    imgManager.requestImageDataForAsset(fetchResult.objectAtIndex(indexPath.row) as! PHAsset, options: options, resultHandler: { (data, dataUTI, orientation, info) -> Void in
+                    imgManager.requestImageDataForAsset(fetchResult.objectAtIndex(indexPath.row - 1) as! PHAsset, options: options, resultHandler: { (data, dataUTI, orientation, info) -> Void in
                         let image = UIImage(data: data!)!
                         let finishImagePostVC = CreateImagePostFinishPostingViewController(image: image)
                         self.navigationController?.pushViewController(finishImagePostVC, animated: true)
