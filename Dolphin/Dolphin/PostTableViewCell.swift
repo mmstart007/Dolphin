@@ -50,13 +50,13 @@ class PostTableViewCell : UITableViewCell {
         if let post = cellPost {
            
             let attributedStringLikes = NSAttributedString(string: String(post.postNumberOfLikes!), attributes: [NSFontAttributeName:numberOfLikesLabel.font])
-            let sizeLikes = attributedStringLikes.boundingRectWithSize(CGSize(width: 1000, height: 40), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
-            postNumberOfLikesWidthConstarint.constant = sizeLikes.width + 10
+            let sizeLikes = attributedStringLikes.boundingRectWithSize(CGSize(width: 1000, height: 20), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
+            postNumberOfLikesWidthConstarint.constant = sizeLikes.width + 5
             numberOfLikesLabel.text = String(post.postNumberOfLikes!)
             
-            let attributedStringComments = NSAttributedString(string: String(post.postNumberOfLikes!), attributes: [NSFontAttributeName:numberOfCommentsLabel.font])
-            let sizeComments = attributedStringComments.boundingRectWithSize(CGSize(width: 1000, height: 40), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
-            postNumberOfCommentsWidthConstraint.constant = sizeComments.width + 10
+            let attributedStringComments = NSAttributedString(string: String(post.postNumberOfComments!), attributes: [NSFontAttributeName:numberOfCommentsLabel.font])
+            let sizeComments = attributedStringComments.boundingRectWithSize(CGSize(width: 1000, height: 20), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
+            postNumberOfCommentsWidthConstraint.constant = sizeComments.width + 5
             numberOfCommentsLabel.text = String(post.postNumberOfComments!)
             
         }
