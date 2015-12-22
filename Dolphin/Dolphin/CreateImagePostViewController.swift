@@ -70,11 +70,7 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if images!.count > 0 {
-            return images!.count + 1
-        } else {
-            return 0
-        }
+        return images!.count + 1
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

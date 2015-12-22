@@ -20,17 +20,57 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         setBackButton()
-        setRightSystemButtonItem(.Action, target: self, action: "actionButtonTapped")
+        
+        setNavBarButtons()
+        
         title = "Dolphin"
         tableView.registerNib(UINib(nibName: "PostDetailHeaderTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostDetailHeaderTableViewCell")
         tableView.registerNib(UINib(nibName: "PostCommentOddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentOddTableViewCell")
         tableView.registerNib(UINib(nibName: "PostCommentEvenTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentEvenTableViewCell")
-        tableView.registerNib(UINib(nibName: "PopularTrendingTopicsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PopularTrendingTopicsTableViewCell")
+        tableView.registerNib(UINib(nibName: "PostDetailsTopicsAndViewsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostDetailsTopicsAndViewsTableViewCell")
         tableView.separatorStyle = .None
         tableView.estimatedRowHeight = 10
         
         // Test data
         topics = ["ECONOMICS", "POLITICS", "COMPUTER SCIENCE", "SYRIA", "K-12"]
+    }
+    
+    func setNavBarButtons() {
+        
+        let customViewActionButton  = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Normal)
+        customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Highlighted)
+        customViewActionButton.addTarget(self, action: "actionButtonPressed", forControlEvents: .TouchUpInside)
+        let actionBarButton         = UIBarButtonItem(customView: customViewActionButton)
+
+        let customViewCommentButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Normal)
+        customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Highlighted)
+        customViewCommentButton.addTarget(self, action: "commentButtonPressed", forControlEvents: .TouchUpInside)
+        let commentBarButton        = UIBarButtonItem(customView: customViewCommentButton)
+
+        let customViewLikeButton    = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Normal)
+        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Highlighted)
+        customViewLikeButton.addTarget(self, action: "likeButtonPressed", forControlEvents: .TouchUpInside)
+        let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
+
+        navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
+        
+    }
+    
+    // MARK: NavBar Actions
+    
+    func actionButtonPressed() {
+        print("Action Button Pressed")
+    }
+    
+    func commentButtonPressed() {
+        print("Comment Button Pressed")
+    }
+    
+    func likeButtonPressed() {
+        print("Like Button Pressed")
     }
     
     // MARK: TableView DataSource
@@ -58,11 +98,11 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             }
             (cell as? PostDetailHeaderTableViewCell)?.configureWithPost(post!)
         } else if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier("PopularTrendingTopicsTableViewCell") as? PopularTrendingTopicsTableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("PostDetailsTopicsAndViewsTableViewCell") as? PostDetailsTopicsAndViewsTableViewCell
             if cell == nil {
-                cell = PopularTrendingTopicsTableViewCell()
+                cell = PostDetailsTopicsAndViewsTableViewCell()
             }
-            (cell as? PopularTrendingTopicsTableViewCell)!.configureWithDataSource(self, delegate: self, centerAligned: false)
+            (cell as? PostDetailsTopicsAndViewsTableViewCell)!.configureWithPost(post!, dataSource: self, delegate: self)
         } else {
             if indexPath.row % 2 == 1 {
                 cell = tableView.dequeueReusableCellWithIdentifier("PostCommentEvenTableViewCell") as? PostCommentEvenTableViewCell
@@ -104,7 +144,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                 (cell as? PostCommentOddTableViewCell)?.adjustCellViews()
             }
         } else if indexPath.section == 1 {
-            (cell as? PopularTrendingTopicsTableViewCell)!.collectionView.setContentOffset(CGPoint(x: self.contentOffset, y: 0), animated: false)
+            (cell as? PostDetailsTopicsAndViewsTableViewCell)!.collectionView.setContentOffset(CGPoint(x: self.contentOffset, y: 0), animated: false)
         }
     }
     
