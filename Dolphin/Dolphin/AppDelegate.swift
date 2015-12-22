@@ -14,6 +14,7 @@ import Crashlytics
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var homeViewController: UIViewController!
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -27,18 +28,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().barStyle = UIBarStyle.Black
         UINavigationBar.appearance().barTintColor = UIColor.blueDolphin()
+        let frame = UIScreen.mainScreen().bounds
+        window = UIWindow(frame: frame)
         
         let homeVC = HomeViewController()
         
         let initialViewController = UINavigationController(rootViewController: homeVC)
         
-        let frame = UIScreen.mainScreen().bounds
-        window = UIWindow(frame: frame)
-        
         // Initialize root controller with sidebar
         let rearViewController = SidebarViewController()
         let revealController = SWRevealViewController(rearViewController: rearViewController, frontViewController: initialViewController)
-        window!.rootViewController = revealController
+        homeViewController = revealController
+        let loginVC = LoginViewController()
+        window!.rootViewController = loginVC
         window!.makeKeyAndVisible()
         
         return true

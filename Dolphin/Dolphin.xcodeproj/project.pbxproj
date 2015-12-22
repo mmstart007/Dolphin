@@ -36,6 +36,8 @@
 		364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364140641C173B810022D1BE /* CreateURLPostViewController.swift */; };
 		364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */; };
 		368798631C29BA190088AC24 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368798621C29BA190088AC24 /* NetworkController.swift */; };
+		368798661C29E1260088AC24 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368798651C29E1260088AC24 /* LoginViewController.swift */; };
+		368798681C29E13C0088AC24 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 368798671C29E13C0088AC24 /* LoginViewController.xib */; };
 		3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECD71C0E3F330087F828 /* DolphinViewController.swift */; };
 		3689ECDA1C0E42A20087F828 /* PostActionsMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */; };
 		3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */; };
@@ -122,6 +124,8 @@
 		364140641C173B810022D1BE /* CreateURLPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostViewController.swift; sourceTree = "<group>"; };
 		364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostViewController.xib; sourceTree = "<group>"; };
 		368798621C29BA190088AC24 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		368798651C29E1260088AC24 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		368798671C29E13C0088AC24 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		3689ECD71C0E3F330087F828 /* DolphinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DolphinViewController.swift; sourceTree = "<group>"; };
 		3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostActionsMenu.xib; sourceTree = "<group>"; };
 		3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODPreviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -220,6 +224,15 @@
 				368798621C29BA190088AC24 /* NetworkController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		368798641C29D7BF0088AC24 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				368798651C29E1260088AC24 /* LoginViewController.swift */,
+				368798671C29E13C0088AC24 /* LoginViewController.xib */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		3689ECDB1C0E45760087F828 /* Home */ = {
@@ -338,6 +351,7 @@
 		36BE4D011C062095002E52D9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				368798641C29D7BF0088AC24 /* Login */,
 				3689ECD71C0E3F330087F828 /* DolphinViewController.swift */,
 				36BE4D021C0620AD002E52D9 /* DolphinTabBarViewController.swift */,
 				36BE4D071C062404002E52D9 /* HomeViewController.swift */,
@@ -535,6 +549,7 @@
 				3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */,
 				364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */,
 				36E998241C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib in Resources */,
+				368798681C29E13C0088AC24 /* LoginViewController.xib in Resources */,
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
 				36E9982A1C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib in Resources */,
@@ -645,6 +660,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				368798661C29E1260088AC24 /* LoginViewController.swift in Sources */,
 				360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */,
 				36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */,
 				36D0C6A11C08D0990002AE35 /* Post.swift in Sources */,

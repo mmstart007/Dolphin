@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,15 +15,41 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="kSs-fy-HRU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="kSs-fy-HRU" secondAttribute="height" multiplier="375:667" id="cve-m0-fJH"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DolphinLogoSplashScreen" translatesAutoresizingMaskIntoConstraints="NO" id="8Dg-rK-kOu">
+                                <rect key="frame" x="62" y="271" width="250" height="125"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="8Dg-rK-kOu" secondAttribute="height" multiplier="2:1" id="ZfM-DW-aS8"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8Dg-rK-kOu" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4fv-8U-B85"/>
+                            <constraint firstItem="8Dg-rK-kOu" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5aA-nT-do8"/>
+                            <constraint firstItem="8Dg-rK-kOu" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="height" multiplier="250:667" id="M4b-UU-dMZ"/>
+                            <constraint firstAttribute="trailing" secondItem="kSs-fy-HRU" secondAttribute="trailing" id="QtG-kL-xHb"/>
+                            <constraint firstItem="kSs-fy-HRU" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="a3c-4A-4e4"/>
+                            <constraint firstItem="kSs-fy-HRU" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="fbN-H7-BGN"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.5" y="374.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Background" width="375" height="667"/>
+        <image name="DolphinLogoSplashScreen" width="200" height="100"/>
+    </resources>
 </document>
