@@ -16,7 +16,7 @@ class PostTableViewCell : UITableViewCell {
     @IBOutlet weak var postuserImageView: UIImageView!
     @IBOutlet weak var postUserNameLabel: UILabel!
     @IBOutlet weak var postDateLabel: UILabel!
-    @IBOutlet weak var numberOfViewsLabel: UILabel!
+    @IBOutlet weak var numberOfLikesLabel: UILabel!
     @IBOutlet weak var numberOfCommentsLabel: UILabel!
     @IBOutlet weak var linkTypePostContainer: UIView!
     @IBOutlet weak var linkPostTitleLabel: UILabel!
@@ -24,7 +24,12 @@ class PostTableViewCell : UITableViewCell {
     @IBOutlet weak var postTextToTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var textHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var linkInfoContainerHeightConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var likedImageView: UIImageView!
+    @IBOutlet weak var postNumberOfLikesWidthConstarint: NSLayoutConstraint!
+    @IBOutlet weak var postNumberOfCommentsWidthConstraint: NSLayoutConstraint!
+    
+    var cellPost: Post?
+    
     override var frame: CGRect {
         get {
             return super.frame
@@ -40,7 +45,25 @@ class PostTableViewCell : UITableViewCell {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if let post = cellPost {
+           
+            let attributedStringLikes = NSAttributedString(string: String(post.postNumberOfLikes!), attributes: [NSFontAttributeName:numberOfLikesLabel.font])
+            let sizeLikes = attributedStringLikes.boundingRectWithSize(CGSize(width: 1000, height: 40), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
+            postNumberOfLikesWidthConstarint.constant = sizeLikes.width + 10
+            numberOfLikesLabel.text = String(post.postNumberOfLikes!)
+            
+            let attributedStringComments = NSAttributedString(string: String(post.postNumberOfLikes!), attributes: [NSFontAttributeName:numberOfCommentsLabel.font])
+            let sizeComments = attributedStringComments.boundingRectWithSize(CGSize(width: 1000, height: 40), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
+            postNumberOfCommentsWidthConstraint.constant = sizeComments.width + 10
+            numberOfCommentsLabel.text = String(post.postNumberOfComments!)
+            
+        }
+    }
+    
     func configureWithPost(post: Post) {
+        self.cellPost = post
         postImageView.sd_setImageWithURL(NSURL(string: (post.postImageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         postuserImageView.sd_setImageWithURL(NSURL(string: (post.postUser?.userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
         postText.text = post.postText
@@ -52,7 +75,7 @@ class PostTableViewCell : UITableViewCell {
         
         postUserNameLabel.text                = String(format: "Posted by %@", arguments: [(post.postUser?.userName)!])
         postDateLabel.text                    = post.postDate?.timeAgo()
-        numberOfViewsLabel.text               = String(format: "%li", arguments: [post.postNumberOfViews!])
+        numberOfLikesLabel.text               = String(format: "%li", arguments: [post.postNumberOfLikes!])
         numberOfCommentsLabel.text            = String(format: "%li", arguments: [post.postNumberOfComments!])
         if post.postType == .URL {
             linkPostTitleLabel.text = post.postText
@@ -69,6 +92,11 @@ class PostTableViewCell : UITableViewCell {
             linkTypePostContainer.hidden = true
             postImageView.hidden         = true
             self.postTextToTopConstraint.constant = 0
+        }
+        if post.isLikedByUser {
+            likedImageView.image = UIImage(named: "ViewsGlassIcon")
+        } else {
+            likedImageView.image = UIImage(named: "SunglassesIconNotLiked")
         }
     }
     

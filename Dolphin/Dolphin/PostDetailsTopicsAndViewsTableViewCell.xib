@@ -48,7 +48,8 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="numberOfViewsLabel" destination="cIo-cI-pJK" id="GSL-Vl-IID"/>
+                <outlet property="likedImageView" destination="Ofs-wd-gSV" id="vOL-lJ-eGL"/>
+                <outlet property="numberOfLikesLabel" destination="cIo-cI-pJK" id="N5F-BD-oz7"/>
                 <outlet property="topicsView" destination="NAz-Jq-xLW" id="jad-KT-16y"/>
                 <outlet property="viewLabelWidthConstraint" destination="2MI-jv-pTd" id="0SL-ea-EfA"/>
             </connections>

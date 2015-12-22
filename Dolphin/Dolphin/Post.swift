@@ -33,20 +33,22 @@ class Post : NSObject {
     var postHeader: String?
     var postText: String?
     var postDate: NSDate?
-    var postNumberOfViews: Int?
+    var postNumberOfLikes: Int?
     var postNumberOfComments: Int?
     var postComments: [PostComment]?
+    var isLikedByUser: Bool
     
     init(user: User, imageURL: String, type: PostType, header: String, text: String, date: NSDate,
-        numberOfViews: Int, numberOfComments: Int, comments: [PostComment]) {
+        numberOfLikes: Int, numberOfComments: Int, comments: [PostComment], isLiked: Bool) {
         self.postUser             = user
         self.postImageURL         = imageURL
         self.postType             = type
         self.postHeader           = header
         self.postText             = text
         self.postDate             = date
-        self.postNumberOfViews    = numberOfViews
+        self.postNumberOfLikes    = numberOfLikes
         self.postNumberOfComments = numberOfComments
         self.postComments         = comments
+        self.isLikedByUser        = isLiked
     }
 }

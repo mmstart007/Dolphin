@@ -13,8 +13,9 @@ class PostDetailsTopicsAndViewsTableViewCell : UITableViewCell {
     
     var collectionView: UICollectionView!
     
+    @IBOutlet weak var likedImageView: UIImageView!
     @IBOutlet weak var topicsView: UIView!
-    @IBOutlet weak var numberOfViewsLabel: UILabel!
+    @IBOutlet weak var numberOfLikesLabel: UILabel!
     @IBOutlet weak var viewLabelWidthConstraint: NSLayoutConstraint!
     var post: Post!
     
@@ -32,15 +33,20 @@ class PostDetailsTopicsAndViewsTableViewCell : UITableViewCell {
         collectionView?.tag        = 0
         self.addSubview(collectionView!)
         self.backgroundColor = UIColor.clearColor()
+        if post.isLikedByUser {
+            likedImageView.image = UIImage(named: "ViewsGlassIcon")
+        } else {
+            likedImageView.image = UIImage(named: "SunglassesIconNotLiked")
+        }
         
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let attributedString = NSAttributedString(string: String(post.postNumberOfViews!), attributes: [NSFontAttributeName:numberOfViewsLabel.font])
+        let attributedString = NSAttributedString(string: String(post.postNumberOfLikes!), attributes: [NSFontAttributeName:numberOfLikesLabel.font])
         let size = attributedString.boundingRectWithSize(CGSize(width: 1000, height: 40), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
-        viewLabelWidthConstraint.constant = size.width
-        numberOfViewsLabel.text = String(post.postNumberOfViews!)
+        viewLabelWidthConstraint.constant = size.width + 10
+        numberOfLikesLabel.text = String(post.postNumberOfLikes!)
         collectionView.frame = CGRect(x: 0, y: 0, width: topicsView.frame.size.width, height: topicsView.frame.size.height)
         self.setNeedsLayout()
         self.setNeedsUpdateConstraints()

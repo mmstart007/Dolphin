@@ -67,9 +67,19 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func commentButtonPressed() {
         print("Comment Button Pressed")
+        let postCommentsVC  = PostCommentsViewController(post: post!)
+        navigationController?.pushViewController(postCommentsVC, animated: true)
     }
     
     func likeButtonPressed() {
+        if (post?.isLikedByUser)! {
+            post?.isLikedByUser = false
+            post?.postNumberOfLikes = (post?.postNumberOfLikes)! - 1
+        } else {
+            post?.isLikedByUser = true
+            post?.postNumberOfLikes = (post?.postNumberOfLikes)! + 1
+        }
+        tableView.reloadData()
         print("Like Button Pressed")
     }
     

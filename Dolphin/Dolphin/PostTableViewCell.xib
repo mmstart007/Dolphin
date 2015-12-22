@@ -29,7 +29,7 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ILk-Ka-Q4y">
-                    <rect key="frame" x="56" y="272" width="163" height="19.5"/>
+                    <rect key="frame" x="56" y="272" width="163" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -62,7 +62,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posted by JohnDoe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMW-dD-7uX">
-                    <rect key="frame" x="56" y="252" width="163" height="14.5"/>
+                    <rect key="frame" x="56" y="252" width="163" height="15"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -156,14 +156,17 @@
                 </mask>
             </variation>
             <connections>
+                <outlet property="likedImageView" destination="sgv-V8-0Uu" id="39r-Sc-xjv"/>
                 <outlet property="linkInfoContainerHeightConstraint" destination="KnM-MK-D1Y" id="fhC-uL-iLc"/>
                 <outlet property="linkPostTitleLabel" destination="HeZ-yR-vrk" id="jZa-97-Bv9"/>
                 <outlet property="linkPostURLLabel" destination="xMB-V5-VIt" id="Ql5-Zi-aSu"/>
                 <outlet property="linkTypePostContainer" destination="Qc2-oj-uCp" id="woe-J8-RrL"/>
                 <outlet property="numberOfCommentsLabel" destination="lv9-vG-g6E" id="Wv5-Xe-OhE"/>
-                <outlet property="numberOfViewsLabel" destination="Q6c-Vg-YbU" id="Tct-PR-CQ8"/>
+                <outlet property="numberOfLikesLabel" destination="Q6c-Vg-YbU" id="QZo-Ii-KXr"/>
                 <outlet property="postDateLabel" destination="ILk-Ka-Q4y" id="l01-vR-PHa"/>
                 <outlet property="postImageView" destination="Vwn-9g-sIl" id="iOJ-Vj-pPZ"/>
+                <outlet property="postNumberOfCommentsWidthConstraint" destination="GD2-j1-53i" id="qvt-bi-Yw4"/>
+                <outlet property="postNumberOfLikesWidthConstarint" destination="e5a-6f-eiR" id="EO6-XQ-kef"/>
                 <outlet property="postText" destination="4du-yc-KJ9" id="dHK-a7-X9P"/>
                 <outlet property="postTextToTopConstraint" destination="cUz-U7-WLJ" id="JsI-Ns-6LK"/>
                 <outlet property="postUserNameLabel" destination="tMW-dD-7uX" id="kTm-L9-Hq9"/>
