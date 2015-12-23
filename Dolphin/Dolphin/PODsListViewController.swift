@@ -13,7 +13,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     @IBOutlet weak var allPODstableView: UITableView!
     @IBOutlet weak var myPODsCollectionView: UICollectionView!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    var segmentedControl: UISegmentedControl!
     
     var allPods: [POD] = []
     var myPods: [POD] = []
@@ -26,7 +26,6 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         myPODsCollectionView.registerNib(UINib(nibName: "MyPODPreviewCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "MyPODPreviewCollectionViewCell")
         myPODsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         allPODstableView.separatorStyle = .None
-        segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
         myPODsCollectionView.dataSource = self
         myPODsCollectionView.delegate   = self
         
@@ -38,6 +37,14 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         
         allPods = [pod1, pod2, pod3]
         myPods = [pod1, pod2, pod3]
+        
+        segmentedControl = UISegmentedControl(items: ["All PODs", "My PODs"])
+        segmentedControl.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
+        segmentedControl.sizeToFit()
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        self.parentViewController?.navigationItem.titleView = segmentedControl
         
     }
     
@@ -107,7 +114,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            return CGSize(width: (self.view.frame.size.width / 2) - 15, height: self.view.frame.size.width / 2.5)
+        return CGSize(width: (self.view.frame.size.width / 2) - 15, height: self.view.frame.size.width / 2.5)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -117,7 +124,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-//        (cell as? MyPODPreviewCollectionViewCell)?.addUserImages(myPods[indexPath.row])
+        //        (cell as? MyPODPreviewCollectionViewCell)?.addUserImages(myPods[indexPath.row])
     }
     
 }
