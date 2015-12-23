@@ -31,10 +31,16 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var loginLabel: UILabel!
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
+        navigationController?.navigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         
+        navigationController?.navigationBarHidden = false
     }
     
     override func viewDidLoad() {
@@ -124,11 +130,11 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     // MARK: Actions
     
     @IBAction func loginButtonTouchUpInside(sender: AnyObject) {
-        presentViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true, completion: nil)
+        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
     }
     
     @IBAction func signUpButtonTouchUpInside(sender: AnyObject) {
-        presentViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true, completion: nil)
+        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
     }
     
     // MARK: Keyboard handling

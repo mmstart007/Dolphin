@@ -31,7 +31,7 @@ class HomeViewController : DolphinTabBarViewController {
         
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
         // Disable Swipe gesture for sidebar
