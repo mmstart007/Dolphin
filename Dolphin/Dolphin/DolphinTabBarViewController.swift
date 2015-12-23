@@ -13,9 +13,11 @@ class DolphinTabBarViewController : UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        Utils.setFontFamilyForView(self.view, includeSubViews: true)
         edgesForExtendedLayout = .None
     }
+    
+    
     
     func setMenuLeftButton() {
         

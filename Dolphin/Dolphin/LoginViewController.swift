@@ -46,6 +46,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Utils.setFontFamilyForView(self.view, includeSubViews: true)
         setAppearance()
         self.centerLogoVerticallyConstraint.active = false
         self.logoTopSpaceToViewConstraint.constant = UIScreen.mainScreen().bounds.height / 6.0

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TopicCollectionViewCell : UICollectionViewCell {
+class TopicCollectionViewCell : CustomFontCollectionViewCell {
     
     @IBOutlet weak var topicNameLabel: UILabel!
     

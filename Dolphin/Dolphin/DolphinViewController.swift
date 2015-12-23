@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-class DolphinViewController : UIViewController {
+class DolphinViewController : DolphinCustomFontViewController {
  
-    public init() {
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PODCollectionViewCell : UICollectionViewCell {
+class PODCollectionViewCell : CustomFontCollectionViewCell {
     
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var podNameLabel: UILabel!
@@ -18,8 +18,6 @@ class PODCollectionViewCell : UICollectionViewCell {
         podImageView.sd_setImageWithURL(NSURL(string: (pod.podImageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         podImageView.contentMode = .ScaleAspectFill
         self.podNameLabel.text   = pod.podName
-        
-        
     }
     
     override func layoutSubviews() {

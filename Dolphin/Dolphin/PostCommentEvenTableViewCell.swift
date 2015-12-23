@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PostCommentEvenTableViewCell : UITableViewCell {
+class PostCommentEvenTableViewCell : CustomFontTableViewCell {
     
     @IBOutlet weak var postCommentUserImageView: UIImageView!
     @IBOutlet weak var postCommentTextView: UITextView!
@@ -47,6 +47,7 @@ class PostCommentEvenTableViewCell : UITableViewCell {
         let newSize = postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newHeight = max(newSize.height, 40)
         self.postCommentTextViewHeightConstraint.constant = newHeight + 10
+        Utils.setFontFamilyForView(self, includeSubViews: true)
     }
     
     func adjustCellViews() {

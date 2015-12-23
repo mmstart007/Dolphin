@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PostDetailsTopicsAndViewsTableViewCell : UITableViewCell {
+class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
     
     var collectionView: UICollectionView!
     
@@ -38,7 +38,6 @@ class PostDetailsTopicsAndViewsTableViewCell : UITableViewCell {
         } else {
             likedImageView.image = UIImage(named: "SunglassesIconNotLiked")
         }
-        
     }
     
     override func layoutSubviews() {

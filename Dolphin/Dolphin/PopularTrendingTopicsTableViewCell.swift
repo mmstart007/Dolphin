@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PopularTrendingTopicsTableViewCell : UITableViewCell {
+class PopularTrendingTopicsTableViewCell : CustomFontTableViewCell {
     
     var collectionView: UICollectionView!
     
@@ -47,7 +47,6 @@ class PopularTrendingTopicsTableViewCell : UITableViewCell {
                 self.backgroundColor = UIColor.clearColor()
             }
         }
-        
         
     }
     

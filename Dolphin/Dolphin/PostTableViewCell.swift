@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PostTableViewCell : UITableViewCell {
+class PostTableViewCell : CustomFontTableViewCell {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postText: UITextView!

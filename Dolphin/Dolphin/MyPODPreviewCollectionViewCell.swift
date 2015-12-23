@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MyPODPreviewCollectionViewCell : UICollectionViewCell {
+class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
     
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var podTitleLabel: UILabel!

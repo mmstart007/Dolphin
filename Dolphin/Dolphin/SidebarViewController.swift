@@ -28,6 +28,7 @@ class SidebarViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         myFeedButtonTouchUpInside(self)
+        Utils.setFontFamilyForView(self.view, includeSubViews: true)
     }
     
     override func viewDidLayoutSubviews() {

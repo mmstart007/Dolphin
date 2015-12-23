@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PODPreviewTableViewCell : UITableViewCell {
+class PODPreviewTableViewCell : CustomFontTableViewCell {
     
     
     @IBOutlet weak var podImageView: UIImageView!

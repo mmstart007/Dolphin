@@ -38,6 +38,12 @@
 		368798631C29BA190088AC24 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368798621C29BA190088AC24 /* NetworkController.swift */; };
 		368798661C29E1260088AC24 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368798651C29E1260088AC24 /* LoginViewController.swift */; };
 		368798681C29E13C0088AC24 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 368798671C29E13C0088AC24 /* LoginViewController.xib */; };
+		368798851C2B2BA70088AC24 /* Raleway-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 368798731C2B2BA70088AC24 /* Raleway-Bold.ttf */; };
+		368798901C2B2BA70088AC24 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3687987E1C2B2BA70088AC24 /* Raleway-Regular.ttf */; };
+		368798981C2B34A60088AC24 /* DolphinCustomFontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368798971C2B34A60088AC24 /* DolphinCustomFontViewController.swift */; };
+		3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3687989A1C2B3E0D0088AC24 /* Utils.swift */; };
+		3687989D1C2B482C0088AC24 /* CustomFontTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3687989C1C2B482C0088AC24 /* CustomFontTableViewCell.swift */; };
+		3687989F1C2B49990088AC24 /* CustomFontCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3687989E1C2B49990088AC24 /* CustomFontCollectionViewCell.swift */; };
 		3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECD71C0E3F330087F828 /* DolphinViewController.swift */; };
 		3689ECDA1C0E42A20087F828 /* PostActionsMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */; };
 		3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */; };
@@ -126,6 +132,12 @@
 		368798621C29BA190088AC24 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		368798651C29E1260088AC24 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		368798671C29E13C0088AC24 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		368798731C2B2BA70088AC24 /* Raleway-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Bold.ttf"; sourceTree = "<group>"; };
+		3687987E1C2B2BA70088AC24 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Raleway-Regular.ttf"; sourceTree = "<group>"; };
+		368798971C2B34A60088AC24 /* DolphinCustomFontViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DolphinCustomFontViewController.swift; sourceTree = "<group>"; };
+		3687989A1C2B3E0D0088AC24 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		3687989C1C2B482C0088AC24 /* CustomFontTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFontTableViewCell.swift; sourceTree = "<group>"; };
+		3687989E1C2B49990088AC24 /* CustomFontCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFontCollectionViewCell.swift; sourceTree = "<group>"; };
 		3689ECD71C0E3F330087F828 /* DolphinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DolphinViewController.swift; sourceTree = "<group>"; };
 		3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostActionsMenu.xib; sourceTree = "<group>"; };
 		3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODPreviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -235,6 +247,42 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		3687986E1C2B2B840088AC24 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3687986F1C2B2B940088AC24 /* Fonts */,
+				36BE4CFB1C061AFC002E52D9 /* Dolphin-Bridging-Header.h */,
+				36BE4CD71C061524002E52D9 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			path = Dolphin;
+			sourceTree = "<group>";
+		};
+		3687986F1C2B2B940088AC24 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				368798701C2B2B990088AC24 /* Raleway */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		368798701C2B2B990088AC24 /* Raleway */ = {
+			isa = PBXGroup;
+			children = (
+				368798731C2B2BA70088AC24 /* Raleway-Bold.ttf */,
+				3687987E1C2B2BA70088AC24 /* Raleway-Regular.ttf */,
+			);
+			name = Raleway;
+			sourceTree = "<group>";
+		};
+		368798991C2B3E030088AC24 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3687989A1C2B3E0D0088AC24 /* Utils.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		3689ECDB1C0E45760087F828 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				36BE4CCA1C061524002E52D9 /* Dolphin */,
+				3687986E1C2B2B840088AC24 /* Supporting Files */,
 				36BE4CDF1C061524002E52D9 /* DolphinTests */,
 				36BE4CEA1C061524002E52D9 /* DolphinUITests */,
 				36BE4CC91C061524002E52D9 /* Products */,
@@ -296,6 +345,7 @@
 		36BE4CCA1C061524002E52D9 /* Dolphin */ = {
 			isa = PBXGroup;
 			children = (
+				368798991C2B3E030088AC24 /* Utils */,
 				368798611C29BA000088AC24 /* Controllers */,
 				36D0C69F1C08D08A0002AE35 /* Model */,
 				36D0C69A1C08AC420002AE35 /* Cells */,
@@ -307,8 +357,6 @@
 				36BE4CCF1C061524002E52D9 /* Main.storyboard */,
 				36BE4CD21C061524002E52D9 /* Assets.xcassets */,
 				36BE4CD41C061524002E52D9 /* LaunchScreen.storyboard */,
-				36BE4CD71C061524002E52D9 /* Info.plist */,
-				36BE4CFB1C061AFC002E52D9 /* Dolphin-Bridging-Header.h */,
 			);
 			path = Dolphin;
 			sourceTree = "<group>";
@@ -353,6 +401,7 @@
 			children = (
 				368798641C29D7BF0088AC24 /* Login */,
 				3689ECD71C0E3F330087F828 /* DolphinViewController.swift */,
+				368798971C2B34A60088AC24 /* DolphinCustomFontViewController.swift */,
 				36BE4D021C0620AD002E52D9 /* DolphinTabBarViewController.swift */,
 				36BE4D071C062404002E52D9 /* HomeViewController.swift */,
 				36BE4D091C06250B002E52D9 /* HomeViewController.xib */,
@@ -405,6 +454,8 @@
 				3689ECDB1C0E45760087F828 /* Home */,
 				3689ECDC1C0E45800087F828 /* Post Details */,
 				361FFE181C0CE8AA007EE366 /* Aux Views */,
+				3687989C1C2B482C0088AC24 /* CustomFontTableViewCell.swift */,
+				3687989E1C2B49990088AC24 /* CustomFontCollectionViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -560,6 +611,7 @@
 				3615B7031C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib in Resources */,
 				364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */,
 				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
+				368798851C2B2BA70088AC24 /* Raleway-Bold.ttf in Resources */,
 				361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */,
 				3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */,
 				36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */,
@@ -575,6 +627,7 @@
 				361FFE261C0D0BBE007EE366 /* PostCommentOddTableViewCell.xib in Resources */,
 				36B1F41C1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib in Resources */,
 				361FFE2C1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib in Resources */,
+				368798901C2B2BA70088AC24 /* Raleway-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,11 +715,13 @@
 			files = (
 				368798661C29E1260088AC24 /* LoginViewController.swift in Sources */,
 				360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */,
+				3687989D1C2B482C0088AC24 /* CustomFontTableViewCell.swift in Sources */,
 				36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */,
 				36D0C6A11C08D0990002AE35 /* Post.swift in Sources */,
 				361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */,
 				36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */,
 				368798631C29BA190088AC24 /* NetworkController.swift in Sources */,
+				368798981C2B34A60088AC24 /* DolphinCustomFontViewController.swift in Sources */,
 				36BE4D081C062404002E52D9 /* HomeViewController.swift in Sources */,
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
 				3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */,
@@ -676,6 +731,7 @@
 				36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
 				36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */,
+				3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */,
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,
@@ -687,6 +743,7 @@
 				361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */,
 				36E998281C28C14A007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.swift in Sources */,
 				361FFE241C0D0BA8007EE366 /* PostCommentOddTableViewCell.swift in Sources */,
+				3687989F1C2B49990088AC24 /* CustomFontCollectionViewCell.swift in Sources */,
 				3689ECE21C0E58CE0087F828 /* PODsListViewController.swift in Sources */,
 				3636F9641C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift in Sources */,
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,

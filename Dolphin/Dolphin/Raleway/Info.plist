@@ -47,8 +47,7 @@
 	<string>Main</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Raleway-Regular.ttf</string>
-		<string>Raleway-Bold.ttf</string>
+		<string></string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

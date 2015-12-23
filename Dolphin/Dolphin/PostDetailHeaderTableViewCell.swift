@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PostDetailHeaderTableViewCell : UITableViewCell {
+class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
@@ -18,6 +18,7 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
         postImageView.sd_setImageWithURL(NSURL(string: (post.postImageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         postTextView.text = post.postText
         backgroundColor = UIColor.clearColor()
+        Utils.setFontFamilyForView(self, includeSubViews: true)
     }
     
 }

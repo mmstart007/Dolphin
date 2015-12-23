@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PopularPODsTableViewCell : UITableViewCell {
+class PopularPODsTableViewCell : CustomFontTableViewCell {
     
     @IBOutlet weak var podsCollectionView: UICollectionView!
     
