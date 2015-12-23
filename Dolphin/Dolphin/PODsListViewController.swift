@@ -44,8 +44,20 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
-        self.parentViewController?.navigationItem.titleView = segmentedControl
         
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.parentViewController?.navigationItem.titleView = segmentedControl
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.parentViewController?.navigationItem.titleView = nil
     }
     
     // MARK: Segmented Control
