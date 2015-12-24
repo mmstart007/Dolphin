@@ -47,8 +47,8 @@ class HomeViewController : DolphinTabBarViewController {
         UITabBar.appearance().selectedImageTintColor = UIColor.yellowHighlightedMenuItem()
         tabBarController?.tabBar.tintColor = UIColor.redColor()
         
-        let controller1 = FeedViewController()
-        let controller2 = FeedViewController()
+        let controller1 = FeedViewController(likes: false)
+        let controller2 = FeedViewController(likes: false)
         let controller3 = UIViewController()
         let controller4 = PopularViewController()
         let controller5 = PODsListViewController()

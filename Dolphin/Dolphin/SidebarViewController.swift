@@ -24,6 +24,17 @@ class SidebarViewController : UIViewController {
     @IBOutlet weak var inviteFriendsMenuItemLabel: UILabel!
     @IBOutlet weak var dolphinDealsMenuItemLabel: UILabel!
     
+    var homeViewController: HomeViewController!
+    
+    init(homeVC: HomeViewController) {
+        super.init(nibName: nil, bundle: nil)
+        self.homeViewController = homeVC
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +68,13 @@ class SidebarViewController : UIViewController {
     
     @IBAction func myFeedButtonTouchUpInside(sender: AnyObject) {
         print("My feed menu item selected")
+        setMyFeedSelected()
+        revealViewController().revealToggleAnimated(true)
+        homeViewController.selectedIndex = 1
+
+    }
+    
+    func setMyFeedSelected() {
         setAllItemsNotSelected()
         myFeedIconImageView.image = myFeedIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
         myFeedIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
@@ -65,14 +83,28 @@ class SidebarViewController : UIViewController {
     
     @IBAction func historyButtonTouchUpInside(sender: AnyObject) {
         print("History menu item selected")
+        revealViewController().revealToggleAnimated(true)
+        homeViewController.navigationController?.pushViewController(FeedViewController(likes: true), animated: true)
+    }
+    
+    func setHistorySelected() {
         setAllItemsNotSelected()
         historyIconImageView.image = historyIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
         historyIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
         historyMenuItemLabel.textColor = UIColor.yellowHighlightedMenuItem()
+
     }
     
     @IBAction func myPODsButtonTouchUpInside(sender: AnyObject) {
         print("My PODs menu item selected")
+        setMyPODsSelected()
+        revealViewController().revealToggleAnimated(true)
+        homeViewController.selectedIndex = 4
+        (homeViewController.viewControllers![4] as? PODsListViewController)?.segmentedControl.selectedSegmentIndex = 1
+        (homeViewController.viewControllers![4] as? PODsListViewController)?.segmentedControlChanged(UIEvent())
+    }
+    
+    func setMyPODsSelected() {
         setAllItemsNotSelected()
         myPODsIconImageView.image = myPODsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
         myPODsIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
@@ -81,6 +113,10 @@ class SidebarViewController : UIViewController {
     
     @IBAction func inviteFriendsButtonTouchUpInside(sender: AnyObject) {
         print("Invite Friends menu item selected")
+        setInviteFriendsSelected()
+    }
+    
+    func setInviteFriendsSelected() {
         setAllItemsNotSelected()
         inviteFriendsIconImageView.image = inviteFriendsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
         inviteFriendsIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
@@ -89,6 +125,10 @@ class SidebarViewController : UIViewController {
     
     @IBAction func dolphinDealsButtonTouchUpInside(sender: AnyObject) {
         print("Dolphin Deals menu item selected")
+        setDealsSelected()
+    }
+    
+    func setDealsSelected() {
         setAllItemsNotSelected()
         dolphinDealsIconImageView.image = dolphinDealsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
         dolphinDealsIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()

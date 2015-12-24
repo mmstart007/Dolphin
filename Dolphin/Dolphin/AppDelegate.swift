@@ -31,13 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let frame = UIScreen.mainScreen().bounds
         window = UIWindow(frame: frame)
         
+        homeViewController = HomeViewController()
+        
         let loginVC = LoginViewController()
         let initialViewController = UINavigationController(rootViewController: loginVC)
         
         // Initialize root controller with sidebar
-        let rearViewController = SidebarViewController()
+        let rearViewController = SidebarViewController(homeVC: homeViewController as! HomeViewController)
         let revealController = SWRevealViewController(rearViewController: rearViewController, frontViewController: initialViewController)
-        homeViewController = HomeViewController()
+        
         
         window!.rootViewController = revealController
         window!.makeKeyAndVisible()

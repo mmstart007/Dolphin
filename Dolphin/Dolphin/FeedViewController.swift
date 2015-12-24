@@ -9,12 +9,24 @@
 import Foundation
 import UIKit
 
-class FeedViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FeedViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var postsTableView: UITableView!
     
     let networkController = NetworkController.sharedInstance
     var cells: [PostTableViewCell] = []
+    var myLikes: Bool = false
+
+    init(likes: Bool) {
+        super.init()
+        self.myLikes = likes
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -23,6 +35,11 @@ class FeedViewController : UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if myLikes {
+            setBackButton()
+            title = "My Likes"
+        }
         self.edgesForExtendedLayout = .None
         postsTableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
         postsTableView.separatorStyle = .None
@@ -37,7 +54,11 @@ class FeedViewController : UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return networkController.posts.count
+        if myLikes {
+            return networkController.likedPosts.count
+        } else {
+            return networkController.posts.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -45,7 +66,12 @@ class FeedViewController : UIViewController, UITableViewDataSource, UITableViewD
         if cell == nil {
             cell = PostTableViewCell()
         }
-        cell?.configureWithPost(networkController.posts[indexPath.row])
+        if myLikes {
+            cell?.configureWithPost(networkController.likedPosts[indexPath.row])
+        } else {
+            cell?.configureWithPost(networkController.posts[indexPath.row])
+        }
+        
         cell?.selectionStyle = .None
         return cell!
     }
@@ -60,7 +86,11 @@ class FeedViewController : UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let postCell = cell as? PostTableViewCell {
-            postCell.adjustCellViews(networkController.posts[indexPath.row])
+            if myLikes {
+                postCell.adjustCellViews(networkController.likedPosts[indexPath.row])
+            } else {
+                postCell.adjustCellViews(networkController.posts[indexPath.row])
+            }
         }
     }
     
@@ -68,7 +98,12 @@ class FeedViewController : UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let postDetailsVC = PostDetailsViewController()
-        postDetailsVC.post = networkController.posts[indexPath.row]
+        if myLikes {
+            postDetailsVC.post = networkController.likedPosts[indexPath.row]
+        } else {
+            postDetailsVC.post = networkController.posts[indexPath.row]
+        }
+        
         navigationController?.pushViewController(postDetailsVC, animated: true)
     }
     
