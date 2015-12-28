@@ -978,7 +978,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dolphin",
-					"/Users/{username}/Documents/FacebookSDK",
+					"~/Documents/FacebookSDK",
 				);
 				INFOPLIST_FILE = Dolphin/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
