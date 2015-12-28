@@ -2,27 +2,38 @@ PODS:
   - Crashlytics (3.4.1):
     - Fabric (~> 1.6.0)
   - Fabric (1.6.1)
+  - HMSegmentedControl (1.5.2)
   - hpple (0.2.0)
   - KTCenterFlowLayout (1.1.1)
   - NSDate+TimeAgo (1.0.3)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
+  - TwitterCore (1.14.6):
+    - Fabric
+  - TwitterKit (1.14.6):
+    - TwitterCore (= 1.14.6)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
+  - HMSegmentedControl
   - hpple
   - KTCenterFlowLayout
   - NSDate+TimeAgo
   - SDWebImage (~> 3.7)
+  - TwitterCore
+  - TwitterKit
 
 SPEC CHECKSUMS:
   Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
   Fabric: bf0ceb04e7c924090efc5f8c55e4fbcca189e0a0
+  HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
   KTCenterFlowLayout: eded079c349450dea12f7cf94b424d1bc3205519
   NSDate+TimeAgo: 416f55d2696d3744c313091c5a9280d47f8238fe
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  TwitterCore: 5e9b2d066ceeef53fe611c0c4436cb700f1ed620
+  TwitterKit: f67360ee0a5f935f053bf37015652ac157e4eb92
 
 COCOAPODS: 0.39.0

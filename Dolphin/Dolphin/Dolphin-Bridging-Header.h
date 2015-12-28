@@ -9,3 +9,6 @@
 #import "TFHpple.h"
 #import "TFHppleElement.h"
 #import "XPathQuery.h"
+#import "HMSegmentedControl.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>

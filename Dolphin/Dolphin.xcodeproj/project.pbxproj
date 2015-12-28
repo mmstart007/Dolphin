@@ -51,6 +51,11 @@
 		3689ECE21C0E58CE0087F828 /* PODsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECE11C0E58CE0087F828 /* PODsListViewController.swift */; };
 		3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECE31C0E58EF0087F828 /* PODsListViewController.xib */; };
 		3689ECE61C0E62E40087F828 /* POD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECE51C0E62E40087F828 /* POD.swift */; };
+		369382AF1C3191470005FCB0 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 369382AE1C3191470005FCB0 /* FBSDKCoreKit.framework */; };
+		369382B11C3195D50005FCB0 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 369382B01C3195D50005FCB0 /* FBSDKLoginKit.framework */; };
+		369382B41C31B1FF0005FCB0 /* FacebookFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369382B31C31B1FF0005FCB0 /* FacebookFriend.swift */; };
+		369382B71C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369382B61C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift */; };
+		369382B91C31B8370005FCB0 /* FriendToInviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 369382B81C31B8370005FCB0 /* FriendToInviteTableViewCell.xib */; };
 		36B1F41A1C0FA7780091A1B3 /* PopularPODsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F4191C0FA7780091A1B3 /* PopularPODsTableViewCell.swift */; };
 		36B1F41C1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */; };
 		36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */; };
@@ -75,6 +80,9 @@
 		36D0C6A41C08D0E40002AE35 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0C6A31C08D0E40002AE35 /* User.swift */; };
 		36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */; };
 		36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36D0C6A71C08E3790002AE35 /* FeedViewController.xib */; };
+		36D129081C2C39E6002E3F47 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D129071C2C39E6002E3F47 /* InviteFriendsViewController.swift */; };
+		36D1290A1C2C39FE002E3F47 /* InviteFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36D129091C2C39FE002E3F47 /* InviteFriendsViewController.xib */; };
+		36D841151C31EDC500C3065C /* TwitterFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D841141C31EDC500C3065C /* TwitterFriend.swift */; };
 		36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E998211C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift */; };
 		36E998241C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36E998231C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib */; };
 		36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */; };
@@ -145,6 +153,11 @@
 		3689ECE11C0E58CE0087F828 /* PODsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODsListViewController.swift; sourceTree = "<group>"; };
 		3689ECE31C0E58EF0087F828 /* PODsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODsListViewController.xib; sourceTree = "<group>"; };
 		3689ECE51C0E62E40087F828 /* POD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POD.swift; sourceTree = "<group>"; };
+		369382AE1C3191470005FCB0 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		369382B01C3195D50005FCB0 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		369382B31C31B1FF0005FCB0 /* FacebookFriend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookFriend.swift; sourceTree = "<group>"; };
+		369382B61C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendToInviteTableViewCell.swift; sourceTree = "<group>"; };
+		369382B81C31B8370005FCB0 /* FriendToInviteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendToInviteTableViewCell.xib; sourceTree = "<group>"; };
 		36B1F4191C0FA7780091A1B3 /* PopularPODsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularPODsTableViewCell.swift; sourceTree = "<group>"; };
 		36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularPODsTableViewCell.xib; sourceTree = "<group>"; };
 		36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -177,6 +190,9 @@
 		36D0C6A31C08D0E40002AE35 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		36D0C6A71C08E3790002AE35 /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
+		36D129071C2C39E6002E3F47 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
+		36D129091C2C39FE002E3F47 /* InviteFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteFriendsViewController.xib; sourceTree = "<group>"; };
+		36D841141C31EDC500C3065C /* TwitterFriend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterFriend.swift; sourceTree = "<group>"; };
 		36E998211C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateImagePostFinishPostingViewController.swift; sourceTree = "<group>"; };
 		36E998231C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateImagePostFinishPostingViewController.xib; sourceTree = "<group>"; };
 		36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+ScaleAndCrop.swift"; sourceTree = "<group>"; };
@@ -193,6 +209,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9F6A1903E9BDD72DB8D25A4 /* libPods-Dolphin.a in Frameworks */,
+				369382AF1C3191470005FCB0 /* FBSDKCoreKit.framework in Frameworks */,
+				369382B11C3195D50005FCB0 /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +337,33 @@
 			name = "Post Details";
 			sourceTree = "<group>";
 		};
+		369382AD1C3191320005FCB0 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				369382B01C3195D50005FCB0 /* FBSDKLoginKit.framework */,
+				369382AE1C3191470005FCB0 /* FBSDKCoreKit.framework */,
+			);
+			name = Facebook;
+			sourceTree = "<group>";
+		};
+		369382B21C31B1EC0005FCB0 /* Invite Friends */ = {
+			isa = PBXGroup;
+			children = (
+				369382B31C31B1FF0005FCB0 /* FacebookFriend.swift */,
+				36D841141C31EDC500C3065C /* TwitterFriend.swift */,
+			);
+			name = "Invite Friends";
+			sourceTree = "<group>";
+		};
+		369382B51C31B7DF0005FCB0 /* Invite Friends */ = {
+			isa = PBXGroup;
+			children = (
+				369382B61C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift */,
+				369382B81C31B8370005FCB0 /* FriendToInviteTableViewCell.xib */,
+			);
+			name = "Invite Friends";
+			sourceTree = "<group>";
+		};
 		36BE4CBF1C061524002E52D9 = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +427,7 @@
 		36BE4CF91C061AE1002E52D9 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				369382AD1C3191320005FCB0 /* Facebook */,
 				36BE4CFA1C061AEC002E52D9 /* SWRevealViewController */,
 			);
 			name = "Third Party";
@@ -425,6 +471,8 @@
 				362D4BDD1C1F336100F065E5 /* CreateImagePostViewController.xib */,
 				36E998211C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift */,
 				36E998231C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib */,
+				36D129071C2C39E6002E3F47 /* InviteFriendsViewController.swift */,
+				36D129091C2C39FE002E3F47 /* InviteFriendsViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -450,6 +498,7 @@
 		36D0C69A1C08AC420002AE35 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				369382B51C31B7DF0005FCB0 /* Invite Friends */,
 				3615B6FF1C19CAC7006BB8B4 /* CreatePost */,
 				3689ECDB1C0E45760087F828 /* Home */,
 				3689ECDC1C0E45800087F828 /* Post Details */,
@@ -463,6 +512,7 @@
 		36D0C69F1C08D08A0002AE35 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				369382B21C31B1EC0005FCB0 /* Invite Friends */,
 				36D0C6A01C08D0990002AE35 /* Post.swift */,
 				36D0C6A31C08D0E40002AE35 /* User.swift */,
 				361FFE271C0D0C46007EE366 /* PostComment.swift */,
@@ -605,7 +655,9 @@
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
 				36E9982A1C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib in Resources */,
 				362D4BDE1C1F336100F065E5 /* CreateImagePostViewController.xib in Resources */,
+				369382B91C31B8370005FCB0 /* FriendToInviteTableViewCell.xib in Resources */,
 				3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */,
+				36D1290A1C2C39FE002E3F47 /* InviteFriendsViewController.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
 				360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */,
 				3615B7031C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib in Resources */,
@@ -739,10 +791,13 @@
 				36B1F41A1C0FA7780091A1B3 /* PopularPODsTableViewCell.swift in Sources */,
 				36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */,
 				36D0C6A41C08D0E40002AE35 /* User.swift in Sources */,
+				369382B71C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift in Sources */,
 				3689ECE61C0E62E40087F828 /* POD.swift in Sources */,
 				361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */,
+				36D841151C31EDC500C3065C /* TwitterFriend.swift in Sources */,
 				36E998281C28C14A007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.swift in Sources */,
 				361FFE241C0D0BA8007EE366 /* PostCommentOddTableViewCell.swift in Sources */,
+				36D129081C2C39E6002E3F47 /* InviteFriendsViewController.swift in Sources */,
 				3687989F1C2B49990088AC24 /* CustomFontCollectionViewCell.swift in Sources */,
 				3689ECE21C0E58CE0087F828 /* PODsListViewController.swift in Sources */,
 				3636F9641C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift in Sources */,
@@ -751,6 +806,7 @@
 				36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */,
 				3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */,
 				364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */,
+				369382B41C31B1FF0005FCB0 /* FacebookFriend.swift in Sources */,
 				3641405F1C110F770022D1BE /* PostCommentsViewController.swift in Sources */,
 				36BE4D031C0620AD002E52D9 /* DolphinTabBarViewController.swift in Sources */,
 			);
@@ -896,6 +952,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Dolphin",
+					"~/Documents/FacebookSDK",
+				);
 				INFOPLIST_FILE = Dolphin/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -914,6 +975,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Dolphin",
+					"/Users/{username}/Documents/FacebookSDK",
+				);
 				INFOPLIST_FILE = Dolphin/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

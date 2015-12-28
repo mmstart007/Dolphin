@@ -52,7 +52,15 @@ class Utils {
             }
         }
         
-        
+    }
+    
+    // MARK: Alert messages
+    
+    static func presentAlertMessage(title: String, message: String, cancelActionText: String, presentingViewContoller: UIViewController) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: cancelActionText, style: .Cancel, handler: nil)
+        alert.addAction(cancelAction)
+        presentingViewContoller.presentViewController(alert, animated: true, completion: nil)
     }
     
 }

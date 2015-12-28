@@ -113,7 +113,8 @@ class SidebarViewController : UIViewController {
     
     @IBAction func inviteFriendsButtonTouchUpInside(sender: AnyObject) {
         print("Invite Friends menu item selected")
-        setInviteFriendsSelected()
+        revealViewController().revealToggleAnimated(true)
+        homeViewController.navigationController?.pushViewController(InviteFriendsViewController(), animated: true)
     }
     
     func setInviteFriendsSelected() {
