@@ -32,4 +32,9 @@ class FriendToInviteTableViewCell : CustomFontTableViewCell {
         friendNameLabel.text = friend.userName
     }
     
+    func configureWithAddressBookContact(contact: AddressBookContact) {
+        friendImageView.image = contact.userImage
+        friendNameLabel.text = contact.userName
+    }
+    
 }

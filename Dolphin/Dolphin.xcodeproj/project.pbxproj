@@ -83,6 +83,7 @@
 		36D129081C2C39E6002E3F47 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D129071C2C39E6002E3F47 /* InviteFriendsViewController.swift */; };
 		36D1290A1C2C39FE002E3F47 /* InviteFriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36D129091C2C39FE002E3F47 /* InviteFriendsViewController.xib */; };
 		36D841151C31EDC500C3065C /* TwitterFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D841141C31EDC500C3065C /* TwitterFriend.swift */; };
+		36D841171C32C62500C3065C /* AddressBookContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D841161C32C62500C3065C /* AddressBookContact.swift */; };
 		36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E998211C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift */; };
 		36E998241C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36E998231C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib */; };
 		36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */; };
@@ -193,6 +194,7 @@
 		36D129071C2C39E6002E3F47 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
 		36D129091C2C39FE002E3F47 /* InviteFriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InviteFriendsViewController.xib; sourceTree = "<group>"; };
 		36D841141C31EDC500C3065C /* TwitterFriend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterFriend.swift; sourceTree = "<group>"; };
+		36D841161C32C62500C3065C /* AddressBookContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookContact.swift; sourceTree = "<group>"; };
 		36E998211C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateImagePostFinishPostingViewController.swift; sourceTree = "<group>"; };
 		36E998231C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateImagePostFinishPostingViewController.xib; sourceTree = "<group>"; };
 		36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+ScaleAndCrop.swift"; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 			children = (
 				369382B31C31B1FF0005FCB0 /* FacebookFriend.swift */,
 				36D841141C31EDC500C3065C /* TwitterFriend.swift */,
+				36D841161C32C62500C3065C /* AddressBookContact.swift */,
 			);
 			name = "Invite Friends";
 			sourceTree = "<group>";
@@ -804,6 +807,7 @@
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */,
+				36D841171C32C62500C3065C /* AddressBookContact.swift in Sources */,
 				3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */,
 				364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */,
 				369382B41C31B1FF0005FCB0 /* FacebookFriend.swift in Sources */,

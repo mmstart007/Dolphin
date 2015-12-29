@@ -9,18 +9,31 @@
 import Foundation
 import UIKit
 import TwitterKit
+import AddressBook
 
 
 class InviteFriendsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     var segmentedControl: HMSegmentedControl!
-    var facebookFriends: [FacebookFriend] = []
-    var twitterFriends: [TwitterFriend]   = []
+    var facebookFriends: [FacebookFriend]         = []
+    var twitterFriends: [TwitterFriend]           = []
+    var addressBookContacts: [AddressBookContact] = []
     var tableView: UITableView!
     var signInLabel: UILabel!
     var loginFacebookTapGesture: UITapGestureRecognizer!
     var loginTwitterTapGesture: UITapGestureRecognizer!
+    var contactsTapGesture: UITapGestureRecognizer!
+    var addressBookRef: ABAddressBook?
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
+            getContactsFromAddressBook()
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +44,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         
         initializeSegmentedControl()
         initializeTableViewAndGestures()
-        
+        getContactsFromAddressBook()
     }
     
     func initializeSegmentedControl() {
@@ -46,6 +59,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.redColor()];
         segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
         self.view.addSubview(segmentedControl)
+        segmentedControl.selectedSegmentIndex = 0
     }
     
     func initializeTableViewAndGestures() {
@@ -67,10 +81,14 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         
         loginFacebookTapGesture = UITapGestureRecognizer(target: self, action: "loginFacebookToGetFriends")
         loginTwitterTapGesture = UITapGestureRecognizer(target: self, action: "loginTwitterToGetFriends")
-        tableView.addGestureRecognizer(loginFacebookTapGesture)
-        tableView.addGestureRecognizer(loginTwitterTapGesture)
+        contactsTapGesture = UITapGestureRecognizer(target: self, action: "openSettings")
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled = false
+        contactsTapGesture.enabled = false
+        tableView.addGestureRecognizer(loginFacebookTapGesture)
+        tableView.addGestureRecognizer(loginTwitterTapGesture)
+        tableView.addGestureRecognizer(contactsTapGesture)
+        
     }
     
     // MARK: Segmented Control
@@ -80,7 +98,9 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         signInLabel.hidden              = true
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled  = false
-        if segmentedControl.selectedSegmentIndex == 1 {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            getContactsFromAddressBook()
+        } else if segmentedControl.selectedSegmentIndex == 1 {
             self.tableView.reloadData()
             if (FBSDKAccessToken.currentAccessToken() == nil) {
                 signInLabel.text = "You need to log in to Facebook to invite friends \n Tap to login"
@@ -101,6 +121,68 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             }
         }
         tableView.reloadData()
+    }
+    
+    // MARK: Address Book
+    
+    func getContactsFromAddressBook() {
+        
+        let authorizationStatus = ABAddressBookGetAuthorizationStatus()
+        
+        switch authorizationStatus {
+        case .Denied, .Restricted:
+            signInLabel.text           = "Access to the address book wasn't granted. \n Please tap here to allow access and import contacts"
+            signInLabel.numberOfLines = 2
+            signInLabel.hidden         = false
+            contactsTapGesture.enabled = true
+            print("Denied")
+        case .Authorized:
+            addressBookRef = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
+            
+            let allContacts = ABAddressBookCopyArrayOfAllPeople(addressBookRef).takeRetainedValue() as Array
+            addressBookContacts.removeAll()
+            for record in allContacts {
+                let currentContact: ABRecordRef = record
+                let currentContactNameTemp = ABRecordCopyCompositeName(currentContact)
+                var currentContactName = ""
+                if currentContactNameTemp != nil {
+                    currentContactName = currentContactNameTemp.takeRetainedValue() as String
+                }
+                
+                let currentContactid = ABRecordGetRecordID(currentContact)
+                var currentContactImage: UIImage? = nil
+                if ABPersonHasImageData(currentContact) {
+                    currentContactImage = UIImage(data: ABPersonCopyImageDataWithFormat(currentContact, kABPersonImageFormatThumbnail).takeRetainedValue())!
+                }
+                let addressBookContact = AddressBookContact(name: currentContactName, image: currentContactImage, user_id: String(currentContactid))
+                addressBookContacts.append(addressBookContact)
+            }
+            tableView.reloadData()
+            print("Authorized")
+        case .NotDetermined:
+            promptForAddressBookRequestAccess()
+            print("Not Determined")
+        }
+        
+    }
+    
+    func promptForAddressBookRequestAccess() {
+        ABAddressBookRequestAccessWithCompletion(addressBookRef) {
+            (granted: Bool, error: CFError!) in
+            dispatch_async(dispatch_get_main_queue()) {
+                if !granted {
+                    self.getContactsFromAddressBook()
+                    print("Just denied")
+                } else {
+                    print("Just authorized")
+                }
+            }
+        }
+    }
+    
+    func openSettings() {
+        let url = NSURL(string: UIApplicationOpenSettingsURLString)
+        UIApplication.sharedApplication().openURL(url!)
     }
     
     // MARK: Social Networks login
@@ -197,7 +279,9 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if segmentedControl.selectedSegmentIndex == 1 {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            return addressBookContacts.count
+        } else if segmentedControl.selectedSegmentIndex == 1 {
             return facebookFriends.count
         } else if segmentedControl.selectedSegmentIndex == 2 {
             return twitterFriends.count
@@ -211,7 +295,9 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         if cell == nil {
             cell = FriendToInviteTableViewCell()
         }
-        if segmentedControl.selectedSegmentIndex == 1 {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            cell?.configureWithAddressBookContact(addressBookContacts[indexPath.row])
+        } else if segmentedControl.selectedSegmentIndex == 1 {
             cell?.configureWithFacebookFriend(facebookFriends[indexPath.row])
         } else if segmentedControl.selectedSegmentIndex == 2 {
             cell?.configureWithTwitterFriend(twitterFriends[indexPath.row])
