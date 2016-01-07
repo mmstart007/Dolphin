@@ -13,6 +13,18 @@ class HomeViewController : DolphinTabBarViewController {
     
     var actionMenu: UIView? = nil
     
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+    }
+    
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    convenience init() {
+        self.init(nibName: "HomeViewController", bundle: nil)
+    }
+    
     @IBOutlet weak var actionMenuBackground: UIView!
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)

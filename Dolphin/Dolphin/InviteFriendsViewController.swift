@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import TwitterKit
 import AddressBook
+import OAuthSwift
 
 
 class InviteFriendsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {
@@ -19,12 +20,17 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     var facebookFriends: [FacebookFriend]         = []
     var twitterFriends: [TwitterFriend]           = []
     var addressBookContacts: [AddressBookContact] = []
+    var instagramFriends: [InstagramFriend]       = []
     var tableView: UITableView!
     var signInLabel: UILabel!
     var loginFacebookTapGesture: UITapGestureRecognizer!
     var loginTwitterTapGesture: UITapGestureRecognizer!
     var contactsTapGesture: UITapGestureRecognizer!
     var addressBookRef: ABAddressBook?
+    
+    convenience init() {
+        self.init(nibName: "InviteFriendsViewController", bundle: nil)
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -98,6 +104,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         signInLabel.hidden              = true
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled  = false
+        contactsTapGesture.enabled      = false
         if segmentedControl.selectedSegmentIndex == 0 {
             getContactsFromAddressBook()
         } else if segmentedControl.selectedSegmentIndex == 1 {
@@ -119,6 +126,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             } else {
                 getTwitterFollowingList()
             }
+        } else {
+//            getInstagramFollowing()
         }
         tableView.reloadData()
     }
@@ -144,17 +153,21 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             for record in allContacts {
                 let currentContact: ABRecordRef = record
                 let currentContactNameTemp = ABRecordCopyCompositeName(currentContact)
-                var currentContactName = ""
+                var contactName = ""
                 if currentContactNameTemp != nil {
-                    currentContactName = currentContactNameTemp.takeRetainedValue() as String
+                    if let currentContactName = currentContactNameTemp.takeRetainedValue() as? String {
+                        contactName = currentContactName
+                    }
                 }
                 
                 let currentContactid = ABRecordGetRecordID(currentContact)
                 var currentContactImage: UIImage? = nil
                 if ABPersonHasImageData(currentContact) {
-                    currentContactImage = UIImage(data: ABPersonCopyImageDataWithFormat(currentContact, kABPersonImageFormatThumbnail).takeRetainedValue())!
+                    if let imageData = ABPersonCopyImageDataWithFormat(currentContact, kABPersonImageFormatThumbnail)?.takeRetainedValue() {
+                        currentContactImage = UIImage(data: imageData)!
+                    }
                 }
-                let addressBookContact = AddressBookContact(name: currentContactName, image: currentContactImage, user_id: String(currentContactid))
+                let addressBookContact = AddressBookContact(name: contactName, image: currentContactImage, user_id: String(currentContactid))
                 addressBookContacts.append(addressBookContact)
             }
             tableView.reloadData()
@@ -174,6 +187,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                     self.getContactsFromAddressBook()
                     print("Just denied")
                 } else {
+                    self.getContactsFromAddressBook()
                     print("Just authorized")
                 }
             }
@@ -246,7 +260,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             let client = TWTRAPIClient(userID: userID)
             
             let statusesShowEndpoint = "https://api.twitter.com/1.1/friends/list.json"
-            let params = ["include_user_entities": "true"]
+            let params = ["include_user_entities": "true", "count" : "200"]
             var clientError : NSError?
             let request = client.URLRequestWithMethod("GET", URL: statusesShowEndpoint, parameters: params, error: &clientError)
             
@@ -266,10 +280,48 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                     print("Error: \(connectionError)")
                 }
             }
-            
-            
-            
         }
+    }
+    
+    
+    
+    func getInstagramFollowing() {
+        let oauthswift = OAuth2Swift(
+            consumerKey:    "cd8e8c8636da4dc58eeed535887e0de9",
+            consumerSecret: "f711d56cda5e4d9481541b1aa714139a",
+            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
+            responseType:   "token"
+        )
+        oauthswift.authorizeWithCallbackURL(
+            NSURL(string: "oauth-swift://oauth-callback/instagram")!,
+            scope: "follower_list", state:"INSTAGRAM",
+            success: { credential, response, parameters in
+                print(credential.oauth_token)
+                let url :String = "https://api.instagram.com/v1/users/self/follows?access_token=\(oauthswift.client.credential.oauth_token)"
+                let parameters :Dictionary = Dictionary<String, AnyObject>()
+                oauthswift.client.get(url, parameters: parameters,
+                    success: {
+                        data, response in
+                        if let jsonDict = try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary {
+                            let usersDict = jsonDict?.objectForKey("data") as! NSArray
+                            self.instagramFriends.removeAll()
+                            for (var i = 0; i < usersDict.count; i++) {
+                                if let userDict = usersDict[i] as? NSDictionary {
+                                    let user = InstagramFriend(name: userDict["full_name"] as! String, imageURL: userDict["profile_picture"] as! String, user_id: userDict["id"] as! String)
+                                    self.instagramFriends.append(user)
+                                }
+                            }
+                            self.tableView.reloadData()
+                        }
+                    }, failure: { error in
+                        print(error)
+                })
+                
+            },
+            failure: { error in
+                print(error.localizedDescription)
+            }
+        )
     }
     
     // MARK: TableView DataSource
@@ -286,7 +338,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         } else if segmentedControl.selectedSegmentIndex == 2 {
             return twitterFriends.count
         } else {
-            return 0
+            return instagramFriends.count
         }
     }
     
@@ -301,6 +353,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             cell?.configureWithFacebookFriend(facebookFriends[indexPath.row])
         } else if segmentedControl.selectedSegmentIndex == 2 {
             cell?.configureWithTwitterFriend(twitterFriends[indexPath.row])
+        } else {
+            cell?.configureWithInstagramFriend(instagramFriends[indexPath.row])
         }
         cell?.selectionStyle = .None
         return cell!

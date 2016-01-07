@@ -15,15 +15,14 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
     
     var imageURLs: [String]?
     
-    init (images: [String]) {
-        super.init()
+    init(images: [String]) {
+        super.init(nibName: "CreateURLPostChooseImageViewController", bundle: nil)
         self.imageURLs = images
     }
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

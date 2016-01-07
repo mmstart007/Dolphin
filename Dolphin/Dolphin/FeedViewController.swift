@@ -18,7 +18,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     var myLikes: Bool = false
 
     init(likes: Bool) {
-        super.init()
+        super.init(nibName: "FeedViewController", bundle: nil)
         self.myLikes = likes
     }
 

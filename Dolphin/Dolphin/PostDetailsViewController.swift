@@ -16,6 +16,11 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     var post: Post?
     var topics: [String] = []
     var contentOffset: CGFloat = 0
+
+    convenience init() {
+        self.init(nibName: "PostDetailsViewController", bundle: nil)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

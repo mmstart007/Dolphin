@@ -25,7 +25,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     var chosenImage: UIImage? = nil
     
     init(post: Post) {
-        super.init()
+        super.init(nibName: "PostCommentsViewController", bundle: nil)
         self.post = post
     }
 

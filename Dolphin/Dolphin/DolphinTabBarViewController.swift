@@ -17,8 +17,6 @@ class DolphinTabBarViewController : UITabBarController {
         edgesForExtendedLayout = .None
     }
     
-    
-    
     func setMenuLeftButton() {
         
         let leftButton                   = UIBarButtonItem(image: UIImage(named: "MenuIcon"), style: UIBarButtonItemStyle.Plain, target: self.revealViewController(), action:"revealToggle:")

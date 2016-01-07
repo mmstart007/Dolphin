@@ -18,8 +18,10 @@ class FriendToInviteTableViewCell : CustomFontTableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        friendImageView.layer.cornerRadius = friendImageView.frame.size.width / 2.0
-        inviteButton.layer.cornerRadius = 10
+        friendImageView.layer.cornerRadius  = friendImageView.frame.size.width / 2.0
+        friendImageView.layer.masksToBounds = true
+        friendImageView.backgroundColor     = UIColor.clearColor()
+        inviteButton.layer.cornerRadius     = 10
     }
     
     func configureWithFacebookFriend(friend: FacebookFriend) {
@@ -33,8 +35,17 @@ class FriendToInviteTableViewCell : CustomFontTableViewCell {
     }
     
     func configureWithAddressBookContact(contact: AddressBookContact) {
-        friendImageView.image = contact.userImage
+        if contact.userImage == nil {
+            friendImageView.image = UIImage(named: "UserPlaceholder")
+        } else {
+            friendImageView.image = contact.userImage
+        }
         friendNameLabel.text = contact.userName
+    }
+    
+    func configureWithInstagramFriend(friend: InstagramFriend) {
+        friendImageView.sd_setImageWithURL(NSURL(string: friend.userImageURL), placeholderImage: UIImage(named: "UserPlaceholder"))
+        friendNameLabel.text = friend.userName
     }
     
 }

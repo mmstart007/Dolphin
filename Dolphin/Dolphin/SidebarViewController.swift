@@ -27,17 +27,22 @@ class SidebarViewController : UIViewController {
     var homeViewController: HomeViewController!
     
     init(homeVC: HomeViewController) {
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "SidebarViewController", bundle: nil)
         self.homeViewController = homeVC
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+    }
+    
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         myFeedButtonTouchUpInside(self)
         Utils.setFontFamilyForView(self.view, includeSubViews: true)
     }

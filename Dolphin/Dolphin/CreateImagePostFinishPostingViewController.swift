@@ -17,7 +17,7 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
     @IBOutlet weak var postImagePreviewImageView: UIImageView!
     
     init(image: UIImage?) {
-        super.init()
+        super.init(nibName: "CreateImagePostFinishPostingViewController", bundle: nil)
         postImage = image
     }
 
