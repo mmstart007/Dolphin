@@ -11,6 +11,7 @@ import UIKit
 import TwitterKit
 import AddressBook
 import OAuthSwift
+import HMSegmentedControl
 
 
 class InviteFriendsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {

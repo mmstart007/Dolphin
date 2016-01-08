@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import WebKit
+import hpple
 
 
 class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, UIWebViewDelegate {

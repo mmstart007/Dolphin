@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import NSDate_TimeAgo
 
 class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
     

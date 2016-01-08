@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360993111C3F1B8F0082B995 /* hpple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 360993101C3F1B8F0082B995 /* hpple.framework */; };
 		360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4AE1C0F6D7300692668 /* TopicCollectionViewCell.swift */; };
 		360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B01C0F6DC400692668 /* TopicCollectionViewCell.xib */; };
 		360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4B21C0F6F1400692668 /* PopularViewController.swift */; };
@@ -111,6 +112,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		360993101C3F1B8F0082B995 /* hpple.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hpple.framework; path = "Pods/../build/Debug-iphoneos/hpple.framework"; sourceTree = "<group>"; };
 		360EA4AE1C0F6D7300692668 /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
 		360EA4B01C0F6DC400692668 /* TopicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicCollectionViewCell.xib; sourceTree = "<group>"; };
 		360EA4B21C0F6F1400692668 /* PopularViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				360993111C3F1B8F0082B995 /* hpple.framework in Frameworks */,
 				369382AF1C3191470005FCB0 /* FBSDKCoreKit.framework in Frameworks */,
 				369382B11C3195D50005FCB0 /* FBSDKLoginKit.framework in Frameworks */,
 				890B04FF265D7EA4ECA25CE0 /* Pods_Dolphin.framework in Frameworks */,
@@ -539,6 +542,7 @@
 		975C8B82324EFCFC021B172B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				360993101C3F1B8F0082B995 /* hpple.framework */,
 				6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */,
 			);
 			name = Frameworks;
@@ -965,6 +969,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dolphin",
 					"~/Documents/FacebookSDK",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
@@ -999,6 +1004,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dolphin",
 					"~/Documents/FacebookSDK",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
