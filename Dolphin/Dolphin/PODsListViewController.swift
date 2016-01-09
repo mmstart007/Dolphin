@@ -15,8 +15,10 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     @IBOutlet weak var myPODsCollectionView: UICollectionView!
     var segmentedControl: UISegmentedControl!
     
-    var allPods: [POD] = []
-    var myPods: [POD] = []
+    var allPods: [POD]      = []
+    var myPods: [POD]       = []
+    var filteredPODs: [POD] = []
+    var searchText: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,13 +52,17 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidDisappear(animated)
-        
+        if segmentedControl.selectedSegmentIndex == 0 {
+            allPODstableView.reloadData()
+        } else {
+            myPODsCollectionView.reloadData()
+        }
         self.parentViewController?.navigationItem.titleView = segmentedControl
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchText = ""
         self.parentViewController?.navigationItem.titleView = nil
     }
     
@@ -80,7 +86,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allPods.count
+        if searchText != nil && searchText != "" {
+            return filteredPODs.count
+        } else {
+            return allPods.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -88,7 +98,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         if cell == nil {
             cell = PODPreviewTableViewCell()
         }
-        cell?.configureWithPOD(allPods[indexPath.row])
+        if searchText != nil && searchText != "" {
+            cell?.configureWithPOD(filteredPODs[indexPath.row])
+        } else {
+            cell?.configureWithPOD(allPods[indexPath.row])
+        }
         cell?.selectionStyle = .None
         return cell!
     }
@@ -98,7 +112,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        (cell as? PODPreviewTableViewCell)!.addUserImages(allPods[indexPath.row])
+        if searchText != nil && searchText != "" {
+            (cell as? PODPreviewTableViewCell)!.addUserImages(filteredPODs[indexPath.row])
+        } else {
+            (cell as? PODPreviewTableViewCell)!.addUserImages(allPods[indexPath.row])
+        }
     }
     
     // MARK: Tableview delegate
@@ -113,7 +131,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return myPods.count
+        if searchText != nil && searchText != "" {
+            return filteredPODs.count
+        } else {
+            return myPods.count
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -121,7 +143,12 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         if cell == nil {
             cell = MyPODPreviewCollectionViewCell()
         }
-        cell!.configureWithPOD(myPods[indexPath.row])
+        if searchText != nil && searchText != "" {
+            cell!.configureWithPOD(filteredPODs[indexPath.row])
+        } else {
+            cell!.configureWithPOD(myPods[indexPath.row])
+        }
+        
         return cell!
     }
     
@@ -137,6 +164,36 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         //        (cell as? MyPODPreviewCollectionViewCell)?.addUserImages(myPods[indexPath.row])
+    }
+    
+    // MARK: Search Posts
+    
+    func filterResults(textToSearch: String) {
+        print("Search text: \(textToSearch)")
+        
+        searchText = textToSearch
+        if segmentedControl.selectedSegmentIndex == 0 {
+            filteredPODs = allPods.filter({( pod : POD) -> Bool in
+                return (pod.podName!.lowercaseString.containsString(textToSearch.lowercaseString))
+            })
+            allPODstableView.reloadData()
+        } else {
+            filteredPODs = myPods.filter({( pod : POD) -> Bool in
+                return (pod.podName!.lowercaseString.containsString(textToSearch.lowercaseString))
+            })
+            myPODsCollectionView.reloadData()
+        }
+    }
+    
+    func userDidCancelSearch() {
+        print("User cancelled search")
+        searchText = ""
+        if segmentedControl.selectedSegmentIndex == 0 {
+            allPODstableView.reloadData()
+        } else {
+            myPODsCollectionView.reloadData()
+        }
+        self.parentViewController?.navigationItem.titleView = segmentedControl
     }
     
 }

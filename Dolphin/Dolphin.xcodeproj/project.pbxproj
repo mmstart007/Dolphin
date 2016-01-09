@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		360993111C3F1B8F0082B995 /* hpple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 360993101C3F1B8F0082B995 /* hpple.framework */; };
+		360993141C4049530082B995 /* UIAppearance_Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = 360993131C4049530082B995 /* UIAppearance_Swift.m */; };
 		360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4AE1C0F6D7300692668 /* TopicCollectionViewCell.swift */; };
 		360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B01C0F6DC400692668 /* TopicCollectionViewCell.xib */; };
 		360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4B21C0F6F1400692668 /* PopularViewController.swift */; };
@@ -113,6 +114,8 @@
 
 /* Begin PBXFileReference section */
 		360993101C3F1B8F0082B995 /* hpple.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hpple.framework; path = "Pods/../build/Debug-iphoneos/hpple.framework"; sourceTree = "<group>"; };
+		360993121C4049530082B995 /* UIAppearance_Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAppearance_Swift.h; sourceTree = "<group>"; };
+		360993131C4049530082B995 /* UIAppearance_Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAppearance_Swift.m; sourceTree = "<group>"; };
 		360EA4AE1C0F6D7300692668 /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
 		360EA4B01C0F6DC400692668 /* TopicCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicCollectionViewCell.xib; sourceTree = "<group>"; };
 		360EA4B21C0F6F1400692668 /* PopularViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
@@ -489,6 +492,8 @@
 		36BE4D041C062162002E52D9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				360993121C4049530082B995 /* UIAppearance_Swift.h */,
+				360993131C4049530082B995 /* UIAppearance_Swift.m */,
 				36BE4D051C06217D002E52D9 /* UIColor+DolphinAdditions.swift */,
 				36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */,
 			);
@@ -793,6 +798,7 @@
 				36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
 				36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */,
+				360993141C4049530082B995 /* UIAppearance_Swift.m in Sources */,
 				3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */,
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,

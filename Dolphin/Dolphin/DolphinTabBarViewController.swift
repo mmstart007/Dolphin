@@ -27,10 +27,21 @@ class DolphinTabBarViewController : UITabBarController {
     
     func setSearchRightButton() {
         
-        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .Search, target: nil, action: "")
+        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "searchButtonPressed")
         rightButton.tintColor             = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = rightButton;
         
+    }
+    
+    func removeRightButton() {
+        
+        navigationItem.rightBarButtonItems = []
+        
+    }
+    
+    func removeAllItemsFromNavBar() {
+        navigationItem.rightBarButtonItems = []
+        navigationItem.titleView           = nil
     }
     
 }

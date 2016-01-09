@@ -9,9 +9,10 @@
 import Foundation
 import UIKit
 
-class HomeViewController : DolphinTabBarViewController {
+class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UITabBarControllerDelegate {
     
     var actionMenu: UIView? = nil
+    var searchBar: UISearchBar?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -40,6 +41,7 @@ class HomeViewController : DolphinTabBarViewController {
         setMenuLeftButton()
         setSearchRightButton()
         setupTabbarController()
+        self.delegate = self
         
     }
     
@@ -70,7 +72,7 @@ class HomeViewController : DolphinTabBarViewController {
         controller3.tabBarItem = UITabBarItem(title: "", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
         controller4.tabBarItem = UITabBarItem(title: "Popular", image: UIImage(named: "SidebarGlassesIcon"), selectedImage: UIImage(named: "SidebarGlassesIcon"))
         controller5.tabBarItem = UITabBarItem(title: "PODs", image: UIImage(named: "SidebarMyPODsIcon"), selectedImage: UIImage(named: "SidebarMyPODsIcon"))
-
+        
         let tabViewControllers = [controller1, controller2, controller3, controller4, controller5]
         viewControllers = tabViewControllers
         
@@ -141,4 +143,51 @@ class HomeViewController : DolphinTabBarViewController {
         // Overlay was tapped, so we close the new post view
         closeNewPostViewButtonTouchUpInside(self)
     }
+    
+    // MARK: Search
+    
+    func searchButtonPressed() {
+        if searchBar == nil {
+            searchBar                    = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 40))
+        }
+        removeAllItemsFromNavBar()
+        
+        navigationItem.titleView     = searchBar
+        searchBar?.tintColor = UIColor.whiteColor()
+        UITextField.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
+        searchBar?.becomeFirstResponder()
+        searchBar?.showsCancelButton = true
+        searchBar?.delegate          = self
+        
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        filterContentForSearchText(searchText)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        filterContentForSearchText("")
+        removeSearchBar()
+        selectedViewController?.performSelector("userDidCancelSearch", withObject: nil)
+    }
+    
+    func removeSearchBar() {
+        removeAllItemsFromNavBar()
+        searchBar?.text = ""
+        title = "Dolphin"
+        searchBar?.resignFirstResponder()
+        setSearchRightButton()
+    }
+    
+    func filterContentForSearchText(searchText: String) {
+        selectedViewController?.performSelector("filterResults:", withObject: searchText)
+    }
+    
+    // MARK: TabbarControllerDelegate
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        removeSearchBar()
+        setSearchRightButton()
+    }
+    
 }

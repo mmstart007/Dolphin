@@ -18,6 +18,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
     @IBOutlet weak var podUsersContainerView: UIView!
     
     var pod: POD?
+    var triangleView: TriangleView?
     
     override var frame: CGRect {
         get {
@@ -38,13 +39,20 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         super.layoutSubviews()
         if pod != nil {
             if pod!.podIsPrivate {
-                let triangleView                = TriangleView()
-                triangleView.frame              = CGRect(x: self.frame.size.width - 60, y: 0, width: 60, height: 60)
-                triangleView.color              = pod!.podColor()
-                triangleView.backgroundColor    = UIColor.clearColor()
-                triangleView.layer.cornerRadius = 5
-                self.addSubview(triangleView)
-                triangleView.addImage("PrivatePODIcon")
+                if triangleView == nil {
+                    triangleView        = TriangleView()
+                    triangleView!.frame = CGRect(x: self.frame.size.width - 60, y: 0, width: 60, height: 60)
+                }
+                triangleView?.hidden             = false
+                triangleView!.color              = pod!.podColor()
+                triangleView!.backgroundColor    = UIColor.clearColor()
+                triangleView!.layer.cornerRadius = 5
+                self.addSubview(triangleView!)
+                triangleView!.addImage("PrivatePODIcon")
+            } else {
+                if triangleView != nil {
+                    triangleView?.hidden = true
+                }
             }
         }
     }

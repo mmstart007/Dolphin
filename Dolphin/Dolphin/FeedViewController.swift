@@ -16,6 +16,8 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     let networkController = NetworkController.sharedInstance
     var cells: [PostTableViewCell] = []
     var myLikes: Bool = false
+    var filteredPosts: [Post] = []
+    var searchText: String? = nil
 
     init(likes: Bool) {
         super.init(nibName: "FeedViewController", bundle: nil)
@@ -31,6 +33,13 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.postsTableView.reloadData()
+        title = "Dolphin"
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillAppear(animated)
+        searchText = ""
+        (self.parentViewController as? HomeViewController)?.removeSearchBar()
     }
     
     override func viewDidLoad() {
@@ -42,8 +51,8 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         }
         self.edgesForExtendedLayout = .None
         postsTableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
-        postsTableView.separatorStyle = .None
-        postsTableView.estimatedRowHeight = 1000
+        postsTableView.separatorStyle     = .None
+        postsTableView.estimatedRowHeight = 400
 
     }
     
@@ -57,7 +66,12 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         if myLikes {
             return networkController.likedPosts.count
         } else {
-            return networkController.posts.count
+            if searchText != nil && searchText != "" {
+                return filteredPosts.count
+            } else {
+                return networkController.posts.count
+            }
+            
         }
     }
     
@@ -69,7 +83,11 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         if myLikes {
             cell?.configureWithPost(networkController.likedPosts[indexPath.row])
         } else {
-            cell?.configureWithPost(networkController.posts[indexPath.row])
+            if searchText != nil && searchText != "" {
+                cell?.configureWithPost(filteredPosts[indexPath.row])
+            } else {
+                cell?.configureWithPost(networkController.posts[indexPath.row])
+            }
         }
         
         cell?.selectionStyle = .None
@@ -80,20 +98,6 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let postCell = cell as? PostTableViewCell {
-            if myLikes {
-                postCell.adjustCellViews(networkController.likedPosts[indexPath.row])
-            } else {
-                postCell.adjustCellViews(networkController.posts[indexPath.row])
-            }
-        }
-    }
-    
     // MARK: Tableview delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -101,10 +105,32 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         if myLikes {
             postDetailsVC.post = networkController.likedPosts[indexPath.row]
         } else {
-            postDetailsVC.post = networkController.posts[indexPath.row]
+            if searchText != nil && searchText != "" {
+                postDetailsVC.post = filteredPosts[indexPath.row]
+            } else {
+                postDetailsVC.post = networkController.posts[indexPath.row]
+            }
+            
         }
         
         navigationController?.pushViewController(postDetailsVC, animated: true)
+    }
+    
+    // MARK: Search Posts
+    
+    func filterResults(textToSearch: String) {
+        print("Search text: \(textToSearch)")
+        filteredPosts = networkController.posts.filter({( post : Post) -> Bool in
+            return (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
+        })
+        searchText = textToSearch
+        postsTableView.reloadData()
+    }
+    
+    func userDidCancelSearch() {
+        print("User cancelled search")
+        searchText = ""
+        postsTableView.reloadData()
     }
     
 }

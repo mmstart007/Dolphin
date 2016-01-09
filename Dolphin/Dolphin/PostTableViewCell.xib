@@ -16,6 +16,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="129"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Vwn-9g-sIl" secondAttribute="height" multiplier="125:43" id="btF-p7-5B9"/>
+                        <constraint firstAttribute="height" constant="129" id="xdW-wP-ZxN"/>
                     </constraints>
                 </imageView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4du-yc-KJ9">
@@ -131,7 +132,6 @@
                 <constraint firstItem="S2e-iu-7hV" firstAttribute="leading" secondItem="Q6c-Vg-YbU" secondAttribute="trailing" constant="4.5" id="ar4-Ps-BOf"/>
                 <constraint firstAttribute="trailing" secondItem="lv9-vG-g6E" secondAttribute="trailing" constant="8" id="b2e-Ot-fqG"/>
                 <constraint firstItem="S2e-iu-7hV" firstAttribute="centerY" secondItem="lv9-vG-g6E" secondAttribute="centerY" id="cK9-PQ-aP2"/>
-                <constraint firstItem="4du-yc-KJ9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="128" id="cUz-U7-WLJ"/>
                 <constraint firstItem="sgv-V8-0Uu" firstAttribute="leading" secondItem="ILk-Ka-Q4y" secondAttribute="trailing" constant="12" id="ePO-xt-QiF"/>
                 <constraint firstItem="Wl9-ZP-bOE" firstAttribute="top" secondItem="4du-yc-KJ9" secondAttribute="bottom" constant="8" id="gzU-gj-dqq"/>
                 <constraint firstItem="ILk-Ka-Q4y" firstAttribute="leading" secondItem="Wl9-ZP-bOE" secondAttribute="trailing" constant="8" id="in7-uk-wz6"/>
@@ -160,10 +160,10 @@
                 <outlet property="numberOfLikesLabel" destination="Q6c-Vg-YbU" id="QZo-Ii-KXr"/>
                 <outlet property="postDateLabel" destination="ILk-Ka-Q4y" id="l01-vR-PHa"/>
                 <outlet property="postImageView" destination="Vwn-9g-sIl" id="iOJ-Vj-pPZ"/>
+                <outlet property="postImageViewHeightConstraint" destination="xdW-wP-ZxN" id="AGB-v0-0iO"/>
                 <outlet property="postNumberOfCommentsWidthConstraint" destination="gIP-f0-Hq7" id="mP7-5t-eK8"/>
                 <outlet property="postNumberOfLikesWidthConstarint" destination="c6H-0y-ETt" id="4WV-Tt-XPL"/>
                 <outlet property="postText" destination="4du-yc-KJ9" id="dHK-a7-X9P"/>
-                <outlet property="postTextToTopConstraint" destination="cUz-U7-WLJ" id="JsI-Ns-6LK"/>
                 <outlet property="postUserNameLabel" destination="tMW-dD-7uX" id="kTm-L9-Hq9"/>
                 <outlet property="postuserImageView" destination="Wl9-ZP-bOE" id="nhu-6n-bRT"/>
                 <outlet property="textHeightConstraint" destination="cbX-Th-U1g" id="GUo-nt-GCj"/>

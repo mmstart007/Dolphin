@@ -17,16 +17,20 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     var pods: [POD]      = []
     var posts: [Post]    = []
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        (parentViewController as? HomeViewController)?.removeRightButton()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.edgesForExtendedLayout = .None
-        
         
         tableView.registerNib(UINib(nibName: "PopularTrendingTopicsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PopularTrendingTopicsTableViewCell")
         tableView.registerNib(UINib(nibName: "PopularPODsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PopularPODsTableViewCell")
         tableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
         tableView.separatorStyle = .None
-        tableView.estimatedRowHeight = 1000
+        tableView.estimatedRowHeight = 400
         
         // Populate data for testing layout purposes
         let user1 = User(name: "John Doe", imageURL: "")
@@ -101,12 +105,6 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             return self.view.frame.size.width / 3
         } else {
             return UITableViewAutomaticDimension
-        }
-    }
-    
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let postCell = cell as? PostTableViewCell {
-            postCell.adjustCellViews(posts[indexPath.row])
         }
     }
     
