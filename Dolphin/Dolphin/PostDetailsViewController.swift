@@ -16,7 +16,16 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     var post: Post?
     var topics: [String] = []
     var contentOffset: CGFloat = 0
+    var actionMenu: UIView? = nil
+    @IBOutlet weak var actionMenuBackground: UIView!
 
+    @IBOutlet weak var firstActionButton: UIButton!
+    @IBOutlet weak var secondActionButton: UIButton!
+    @IBOutlet weak var thirdActionButton: UIButton!
+    @IBOutlet weak var fourthActionButton: UIButton!
+    @IBOutlet weak var fifthActionButton: UIButton!
+    @IBOutlet weak var sixthActionButton: UIButton!
+    
     convenience init() {
         self.init(nibName: "PostDetailsViewController", bundle: nil)
     }
@@ -64,10 +73,60 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         
     }
     
-    // MARK: NavBar Actions
+    // MARK: NavBar Actions and Action Menu
     
     func actionButtonPressed() {
         print("Action Button Pressed")
+        let subViewsArray = NSBundle.mainBundle().loadNibNamed("PostDetailsActionView", owner: self, options: nil)
+        
+        self.actionMenu = subViewsArray[0] as? UIView
+        setupActionMenuFields()
+        actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "actionMenuBackgroundTapped"))
+        self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
+        UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.actionMenu?.frame = CGRect(x: 0, y: 0, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
+            }) { (finished) -> Void in
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.actionMenuBackground.alpha = 0.4
+                })
+        }
+    }
+    
+    func setupActionMenuFields() {
+        if self.actionMenu != nil {
+            firstActionButton.layer.cornerRadius  = 5
+            firstActionButton.layer.borderWidth   = 1
+            firstActionButton.layer.borderColor   = UIColor.darkGrayColor().CGColor
+
+            fourthActionButton.layer.cornerRadius = 5
+            fourthActionButton.layer.borderWidth  = 1
+            fourthActionButton.layer.borderColor  = UIColor.darkGrayColor().CGColor
+
+            sixthActionButton.layer.cornerRadius  = 5
+            sixthActionButton.layer.borderWidth   = 1
+            sixthActionButton.layer.borderColor   = UIColor.darkGrayColor().CGColor
+            
+            secondActionButton.layer.cornerRadius  = 5
+            thirdActionButton.layer.cornerRadius  = 5
+            fifthActionButton.layer.cornerRadius  = 5
+        }
+    }
+    
+    @IBAction func closePostActionViewTouchUpInside(sender: AnyObject) {
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.actionMenuBackground.alpha = 0
+            }) { (finished) -> Void in
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
+                    }) { (finished) -> Void in
+                        self.actionMenu?.removeFromSuperview()
+                }
+        }
+    }
+    
+    func actionMenuBackgroundTapped() {
+        closePostActionViewTouchUpInside(self)
     }
     
     func commentButtonPressed() {
@@ -242,13 +301,6 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             self.contentOffset = scrollView.contentOffset.x
             
         }
-    }
-
-    
-    // MARK: Actions
-    
-    func actionButtonTapped() {
-        print("Action button pressed")
     }
     
 }

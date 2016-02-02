@@ -37,6 +37,8 @@
 		364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140601C110F900022D1BE /* PostCommentsViewController.xib */; };
 		364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364140641C173B810022D1BE /* CreateURLPostViewController.swift */; };
 		364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */; };
+		36736F661C5FEE170040A263 /* PostDetailsActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36736F651C5FEE170040A263 /* PostDetailsActionView.xib */; };
+		36736F681C6130790040A263 /* DolphinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36736F671C6130780040A263 /* DolphinButton.swift */; };
 		368798631C29BA190088AC24 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368798621C29BA190088AC24 /* NetworkController.swift */; };
 		368798661C29E1260088AC24 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368798651C29E1260088AC24 /* LoginViewController.swift */; };
 		368798681C29E13C0088AC24 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 368798671C29E13C0088AC24 /* LoginViewController.xib */; };
@@ -47,7 +49,6 @@
 		3687989D1C2B482C0088AC24 /* CustomFontTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3687989C1C2B482C0088AC24 /* CustomFontTableViewCell.swift */; };
 		3687989F1C2B49990088AC24 /* CustomFontCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3687989E1C2B49990088AC24 /* CustomFontCollectionViewCell.swift */; };
 		3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECD71C0E3F330087F828 /* DolphinViewController.swift */; };
-		3689ECDA1C0E42A20087F828 /* PostActionsMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */; };
 		3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */; };
 		3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECDF1C0E45D40087F828 /* PODPreviewTableViewCell.swift */; };
 		3689ECE21C0E58CE0087F828 /* PODsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3689ECE11C0E58CE0087F828 /* PODsListViewController.swift */; };
@@ -144,6 +145,8 @@
 		364140601C110F900022D1BE /* PostCommentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCommentsViewController.xib; sourceTree = "<group>"; };
 		364140641C173B810022D1BE /* CreateURLPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostViewController.swift; sourceTree = "<group>"; };
 		364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostViewController.xib; sourceTree = "<group>"; };
+		36736F651C5FEE170040A263 /* PostDetailsActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsActionView.xib; sourceTree = "<group>"; };
+		36736F671C6130780040A263 /* DolphinButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DolphinButton.swift; sourceTree = "<group>"; };
 		367F613D1C3B2E40005E6076 /* Dolphin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dolphin-Bridging-Header.h"; sourceTree = "<group>"; };
 		368798621C29BA190088AC24 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		368798651C29E1260088AC24 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -155,7 +158,6 @@
 		3687989C1C2B482C0088AC24 /* CustomFontTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFontTableViewCell.swift; sourceTree = "<group>"; };
 		3687989E1C2B49990088AC24 /* CustomFontCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFontCollectionViewCell.swift; sourceTree = "<group>"; };
 		3689ECD71C0E3F330087F828 /* DolphinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DolphinViewController.swift; sourceTree = "<group>"; };
-		3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostActionsMenu.xib; sourceTree = "<group>"; };
 		3689ECDD1C0E45B00087F828 /* PODPreviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODPreviewTableViewCell.xib; sourceTree = "<group>"; };
 		3689ECDF1C0E45D40087F828 /* PODPreviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODPreviewTableViewCell.swift; sourceTree = "<group>"; };
 		3689ECE11C0E58CE0087F828 /* PODsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODsListViewController.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				360993131C4049530082B995 /* UIAppearance_Swift.m */,
 				36BE4D051C06217D002E52D9 /* UIColor+DolphinAdditions.swift */,
 				36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */,
+				36736F671C6130780040A263 /* DolphinButton.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -504,7 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				36D0C6971C07A0F50002AE35 /* NewPostMenu.xib */,
-				3689ECD91C0E42A20087F828 /* PostActionsMenu.xib */,
+				36736F651C5FEE170040A263 /* PostDetailsActionView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -684,7 +687,7 @@
 				36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */,
 				36BE4D0E1C062688002E52D9 /* SidebarViewController.xib in Resources */,
 				36BE4CD11C061524002E52D9 /* Main.storyboard in Resources */,
-				3689ECDA1C0E42A20087F828 /* PostActionsMenu.xib in Resources */,
+				36736F661C5FEE170040A263 /* PostDetailsActionView.xib in Resources */,
 				36D0C69C1C08AC5F0002AE35 /* PostTableViewCell.xib in Resources */,
 				361FFE221C0CFAD1007EE366 /* PostDetailHeaderTableViewCell.xib in Resources */,
 				36BE4D0A1C06250B002E52D9 /* HomeViewController.xib in Resources */,
@@ -804,6 +807,7 @@
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,
 				36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */,
+				36736F681C6130790040A263 /* DolphinButton.swift in Sources */,
 				36B1F41A1C0FA7780091A1B3 /* PopularPODsTableViewCell.swift in Sources */,
 				36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */,
 				36D0C6A41C08D0E40002AE35 /* User.swift in Sources */,
