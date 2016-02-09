@@ -48,16 +48,10 @@ class PostTableViewCell : CustomFontTableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+       
         if let post = cellPost {
-            
             postuserImageView.layer.cornerRadius = postuserImageView.frame.size.width / 2.0
-            if triangleView == nil {
-                triangleView        = TriangleView()
-                triangleView!.frame = CGRect(x: self.frame.size.width - 30, y: 0, width: 30, height: 30)
-            }
-            triangleView!.color           = post.postColor()
-            triangleView!.backgroundColor = UIColor.clearColor()
-            self.addSubview(triangleView!)
+            
         }
     }
     
@@ -125,6 +119,17 @@ class PostTableViewCell : CustomFontTableViewCell {
             linkTypePostContainer.hidden             = true
             postImageView.hidden                     = false
             postImageViewHeightConstraint.active     = false
+        }
+    }
+    
+    func adjustViews() {
+        if triangleView == nil {
+            triangleView        = TriangleView()
+            let xPosition       = self.frame.size.width - 30
+            triangleView!.frame = CGRect(x: xPosition, y: 0, width: 30, height: 30)
+            triangleView!.color           = cellPost!.postColor()
+            triangleView!.backgroundColor = UIColor.clearColor()
+            self.addSubview(triangleView!)
         }
     }
     

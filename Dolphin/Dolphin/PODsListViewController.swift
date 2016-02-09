@@ -20,6 +20,14 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     var filteredPODs: [POD] = []
     var searchText: String? = nil
     
+    required init() {
+        super.init(nibName: "PODsListViewController", bundle: NSBundle.mainBundle())
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -162,12 +170,6 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
-    }
-    
-    // MARK: UICollectionViewDelegate
-    
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        //        (cell as? MyPODPreviewCollectionViewCell)?.addUserImages(myPods[indexPath.row])
     }
     
     // MARK: Search Posts

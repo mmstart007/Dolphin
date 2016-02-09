@@ -116,6 +116,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         navigationController?.pushViewController(postDetailsVC, animated: true)
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        (cell as? PostTableViewCell)?.adjustViews()
+    }
+    
     // MARK: Search Posts
     
     func filterResults(textToSearch: String) {
