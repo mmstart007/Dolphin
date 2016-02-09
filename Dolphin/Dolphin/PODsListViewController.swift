@@ -134,7 +134,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         if searchText != nil && searchText != "" {
             return filteredPODs.count
         } else {
-            return myPods.count
+            return myPods.count + 1
         }
     }
     
@@ -146,7 +146,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         if searchText != nil && searchText != "" {
             cell!.configureWithPOD(filteredPODs[indexPath.row])
         } else {
-            cell!.configureWithPOD(myPods[indexPath.row])
+            if indexPath.row < myPods.count {
+                cell!.configureWithPOD(myPods[indexPath.row])
+            } else {
+                cell?.configureWithPOD(nil)
+            }
         }
         
         return cell!

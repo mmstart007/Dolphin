@@ -74,7 +74,9 @@ class PostTableViewCell : CustomFontTableViewCell {
         postuserImageView.layer.masksToBounds = true
         
         postUserNameLabel.text                = String(format: "Posted by %@", arguments: [(post.postUser?.userName)!])
-        postDateLabel.text                    = post.postDate?.timeAgo()
+        if let date = post.postDate {
+            postDateLabel.text                = date.formattedAsTimeAgo()
+        }
         numberOfLikesLabel.text               = String(format: "%li", arguments: [post.postNumberOfLikes!])
         numberOfCommentsLabel.text            = String(format: "%li", arguments: [post.postNumberOfComments!])
 

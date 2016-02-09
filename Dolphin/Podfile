@@ -3,7 +3,6 @@ use_frameworks!
 
 target 'Dolphin' do
     pod 'SDWebImage', '~>3.7'
-    pod 'NSDate+TimeAgo'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'TwitterKit'
@@ -13,4 +12,5 @@ target 'Dolphin' do
     pod 'HMSegmentedControl'
     pod "OAuthSwift", "~> 0.5.0"
     pod 'UITextView+Placeholder'
+    pod 'NSDate-Time-Ago'
 end

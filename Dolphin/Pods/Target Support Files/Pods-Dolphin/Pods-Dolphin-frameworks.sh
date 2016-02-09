@@ -86,7 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Dolphin/HMSegmentedControl.framework"
   install_framework "Pods-Dolphin/KTCenterFlowLayout.framework"
-  install_framework "Pods-Dolphin/NSDate_TimeAgo.framework"
+  install_framework "Pods-Dolphin/NSDate_Time_Ago.framework"
   install_framework "Pods-Dolphin/OAuthSwift.framework"
   install_framework "Pods-Dolphin/SDWebImage.framework"
   install_framework "Pods-Dolphin/UITextView_Placeholder.framework"
@@ -95,7 +95,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Dolphin/HMSegmentedControl.framework"
   install_framework "Pods-Dolphin/KTCenterFlowLayout.framework"
-  install_framework "Pods-Dolphin/NSDate_TimeAgo.framework"
+  install_framework "Pods-Dolphin/NSDate_Time_Ago.framework"
   install_framework "Pods-Dolphin/OAuthSwift.framework"
   install_framework "Pods-Dolphin/SDWebImage.framework"
   install_framework "Pods-Dolphin/UITextView_Placeholder.framework"

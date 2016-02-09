@@ -5,7 +5,7 @@ PODS:
   - HMSegmentedControl (1.5.2)
   - hpple (0.2.0)
   - KTCenterFlowLayout (1.1.1)
-  - NSDate+TimeAgo (1.0.3)
+  - NSDate-Time-Ago (1.0.1)
   - OAuthSwift (0.5.0)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
@@ -22,7 +22,7 @@ DEPENDENCIES:
   - HMSegmentedControl
   - hpple
   - KTCenterFlowLayout
-  - NSDate+TimeAgo
+  - NSDate-Time-Ago
   - OAuthSwift (~> 0.5.0)
   - SDWebImage (~> 3.7)
   - TwitterCore
@@ -35,7 +35,7 @@ SPEC CHECKSUMS:
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
   KTCenterFlowLayout: eded079c349450dea12f7cf94b424d1bc3205519
-  NSDate+TimeAgo: 416f55d2696d3744c313091c5a9280d47f8238fe
+  NSDate-Time-Ago: e9de167d0659ebe465c273e833e7b582f061fc41
   OAuthSwift: f2e0de083739da5697be095c9af2671242a4ed8b
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   TwitterCore: 12983a7464e34afbbf18881347898a9db526ac71

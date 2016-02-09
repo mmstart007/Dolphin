@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -44,15 +44,52 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Hb-Uo-YKW" userLabel="Create POD view">
+                    <rect key="frame" x="0.0" y="0.0" width="187" height="150"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a POD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7E-w9-6xD">
+                            <rect key="frame" x="8" y="112" width="171" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="ZZM-vv-zNP"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="foJ-rS-SKU">
+                            <rect key="frame" x="78" y="60" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="foJ-rS-SKU" secondAttribute="height" multiplier="1:1" id="szr-Rp-Fi1"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="foJ-rS-SKU" firstAttribute="width" secondItem="6Hb-Uo-YKW" secondAttribute="height" multiplier="1:5" id="6mh-Je-qXc"/>
+                        <constraint firstItem="B7E-w9-6xD" firstAttribute="leading" secondItem="6Hb-Uo-YKW" secondAttribute="leading" constant="8" id="Bb2-T3-zst"/>
+                        <constraint firstAttribute="trailing" secondItem="B7E-w9-6xD" secondAttribute="trailing" constant="8" id="R4z-P3-1uV"/>
+                        <constraint firstItem="foJ-rS-SKU" firstAttribute="centerX" secondItem="6Hb-Uo-YKW" secondAttribute="centerX" id="RzF-BS-p5h"/>
+                        <constraint firstAttribute="bottom" secondItem="B7E-w9-6xD" secondAttribute="bottom" constant="17" id="fpR-eS-dbA"/>
+                        <constraint firstItem="foJ-rS-SKU" firstAttribute="centerY" secondItem="6Hb-Uo-YKW" secondAttribute="centerY" id="pbo-GY-SGa"/>
+                        <constraint firstItem="B7E-w9-6xD" firstAttribute="top" secondItem="6Hb-Uo-YKW" secondAttribute="top" constant="112" id="sCG-Jv-eSK"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="sCG-Jv-eSK"/>
+                        </mask>
+                    </variation>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="1Cq-ln-LGk" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="26:29" constant="-4.4827586206896513" id="15J-xP-U9H"/>
                 <constraint firstItem="Qj6-3L-RsJ" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="57:50" constant="2.8421709430404007e-14" id="1dL-pJ-waw"/>
+                <constraint firstItem="6Hb-Uo-YKW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="1kU-EI-itw"/>
                 <constraint firstItem="5JQ-2A-hgb" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="11:50" id="5An-l9-WND"/>
                 <constraint firstAttribute="bottom" secondItem="1Cq-ln-LGk" secondAttribute="bottom" constant="8" id="DQA-pW-2OD"/>
                 <constraint firstItem="75Y-fk-ycN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="DhO-G5-MTf"/>
                 <constraint firstAttribute="trailing" secondItem="Qj6-3L-RsJ" secondAttribute="trailing" constant="8" id="FpZ-Ug-6lj"/>
+                <constraint firstAttribute="trailing" secondItem="6Hb-Uo-YKW" secondAttribute="trailing" id="H1z-RY-61y"/>
                 <constraint firstItem="1Cq-ln-LGk" firstAttribute="width" secondItem="wHB-R9-zdr" secondAttribute="width" id="Hl5-g1-jf1"/>
                 <constraint firstItem="1Cq-ln-LGk" firstAttribute="height" secondItem="wHB-R9-zdr" secondAttribute="height" constant="1" id="ILA-Tu-3BN"/>
                 <constraint firstItem="Qj6-3L-RsJ" firstAttribute="top" secondItem="75Y-fk-ycN" secondAttribute="bottom" constant="2" id="K1M-Uc-eBM"/>
@@ -60,10 +97,12 @@
                 <constraint firstItem="5JQ-2A-hgb" firstAttribute="leading" secondItem="wHB-R9-zdr" secondAttribute="trailing" constant="8" id="Qyc-Oq-tAd"/>
                 <constraint firstItem="5JQ-2A-hgb" firstAttribute="top" secondItem="Qj6-3L-RsJ" secondAttribute="bottom" constant="8" id="SQ2-xP-pCR"/>
                 <constraint firstItem="Qj6-3L-RsJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="TE9-sC-55k"/>
+                <constraint firstItem="6Hb-Uo-YKW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TsE-s6-8Qt"/>
                 <constraint firstAttribute="bottom" secondItem="5JQ-2A-hgb" secondAttribute="bottom" constant="7" id="USg-En-mkT"/>
                 <constraint firstItem="1Cq-ln-LGk" firstAttribute="top" secondItem="wHB-R9-zdr" secondAttribute="bottom" constant="2" id="W0j-zC-3zN"/>
                 <constraint firstItem="75Y-fk-ycN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Xx0-1Q-lsp"/>
                 <constraint firstAttribute="trailing" secondItem="5JQ-2A-hgb" secondAttribute="trailing" constant="8" id="Y5d-0A-juh"/>
+                <constraint firstAttribute="bottom" secondItem="6Hb-Uo-YKW" secondAttribute="bottom" id="bVa-q1-WIe"/>
                 <constraint firstItem="5JQ-2A-hgb" firstAttribute="trailing" secondItem="Qj6-3L-RsJ" secondAttribute="trailing" id="cBw-Dy-Eka"/>
                 <constraint firstItem="1Cq-ln-LGk" firstAttribute="leading" secondItem="Qj6-3L-RsJ" secondAttribute="leading" id="cs6-2f-UCC"/>
                 <constraint firstAttribute="trailing" secondItem="75Y-fk-ycN" secondAttribute="trailing" id="dG3-Sx-jQm"/>
@@ -72,6 +111,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="createPODView" destination="6Hb-Uo-YKW" id="ehh-ed-OWb"/>
                 <outlet property="lastPostDateLabel" destination="1Cq-ln-LGk" id="dZP-Cw-Dhl"/>
                 <outlet property="podImageView" destination="75Y-fk-ycN" id="gf1-Kk-2s1"/>
                 <outlet property="podTitleLabel" destination="Qj6-3L-RsJ" id="ogq-r1-e0l"/>
@@ -80,4 +120,7 @@
             <point key="canvasLocation" x="296.5" y="229"/>
         </view>
     </objects>
+    <resources>
+        <image name="PlusIcon" width="64" height="64"/>
+    </resources>
 </document>

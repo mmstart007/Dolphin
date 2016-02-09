@@ -1,0 +1,6 @@
+framework module NSDate_Time_Ago {
+  umbrella header "NSDate-Time-Ago-umbrella.h"
+
+  export *
+  module * { export * }
+}
