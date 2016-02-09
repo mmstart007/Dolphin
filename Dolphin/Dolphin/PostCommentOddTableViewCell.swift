@@ -37,7 +37,9 @@ class PostCommentOddTableViewCell : CustomFontTableViewCell {
         postCommentUserImageView.sd_setImageWithURL(NSURL(string: (comment.postCommentUser?.userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
         postCommentTextView.text                     = comment.postCommentText
         postCommentUserNameLabel.text                = comment.postCommentUser?.userName
-        postCommentDateLabel.text                    = comment.postCommentDate?.timeAgo()
+        if let date = comment.postCommentDate {
+            postCommentDateLabel.text                = date.timeAgo()
+        }
         postCommentUserImageView.layer.cornerRadius  = postCommentUserImageView.frame.size.width / 2.0
         postCommentUserImageView.layer.masksToBounds = true
         postCommentTextView.textColor                = UIColor.lightGrayColor()

@@ -37,7 +37,9 @@ class PostCommentEvenTableViewCell : CustomFontTableViewCell {
         self.layer.cornerRadius                      = 5
         postCommentTextView.text                     = comment.postCommentText
         postCommentUserNameLabel.text                = comment.postCommentUser?.userName
-        postCommentDateLabel.text                    = comment.postCommentDate?.timeAgo()
+        if let date = comment.postCommentDate {
+            postCommentDateLabel.text                = date.timeAgo()
+        }
         postCommentUserImageView.layer.cornerRadius  = postCommentUserImageView.frame.size.width / 2.0
         postCommentUserImageView.layer.masksToBounds = true
         postCommentTextView.textColor                = UIColor.lightGrayColor()
