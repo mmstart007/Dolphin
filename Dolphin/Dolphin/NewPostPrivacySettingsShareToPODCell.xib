@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="NewPostPrivacySettingsShareToPODCell" customModule="Dolphin" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S3q-NS-0q2">
+                    <rect key="frame" x="23" y="17" width="25" height="25"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="S3q-NS-0q2" secondAttribute="height" multiplier="1:1" id="Zoc-Wm-2Pr"/>
+                        <constraint firstAttribute="width" constant="25" id="wnU-5U-fpZ"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="br6-iu-UHX">
+                    <rect key="frame" x="56" y="19" width="306" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Q6B-yw-u1z"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="br6-iu-UHX" firstAttribute="leading" secondItem="S3q-NS-0q2" secondAttribute="trailing" constant="8" id="9r1-hJ-YEc"/>
+                <constraint firstAttribute="bottom" secondItem="S3q-NS-0q2" secondAttribute="bottom" constant="18" id="BeY-xn-bE1"/>
+                <constraint firstAttribute="trailing" secondItem="br6-iu-UHX" secondAttribute="trailing" constant="13" id="RE6-2E-2Yv"/>
+                <constraint firstItem="br6-iu-UHX" firstAttribute="centerY" secondItem="S3q-NS-0q2" secondAttribute="centerY" id="Ubh-Qa-wGX"/>
+                <constraint firstItem="S3q-NS-0q2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="23" id="Vy1-ZK-WCz"/>
+                <constraint firstItem="S3q-NS-0q2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="17" id="yUv-C2-9zc"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="podName" destination="br6-iu-UHX" id="Vqw-sn-BVC"/>
+                <outlet property="selectedImageView" destination="S3q-NS-0q2" id="aDJ-sp-SbX"/>
+            </connections>
+        </view>
+    </objects>
+</document>

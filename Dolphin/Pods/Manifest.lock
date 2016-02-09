@@ -14,6 +14,7 @@ PODS:
     - Fabric
   - TwitterKit (1.14.6):
     - TwitterCore (= 1.14.6)
+  - UITextView+Placeholder (1.1.1)
 
 DEPENDENCIES:
   - Crashlytics
@@ -26,6 +27,7 @@ DEPENDENCIES:
   - SDWebImage (~> 3.7)
   - TwitterCore
   - TwitterKit
+  - UITextView+Placeholder
 
 SPEC CHECKSUMS:
   Crashlytics: 41574a245bc6ae10c55d57f385ebd2004e5bee05
@@ -38,5 +40,6 @@ SPEC CHECKSUMS:
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   TwitterCore: 5e9b2d066ceeef53fe611c0c4436cb700f1ed620
   TwitterKit: f67360ee0a5f935f053bf37015652ac157e4eb92
+  UITextView+Placeholder: a6fc3e0378f3870036ec562a7537cbf6dbae4bf6
 
 COCOAPODS: 0.39.0

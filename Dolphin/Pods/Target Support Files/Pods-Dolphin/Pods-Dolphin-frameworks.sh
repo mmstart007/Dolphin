@@ -89,6 +89,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Dolphin/NSDate_TimeAgo.framework"
   install_framework "Pods-Dolphin/OAuthSwift.framework"
   install_framework "Pods-Dolphin/SDWebImage.framework"
+  install_framework "Pods-Dolphin/UITextView_Placeholder.framework"
   install_framework "Pods-Dolphin/hpple.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -97,5 +98,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Dolphin/NSDate_TimeAgo.framework"
   install_framework "Pods-Dolphin/OAuthSwift.framework"
   install_framework "Pods-Dolphin/SDWebImage.framework"
+  install_framework "Pods-Dolphin/UITextView_Placeholder.framework"
   install_framework "Pods-Dolphin/hpple.framework"
 fi

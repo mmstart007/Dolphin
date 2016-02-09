@@ -11,6 +11,13 @@ import UIKit
 
 class DolphinViewController : DolphinCustomFontViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
+//        self.view.addGestureRecognizer(tapGesture)
+        
+    }
     
     override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -27,8 +34,19 @@ class DolphinViewController : DolphinCustomFontViewController {
         
     }
     
+    func setDismissButton() {
+        
+        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "dismissButtonPressed:")
+        self.navigationItem.leftBarButtonItem = leftButton;
+        
+    }
+    
     func goBackButtonPressed(sender: UIBarButtonItem) {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func dismissButtonPressed(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func setRightSystemButtonItem(systemItem: UIBarButtonSystemItem, target: AnyObject?, action: Selector) {
@@ -47,6 +65,12 @@ class DolphinViewController : DolphinCustomFontViewController {
         let rightButton = UIBarButtonItem(image: UIImage(named: imageName), style: .Plain, target: target, action: action)
         rightButton.tintColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItems?.append(rightButton)
+    }
+    
+    func resignResponder() {
+        if let firstResponder = view.findViewThatIsFirstResponder() {
+            firstResponder.resignFirstResponder()
+        }
     }
     
 }

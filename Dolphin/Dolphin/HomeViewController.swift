@@ -134,7 +134,10 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         
     }
     @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
-        
+        closeNewPostViewButtonTouchUpInside(self)
+        let createTextPostVC = CreateTextPostViewController()
+        let textPostNavController = UINavigationController(rootViewController: createTextPostVC)
+        presentViewController(textPostNavController, animated: true, completion: nil)
         print("Post text button pressed")
         
     }
