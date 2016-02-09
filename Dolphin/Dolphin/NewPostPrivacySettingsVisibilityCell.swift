@@ -14,7 +14,6 @@ class NewPostPrivacySettingsVisibilityCell : CustomFontTableViewCell {
     @IBOutlet weak var selectedImageView: UIImageView!
     @IBOutlet weak var visibilityIconImageView: UIImageView!
     @IBOutlet weak var visibilityLabel: UILabel!
-    @IBOutlet weak var informativeTextLabel: UILabel!
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -34,15 +33,7 @@ class NewPostPrivacySettingsVisibilityCell : CustomFontTableViewCell {
         }
         visibilityIconImageView.image      = setting.image != nil && setting.image != "" ? UIImage(named: setting.image!)?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate) : nil
         visibilityIconImageView.tintColor  = UIColor.darkGrayColor()
-        if setting.informativeText == "" {
-            informativeTextLabel.hidden = true
-        } else {
-            informativeTextLabel.hidden = false
-        }
         visibilityLabel.text               = setting.name
-        informativeTextLabel.text          = setting.informativeText
-        informativeTextLabel.numberOfLines = 0
-        informativeTextLabel.sizeToFit()
     }
     
 }

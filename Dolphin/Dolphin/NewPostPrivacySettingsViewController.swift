@@ -15,13 +15,11 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
         
         var name: String?
         var image: String?
-        var informativeText: String?
         
         init(settingName: String, settingImage: String, settingInformativeText: String) {
             
             name            = settingName
             image           = settingImage
-            informativeText = settingInformativeText
             
         }
         
@@ -68,11 +66,7 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
     func setupFields() {
         
         let setting1 = VisibilitySetting(settingName: "Public", settingImage: "EarthIcon", settingInformativeText: "People who are not friends with you can see this post when their friends share it.")
-        let setting2 = VisibilitySetting(settingName: "My Dolphin Friends", settingImage: "PeopleIcon", settingInformativeText: "")
-        let setting3 = VisibilitySetting(settingName: "Only Me", settingImage: "LockIcon", settingInformativeText: "")
         privacySettings.append(setting1)
-        privacySettings.append(setting2)
-        privacySettings.append(setting3)
         tableView.reloadData()
      
         for pod in NetworkController.sharedInstance.pods {
@@ -134,11 +128,7 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 && privacySettings[indexPath.row].informativeText != "" {
-            return 80
-        } else {
-            return 60
-        }
+        return 60
     }
     
     // MARK: TableView Delegate
@@ -146,7 +136,11 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
             selectedPrivacySettingIndex = indexPath.row
+            for (var i = 0; i < podShareSettings.count; i++) {
+                podShareSettings[i].selected = false
+            }
         } else {
+            selectedPrivacySettingIndex = -1
             podShareSettings[indexPath.row].selected = !podShareSettings[indexPath.row].selected
         }
         tableView.reloadData()
