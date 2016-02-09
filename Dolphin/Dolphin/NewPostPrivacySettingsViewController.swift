@@ -142,6 +142,15 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
         } else {
             selectedPrivacySettingIndex = -1
             podShareSettings[indexPath.row].selected = !podShareSettings[indexPath.row].selected
+            var oneSelected = false
+            for (var i = 0; i < podShareSettings.count; i++) {
+                if podShareSettings[i].selected == true {
+                    oneSelected = true
+                }
+            }
+            if !oneSelected {
+                selectedPrivacySettingIndex = 0
+            }
         }
         tableView.reloadData()
     }
