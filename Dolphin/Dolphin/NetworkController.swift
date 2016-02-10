@@ -12,9 +12,10 @@ class NetworkController: NSObject {
     
     static let sharedInstance = NetworkController()
     
-    var posts: [Post] = []
+    var posts: [Post]      = []
     var likedPosts: [Post] = []
-    var pods: [POD] = []
+    var pods: [POD]        = []
+    var deals: [Deal]      = []
     
     func initializeNetworkController() {
         let user1 = User(name: "John Doe", imageURL: "")
@@ -42,7 +43,13 @@ class NetworkController: NSObject {
         
         pods = [pod1, pod2, pod3]
         
+        let deal1 = Deal(image: "http://www.freelogovectors.net/wp-content/uploads/2013/01/staples-logo.jpg", description: "50% STAPLES purchase of $100 or more", date: NSDate())
+        let deal2 = Deal(image: "http://i.ebayimg.com/00/s/NzY4WDEwMjQ=/z/1I4AAOSwDNdVtpOh/$_3.jpg", description: "XBOX ONE (NIB)", date: NSDate())
+        let deal3 = Deal(image: "http://ecx.images-amazon.com/images/I/41aawS8-fLL._SY300_.jpg", description: "Ninja Turtles Remote Control Adapter", date: NSDate())
         
+        deals.append(deal1)
+        deals.append(deal2)
+        deals.append(deal3)
     }
     
 }

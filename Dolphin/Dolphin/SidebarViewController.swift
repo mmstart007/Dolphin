@@ -131,6 +131,8 @@ class SidebarViewController : UIViewController {
     
     @IBAction func dolphinDealsButtonTouchUpInside(sender: AnyObject) {
         print("Dolphin Deals menu item selected")
+        revealViewController().revealToggleAnimated(true)
+        homeViewController.navigationController?.pushViewController(DealsListViewController(), animated: true)
         setDealsSelected()
     }
     

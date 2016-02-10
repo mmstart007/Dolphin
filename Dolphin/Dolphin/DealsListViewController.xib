@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DealsListViewController" customModule="Dolphin" customModuleProvider="target">
+            <connections>
+                <outlet property="dealsCollectionView" destination="FWT-sc-6vx" id="9Ss-q1-gjj"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Rdb-Pd-LnZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="FWT-sc-6vx">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="g27-QF-b1x">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="FWT-sc-6vx" secondAttribute="trailing" id="QJr-dh-rJr"/>
+                <constraint firstItem="FWT-sc-6vx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fcv-Is-XHy"/>
+                <constraint firstItem="FWT-sc-6vx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ufE-LQ-Tjf"/>
+                <constraint firstAttribute="bottom" secondItem="FWT-sc-6vx" secondAttribute="bottom" id="ylo-Gf-scJ"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="348.5" y="236.5"/>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DealCollectionViewCell" customModule="Dolphin" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y2J-ks-UNZ" userLabel="Deal Image View">
+                    <rect key="frame" x="0.0" y="0.0" width="200" height="110"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rys-pu-uZv" userLabel="Deal Description Label">
+                    <rect key="frame" x="8" y="118" width="184" height="43"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Rys-pu-uZv" secondAttribute="height" multiplier="184:43" id="SWq-Nh-6W2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szZ-QI-FfC" userLabel="Deal Date Label">
+                    <rect key="frame" x="8" y="169" width="184" height="23"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="szZ-QI-FfC" firstAttribute="width" secondItem="Rys-pu-uZv" secondAttribute="width" id="1bO-oj-nS0"/>
+                <constraint firstAttribute="trailing" secondItem="Rys-pu-uZv" secondAttribute="trailing" constant="8" id="5hS-zf-t1O"/>
+                <constraint firstAttribute="bottom" secondItem="szZ-QI-FfC" secondAttribute="bottom" constant="8" id="DZs-mD-WlT"/>
+                <constraint firstAttribute="trailing" secondItem="y2J-ks-UNZ" secondAttribute="trailing" id="Laf-SN-SeN"/>
+                <constraint firstItem="Rys-pu-uZv" firstAttribute="top" secondItem="y2J-ks-UNZ" secondAttribute="bottom" constant="8" id="NZF-I3-Gi4"/>
+                <constraint firstItem="y2J-ks-UNZ" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="110:200" id="Uzg-vy-E8R"/>
+                <constraint firstItem="szZ-QI-FfC" firstAttribute="leading" secondItem="Rys-pu-uZv" secondAttribute="leading" id="WO1-5g-cIP"/>
+                <constraint firstItem="szZ-QI-FfC" firstAttribute="top" secondItem="Rys-pu-uZv" secondAttribute="bottom" constant="8" id="XFb-IE-H9c"/>
+                <constraint firstItem="y2J-ks-UNZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bdL-zA-1si"/>
+                <constraint firstItem="Rys-pu-uZv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="dFM-Nl-6xL"/>
+                <constraint firstItem="y2J-ks-UNZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uf3-Da-z3Z"/>
+                <constraint firstItem="szZ-QI-FfC" firstAttribute="trailing" secondItem="Rys-pu-uZv" secondAttribute="trailing" id="yo4-H1-XWr"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="dealDateLabel" destination="szZ-QI-FfC" id="MfE-IY-s7p"/>
+                <outlet property="dealDescriptionLabel" destination="Rys-pu-uZv" id="EDd-Yh-Y2C"/>
+                <outlet property="dealImageView" destination="y2J-ks-UNZ" id="xIe-5U-ieh"/>
+            </connections>
+        </view>
+    </objects>
+</document>

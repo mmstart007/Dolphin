@@ -22,6 +22,10 @@ extension UIColor {
         return UIColor(red: 252.0/255.0, green: 226.0/255.0, blue: 52.0/255.0, alpha: 1.0)
     }
     
+    class func greenDolphinDealHeader() -> UIColor {
+        return UIColor(red: 36.0/255.0, green: 180.0/255.0, blue: 21.0/255.0, alpha: 1.0)
+    }
+    
     class func topicsColorsArray() -> [UIColor] {
         let color1 = UIColor(red: 255.0/255.0, green: 180.0/255.0, blue: 227.0/255.0, alpha: 1.0)
         let color2 = UIColor(red: 109.0/255.0, green: 207.0/255.0, blue: 246.0/255.0, alpha: 1.0)
