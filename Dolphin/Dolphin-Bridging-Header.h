@@ -11,3 +11,4 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "UIAppearance_Swift.h"
+#import "ImageCropView.h"

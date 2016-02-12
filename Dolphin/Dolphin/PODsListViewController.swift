@@ -164,6 +164,15 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         return cell!
     }
     
+    // MARK: UICollectionViewDelegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if (searchText == nil || searchText == "") && indexPath.row == myPods.count {
+            let createPODVC = CreatePodViewController()
+            navigationController?.pushViewController(createPODVC, animated: true)
+        }
+    }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSize(width: (self.view.frame.size.width / 2) - 15, height: self.view.frame.size.width / 2.5)
     }

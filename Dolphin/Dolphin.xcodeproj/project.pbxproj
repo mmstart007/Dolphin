@@ -44,6 +44,12 @@
 		364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140601C110F900022D1BE /* PostCommentsViewController.xib */; };
 		364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364140641C173B810022D1BE /* CreateURLPostViewController.swift */; };
 		364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */; };
+		3650E0B61C6D1AFA00BB9301 /* CreatePodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3650E0B51C6D1AFA00BB9301 /* CreatePodViewController.swift */; };
+		3650E0B81C6D206700BB9301 /* CreatePodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3650E0B71C6D206700BB9301 /* CreatePodViewController.xib */; };
+		3650E0BC1C6D428400BB9301 /* ImageCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3650E0BB1C6D428400BB9301 /* ImageCropView.m */; };
+		3650E0BF1C6D42C200BB9301 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3650E0BE1C6D42C200BB9301 /* FXBlurView.m */; };
+		3650E0C21C6D4D6700BB9301 /* UserImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3650E0C11C6D4D6700BB9301 /* UserImageCollectionViewCell.swift */; };
+		3650E0C41C6D4D8100BB9301 /* UserImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3650E0C31C6D4D8100BB9301 /* UserImageCollectionViewCell.xib */; };
 		3668B2F61C6A761400469FF9 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3668B2F51C6A761300469FF9 /* Deal.swift */; };
 		3668B2F81C6A77B100469FF9 /* DealsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */; };
 		3668B2FA1C6A77E700469FF9 /* DealsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */; };
@@ -166,6 +172,14 @@
 		364140601C110F900022D1BE /* PostCommentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCommentsViewController.xib; sourceTree = "<group>"; };
 		364140641C173B810022D1BE /* CreateURLPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostViewController.swift; sourceTree = "<group>"; };
 		364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostViewController.xib; sourceTree = "<group>"; };
+		3650E0B51C6D1AFA00BB9301 /* CreatePodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePodViewController.swift; sourceTree = "<group>"; };
+		3650E0B71C6D206700BB9301 /* CreatePodViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePodViewController.xib; sourceTree = "<group>"; };
+		3650E0BA1C6D428400BB9301 /* ImageCropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCropView.h; sourceTree = "<group>"; };
+		3650E0BB1C6D428400BB9301 /* ImageCropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCropView.m; sourceTree = "<group>"; };
+		3650E0BD1C6D42C200BB9301 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
+		3650E0BE1C6D42C200BB9301 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		3650E0C11C6D4D6700BB9301 /* UserImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		3650E0C31C6D4D8100BB9301 /* UserImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		3668B2F51C6A761300469FF9 /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealsListViewController.swift; sourceTree = "<group>"; };
 		3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealsListViewController.xib; sourceTree = "<group>"; };
@@ -290,6 +304,26 @@
 				361FFE191C0CE8DE007EE366 /* TriangleView.swift */,
 			);
 			name = "Aux Views";
+			sourceTree = "<group>";
+		};
+		3650E0B91C6D427400BB9301 /* Image Cropping */ = {
+			isa = PBXGroup;
+			children = (
+				3650E0BD1C6D42C200BB9301 /* FXBlurView.h */,
+				3650E0BE1C6D42C200BB9301 /* FXBlurView.m */,
+				3650E0BA1C6D428400BB9301 /* ImageCropView.h */,
+				3650E0BB1C6D428400BB9301 /* ImageCropView.m */,
+			);
+			name = "Image Cropping";
+			sourceTree = "<group>";
+		};
+		3650E0C01C6D4D4C00BB9301 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				3650E0C11C6D4D6700BB9301 /* UserImageCollectionViewCell.swift */,
+				3650E0C31C6D4D8100BB9301 /* UserImageCollectionViewCell.xib */,
+			);
+			name = Users;
 			sourceTree = "<group>";
 		};
 		3668B2FB1C6A79CD00469FF9 /* Deals */ = {
@@ -482,6 +516,7 @@
 		36BE4CF91C061AE1002E52D9 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				3650E0B91C6D427400BB9301 /* Image Cropping */,
 				369382AD1C3191320005FCB0 /* Facebook */,
 				36BE4CFA1C061AEC002E52D9 /* SWRevealViewController */,
 			);
@@ -534,6 +569,8 @@
 				361F50871C65339000153B6C /* NewPostPrivacySettingsViewController.xib */,
 				3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */,
 				3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */,
+				3650E0B51C6D1AFA00BB9301 /* CreatePodViewController.swift */,
+				3650E0B71C6D206700BB9301 /* CreatePodViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -563,6 +600,7 @@
 		36D0C69A1C08AC420002AE35 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				3650E0C01C6D4D4C00BB9301 /* Users */,
 				3668B2FB1C6A79CD00469FF9 /* Deals */,
 				369382B51C31B7DF0005FCB0 /* Invite Friends */,
 				3615B6FF1C19CAC7006BB8B4 /* CreatePost */,
@@ -725,6 +763,7 @@
 				361F50881C65339000153B6C /* NewPostPrivacySettingsViewController.xib in Resources */,
 				36E9982A1C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib in Resources */,
 				3668B2FF1C6A7A7900469FF9 /* DealCollectionViewCell.xib in Resources */,
+				3650E0B81C6D206700BB9301 /* CreatePodViewController.xib in Resources */,
 				362D4BDE1C1F336100F065E5 /* CreateImagePostViewController.xib in Resources */,
 				369382B91C31B8370005FCB0 /* FriendToInviteTableViewCell.xib in Resources */,
 				3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */,
@@ -744,6 +783,7 @@
 				36BE4CD11C061524002E52D9 /* Main.storyboard in Resources */,
 				36736F661C5FEE170040A263 /* PostDetailsActionView.xib in Resources */,
 				36D0C69C1C08AC5F0002AE35 /* PostTableViewCell.xib in Resources */,
+				3650E0C41C6D4D8100BB9301 /* UserImageCollectionViewCell.xib in Resources */,
 				361FFE221C0CFAD1007EE366 /* PostDetailHeaderTableViewCell.xib in Resources */,
 				36BE4D0A1C06250B002E52D9 /* HomeViewController.xib in Resources */,
 				36D0C6981C07A0F50002AE35 /* NewPostMenu.xib in Resources */,
@@ -842,6 +882,7 @@
 				368798661C29E1260088AC24 /* LoginViewController.swift in Sources */,
 				360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */,
 				3687989D1C2B482C0088AC24 /* CustomFontTableViewCell.swift in Sources */,
+				3650E0C21C6D4D6700BB9301 /* UserImageCollectionViewCell.swift in Sources */,
 				36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */,
 				36D0C6A11C08D0990002AE35 /* Post.swift in Sources */,
 				361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */,
@@ -873,6 +914,7 @@
 				369382B71C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift in Sources */,
 				3689ECE61C0E62E40087F828 /* POD.swift in Sources */,
 				361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */,
+				3650E0BC1C6D428400BB9301 /* ImageCropView.m in Sources */,
 				36D841151C31EDC500C3065C /* TwitterFriend.swift in Sources */,
 				36E998281C28C14A007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.swift in Sources */,
 				361FFE241C0D0BA8007EE366 /* PostCommentOddTableViewCell.swift in Sources */,
@@ -884,9 +926,11 @@
 				361F50861C65337C00153B6C /* NewPostPrivacySettingsViewController.swift in Sources */,
 				3636F9641C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift in Sources */,
 				3668B2FD1C6A7A6200469FF9 /* DealCollectionViewCell.swift in Sources */,
+				3650E0BF1C6D42C200BB9301 /* FXBlurView.m in Sources */,
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				3668B2F61C6A761400469FF9 /* Deal.swift in Sources */,
+				3650E0B61C6D1AFA00BB9301 /* CreatePodViewController.swift in Sources */,
 				36C5DAA01C35A05300DFF60F /* InstagramFriend.swift in Sources */,
 				36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */,
 				36D841171C32C62500C3065C /* AddressBookContact.swift in Sources */,
