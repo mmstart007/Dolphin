@@ -130,6 +130,12 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     // MARK: Tableview delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("POD selected: " + String(indexPath.row))
+        
+        let podDetailsVC = PODDetailsViewController()
+        let selectedPOD = allPods[indexPath.row]
+        podDetailsVC.pod = selectedPOD
+        navigationController?.pushViewController(podDetailsVC, animated: true)
     }
     
     // MARK: CollectionView Datasource

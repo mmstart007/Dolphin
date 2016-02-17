@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -40,13 +40,13 @@
                                 <constraint firstAttribute="width" constant="112" id="FB7-Kw-cJu"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Doe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xza-hu-cTE" userLabel="Username Label">
-                            <rect key="frame" x="0.0" y="162" width="258" height="20.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="John Doe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xza-hu-cTE" userLabel="Username Label">
+                            <rect key="frame" x="0.0" y="162" width="258" height="21"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRs-qq-wIf" userLabel="MyFeedMenuitem">
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tRs-qq-wIf" userLabel="MyFeedMenuitem">
                             <rect key="frame" x="0.0" y="207" width="258" height="48"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SidebarDolphinIcon" translatesAutoresizingMaskIntoConstraints="NO" id="hEn-Ee-4dI">
@@ -57,7 +57,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3se-GP-TMM">
-                                    <rect key="frame" x="71" y="14.5" width="187" height="18"/>
+                                    <rect key="frame" x="71" y="15" width="187" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -82,7 +82,7 @@
                                 <constraint firstItem="3se-GP-TMM" firstAttribute="centerY" secondItem="hEn-Ee-4dI" secondAttribute="centerY" id="tZf-k0-7Pt"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1OJ-FA-zMh" userLabel="GlassesMenuitem">
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1OJ-FA-zMh" userLabel="GlassesMenuitem">
                             <rect key="frame" x="0.0" y="245" width="258" height="48"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SidebarGlassesIcon" translatesAutoresizingMaskIntoConstraints="NO" id="cHK-fv-JSL">
@@ -93,7 +93,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History / My Likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KsI-YC-hKi">
-                                    <rect key="frame" x="71" y="14.5" width="187" height="18"/>
+                                    <rect key="frame" x="71" y="15" width="187" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -118,7 +118,7 @@
                                 <constraint firstAttribute="bottom" secondItem="Pjm-Pn-CsP" secondAttribute="bottom" id="xCC-kb-NxW"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NB7-o4-5Dk" userLabel="MyPODsMenuitem">
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NB7-o4-5Dk" userLabel="MyPODsMenuitem">
                             <rect key="frame" x="0.0" y="293" width="258" height="48"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SidebarMyPODsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="zfa-pI-RjX">
@@ -129,7 +129,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My PODs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b8h-Ly-OZz">
-                                    <rect key="frame" x="71" y="14.5" width="187" height="18"/>
+                                    <rect key="frame" x="71" y="15" width="187" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -154,7 +154,7 @@
                                 <constraint firstItem="b8h-Ly-OZz" firstAttribute="centerY" secondItem="zfa-pI-RjX" secondAttribute="centerY" id="vZh-LE-UVe"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KBz-7c-7sg" userLabel="InviteFriendsMenuitem">
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KBz-7c-7sg" userLabel="InviteFriendsMenuitem">
                             <rect key="frame" x="0.0" y="341" width="258" height="48"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SidebarInviteFriendsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="fhH-Lv-0Og">
@@ -165,7 +165,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invite Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Po0-oL-dk8">
-                                    <rect key="frame" x="71" y="14.5" width="187" height="18"/>
+                                    <rect key="frame" x="71" y="15" width="187" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -190,7 +190,7 @@
                                 <constraint firstAttribute="trailing" secondItem="Po0-oL-dk8" secondAttribute="trailing" id="raL-Q1-zsD"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFt-WZ-9yL" userLabel="DolphinDealsMenuitem">
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UFt-WZ-9yL" userLabel="DolphinDealsMenuitem">
                             <rect key="frame" x="0.0" y="389" width="258" height="48"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SidebarDolphinDealsIcon" translatesAutoresizingMaskIntoConstraints="NO" id="CEs-pn-ZGY">
@@ -201,7 +201,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dolphin Deals" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="McI-W8-3PM">
-                                    <rect key="frame" x="71" y="14.5" width="187" height="18"/>
+                                    <rect key="frame" x="71" y="15" width="187" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -237,7 +237,7 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjC-vM-5yk">
-                                    <rect key="frame" x="71" y="14.5" width="63" height="18"/>
+                                    <rect key="frame" x="71" y="15" width="63" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
