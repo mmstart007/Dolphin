@@ -34,7 +34,7 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
         dealsCollectionView.delegate   = self
     }
  
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 2
@@ -78,5 +78,16 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
     }
+    
+    // MARK: UICollectionViewDelegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let dealDetailsVC = DealDetailsViewController()
+        dealDetailsVC.deal = networkController.deals[indexPath.row];
+        navigationController?.pushViewController(dealDetailsVC, animated: true)
+        
+    }
+    
     
 }

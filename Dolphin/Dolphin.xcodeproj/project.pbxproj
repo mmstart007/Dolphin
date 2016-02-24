@@ -19,6 +19,9 @@
 		3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */; };
 		3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */; };
 		3615B7031C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B7021C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib */; };
+		3616E49C1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3616E49A1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift */; };
+		3616E49F1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3616E49E1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib */; };
+		3616E4A11C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3616E4A01C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib */; };
 		361F50841C652C3900153B6C /* UIView+DolphinExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361F50831C652C3900153B6C /* UIView+DolphinExtensions.swift */; };
 		361F50861C65337C00153B6C /* NewPostPrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361F50851C65337C00153B6C /* NewPostPrivacySettingsViewController.swift */; };
 		361F50881C65339000153B6C /* NewPostPrivacySettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361F50871C65339000153B6C /* NewPostPrivacySettingsViewController.xib */; };
@@ -50,6 +53,9 @@
 		3650E0BF1C6D42C200BB9301 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3650E0BE1C6D42C200BB9301 /* FXBlurView.m */; };
 		3650E0C21C6D4D6700BB9301 /* UserImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3650E0C11C6D4D6700BB9301 /* UserImageCollectionViewCell.swift */; };
 		3650E0C41C6D4D8100BB9301 /* UserImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3650E0C31C6D4D8100BB9301 /* UserImageCollectionViewCell.xib */; };
+		365D76C91C7540AA00A0833F /* DealDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365D76C71C7540AA00A0833F /* DealDetailsViewController.swift */; };
+		365D76CA1C7540AA00A0833F /* DealDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 365D76C81C7540AA00A0833F /* DealDetailsViewController.xib */; };
+		365D76CE1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365D76CC1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift */; };
 		3668B2F61C6A761400469FF9 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3668B2F51C6A761300469FF9 /* Deal.swift */; };
 		3668B2F81C6A77B100469FF9 /* DealsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */; };
 		3668B2FA1C6A77E700469FF9 /* DealsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */; };
@@ -153,6 +159,9 @@
 		3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostChooseImageViewController.xib; sourceTree = "<group>"; };
 		3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostChooseImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		3615B7021C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostChooseImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		3616E49A1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsCodeSectionTableViewCell.swift; sourceTree = "<group>"; };
+		3616E49E1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealDetailsHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		3616E4A01C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealDetailsCodeSectionTableViewCell.xib; sourceTree = "<group>"; };
 		361F50831C652C3900153B6C /* UIView+DolphinExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+DolphinExtensions.swift"; sourceTree = "<group>"; };
 		361F50851C65337C00153B6C /* NewPostPrivacySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostPrivacySettingsViewController.swift; sourceTree = "<group>"; };
 		361F50871C65339000153B6C /* NewPostPrivacySettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPostPrivacySettingsViewController.xib; sourceTree = "<group>"; };
@@ -186,6 +195,9 @@
 		3650E0BE1C6D42C200BB9301 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		3650E0C11C6D4D6700BB9301 /* UserImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		3650E0C31C6D4D8100BB9301 /* UserImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		365D76C71C7540AA00A0833F /* DealDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsViewController.swift; sourceTree = "<group>"; };
+		365D76C81C7540AA00A0833F /* DealDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealDetailsViewController.xib; sourceTree = "<group>"; };
+		365D76CC1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		3668B2F51C6A761300469FF9 /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealsListViewController.swift; sourceTree = "<group>"; };
 		3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealsListViewController.xib; sourceTree = "<group>"; };
@@ -338,6 +350,17 @@
 				36DCCD761C73EB8800D4B171 /* UserImagePODMemberCollectionViewCell.xib */,
 			);
 			name = Users;
+			sourceTree = "<group>";
+		};
+		365D76CB1C7546FF00A0833F /* Deal Details */ = {
+			isa = PBXGroup;
+			children = (
+				365D76CC1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift */,
+				3616E49E1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib */,
+				3616E49A1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift */,
+				3616E4A01C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib */,
+			);
+			name = "Deal Details";
 			sourceTree = "<group>";
 		};
 		3668B2FB1C6A79CD00469FF9 /* Deals */ = {
@@ -587,6 +610,8 @@
 				3650E0B71C6D206700BB9301 /* CreatePodViewController.xib */,
 				369697431C725ECA00774055 /* PODDetailsViewController.swift */,
 				369697441C725ECA00774055 /* PODDetailsViewController.xib */,
+				365D76C71C7540AA00A0833F /* DealDetailsViewController.swift */,
+				365D76C81C7540AA00A0833F /* DealDetailsViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -616,6 +641,7 @@
 		36D0C69A1C08AC420002AE35 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				365D76CB1C7546FF00A0833F /* Deal Details */,
 				36DCCD701C73ABD000D4B171 /* PODs Details */,
 				3650E0C01C6D4D4C00BB9301 /* Users */,
 				3668B2FB1C6A79CD00469FF9 /* Deals */,
@@ -783,6 +809,7 @@
 				36DCCD781C73EB8800D4B171 /* UserImagePODMemberCollectionViewCell.xib in Resources */,
 				369697461C725ECB00774055 /* PODDetailsViewController.xib in Resources */,
 				364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */,
+				365D76CA1C7540AA00A0833F /* DealDetailsViewController.xib in Resources */,
 				36E998241C24A952007FCF64 /* CreateImagePostFinishPostingViewController.xib in Resources */,
 				368798681C29E13C0088AC24 /* LoginViewController.xib in Resources */,
 				361F508C1C65389D00153B6C /* NewPostPrivacySettingsVisibilityCell.xib in Resources */,
@@ -799,6 +826,8 @@
 				3668B2FA1C6A77E700469FF9 /* DealsListViewController.xib in Resources */,
 				36D1290A1C2C39FE002E3F47 /* InviteFriendsViewController.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
+				3616E49F1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib in Resources */,
+				3616E4A11C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib in Resources */,
 				360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */,
 				3615B7031C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib in Resources */,
 				36F4AC3E1C64EFB900323672 /* CreateTextPostViewController.xib in Resources */,
@@ -933,8 +962,10 @@
 				360993141C4049530082B995 /* UIAppearance_Swift.m in Sources */,
 				3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */,
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
+				365D76CE1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift in Sources */,
 				361F50841C652C3900153B6C /* UIView+DolphinExtensions.swift in Sources */,
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
+				3616E49C1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,
 				36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */,
 				36736F681C6130790040A263 /* DolphinButton.swift in Sources */,
@@ -961,6 +992,7 @@
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				36DCCD731C73AC3A00D4B171 /* PODMembersTableViewCell.swift in Sources */,
+				365D76C91C7540AA00A0833F /* DealDetailsViewController.swift in Sources */,
 				3668B2F61C6A761400469FF9 /* Deal.swift in Sources */,
 				3650E0B61C6D1AFA00BB9301 /* CreatePodViewController.swift in Sources */,
 				36C5DAA01C35A05300DFF60F /* InstagramFriend.swift in Sources */,
