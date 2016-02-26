@@ -10,29 +10,8 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="Popular PODs Table View Cell" customClass="PopularPODsTableViewCell" customModule="Dolphin" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="KwG-k5-0Vq">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dtC-mX-M9a">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
-            </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="KwG-k5-0Vq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6hH-ru-uJ5"/>
-                <constraint firstItem="KwG-k5-0Vq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LDi-nw-nEm"/>
-                <constraint firstAttribute="bottom" secondItem="KwG-k5-0Vq" secondAttribute="bottom" id="Mlh-93-xMa"/>
-                <constraint firstAttribute="trailing" secondItem="KwG-k5-0Vq" secondAttribute="trailing" id="XwT-c7-qKZ"/>
-            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="podsCollectionView" destination="KwG-k5-0Vq" id="8RE-LI-FBq"/>
-            </connections>
             <point key="canvasLocation" x="336.5" y="231"/>
         </view>
     </objects>

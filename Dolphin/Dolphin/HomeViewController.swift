@@ -35,6 +35,11 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         // Enable Swipe gesture for sidebar
         revealViewController().panGestureRecognizer().enabled = true
         
+        // if the login is the rootViewController we have to change it for HomeViewController
+        if navigationController!.viewControllers[0].isKindOfClass(LoginViewController) {
+            navigationController?.setViewControllers([self], animated: true)
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -45,6 +50,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         setSearchRightButton()
         setupTabbarController()
         self.delegate = self
+        
     }
     
     

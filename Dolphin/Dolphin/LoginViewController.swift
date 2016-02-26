@@ -49,6 +49,12 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         navigationController?.navigationBarHidden = true
     }
     
+    override func viewDidAppear(animated: Bool) {
+        if navigationController!.viewControllers[0].isKindOfClass(HomeViewController) {
+            navigationController?.setViewControllers([self], animated: true)
+        }
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -143,7 +149,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     // MARK: Actions
     
     @IBAction func loginButtonTouchUpInside(sender: AnyObject) {
-        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)        
     }
     
     @IBAction func signUpButtonTouchUpInside(sender: AnyObject) {

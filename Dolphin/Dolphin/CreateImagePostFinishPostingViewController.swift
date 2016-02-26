@@ -55,5 +55,8 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
     
     func postButtonTouchUpInside() {
         print("postButtonTouchUpInside")
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
+    
+
 }

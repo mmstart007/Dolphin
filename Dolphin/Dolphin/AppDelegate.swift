@@ -43,7 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         homeViewController = HomeViewController()
         
         let loginVC = LoginViewController()
-        let initialViewController = UINavigationController(rootViewController: loginVC)
+        let userLogged = false
+        let rootViewController = userLogged ? homeViewController : loginVC
+        let initialViewController = UINavigationController(rootViewController: rootViewController)
         
         // Initialize root controller with sidebar
         let rearViewController = SidebarViewController(homeVC: homeViewController as! HomeViewController)
