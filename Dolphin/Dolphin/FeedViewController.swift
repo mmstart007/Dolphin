@@ -33,7 +33,6 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.postsTableView.reloadData()
-        title = "Dolphin"
     }
     
     override func viewWillDisappear(animated: Bool) {

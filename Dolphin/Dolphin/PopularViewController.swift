@@ -55,7 +55,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         topics = ["ECONOMICS", "POLITICS", "COMPUTER SCIENCE", "SYRIA", "K-12"]
     }
     
-    // MARK: TableView DataSource
+    // MARK: - TableView DataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
@@ -128,7 +128,14 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         return headerView
     }
     
-    // MARK: Tableview delegate
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        // Adjust views of comment cells
+        if indexPath.section == 1 {
+            cell.selectionStyle = .None
+        }
+    }
+    
+    // MARK: - Tableview delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 2 {
@@ -138,7 +145,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    // MARK: CollectionView Datasource
+    // MARK: - CollectionView Datasource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -191,6 +198,23 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+    
+    // MARK: - CollectionView Delegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if collectionView.tag == 0 {
+            print("Topic %@ pressed", topics[indexPath.row])
+        } else if collectionView.tag == 1 {
+            print("Pod %@ pressed", pods[indexPath.row].podName)
+            let podDetailsVC = PODDetailsViewController()
+            let selectedPOD = pods[indexPath.row]
+            podDetailsVC.pod = selectedPOD
+            navigationController?.pushViewController(podDetailsVC, animated: true)
+            
+        }
+
     }
 
 }

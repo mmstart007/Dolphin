@@ -65,7 +65,16 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         } else {
             myPODsCollectionView.reloadData()
         }
-        self.parentViewController?.navigationItem.titleView = segmentedControl
+        let parent = self.parentViewController as? HomeViewController
+        if (searchText == nil || searchText == "") {
+            parent?.removeSearchBar()
+            parent?.setSearchRightButton()
+            self.parentViewController?.navigationItem.titleView = segmentedControl
+        } else {
+            parent?.searchBar?.becomeFirstResponder()
+        }
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -132,10 +141,17 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("POD selected: " + String(indexPath.row))
         
-        let podDetailsVC = PODDetailsViewController()
-        let selectedPOD = allPods[indexPath.row]
-        podDetailsVC.pod = selectedPOD
-        navigationController?.pushViewController(podDetailsVC, animated: true)
+        if (searchText == nil || searchText == "") {
+            let podDetailsVC = PODDetailsViewController()
+            let selectedPOD = allPods[indexPath.row]
+            podDetailsVC.pod = selectedPOD
+            navigationController?.pushViewController(podDetailsVC, animated: true)
+        } else {
+            let podDetailsVC = PODDetailsViewController()
+            let selectedPOD = filteredPODs[indexPath.row]
+            podDetailsVC.pod = selectedPOD
+            navigationController?.pushViewController(podDetailsVC, animated: true)
+        }
     }
     
     // MARK: CollectionView Datasource
@@ -160,8 +176,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         if searchText != nil && searchText != "" {
             cell!.configureWithPOD(filteredPODs[indexPath.row])
         } else {
-            if indexPath.row < myPods.count {
-                cell!.configureWithPOD(myPods[indexPath.row])
+            if indexPath.row > 0 {
+                cell!.configureWithPOD(myPods[indexPath.row - 1])
             } else {
                 cell?.configureWithPOD(nil)
             }
@@ -173,9 +189,19 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if (searchText == nil || searchText == "") && indexPath.row == myPods.count {
+        if (searchText == nil || searchText == "") && indexPath.row == 0 {
             let createPODVC = CreatePodViewController()
             navigationController?.pushViewController(createPODVC, animated: true)
+        } else if (searchText == nil || searchText == ""){
+            let podDetailsVC = PODDetailsViewController()
+            let selectedPOD = allPods[indexPath.row - 1]
+            podDetailsVC.pod = selectedPOD
+            navigationController?.pushViewController(podDetailsVC, animated: true)
+        } else {
+            let podDetailsVC = PODDetailsViewController()
+            let selectedPOD = filteredPODs[indexPath.row]
+            podDetailsVC.pod = selectedPOD
+            navigationController?.pushViewController(podDetailsVC, animated: true)
         }
     }
     

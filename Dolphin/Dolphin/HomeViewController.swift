@@ -27,11 +27,14 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     }
     
     @IBOutlet weak var actionMenuBackground: UIView!
+    
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         // Enable Swipe gesture for sidebar
         revealViewController().panGestureRecognizer().enabled = true
+        
     }
     
     override func viewDidLoad() {
@@ -42,8 +45,8 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         setSearchRightButton()
         setupTabbarController()
         self.delegate = self
-        
     }
+    
     
     override func viewWillDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
@@ -67,7 +70,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         let controller4 = PopularViewController()
         let controller5 = PODsListViewController()
         
-        controller1.tabBarItem = UITabBarItem(title: "Latest", image: UIImage(named: "TabbarLatestIcon"), selectedImage: UIImage(named: "TabbarLatestIcon"))
+        controller1.tabBarItem = UITabBarItem(title: "Recent", image: UIImage(named: "TabbarLatestIcon"), selectedImage: UIImage(named: "TabbarLatestIcon"))
         controller2.tabBarItem = UITabBarItem(title: "My Feed", image: UIImage(named: "SidebarDolphinIcon"), selectedImage: UIImage(named: "SidebarDolphinIcon"))
         controller3.tabBarItem = UITabBarItem(title: "", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
         controller4.tabBarItem = UITabBarItem(title: "Popular", image: UIImage(named: "SidebarGlassesIcon"), selectedImage: UIImage(named: "SidebarGlassesIcon"))
