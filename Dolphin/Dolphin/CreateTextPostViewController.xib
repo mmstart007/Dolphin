@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -8,6 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateTextPostViewController" customModule="Dolphin" customModuleProvider="target">
             <connections>
+                <outlet property="postTagsTextView" destination="GSZ-yR-VeE" id="hHX-cN-v0W"/>
                 <outlet property="postTextView" destination="Jgf-FV-nbl" id="p8e-L7-Osh"/>
                 <outlet property="postTitleTextField" destination="QRN-OE-vQN" id="JXu-Ap-AdF"/>
                 <outlet property="postToFieldView" destination="26j-xS-0uU" id="vM5-nr-mGf"/>
@@ -93,11 +94,15 @@
                     </constraints>
                 </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jgf-FV-nbl">
-                    <rect key="frame" x="8" y="77" width="359" height="582"/>
+                    <rect key="frame" x="8" y="77" width="359" height="291"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSZ-yR-VeE" customClass="KSTokenView" customModule="KSTokenView">
+                    <rect key="frame" x="8" y="368" width="359" height="291"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -107,14 +112,18 @@
                 <constraint firstItem="QRN-OE-vQN" firstAttribute="width" secondItem="lDR-m9-Xa8" secondAttribute="width" id="3CQ-M7-Xns"/>
                 <constraint firstItem="QRN-OE-vQN" firstAttribute="top" secondItem="lDR-m9-Xa8" secondAttribute="bottom" constant="2" id="3E7-w0-R8i"/>
                 <constraint firstItem="lDR-m9-Xa8" firstAttribute="top" secondItem="26j-xS-0uU" secondAttribute="bottom" constant="-1" id="8bu-TH-b2I"/>
+                <constraint firstItem="GSZ-yR-VeE" firstAttribute="top" secondItem="Jgf-FV-nbl" secondAttribute="bottom" id="9EB-vw-M5n"/>
+                <constraint firstItem="GSZ-yR-VeE" firstAttribute="centerX" secondItem="U8U-cx-bXd" secondAttribute="centerX" id="FSR-5B-DlP"/>
                 <constraint firstItem="QRN-OE-vQN" firstAttribute="centerX" secondItem="lDR-m9-Xa8" secondAttribute="centerX" id="Lux-Ap-a7E"/>
                 <constraint firstItem="Jgf-FV-nbl" firstAttribute="width" secondItem="U8U-cx-bXd" secondAttribute="width" id="MvR-82-reF"/>
-                <constraint firstAttribute="bottom" secondItem="Jgf-FV-nbl" secondAttribute="bottom" constant="8" id="QWX-f4-ZPX"/>
+                <constraint firstAttribute="bottom" secondItem="GSZ-yR-VeE" secondAttribute="bottom" constant="8" id="Php-gQ-Djk"/>
                 <constraint firstItem="U8U-cx-bXd" firstAttribute="top" secondItem="QRN-OE-vQN" secondAttribute="bottom" constant="-1" id="RPL-Bk-Hhn"/>
                 <constraint firstAttribute="trailing" secondItem="26j-xS-0uU" secondAttribute="trailing" constant="8" id="URS-KM-7ef"/>
                 <constraint firstItem="26j-xS-0uU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="dRa-0H-WLk"/>
                 <constraint firstItem="Jgf-FV-nbl" firstAttribute="centerX" secondItem="U8U-cx-bXd" secondAttribute="centerX" id="fqK-qZ-AKT"/>
+                <constraint firstItem="Jgf-FV-nbl" firstAttribute="height" secondItem="GSZ-yR-VeE" secondAttribute="height" id="mKy-ib-eT3"/>
                 <constraint firstItem="Jgf-FV-nbl" firstAttribute="top" secondItem="U8U-cx-bXd" secondAttribute="bottom" constant="8" id="om8-jP-G0x"/>
+                <constraint firstItem="GSZ-yR-VeE" firstAttribute="width" secondItem="U8U-cx-bXd" secondAttribute="width" id="osN-aR-lop"/>
                 <constraint firstItem="lDR-m9-Xa8" firstAttribute="width" secondItem="26j-xS-0uU" secondAttribute="width" id="wb3-fz-yAd"/>
                 <constraint firstItem="26j-xS-0uU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="wxA-Xa-NSV"/>
             </constraints>

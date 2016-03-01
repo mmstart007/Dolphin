@@ -89,6 +89,7 @@
 		36B1F41C1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */; };
 		36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */; };
 		36B1F4201C0FA97D0091A1B3 /* PODCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B1F41F1C0FA97D0091A1B3 /* PODCollectionViewCell.xib */; };
+		36B818B51C8504D5003563FE /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B818B41C8504D5003563FE /* List.swift */; };
 		36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BE4CCB1C061524002E52D9 /* AppDelegate.swift */; };
 		36BE4CD11C061524002E52D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CCF1C061524002E52D9 /* Main.storyboard */; };
 		36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CD21C061524002E52D9 /* Assets.xcassets */; };
@@ -232,6 +233,7 @@
 		36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularPODsTableViewCell.xib; sourceTree = "<group>"; };
 		36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODCollectionViewCell.swift; sourceTree = "<group>"; };
 		36B1F41F1C0FA97D0091A1B3 /* PODCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODCollectionViewCell.xib; sourceTree = "<group>"; };
+		36B818B41C8504D5003563FE /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		36BE4CC81C061524002E52D9 /* Dolphin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dolphin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36BE4CCB1C061524002E52D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36BE4CD01C061524002E52D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 			isa = PBXGroup;
 			children = (
 				3687989A1C2B3E0D0088AC24 /* Utils.swift */,
+				36B818B41C8504D5003563FE /* List.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -964,6 +967,7 @@
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
 				365D76CE1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift in Sources */,
 				361F50841C652C3900153B6C /* UIView+DolphinExtensions.swift in Sources */,
+				36B818B51C8504D5003563FE /* List.swift in Sources */,
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
 				3616E49C1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,

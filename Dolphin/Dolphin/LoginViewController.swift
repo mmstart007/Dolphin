@@ -153,7 +153,36 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func signUpButtonTouchUpInside(sender: AnyObject) {
-        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+        var fieldsValidated = true
+        var errorTitle: String = ""
+        var errorMsg: String = ""
+        if !checkValidUsername() {
+            fieldsValidated = false
+            errorTitle = "Username Error"
+            errorMsg = "Username already in use"
+        } else if !checkValidPassword() {
+            fieldsValidated = false
+            errorTitle = "Password Error"
+            errorMsg = "Password should be at least 5 characters long"
+        }
+        if fieldsValidated {
+            navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+        } else {
+            let alert = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Auxiliary methods
+    
+    func checkValidPassword() -> Bool {
+        return signUpPasswordTextField.text?.characters.count > 5
+    }
+    
+    func checkValidUsername() -> Bool {
+        return signUpUsernameTextField.text != "test"
     }
     
     // MARK: Keyboard handling
