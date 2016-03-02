@@ -352,7 +352,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    override func keyboardWillHide(notification: NSNotification) {
         print("Keyboard hidden")
         writeCommentBottomConstraint.constant = 0
         UIView.animateWithDuration(0.25, animations: { () -> Void in
