@@ -48,7 +48,7 @@ class CreateTextPostViewController : DolphinViewController {
         postTagsTextView.placeholder = ""
         postTagsTextView.descriptionText = "Tags"
         postTagsTextView.maxTokenLimit = 15 //default is -1 for unlimited number of tokens
-        postTagsTextView.style = .Squared
+        postTagsTextView.style = .Rounded
         postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 150)
         postTagsTextView.font = UIFont.systemFontOfSize(14)
         

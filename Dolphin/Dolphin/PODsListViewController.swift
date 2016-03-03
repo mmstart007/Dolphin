@@ -145,12 +145,12 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = allPods[indexPath.row]
             podDetailsVC.pod = selectedPOD
-            navigationController?.pushViewController(podDetailsVC, animated: true)
+            checkPrivatePODs(podDetailsVC, pod: selectedPOD)
         } else {
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = filteredPODs[indexPath.row]
             podDetailsVC.pod = selectedPOD
-            navigationController?.pushViewController(podDetailsVC, animated: true)
+            checkPrivatePODs(podDetailsVC, pod: selectedPOD)
         }
     }
     
@@ -189,19 +189,20 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
         if (searchText == nil || searchText == "") && indexPath.row == 0 {
             let createPODVC = CreatePodViewController()
-            navigationController?.pushViewController(createPODVC, animated: true)
+            checkPrivatePODs(createPODVC, pod: nil)
         } else if (searchText == nil || searchText == ""){
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = allPods[indexPath.row - 1]
             podDetailsVC.pod = selectedPOD
-            navigationController?.pushViewController(podDetailsVC, animated: true)
+            checkPrivatePODs(podDetailsVC, pod: selectedPOD)
         } else {
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = filteredPODs[indexPath.row]
             podDetailsVC.pod = selectedPOD
-            navigationController?.pushViewController(podDetailsVC, animated: true)
+            checkPrivatePODs(podDetailsVC, pod: selectedPOD)
         }
     }
     
@@ -241,6 +242,24 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             myPODsCollectionView.reloadData()
         }
         self.parentViewController?.navigationItem.titleView = segmentedControl
+    }
+    
+    // MARK: - Auxiliary methods
+    
+    func checkPrivatePODs(goToViewController: UIViewController, pod: POD?) {
+        if pod != nil && pod!.podIsPrivate {
+            let alert = UIAlertController(title: "Access", message: "This is a PRIVATE POD, do you want to request access to it?", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Request", style: UIAlertActionStyle.Default, handler: { action in
+                self.navigationController?.pushViewController(goToViewController, animated: true)
+            }))
+            alert.addAction(UIAlertAction(title: "Not now", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            // show the alert
+            self.presentViewController(alert, animated: true, completion: nil)
+        } else {
+            navigationController?.pushViewController(goToViewController, animated: true)
+        }
     }
     
 }
