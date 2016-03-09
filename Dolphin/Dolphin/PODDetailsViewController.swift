@@ -83,7 +83,6 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
     
-    // MARK: TableView DataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2

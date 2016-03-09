@@ -1,4 +1,5 @@
 PODS:
+  - ActionSheetPicker-3.0 (2.0.5)
   - Crashlytics (3.6.0):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.5)
@@ -17,6 +18,7 @@ PODS:
   - UITextView+Placeholder (1.1.1)
 
 DEPENDENCIES:
+  - ActionSheetPicker-3.0
   - Crashlytics
   - Fabric
   - HMSegmentedControl
@@ -30,6 +32,7 @@ DEPENDENCIES:
   - UITextView+Placeholder
 
 SPEC CHECKSUMS:
+  ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
   Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
   Fabric: 338ffd3c2afcab120638907b4251189de9ad17b3
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d

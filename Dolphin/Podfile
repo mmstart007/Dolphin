@@ -13,4 +13,5 @@ target 'Dolphin' do
     pod "OAuthSwift", "~> 0.5.0"
     pod 'UITextView+Placeholder'
     pod 'NSDate-Time-Ago'
+    pod 'ActionSheetPicker-3.0'
 end

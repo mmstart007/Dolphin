@@ -151,6 +151,9 @@ class SidebarViewController : UIViewController {
     
     @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {
         print("Settings button pressed")
+        revealViewController().revealToggleAnimated(true)
+        let settingsVC = SettingsViewController()
+        homeViewController.navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     // Set all items non selected before setting the chosen one

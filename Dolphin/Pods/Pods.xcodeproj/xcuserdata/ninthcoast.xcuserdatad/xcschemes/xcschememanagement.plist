@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>ActionSheetPicker-3.0.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HMSegmentedControl.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,6 +62,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>4786595F9E660907F5828F19808FFE53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6B60F22D36FBF6AA4D907A2E91F5970F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>71C1DF39EE1271EA1147F993CA1439A0</key>
 		<dict>
 			<key>primary</key>
@@ -67,17 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9B8635004DBC08D3286E965AB9F40793</key>
+		<key>CAC56D94C3866B2AF2BFE5E01A30AD76</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BEA1DEBC4FE9BC421167E8D78F81A581</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C2331682E59A4F0F6F7718AB5A8154A5</key>
+		<key>CE0A701D8A271EFE0065667D13272921</key>
 		<dict>
 			<key>primary</key>
 			<true/>

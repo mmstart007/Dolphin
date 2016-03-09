@@ -147,7 +147,8 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func signUpButtonTouchUpInside(sender: AnyObject) {
-        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+        let createProfileVC = CreateProfileViewController()
+        navigationController?.pushViewController(createProfileVC, animated: true)
     }
     
     // MARK: Keyboard handling
