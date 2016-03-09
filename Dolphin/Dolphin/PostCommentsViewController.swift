@@ -62,7 +62,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         view.addGestureRecognizer(viewTapRecognizer)
     }
     
-    // MARK: TableView DataSource
+    // MARK: - TableView DataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

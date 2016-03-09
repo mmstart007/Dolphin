@@ -166,7 +166,8 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             errorMsg = "Password should be at least 5 characters long"
         }
         if fieldsValidated {
-            navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+            let createProfileVC = CreateProfileViewController()
+            navigationController?.pushViewController(createProfileVC, animated: true)
         } else {
             let alert = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)

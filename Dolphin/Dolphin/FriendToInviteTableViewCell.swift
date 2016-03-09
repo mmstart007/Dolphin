@@ -48,4 +48,14 @@ class FriendToInviteTableViewCell : CustomFontTableViewCell {
         friendNameLabel.text = friend.userName
     }
     
+    func configureWithPODMember(member: User) {
+        if member.userImageURL == "" {
+            friendImageView.image = UIImage(named: "UserPlaceholder")
+        } else {
+            friendImageView.sd_setImageWithURL(NSURL(string: member.userImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
+        }
+        friendNameLabel.text = member.userName
+        inviteButton.hidden = true
+    }
+    
 }
