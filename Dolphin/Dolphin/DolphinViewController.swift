@@ -11,11 +11,13 @@ import UIKit
 
 class DolphinViewController : DolphinCustomFontViewController {
     
+    var parentScrollView: UIScrollView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let tapGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
-//        self.view.addGestureRecognizer(tapGesture)
+        //        let tapGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
+        //        self.view.addGestureRecognizer(tapGesture)
         
     }
     
@@ -73,4 +75,34 @@ class DolphinViewController : DolphinCustomFontViewController {
         }
     }
     
+    // MARK: Handle Keyboard showing
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let activeView = self.view.findViewThatIsFirstResponder() {
+            if let keyboardSize = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size {
+                let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+                parentScrollView?.contentInset = contentInsets
+                parentScrollView?.scrollIndicatorInsets = contentInsets
+                var aRect = self.view.frame
+                aRect.size.height -= keyboardSize.height;
+                let activeViewAbsoluteFrame = activeView.convertRect(activeView.frame, toView: nil)
+                let distance = (UIScreen.mainScreen().bounds.height - keyboardSize.height) - (activeViewAbsoluteFrame.origin.y + activeViewAbsoluteFrame.size.height)
+                if !CGRectContainsPoint(aRect, activeViewAbsoluteFrame.origin) {
+                    parentScrollView?.scrollRectToVisible(activeViewAbsoluteFrame, animated: true)
+                }
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        let contentInsets = UIEdgeInsetsZero
+        parentScrollView?.contentInset = contentInsets
+        parentScrollView?.scrollIndicatorInsets = contentInsets
+        
+    }
+    
+    
 }
+

@@ -124,7 +124,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         return headerView
     }
     
-    // MARK: Keyboard management
+    // MARK: - Keyboard management
     
     func addKeyboardObservers() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillAppear:"), name: UIKeyboardWillShowNotification, object: nil)
@@ -143,7 +143,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    override func keyboardWillHide(notification: NSNotification) {
         print("Keyboard hidden")
         writeCommentBottomConstraint.constant = 0
         UIView.animateWithDuration(0.25, animations: { () -> Void in

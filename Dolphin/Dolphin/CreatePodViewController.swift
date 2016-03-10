@@ -16,6 +16,8 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     @IBOutlet weak var membersCollectionView: UICollectionView!
     @IBOutlet weak var leftCharactersLabel: UILabel!
     @IBOutlet weak var podNameTextField: UITextField!
+    @IBOutlet weak var podDescriptionTextView: UITextView!
+    
     let picker = UIImagePickerController()
     let maxNameCharacters = 20
     
@@ -40,12 +42,17 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         super.viewDidLoad()
         
         setBackButton()
+        setRightButtonItemWithText("Save", target: self, action: Selector("saveSettingsPressed:"))
         title = "Create a POD"
         
         membersCollectionView.registerNib(UINib(nibName: "UserImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "UserImageCollectionViewCell")
         membersCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         membersCollectionView.dataSource = self
         membersCollectionView.delegate   = self
+        
+        podDescriptionTextView.placeholder = "POD Description"
+        podDescriptionTextView.placeholderColor = UIColor.lightGrayColor()
+        podDescriptionTextView.textContainerInset = UIEdgeInsets(top: 0, left: 31, bottom: 0, right: 0)
         
         podNameTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         leftCharactersLabel.text = String(format: "%li / %li", arguments: [(podNameTextField!.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))!, maxNameCharacters])
@@ -161,6 +168,12 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     
     func textFieldDidChange(textField: UITextField) {
         leftCharactersLabel.text = String(format: "%li / %li", arguments: [textField.text!.characters.count, maxNameCharacters])
+    }
+    
+    // MARK: - Actions
+    
+    func saveSettingsPressed(sender: AnyObject) {
+        print("Save Pressed")
     }
     
 }

@@ -146,7 +146,9 @@ class SidebarViewController : UIViewController {
     @IBAction func logoutButtonTouchUpInside(sender: AnyObject) {
         print("Logout button pressed")
         revealViewController().revealToggleAnimated(true)
-        (UIApplication.sharedApplication().delegate as? AppDelegate)?.homeViewController.navigationController?.popToRootViewControllerAnimated(false)
+        let loginVC = LoginViewController()
+        let rootViewController = (UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController
+        rootViewController.navigationController?.pushViewController(loginVC, animated: true)
     }
     
     @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {

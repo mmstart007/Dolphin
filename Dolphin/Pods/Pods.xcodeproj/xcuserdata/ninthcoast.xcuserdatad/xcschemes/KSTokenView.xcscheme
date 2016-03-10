@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '21D12F1EB453EF5EED1027F1'
-               BlueprintName = 'Pods-Dolphin'
+               BlueprintIdentifier = '6D718F70F46DA070A4E92D87'
+               BlueprintName = 'KSTokenView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Pods_Dolphin.framework'>
+               BuildableName = 'KSTokenView.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

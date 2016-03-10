@@ -3,12 +3,17 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PostDetailsViewController" customModule="Dolphin" customModuleProvider="target">
             <connections>
+                <outlet property="chosenImageContainer" destination="u33-mK-VfI" id="gPC-bo-pwT"/>
+                <outlet property="chosenImageView" destination="mOe-yQ-vgJ" id="T8K-sK-gcp"/>
+                <outlet property="commentTextView" destination="KMG-uV-kz8" id="wAy-5k-blb"/>
                 <outlet property="tableView" destination="Fc8-KZ-BCv" id="Cyg-MM-YkG"/>
                 <outlet property="view" destination="iN0-l3-epB" id="iG5-H6-76Y"/>
+                <outlet property="writeCommentBottomConstraint" destination="hp2-Hz-eWQ" id="ayE-kz-yYd"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -17,23 +22,110 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Fc8-KZ-BCv">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="kzf-Ql-8jC"/>
                         <outlet property="delegate" destination="-1" id="UXF-bW-xcw"/>
                     </connections>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rsa-wZ-Qhr" userLabel="Write Comment View">
+                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bT2-jf-4mx" userLabel="Camera Button">
+                            <rect key="frame" x="2" y="8" width="41" height="33"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="bT2-jf-4mx" secondAttribute="height" multiplier="41:33" id="Yjx-uP-hV3"/>
+                                <constraint firstAttribute="height" constant="33" id="be0-5B-Gi9"/>
+                            </constraints>
+                            <state key="normal" image="CameraIcon"/>
+                            <connections>
+                                <action selector="selectImageButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="hbd-Xg-e9x"/>
+                            </connections>
+                        </button>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KMG-uV-kz8" userLabel="Comment Text View">
+                            <rect key="frame" x="44" y="8" width="274" height="33"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfF-J2-AvW">
+                            <rect key="frame" x="320" y="8" width="55" height="33"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="dfF-J2-AvW" secondAttribute="height" multiplier="5:3" id="V1z-Jx-hvO"/>
+                            </constraints>
+                            <state key="normal" title="Post">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="05U-2n-2ty"/>
+                        <constraint firstItem="KMG-uV-kz8" firstAttribute="top" secondItem="dfF-J2-AvW" secondAttribute="top" id="22g-S4-b7t"/>
+                        <constraint firstItem="KMG-uV-kz8" firstAttribute="height" secondItem="bT2-jf-4mx" secondAttribute="height" id="3zb-GQ-Rgn"/>
+                        <constraint firstItem="dfF-J2-AvW" firstAttribute="leading" secondItem="KMG-uV-kz8" secondAttribute="trailing" constant="2" id="Ecp-rx-3tI"/>
+                        <constraint firstAttribute="trailing" secondItem="dfF-J2-AvW" secondAttribute="trailing" id="MFK-VR-CjL"/>
+                        <constraint firstItem="KMG-uV-kz8" firstAttribute="top" secondItem="bT2-jf-4mx" secondAttribute="top" id="TLh-wD-Un4"/>
+                        <constraint firstItem="bT2-jf-4mx" firstAttribute="leading" secondItem="Rsa-wZ-Qhr" secondAttribute="leading" constant="2" id="cj4-1t-3cC"/>
+                        <constraint firstItem="KMG-uV-kz8" firstAttribute="bottom" secondItem="dfF-J2-AvW" secondAttribute="bottom" id="egv-cP-0IH"/>
+                        <constraint firstItem="KMG-uV-kz8" firstAttribute="bottom" secondItem="bT2-jf-4mx" secondAttribute="bottom" id="iov-JE-nDw"/>
+                        <constraint firstItem="bT2-jf-4mx" firstAttribute="centerY" secondItem="Rsa-wZ-Qhr" secondAttribute="centerY" id="uyX-yE-t8t"/>
+                        <constraint firstItem="KMG-uV-kz8" firstAttribute="leading" secondItem="bT2-jf-4mx" secondAttribute="trailing" constant="1" id="uyx-yT-GhS"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u33-mK-VfI">
+                    <rect key="frame" x="0.0" y="517" width="375" height="100"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mOe-yQ-vgJ">
+                            <rect key="frame" x="8" y="8" width="84" height="84"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="mOe-yQ-vgJ" secondAttribute="height" multiplier="1:1" id="Ie0-03-WIZ"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Z8-79-eB0">
+                            <rect key="frame" x="78" y="0.0" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="8Z8-79-eB0" secondAttribute="height" multiplier="1:1" id="WT2-e2-hct"/>
+                            </constraints>
+                            <state key="normal" image="DeleteImageIcon"/>
+                            <connections>
+                                <action selector="removeImageFromCommentButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="Dt7-No-hUt"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="mOe-yQ-vgJ" firstAttribute="leading" secondItem="u33-mK-VfI" secondAttribute="leading" constant="8" id="F8L-Vl-LmM"/>
+                        <constraint firstItem="8Z8-79-eB0" firstAttribute="width" secondItem="mOe-yQ-vgJ" secondAttribute="height" multiplier="2:7" id="asM-gx-hts"/>
+                        <constraint firstAttribute="height" constant="100" id="cel-ZO-LnM"/>
+                        <constraint firstAttribute="bottom" secondItem="mOe-yQ-vgJ" secondAttribute="bottom" constant="8" id="cz1-g5-kgs"/>
+                        <constraint firstItem="8Z8-79-eB0" firstAttribute="top" secondItem="mOe-yQ-vgJ" secondAttribute="top" constant="-8" id="dIa-AU-1vx"/>
+                        <constraint firstItem="mOe-yQ-vgJ" firstAttribute="top" secondItem="u33-mK-VfI" secondAttribute="top" constant="8" id="eJn-HQ-L8c"/>
+                        <constraint firstItem="8Z8-79-eB0" firstAttribute="trailing" secondItem="mOe-yQ-vgJ" secondAttribute="trailing" constant="10" id="t77-W7-j3q"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Fc8-KZ-BCv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KrP-y7-uOg"/>
                 <constraint firstItem="Fc8-KZ-BCv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="SaD-um-gmg"/>
-                <constraint firstAttribute="bottom" secondItem="Fc8-KZ-BCv" secondAttribute="bottom" id="TDf-Mo-adV"/>
+                <constraint firstItem="Rsa-wZ-Qhr" firstAttribute="top" secondItem="Fc8-KZ-BCv" secondAttribute="bottom" id="Xks-zy-Ml6"/>
+                <constraint firstItem="Rsa-wZ-Qhr" firstAttribute="top" secondItem="u33-mK-VfI" secondAttribute="bottom" id="bIj-Ue-6O3"/>
+                <constraint firstItem="Rsa-wZ-Qhr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cis-a0-S0l"/>
+                <constraint firstAttribute="trailing" secondItem="Rsa-wZ-Qhr" secondAttribute="trailing" id="geN-ze-8q7"/>
+                <constraint firstAttribute="bottom" secondItem="Rsa-wZ-Qhr" secondAttribute="bottom" id="hp2-Hz-eWQ"/>
+                <constraint firstAttribute="trailing" secondItem="u33-mK-VfI" secondAttribute="trailing" id="kaW-qv-XAg"/>
                 <constraint firstAttribute="trailing" secondItem="Fc8-KZ-BCv" secondAttribute="trailing" id="l2o-Cs-hKT"/>
+                <constraint firstItem="u33-mK-VfI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tGc-yA-ozX"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="336.5" y="292.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="CameraIcon" width="25" height="20"/>
+        <image name="DeleteImageIcon" width="255" height="255"/>
+    </resources>
 </document>

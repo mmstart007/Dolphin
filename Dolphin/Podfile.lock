@@ -5,6 +5,7 @@ PODS:
   - Fabric (1.6.5)
   - HMSegmentedControl (1.5.2)
   - hpple (0.2.0)
+  - KSTokenView (2.3.1)
   - KTCenterFlowLayout (1.1.1)
   - NSDate-Time-Ago (1.0.1)
   - OAuthSwift (0.5.0)
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - Fabric
   - HMSegmentedControl
   - hpple
+  - KSTokenView (~> 2.3.0)
   - KTCenterFlowLayout
   - NSDate-Time-Ago
   - OAuthSwift (~> 0.5.0)
@@ -37,6 +39,7 @@ SPEC CHECKSUMS:
   Fabric: 338ffd3c2afcab120638907b4251189de9ad17b3
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
+  KSTokenView: 15150f0aec162ac5b61e7cc10ba356e02da8f355
   KTCenterFlowLayout: eded079c349450dea12f7cf94b424d1bc3205519
   NSDate-Time-Ago: e9de167d0659ebe465c273e833e7b582f061fc41
   OAuthSwift: f2e0de083739da5697be095c9af2671242a4ed8b

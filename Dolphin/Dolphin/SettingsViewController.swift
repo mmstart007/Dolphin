@@ -33,6 +33,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         
         title = "Settings"
         setBackButton()
+        setRightButtonItemWithText("Save", target: self, action: Selector("saveSettingsPressed:"))
         tableViewSettings.delegate = self
         tableViewSettings.dataSource = self
         registerCells()
@@ -198,6 +199,10 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     
     }
     
+    func setAppearence() {
+        tableViewSettings.backgroundColor = UIColor.groupTableViewBackgroundColor()
+    }
+    
     // MARK: - SwitchTableViewCell delegate
     
     func toggleSwitch(enabled: Bool, tag: Int) {
@@ -208,6 +213,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         } else if tag == 1 {
             // Push Notifications
         }
+    }
+    
+    // MARK: - Actions
+    
+    func saveSettingsPressed(sender: AnyObject) {
+        print("Save Pressed")
     }
 
 

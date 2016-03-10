@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Dolphin/ActionSheetPicker_3_0.framework"
   install_framework "Pods-Dolphin/HMSegmentedControl.framework"
+  install_framework "Pods-Dolphin/KSTokenView.framework"
   install_framework "Pods-Dolphin/KTCenterFlowLayout.framework"
   install_framework "Pods-Dolphin/NSDate_Time_Ago.framework"
   install_framework "Pods-Dolphin/OAuthSwift.framework"
@@ -96,6 +97,7 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Dolphin/ActionSheetPicker_3_0.framework"
   install_framework "Pods-Dolphin/HMSegmentedControl.framework"
+  install_framework "Pods-Dolphin/KSTokenView.framework"
   install_framework "Pods-Dolphin/KTCenterFlowLayout.framework"
   install_framework "Pods-Dolphin/NSDate_Time_Ago.framework"
   install_framework "Pods-Dolphin/OAuthSwift.framework"

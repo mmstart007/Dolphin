@@ -49,6 +49,12 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         navigationController?.navigationBarHidden = true
     }
     
+    override func viewDidAppear(animated: Bool) {
+        if navigationController!.viewControllers[0].isKindOfClass(HomeViewController) {
+            navigationController?.setViewControllers([self], animated: true)
+        }
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -143,12 +149,41 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     // MARK: Actions
     
     @IBAction func loginButtonTouchUpInside(sender: AnyObject) {
-        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)        
     }
     
     @IBAction func signUpButtonTouchUpInside(sender: AnyObject) {
-        let createProfileVC = CreateProfileViewController()
-        navigationController?.pushViewController(createProfileVC, animated: true)
+        var fieldsValidated = true
+        var errorTitle: String = ""
+        var errorMsg: String = ""
+        if !checkValidUsername() {
+            fieldsValidated = false
+            errorTitle = "Username Error"
+            errorMsg = "Username already in use"
+        } else if !checkValidPassword() {
+            fieldsValidated = false
+            errorTitle = "Password Error"
+            errorMsg = "Password should be at least 5 characters long"
+        }
+        if fieldsValidated {
+            let createProfileVC = CreateProfileViewController()
+            navigationController?.pushViewController(createProfileVC, animated: true)
+        } else {
+            let alert = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Auxiliary methods
+    
+    func checkValidPassword() -> Bool {
+        return signUpPasswordTextField.text?.characters.count > 5
+    }
+    
+    func checkValidUsername() -> Bool {
+        return signUpUsernameTextField.text != "test"
     }
     
     // MARK: Keyboard handling
