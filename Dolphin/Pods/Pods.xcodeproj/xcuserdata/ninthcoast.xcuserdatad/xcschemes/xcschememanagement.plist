@@ -2,6 +2,59 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>ActionSheetPicker-3.0.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>HMSegmentedControl.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>KSTokenView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>KTCenterFlowLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>NSDate-Time-Ago.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>OAuthSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Dolphin.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>UITextView+Placeholder.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>hpple.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>053D239EEF3E6F84F72486C4F3649A77</key>
@@ -19,17 +72,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4786595F9E660907F5828F19808FFE53</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>63D4020419748D12B33C0C04E0AF9DC7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6B60F22D36FBF6AA4D907A2E91F5970F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -45,11 +88,6 @@
 			<true/>
 		</dict>
 		<key>887089F26E2D435750153B19EC22F1F3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CAC56D94C3866B2AF2BFE5E01A30AD76</key>
 		<dict>
 			<key>primary</key>
 			<true/>
