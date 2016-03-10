@@ -42,6 +42,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         super.viewDidLoad()
         
         setBackButton()
+        setRightButtonItemWithText("Save", target: self, action: Selector("saveSettingsPressed:"))
         title = "Create a POD"
         
         membersCollectionView.registerNib(UINib(nibName: "UserImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "UserImageCollectionViewCell")
@@ -167,6 +168,12 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     
     func textFieldDidChange(textField: UITextField) {
         leftCharactersLabel.text = String(format: "%li / %li", arguments: [textField.text!.characters.count, maxNameCharacters])
+    }
+    
+    // MARK: - Actions
+    
+    func saveSettingsPressed(sender: AnyObject) {
+        print("Save Pressed")
     }
     
 }

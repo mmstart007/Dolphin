@@ -35,6 +35,22 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         tableViewPosts.estimatedRowHeight = 400
         tableViewPosts.backgroundColor    = UIColor.lightGrayBackground()
         
+        // Add bottom blue bar
+        let fakeTabBar = UIView(frame: CGRect(x: 0, y: UIScreen.mainScreen().bounds.size.height - 113, width: UIScreen.mainScreen().bounds.size.width, height: 49))
+        fakeTabBar.backgroundColor = UIColor.blueDolphin()
+        
+        // Add plus button
+        let plusButton = UIButton(frame: CGRect(x: (UIScreen.mainScreen().bounds.size.width / 2.0) - 40, y: UIScreen.mainScreen().bounds.size.height - 130, width: 80, height: 80))
+        plusButton.enabled = true
+        plusButton.layer.cornerRadius = 40
+        plusButton.layer.borderColor = UIColor.whiteColor().CGColor
+        plusButton.layer.borderWidth = 3
+        plusButton.setImage(UIImage(named: "TabbarPlusIcon"), forState: .Normal)
+        plusButton .addTarget(self , action: "plusButtonTouchUpInside", forControlEvents: .TouchUpInside)
+        plusButton.backgroundColor = UIColor.blueDolphin()
+        self.view.addSubview(fakeTabBar)
+        self.view.addSubview(plusButton)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,6 +139,13 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
         
+    }
+    
+    // MARK: - Actions
+    
+    func plusButtonTouchUpInside() {
+        let createPODVC = CreatePodViewController()
+        navigationController?.pushViewController(createPODVC, animated: true)
     }
     
 }
