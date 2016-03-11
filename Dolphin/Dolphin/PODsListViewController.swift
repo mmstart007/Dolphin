@@ -192,17 +192,17 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         
         if (searchText == nil || searchText == "") && indexPath.row == 0 {
             let createPODVC = CreatePodViewController()
-            checkPrivatePODs(createPODVC, pod: nil)
+            navigationController?.pushViewController(createPODVC, animated: true)
         } else if (searchText == nil || searchText == ""){
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = allPods[indexPath.row - 1]
             podDetailsVC.pod = selectedPOD
-            checkPrivatePODs(podDetailsVC, pod: selectedPOD)
+            navigationController?.pushViewController(podDetailsVC, animated: true)
         } else {
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = filteredPODs[indexPath.row]
             podDetailsVC.pod = selectedPOD
-            checkPrivatePODs(podDetailsVC, pod: selectedPOD)
+            navigationController?.pushViewController(podDetailsVC, animated: true)
         }
     }
     

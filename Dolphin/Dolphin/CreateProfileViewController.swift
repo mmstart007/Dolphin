@@ -56,7 +56,7 @@ class CreateProfileViewController: DolphinViewController {
     
     @IBAction func gradeButtonTouchUpInside(sender: AnyObject) {
         
-        let grades = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
+        let grades = ["Pre-K", "K", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
         
         ActionSheetStringPicker.showPickerWithTitle("Select a Grade", rows: grades, initialSelection: 1, doneBlock: {
             picker, value, index in
@@ -73,7 +73,9 @@ class CreateProfileViewController: DolphinViewController {
     
     @IBAction func subjectButtonTouchUpInside(sender: AnyObject) {
         
-        let subjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Music", "History", "Geography"];
+        let subjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Music", "History", "Geography"
+            , "Physical", "Education", "Health", "Music", "Art", "Foreign Language", "Social Studies", "English Language Arts"
+            , "Counseling", "STEM", "Science"];
         
         ActionSheetStringPicker.showPickerWithTitle("Select a Subject", rows: subjects, initialSelection: 1, doneBlock: {
             picker, value, index in
