@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SSKeychain
     
 class SidebarViewController : UIViewController {
     
@@ -146,6 +147,18 @@ class SidebarViewController : UIViewController {
     @IBAction func logoutButtonTouchUpInside(sender: AnyObject) {
         print("Logout button pressed")
         revealViewController().revealToggleAnimated(true)
+        // remove user token
+        // Delete
+        let deleteQuery = SSKeychainQuery()
+        deleteQuery.service = Constants.KeychainConfig.Service
+        deleteQuery.account = Constants.KeychainConfig.Account
+        do {
+            try deleteQuery.deleteItem()            
+        }
+        catch {
+            // Handle error
+            print("Error: token not removed from keychain")
+        }
         let loginVC = LoginViewController()
         let rootViewController = (UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController
         rootViewController.navigationController?.pushViewController(loginVC, animated: true)

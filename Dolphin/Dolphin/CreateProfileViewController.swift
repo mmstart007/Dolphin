@@ -24,7 +24,7 @@ class CreateProfileViewController: DolphinViewController {
         super.viewDidLoad()
         
         Utils.setFontFamilyForView(self.view, includeSubViews: true)
-        setBackButton()
+        navigationItem.hidesBackButton = true
         setNavBarStyle()
     }
     

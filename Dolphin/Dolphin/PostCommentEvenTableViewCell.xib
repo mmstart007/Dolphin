@@ -34,6 +34,7 @@
                     <rect key="frame" x="181" y="8" width="51" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="SFe-pJ-38N"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="51" id="rYN-U8-1n1"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -56,27 +57,16 @@
                 <constraint firstItem="2dl-Ze-TEU" firstAttribute="width" secondItem="gT4-Aq-Qjx" secondAttribute="height" multiplier="34:25" id="7au-gh-vob"/>
                 <constraint firstItem="gT4-Aq-Qjx" firstAttribute="top" secondItem="khA-WG-1nN" secondAttribute="top" constant="8" id="BQ5-1B-pKI"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gT4-Aq-Qjx" secondAttribute="bottom" constant="8" id="Cmc-Dw-DD1"/>
-                <constraint firstAttribute="bottom" secondItem="dMR-x7-LIS" secondAttribute="bottom" constant="8" id="Mi1-CH-SVB"/>
                 <constraint firstItem="2dl-Ze-TEU" firstAttribute="top" secondItem="khA-WG-1nN" secondAttribute="top" constant="8" id="N5C-J4-t6J"/>
-                <constraint firstAttribute="bottom" secondItem="dMR-x7-LIS" secondAttribute="bottom" constant="14" id="TAm-Ue-5Nm"/>
                 <constraint firstItem="2dl-Ze-TEU" firstAttribute="leading" secondItem="xh3-ZG-2fG" secondAttribute="trailing" constant="9" id="Uo9-si-WuA"/>
                 <constraint firstItem="2dl-Ze-TEU" firstAttribute="top" secondItem="gT4-Aq-Qjx" secondAttribute="top" id="WaJ-4J-JGf"/>
                 <constraint firstAttribute="trailing" secondItem="gT4-Aq-Qjx" secondAttribute="trailing" constant="8" id="b79-yI-MdJ"/>
-                <constraint firstAttribute="bottom" secondItem="dMR-x7-LIS" secondAttribute="bottom" constant="12" id="bZq-BX-3Yj"/>
                 <constraint firstItem="dMR-x7-LIS" firstAttribute="leading" secondItem="khA-WG-1nN" secondAttribute="leading" constant="8" id="g8P-c5-8Lh"/>
-                <constraint firstItem="xh3-ZG-2fG" firstAttribute="width" secondItem="2dl-Ze-TEU" secondAttribute="height" multiplier="31:16" constant="20" id="pH5-Rx-GJz"/>
                 <constraint firstItem="dMR-x7-LIS" firstAttribute="top" secondItem="2dl-Ze-TEU" secondAttribute="bottom" constant="-5" id="sCq-kz-jIi"/>
                 <constraint firstItem="gT4-Aq-Qjx" firstAttribute="leading" secondItem="2dl-Ze-TEU" secondAttribute="trailing" constant="8" id="sKx-lQ-hcg"/>
                 <constraint firstAttribute="bottom" secondItem="dMR-x7-LIS" secondAttribute="bottom" constant="8" id="z4b-Bj-3G1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="Mi1-CH-SVB"/>
-                    <exclude reference="TAm-Ue-5Nm"/>
-                    <exclude reference="bZq-BX-3Yj"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="postCommentDateLabel" destination="xh3-ZG-2fG" id="Xzu-sy-2tN"/>
                 <outlet property="postCommentTextView" destination="dMR-x7-LIS" id="BCQ-48-eXD"/>
@@ -84,7 +74,7 @@
                 <outlet property="postCommentUserImageView" destination="gT4-Aq-Qjx" id="uoq-hC-dFJ"/>
                 <outlet property="postCommentUserNameLabel" destination="2dl-Ze-TEU" id="4a9-TE-upH"/>
             </connections>
-            <point key="canvasLocation" x="531.5" y="342.5"/>
+            <point key="canvasLocation" x="531.5" y="342"/>
         </view>
     </objects>
 </document>

@@ -8,9 +8,12 @@
 
 import Foundation
 import UIKit
+import SSKeychain
+import SVProgressHUD
 
 class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     
+    let networkController = NetworkController.sharedInstance
     
     @IBOutlet weak var centerLogoVerticallyConstraint: NSLayoutConstraint!
     @IBOutlet weak var logoTopSpaceToViewConstraint: NSLayoutConstraint!
@@ -149,7 +152,39 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     // MARK: Actions
     
     @IBAction func loginButtonTouchUpInside(sender: AnyObject) {
-        navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)        
+        let deviceId: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
+        
+        SVProgressHUD.showWithStatus("Signing")
+        networkController.getTokenByDeviceId(deviceId, completionHandler: { (token, error) -> () in
+            if error == nil {
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.apiToken = token
+                // save the user token in keychain
+                let newQuery = SSKeychainQuery()
+                newQuery.password = token
+                newQuery.service  = Constants.KeychainConfig.Service
+                newQuery.account  = Constants.KeychainConfig.Account
+                newQuery.label    = Constants.KeychainConfig.TokenLabel
+                do {
+                    try newQuery.save()
+                    self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+                }
+                catch {
+                    // Handle error
+                    print("Error: token not saved in keychain")
+                }
+                SVProgressHUD.dismiss()
+                
+            } else {
+                SVProgressHUD.dismiss()
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Login failure", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        })
+        
     }
     
     @IBAction func signUpButtonTouchUpInside(sender: AnyObject) {
@@ -160,14 +195,55 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             fieldsValidated = false
             errorTitle = "Username Error"
             errorMsg = "Username already in use"
+        } else if !checkValidMail() {
+            fieldsValidated = false
+            errorTitle = "Mail Error"
+            errorMsg = "Wrong format"
         } else if !checkValidPassword() {
             fieldsValidated = false
             errorTitle = "Password Error"
             errorMsg = "Password should be at least 5 characters long"
         }
         if fieldsValidated {
-            let createProfileVC = CreateProfileViewController()
-            navigationController?.pushViewController(createProfileVC, animated: true)
+            
+            // fields validated, reigster user
+            let deviceId: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
+            let name: String = ""
+            let avatarImage: String = ""
+            let email: String = signUpEmailTextField.text!
+            let password: String = signUpPasswordTextField.text!
+            let user = User(deviceId: deviceId, name: name, imageURL: avatarImage, email: email, password: password)
+            SVProgressHUD.showWithStatus("Signing up")
+            networkController.registerUser(user, completionHandler: { (token, error) -> () in
+                if error == nil {
+                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    appDelegate.apiToken = token
+                    // save the user token in keychain
+                    let newQuery = SSKeychainQuery()
+                    newQuery.password = token
+                    newQuery.service  = Constants.KeychainConfig.Service
+                    newQuery.account  = Constants.KeychainConfig.Account
+                    newQuery.label    = Constants.KeychainConfig.TokenLabel
+                    do {
+                        try newQuery.save()
+                        let createProfileVC = CreateProfileViewController()
+                        self.navigationController?.pushViewController(createProfileVC, animated: true)
+                    }
+                    catch {
+                        // Handle error
+                        print("Error: token not saved in keychain")
+                    }
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    SVProgressHUD.dismiss()
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Signup failure", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            })
         } else {
             let alert = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
@@ -179,11 +255,18 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Auxiliary methods
     
     func checkValidPassword() -> Bool {
-        return signUpPasswordTextField.text?.characters.count > 5
+        return signUpPasswordTextField.text?.characters.count >= 5
     }
     
     func checkValidUsername() -> Bool {
         return signUpUsernameTextField.text != "test"
+    }
+    
+    func checkValidMail() -> Bool {
+        let emailRegex = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegex)
+        return emailTest.evaluateWithObject(signUpEmailTextField.text)
     }
     
     // MARK: Keyboard handling

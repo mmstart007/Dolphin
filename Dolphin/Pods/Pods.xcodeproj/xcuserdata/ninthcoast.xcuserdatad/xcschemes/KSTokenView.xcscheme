@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '6D718F70F46DA070A4E92D87'
+               BlueprintIdentifier = '7443E935A77EAD4793983354'
                BlueprintName = 'KSTokenView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'KSTokenView.framework'>

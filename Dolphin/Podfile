@@ -15,4 +15,8 @@ target 'Dolphin' do
     pod 'NSDate-Time-Ago'
     pod 'KSTokenView', '~> 2.3.0'
     pod 'ActionSheetPicker-3.0'
+    pod 'Alamofire', '~> 3.0'
+    pod 'SSKeychain'
+    pod 'SVProgressHUD'
+    pod 'SVPullToRefresh'
 end

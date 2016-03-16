@@ -10,45 +10,63 @@ import Foundation
 
 class Post : NSObject {
     
-    enum PostType: String {
-     
-        case URL = "URL", Photo = "PHOTO", Text = "TEXT"
-        
-    }
-    
     func postColor() -> UIColor {
-        switch(self.postType!) {
-        case .URL:
+        switch(self.postType!.name!) {
+        case "url":
             return UIColor(red: 155/255.0, green: 230/255.0, blue: 88/255.0, alpha: 1)
-        case .Photo:
+        case "image":
             return UIColor(red: 40/255.0, green: 231/255.0, blue: 216/255.0, alpha: 1)
-        case .Text:
+        case "text":
             return UIColor(red: 232/255.0, green: 97/255.0, blue: 39/255.0, alpha: 1)
+        default:
+            return UIColor.blackColor()
         }
     }
     
+    var postId: Int?
     var postUser: User?
-    var postImageURL: String?
+    var postImage: Image?
     var postType: PostType?
+    var postTopics: [Topic]?
     var postHeader: String?
     var postText: String?
     var postDate: NSDate?
     var postNumberOfLikes: Int?
     var postNumberOfComments: Int?
     var postComments: [PostComment]?
-    var isLikedByUser: Bool
+    var isLikedByUser: Bool = false
     
-    init(user: User, imageURL: String, type: PostType, header: String, text: String, date: NSDate,
-        numberOfLikes: Int, numberOfComments: Int, comments: [PostComment], isLiked: Bool) {
-        self.postUser             = user
-        self.postImageURL         = imageURL
-        self.postType             = type
-        self.postHeader           = header
-        self.postText             = text
-        self.postDate             = date
-        self.postNumberOfLikes    = numberOfLikes
-        self.postNumberOfComments = numberOfComments
-        self.postComments         = comments
-        self.isLikedByUser        = isLiked
+
+    
+    convenience init(jsonObject: AnyObject) {
+        self.init()
+        
+        let postJsonObject = jsonObject as? [String: AnyObject]
+        if let userJson = postJsonObject!["user"] as? [String: AnyObject] {
+            self.postUser  = User(jsonObject: userJson)
+        }
+        if let imageJson = postJsonObject!["image"] as? [String: AnyObject] {
+            self.postImage = Image(jsonObject: imageJson)
+        }
+        if let typeJson = postJsonObject!["type"] as? [String: AnyObject] {
+            self.postType = PostType(jsonObject: typeJson)
+        }
+        self.postTopics = []
+        if let topicsJsonArray = postJsonObject!["topics"] as? [[String: AnyObject]] {
+            for elem in topicsJsonArray {
+                self.postTopics?.append(Topic(jsonObject: elem))
+            }
+        }
+        self.postNumberOfLikes    = postJsonObject!["likes_count"] as? Int
+        self.postNumberOfComments = postJsonObject!["comments_count"] as? Int
+        self.postText             = postJsonObject!["body"] as? String
+        self.postHeader           = postJsonObject!["title"] as? String
+        self.postId               = postJsonObject!["id"] as? Int
+        let dateString            = postJsonObject!["created_at"] as? String
+        let dateFormatter         = NSDateFormatter()
+        dateFormatter.dateFormat  = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+        self.postDate             = dateFormatter.dateFromString(dateString!)
+        self.postComments         = []
+        
     }
 }

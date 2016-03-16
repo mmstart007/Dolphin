@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HMSegmentedControl.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -44,6 +49,21 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SSKeychain.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SVPullToRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UITextView+Placeholder.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -67,7 +87,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>373379D62A01697E49A9868FF5C46F81</key>
+		<key>3C4F65099069430C3C4D80EEC74CE42C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>49645AEF8BAF9598E66DDDF42D96A722</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +102,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>6F629A73C61D1238189854F39A855334</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>71C1DF39EE1271EA1147F993CA1439A0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7FE8154AFD0B8D7CB73A62FC2285B98F</key>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7CCFC60E5613272014B182D2517C4DFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,17 +127,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>BA5FB2FFB894676626687504464FD0EB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>CE0A701D8A271EFE0065667D13272921</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D635F027F0A6FD04B98B790907265430</key>
+		<key>CF6EA62D5A1135848A7D79A83D7B83B0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EB18F8506824E59413333FC7C3BB5DC8</key>
+		<key>D635F027F0A6FD04B98B790907265430</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -34,16 +34,17 @@ class PostCommentEvenTableViewCell : CustomFontTableViewCell {
     
     func configureWithPostComment(comment: PostComment) {
         postCommentUserImageView.sd_setImageWithURL(NSURL(string: (comment.postCommentUser?.userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
-        self.layer.cornerRadius                      = 5
-        postCommentTextView.text                     = comment.postCommentText
-        postCommentUserNameLabel.text                = comment.postCommentUser?.userName
+        self.layer.cornerRadius                               = 5
+        postCommentTextView.text                              = comment.postCommentText
+        postCommentTextView.textContainer.lineFragmentPadding = 0
+        postCommentUserNameLabel.text                         = comment.postCommentUser?.userName
         if let date = comment.postCommentDate {
-            postCommentDateLabel.text                = date.formattedAsTimeAgo()
+            postCommentDateLabel.text = date.formattedAsTimeAgo()
         }
-        postCommentUserImageView.layer.cornerRadius  = postCommentUserImageView.frame.size.width / 2.0
-        postCommentUserImageView.layer.masksToBounds = true
-        postCommentTextView.textColor                = UIColor.lightGrayColor()
-        postCommentTextView.textAlignment            = .Right
+        postCommentUserImageView.layer.cornerRadius           = postCommentUserImageView.frame.size.width / 2.0
+        postCommentUserImageView.layer.masksToBounds          = true
+        postCommentTextView.textColor                         = UIColor.lightGrayColor()
+        postCommentTextView.textAlignment                     = .Right
         let fixedWidth = postCommentTextView.frame.size.width
         postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))

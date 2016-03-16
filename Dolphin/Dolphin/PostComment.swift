@@ -10,14 +10,31 @@ import Foundation
 
 class PostComment : NSObject {
     
+    var postCommentId: Int?
     var postCommentUser: User?
     var postCommentText: String?
     var postCommentDate: NSDate?
     
-    init(user: User, text: String, date: NSDate) {
+    convenience init(user: User, text: String, date: NSDate) {
+        self.init()
         self.postCommentUser = user
         self.postCommentText = text
         self.postCommentDate = date
+    }
+    
+    convenience init(jsonObject: AnyObject) {
+        self.init()
+        
+        let postJsonObject       = jsonObject as? [String: AnyObject]
+
+        self.postCommentId       = postJsonObject!["id"] as? Int
+        self.postCommentUser     = User(jsonObject: postJsonObject!["user"] as! [String: AnyObject])
+        self.postCommentText     = postJsonObject!["body"] as? String
+        let dateString           = postJsonObject!["created_at"] as? String
+        let dateFormatter        = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+        self.postCommentDate     = dateFormatter.dateFromString(dateString!)
+        
     }
     
 }

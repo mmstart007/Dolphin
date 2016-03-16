@@ -85,23 +85,31 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Dolphin/ActionSheetPicker_3_0.framework"
+  install_framework "Pods-Dolphin/Alamofire.framework"
   install_framework "Pods-Dolphin/HMSegmentedControl.framework"
   install_framework "Pods-Dolphin/KSTokenView.framework"
   install_framework "Pods-Dolphin/KTCenterFlowLayout.framework"
   install_framework "Pods-Dolphin/NSDate_Time_Ago.framework"
   install_framework "Pods-Dolphin/OAuthSwift.framework"
   install_framework "Pods-Dolphin/SDWebImage.framework"
+  install_framework "Pods-Dolphin/SSKeychain.framework"
+  install_framework "Pods-Dolphin/SVProgressHUD.framework"
+  install_framework "Pods-Dolphin/SVPullToRefresh.framework"
   install_framework "Pods-Dolphin/UITextView_Placeholder.framework"
   install_framework "Pods-Dolphin/hpple.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Dolphin/ActionSheetPicker_3_0.framework"
+  install_framework "Pods-Dolphin/Alamofire.framework"
   install_framework "Pods-Dolphin/HMSegmentedControl.framework"
   install_framework "Pods-Dolphin/KSTokenView.framework"
   install_framework "Pods-Dolphin/KTCenterFlowLayout.framework"
   install_framework "Pods-Dolphin/NSDate_Time_Ago.framework"
   install_framework "Pods-Dolphin/OAuthSwift.framework"
   install_framework "Pods-Dolphin/SDWebImage.framework"
+  install_framework "Pods-Dolphin/SSKeychain.framework"
+  install_framework "Pods-Dolphin/SVProgressHUD.framework"
+  install_framework "Pods-Dolphin/SVPullToRefresh.framework"
   install_framework "Pods-Dolphin/UITextView_Placeholder.framework"
   install_framework "Pods-Dolphin/hpple.framework"
 fi

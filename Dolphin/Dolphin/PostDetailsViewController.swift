@@ -8,15 +8,16 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 class PostDetailsViewController : DolphinViewController, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
-    
+    let networkController = NetworkController.sharedInstance
     let commentTextViewPlaceHolder: String! = "Write a comment..."
     let picker = UIImagePickerController()
     
     var post: Post?
-    var topics: [String] = []
+    var topics: [Topic]?
     var contentOffset: CGFloat = 0
     var actionMenu: UIView? = nil
     var chosenImage: UIImage? = nil
@@ -52,10 +53,15 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         tableView.separatorStyle = .None
         tableView.estimatedRowHeight = 10
         
-        // Test data
-        topics = ["ECONOMICS", "POLITICS", "COMPUTER SCIENCE", "SYRIA", "K-12"]
-        
         addKeyboardObservers()
+        
+        topics = post?.postTopics
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        loadComments()
     }
     
     func setAppearance() {
@@ -181,7 +187,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if (post?.postType != .Text) {
+            if (post?.postType?.name != "") {
                 return 1
             } else {
                 return 0
@@ -293,7 +299,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return topics.count
+        return topics!.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -301,13 +307,13 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         if cell == nil {
             cell = TopicCollectionViewCell()
         }
-        cell?.configureWithName(topics[indexPath.row].uppercaseString, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
+        cell?.configureWithName(topics![indexPath.row].name!.uppercaseString, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
         collectionView.userInteractionEnabled = true
         return cell!
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let text = topics[indexPath.row].uppercaseString
+        let text = topics![indexPath.row].name!.uppercaseString
         let font = UIFont.systemFontOfSize(16)
         let textString = text as NSString
         
@@ -434,6 +440,27 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         print("imagePickerControllerDidCancel")
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - Auxiliary methods
+    func loadComments() {
+        
+        SVProgressHUD.showWithStatus("Loading")
+        networkController.getPostComments(String(post!.postId!)) { (postComments, error) -> () in
+            if error == nil {
+                self.post?.postComments = postComments
+                self.tableView.reloadData()
+                SVProgressHUD.dismiss()
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
+            }
+        }
     }
     
 }

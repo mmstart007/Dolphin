@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 class FeedViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -16,8 +17,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     let networkController = NetworkController.sharedInstance
     var cells: [PostTableViewCell] = []
     var myLikes: Bool = false
+    var allPosts: [Post] = []
     var filteredPosts: [Post] = []
     var searchText: String? = nil
+    var isDataLoaded: Bool = false
 
     init(likes: Bool) {
         super.init(nibName: "FeedViewController", bundle: nil)
@@ -28,11 +31,16 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.postsTableView.reloadData()
+        if !isDataLoaded {
+            loadData(false)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -52,6 +60,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         postsTableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
         postsTableView.separatorStyle     = .None
         postsTableView.estimatedRowHeight = 400
+        
+        postsTableView.addPullToRefreshWithActionHandler { () -> Void in
+            self.loadData(true)
+        }
 
     }
     
@@ -68,7 +80,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             if searchText != nil && searchText != "" {
                 return filteredPosts.count
             } else {
-                return networkController.posts.count
+                return allPosts.count
             }
             
         }
@@ -85,7 +97,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             if searchText != nil && searchText != "" {
                 cell?.configureWithPost(filteredPosts[indexPath.row])
             } else {
-                cell?.configureWithPost(networkController.posts[indexPath.row])
+                cell?.configureWithPost(allPosts[indexPath.row])
             }
         }
         
@@ -107,7 +119,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             if searchText != nil && searchText != "" {
                 postDetailsVC.post = filteredPosts[indexPath.row]
             } else {
-                postDetailsVC.post = networkController.posts[indexPath.row]
+                postDetailsVC.post = allPosts[indexPath.row]
             }
             
         }
@@ -123,7 +135,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     func filterResults(textToSearch: String) {
         print("Search text: \(textToSearch)")
-        filteredPosts = networkController.posts.filter({( post : Post) -> Bool in
+        filteredPosts = allPosts.filter({( post : Post) -> Bool in
             return (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
         })
         searchText = textToSearch
@@ -134,6 +146,47 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         print("User cancelled search")
         searchText = ""
         postsTableView.reloadData()
+    }
+    
+    // MARK: - Auxiliary methods
+    func loadData(pullToRefresh: Bool) {
+        if !pullToRefresh {
+            SVProgressHUD.showWithStatus("Loading")
+        }
+        networkController.getAllPost { (posts, error) -> () in
+            if error == nil {
+                self.isDataLoaded = true
+                self.allPosts = posts
+                self.postsTableView.reloadData()
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                }
+                //self.loadTest()
+                
+            } else {
+                self.isDataLoaded = false
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                }
+            }
+            self.postsTableView.pullToRefreshView.stopAnimating()
+        }
+    }
+    
+    func loadTest() {
+        networkController.getUserComments("23") { (likes, error) -> () in
+            if error == nil {
+                print("user likes succesffully fetched")
+            } else {
+                
+            }
+            self.postsTableView.pullToRefreshView.stopAnimating()
+        }
     }
     
 }

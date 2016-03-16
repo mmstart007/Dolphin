@@ -58,7 +58,7 @@ class PostTableViewCell : CustomFontTableViewCell {
     func configureWithPost(post: Post) {
         self.cellPost = post
         
-        postImageView.sd_setImageWithURL(NSURL(string: (post.postImageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        postImageView.sd_setImageWithURL(NSURL(string: (post.postImage?.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         postuserImageView.sd_setImageWithURL(NSURL(string: (post.postUser?.userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
         postText.text = post.postText
         self.layer.cornerRadius               = 5
@@ -97,7 +97,7 @@ class PostTableViewCell : CustomFontTableViewCell {
         postNumberOfCommentsWidthConstraint.constant = sizeComments.width + 5
         numberOfCommentsLabel.text = String(post.postNumberOfComments!)
         
-        if post.postType == .URL {
+        if post.postType?.name == "url" {
             linkPostTitleLabel.text                    = post.postText
             linkPostURLLabel.text                      = post.postHeader
             linkInfoContainerHeightConstraint.active   = true
@@ -106,7 +106,7 @@ class PostTableViewCell : CustomFontTableViewCell {
             postImageView.hidden                       = false
             postImageViewHeightConstraint.active       = false
             self.textHeightConstraint.active           = false
-        } else if post.postType == .Text {
+        } else if post.postType?.name == "text" {
             postImageView.hidden                     = true
             self.textHeightConstraint.active         = true
             linkInfoContainerHeightConstraint.active = false

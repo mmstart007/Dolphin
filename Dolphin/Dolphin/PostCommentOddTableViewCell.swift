@@ -35,15 +35,16 @@ class PostCommentOddTableViewCell : CustomFontTableViewCell {
     func configureWithPostComment(comment: PostComment) {
         self.layer.cornerRadius               = 5
         postCommentUserImageView.sd_setImageWithURL(NSURL(string: (comment.postCommentUser?.userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
-        postCommentTextView.text                     = comment.postCommentText
-        postCommentUserNameLabel.text                = comment.postCommentUser?.userName
+        postCommentTextView.text                              = comment.postCommentText
+        postCommentTextView.textContainer.lineFragmentPadding = 0
+        postCommentUserNameLabel.text                         = comment.postCommentUser?.userName
         if let date = comment.postCommentDate {
-            postCommentDateLabel.text                = date.formattedAsTimeAgo()
+            postCommentDateLabel.text = date.formattedAsTimeAgo()
         }
-        postCommentUserImageView.layer.cornerRadius  = postCommentUserImageView.frame.size.width / 2.0
-        postCommentUserImageView.layer.masksToBounds = true
-        postCommentTextView.textColor                = UIColor.lightGrayColor()
-        let fixedWidth = postCommentTextView.frame.size.width
+        postCommentUserImageView.layer.cornerRadius           = postCommentUserImageView.frame.size.width / 2.0
+        postCommentUserImageView.layer.masksToBounds          = true
+        postCommentTextView.textColor                         = UIColor.lightGrayColor()
+        let fixedWidth                                        = postCommentTextView.frame.size.width
         postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newHeight = max(newSize.height, 40)
