@@ -58,8 +58,16 @@ class PostTableViewCell : CustomFontTableViewCell {
     func configureWithPost(post: Post) {
         self.cellPost = post
         
-        postImageView.sd_setImageWithURL(NSURL(string: (post.postImage?.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-        postuserImageView.sd_setImageWithURL(NSURL(string: (post.postUser?.userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+        if let image = post.postImage {
+            postImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        } else {
+            postImageView.image = UIImage(named: "PostImagePlaceholder")
+        }
+        if let userImageUrl = post.postUser?.userImageURL {
+            postuserImageView.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+        } else {
+            postuserImageView.image = UIImage(named: "PostImagePlaceholder")
+        }
         postText.text = post.postText
         self.layer.cornerRadius               = 5
         postImageView.layer.cornerRadius      = 5
@@ -79,7 +87,7 @@ class PostTableViewCell : CustomFontTableViewCell {
         let fixedWidth = postText.frame.size.width
         postText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = postText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        self.textHeightConstraint.constant = newSize.height
+        self.textHeightConstraint.constant = newSize.height + 10
 
         if post.isLikedByUser {
             likedImageView.image = UIImage(named: "ViewsGlassIcon")

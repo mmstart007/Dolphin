@@ -159,18 +159,43 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             if error == nil {
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 appDelegate.apiToken = token
+                
+                // lookup the user token in keychain
+                let lookupQuery = SSKeychainQuery()
+                lookupQuery.service = Constants.KeychainConfig.Service
+                lookupQuery.account = Constants.KeychainConfig.Account
+                var tokenFound: Bool = false
+                do {
+                    try lookupQuery.fetch()
+                    tokenFound = true
+                }
+                catch {
+                    // Handle error
+                    print("Error: token not found")
+                }
+                if tokenFound {
+                    do {
+                        try lookupQuery.deleteItem()
+                    }
+                    catch {
+                        // Handle error
+                        print("Error: old token couldn't be removed")
+                    }
+                }
+                
+                
                 // save the user token in keychain
                 let newQuery = SSKeychainQuery()
                 newQuery.password = token
                 newQuery.service  = Constants.KeychainConfig.Service
                 newQuery.account  = Constants.KeychainConfig.Account
-                newQuery.label    = Constants.KeychainConfig.TokenLabel
                 do {
                     try newQuery.save()
                     self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
                 }
                 catch {
                     // Handle error
+                    print(error)
                     print("Error: token not saved in keychain")
                 }
                 SVProgressHUD.dismiss()
@@ -218,12 +243,35 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
                 if error == nil {
                     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                     appDelegate.apiToken = token
+                    
+                    // lookup the user token in keychain
+                    let lookupQuery = SSKeychainQuery()
+                    lookupQuery.service = Constants.KeychainConfig.Service
+                    lookupQuery.account = Constants.KeychainConfig.Account
+                    var tokenFound: Bool = false
+                    do {
+                        try lookupQuery.fetch()
+                        tokenFound = true
+                    }
+                    catch {
+                        // Handle error
+                        print("Error: token not found")
+                    }
+                    if tokenFound {
+                        do {
+                            try lookupQuery.deleteItem()
+                        }
+                        catch {
+                            // Handle error
+                            print("Error: old token couldn't be removed")
+                        }
+                    }
+                    
                     // save the user token in keychain
                     let newQuery = SSKeychainQuery()
                     newQuery.password = token
                     newQuery.service  = Constants.KeychainConfig.Service
                     newQuery.account  = Constants.KeychainConfig.Account
-                    newQuery.label    = Constants.KeychainConfig.TokenLabel
                     do {
                         try newQuery.save()
                         let createProfileVC = CreateProfileViewController()

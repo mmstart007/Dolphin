@@ -95,6 +95,9 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         plusButton .addTarget(self , action: "plusButtonTouchUpInside", forControlEvents: .TouchUpInside)
         plusButton.backgroundColor = UIColor.blueDolphin()
         self.view.addSubview(plusButton)
+        
+        // put recent as marked
+        selectedIndex = 1
     }
     
     // MARK: Plus button Actions

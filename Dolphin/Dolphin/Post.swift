@@ -12,7 +12,7 @@ class Post : NSObject {
     
     func postColor() -> UIColor {
         switch(self.postType!.name!) {
-        case "url":
+        case "link":
             return UIColor(red: 155/255.0, green: 230/255.0, blue: 88/255.0, alpha: 1)
         case "image":
             return UIColor(red: 40/255.0, green: 231/255.0, blue: 216/255.0, alpha: 1)
@@ -26,8 +26,11 @@ class Post : NSObject {
     var postId: Int?
     var postUser: User?
     var postImage: Image?
+    var postImageData: UIImage?
     var postType: PostType?
     var postTopics: [Topic]?
+    var postUrl: String?
+    var postImageUrl: String?
     var postHeader: String?
     var postText: String?
     var postDate: NSDate?
@@ -36,7 +39,25 @@ class Post : NSObject {
     var postComments: [PostComment]?
     var isLikedByUser: Bool = false
     
-
+    convenience init(user: User?, image: Image?, imageData: UIImage?, type: PostType?,
+        topics: [Topic]?, url: String?, imageUrl: String?, title: String?, text: String?,
+        date: NSDate?, numberOfLikes: Int?, numberOfComments: Int?, comments: [PostComment]?) {
+            self.init()
+            
+            self.postUser             = user
+            self.postImage            = image
+            self.postImageData        = imageData
+            self.postType             = type
+            self.postTopics           = topics
+            self.postUrl              = url
+            self.postImageUrl         = imageUrl
+            self.postHeader           = title
+            self.postText             = text
+            self.postDate             = date
+            self.postNumberOfLikes    = numberOfLikes
+            self.postNumberOfComments = numberOfComments
+            self.postComments         = comments
+    }
     
     convenience init(jsonObject: AnyObject) {
         self.init()
@@ -57,6 +78,10 @@ class Post : NSObject {
                 self.postTopics?.append(Topic(jsonObject: elem))
             }
         }
+        
+        /// read parameters depending on the type
+        
+        
         self.postNumberOfLikes    = postJsonObject!["likes_count"] as? Int
         self.postNumberOfComments = postJsonObject!["comments_count"] as? Int
         self.postText             = postJsonObject!["body"] as? String
@@ -68,5 +93,38 @@ class Post : NSObject {
         self.postDate             = dateFormatter.dateFromString(dateString!)
         self.postComments         = []
         
+    }
+    
+    func toJson() -> [String: AnyObject] {
+        var retDic: [String: AnyObject] = ["type": self.postType!.name!]
+        if let title = self.postHeader {
+            retDic["title"] = title
+        }
+        if let body = self.postText {
+            retDic["body"] = body
+        }
+        if let type = self.postType {
+            switch type.name! {
+            case "link":
+                retDic["url"] = self.postUrl
+                break
+            case "image":
+                retDic["image_url"] = self.postImageUrl
+                break
+            default:
+                break
+            }
+        }
+        if let topics = self.postTopics {
+            var topicsNames: [String] = []
+            for t in topics {
+                topicsNames.append(t.name!)
+            }
+            retDic["topics"] = topicsNames
+        }
+        if let image = self.postImageData {
+            retDic["image"] = Utils.encodeBase64(image)
+        }
+        return retDic
     }
 }

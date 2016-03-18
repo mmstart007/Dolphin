@@ -166,7 +166,12 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             } else {
                 self.isDataLoaded = false
                 let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let alert: UIAlertController
+                if errors != nil && errors![0] == "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
                 let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                 alert.addAction(cancelAction)
                 self.presentViewController(alert, animated: true, completion: nil)
@@ -179,9 +184,9 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     }
     
     func loadTest() {
-        networkController.getUserComments("23") { (likes, error) -> () in
+        networkController.deletePost("58") { (error) -> () in
             if error == nil {
-                print("user likes succesffully fetched")
+                print("post deleted")
             } else {
                 
             }

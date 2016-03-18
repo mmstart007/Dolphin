@@ -74,4 +74,35 @@ class Utils {
             dispatch_get_main_queue(), closure)
     }
     
+    // MARK: - Base64 encoding/decoding
+    
+    static func encodeBase64(srcImage: UIImage) -> String {
+        //Now use image to create into NSData format
+        let imageData = UIImagePNGRepresentation(srcImage)
+        let base64String = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)        
+        return base64String
+
+    }
+    
+    static func decodeBase64(encodedBase64String: String) -> UIImage? {
+        let decodedData = NSData(base64EncodedString: encodedBase64String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+        let decodedImage = UIImage(data: decodedData!)
+        return decodedImage
+        
+    }
+    
+    // MARK: - Resize images
+    
+    static func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
+        
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
+        image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
 }

@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 import UITextView_Placeholder
 import KSTokenView
+import SVProgressHUD
 
 class CreateTextPostViewController : DolphinViewController {
     
     let tags: Array<String> = List.names()
+    let networkController = NetworkController.sharedInstance
     
     @IBOutlet weak var postToFieldView: UIView!
     @IBOutlet weak var postTextView: UITextView!
@@ -32,7 +34,7 @@ class CreateTextPostViewController : DolphinViewController {
         
         setDismissButton()
         title = "Write"
-        setRightSystemButtonItem(.Done, target: self, action: nil)
+        setRightSystemButtonItem(.Done, target: self, action: Selector("donePressed:"))
         let tapVisibilityViewGesture = UITapGestureRecognizer(target: self, action: "goToPrivacySettings")
         postToFieldView.addGestureRecognizer(tapVisibilityViewGesture)
         
@@ -63,6 +65,49 @@ class CreateTextPostViewController : DolphinViewController {
         let privacySettingsNavController = UINavigationController(rootViewController: privacySettingsVC)
         presentViewController(privacySettingsNavController, animated: true, completion: nil)
     }
+    
+    // MARK: - Actions
+    func donePressed(sender: AnyObject) {
+        print("Create post pressed")
+        var topics: [Topic] = []
+        if postTagsTextView.tokens() != nil {
+            let topicsStringArray = postTagsTextView.tokens()
+            for t in topicsStringArray! {
+                topics.append(Topic(name: t.title))
+            }
+        }
+        let title: String = postTitleTextField.text!
+        let text: String = postTextView.text!
+        // crate the pod
+        let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "text"), topics: topics, url: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
+        SVProgressHUD.showWithStatus("Posting")
+        networkController.createPost(post, completionHandler: { (post, error) -> () in
+            if error == nil {
+                
+                if post?.postId != nil {
+                    // everything worked ok
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                } else {
+                    // there was an error saving the post
+                }
+                SVProgressHUD.dismiss()
+                
+            } else {
+                SVProgressHUD.dismiss()
+                let errors: [String]? = error!["errors"] as? [String]
+                var alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        })
+    }
+    
     
     
 }

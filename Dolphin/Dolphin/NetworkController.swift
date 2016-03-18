@@ -44,9 +44,13 @@ class NetworkController: NSObject {
         case RegisterUser       = "users"
         case GetUserById        = "users/%@"
         case GetUserLikes       = "users/%@/likes"
+        case CreatePost         = "posts"
         case GetUserComments    = "users/%@/comments"
         case GetAllPost         = "posts/filter"
+        case PostById           = "posts/%@"
         case GetPostComments    = "posts/%@/comments"
+        case GetPostLikes       = "posts/%@/likes"
+
     }
     
     
@@ -71,7 +75,7 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["user": user.toJson()]
         performRequest(MethodType.POST, authenticated: false, method: .RegisterUser, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                token = (result!["token"] as? String)!
+                token = (result!["api_token"] as? String)!
                 completionHandler(token, nil)
             } else {
                 completionHandler(token, error)
@@ -111,6 +115,22 @@ class NetworkController: NSObject {
         
     }
     
+    func createPost(post: Post, completionHandler: (Post?, AnyObject?) -> ()) -> () {
+        var savedPost: Post?
+        let parameters : [String : AnyObject]? = ["post": post.toJson()]
+        performRequest(MethodType.POST, authenticated: true, method: .CreatePost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let postJson = result!["post"] as? [[String: AnyObject]] {
+                    savedPost = Post(jsonObject: postJson[0])
+                }
+                completionHandler(savedPost, nil)
+            } else {
+                completionHandler(savedPost, error)
+            }
+        }
+        
+    }
+    
     func getUserComments(userId: String, completionHandler: ([PostComment], AnyObject?) -> ()) -> () {
         var userComments: [PostComment] = []
         let urlParameters : [CVarArgType] = [userId]
@@ -128,6 +148,20 @@ class NetworkController: NSObject {
         
     }
     
+    func getPostById(postId: String, completionHandler: (Post?, AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [postId]
+        performRequest(MethodType.GET, authenticated: true, method: .PostById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                let postJson = result!["post"] as? [[String: AnyObject]]
+                let post = Post(jsonObject: postJson![0])
+                completionHandler(post, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+        
+    }
+    
     
     func getAllPost(completionHandler: ([Post], AnyObject?) -> ()) -> () {
         var posts: [Post] = []
@@ -135,8 +169,10 @@ class NetworkController: NSObject {
         performRequest(MethodType.POST, authenticated: true, method: .GetAllPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 let postJsonArray = result!["posts"] as? [[AnyObject]]
-                for elem in postJsonArray![0] {
-                    posts.append(Post(jsonObject: elem))
+                if postJsonArray?.count > 0 {
+                    for elem in postJsonArray! {
+                        posts.append(Post(jsonObject: elem[0]))
+                    }
                 }
                 completionHandler(posts, nil)
             } else {
@@ -163,8 +199,34 @@ class NetworkController: NSObject {
     }
     
     
+    func getPostLikes(postId: String, completionHandler: ([Like], AnyObject?) -> ()) -> () {
+        var postLikes: [Like] = []
+        let urlParameters : [CVarArgType] = [postId]
+        performRequest(MethodType.GET, authenticated: true, method: .GetPostLikes, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                let postLikesJsonArray = result!["likes"] as? [AnyObject]
+                for elem in postLikesJsonArray! {
+                    postLikes.append(Like(jsonObject: elem))
+                }
+                completionHandler(postLikes, nil)
+            } else {
+                completionHandler(postLikes, error)
+            }
+        }
+        
+    }
     
-    
+    func deletePost(postId: String, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [postId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PostById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
+    }
     
     
     

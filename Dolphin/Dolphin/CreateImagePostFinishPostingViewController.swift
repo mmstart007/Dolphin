@@ -8,9 +8,12 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 class CreateImagePostFinishPostingViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    let networkController = NetworkController.sharedInstance
+    
     var postImage: UIImage?
     var picker: UIImagePickerController = UIImagePickerController()
     
@@ -55,7 +58,45 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
     
     func postButtonTouchUpInside() {
         print("postButtonTouchUpInside")
-        self.navigationController?.popToRootViewControllerAnimated(true)
+
+        var newWidth: CGFloat
+        if self.postImage?.size.width < 414 {
+            newWidth = self.postImage!.size.width
+        } else {
+            newWidth = 414
+        }
+        let resizedImage = Utils.resizeImage(self.postImage!, newWidth: newWidth)
+        
+        // crate the pod
+        let post = Post(user: nil, image: nil, imageData: resizedImage, type: PostType(name: "image"), topics: nil, url: nil, imageUrl: nil, title: nil, text: nil, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
+        SVProgressHUD.showWithStatus("Posting")
+        networkController.createPost(post, completionHandler: { (post, error) -> () in
+            if error == nil {
+                
+                if post?.postId != nil {
+                    // everything worked ok
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                } else {
+                    // there was an error saving the post
+                }
+                SVProgressHUD.dismiss()
+                
+            } else {
+                SVProgressHUD.dismiss()
+                let errors: [String]? = error!["errors"] as? [String]
+                var alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        })
+        
+        
     }
     
 

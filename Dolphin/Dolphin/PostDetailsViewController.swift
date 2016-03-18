@@ -187,7 +187,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if (post?.postType?.name != "") {
+            if (post?.postType?.name != "text") {
                 return 1
             } else {
                 return 0

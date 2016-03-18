@@ -13,6 +13,12 @@ class Topic : NSObject {
     var id: Int?
     var name: String?
     
+    convenience init(name: String) {
+        self.init()
+        
+        self.name = name
+    }
+    
     convenience init(jsonObject: AnyObject) {
         self.init()
         

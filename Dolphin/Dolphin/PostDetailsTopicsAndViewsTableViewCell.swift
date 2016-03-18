@@ -11,7 +11,7 @@ import UIKit
 
 class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
     
-    var collectionView: UICollectionView!
+    var collectionView: UICollectionView! = nil
     
     @IBOutlet weak var likedImageView: UIImageView!
     @IBOutlet weak var topicsView: UIView!

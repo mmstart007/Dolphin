@@ -15,7 +15,11 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
     @IBOutlet weak var postTextView: UITextView!
     
     func configureWithPost(post: Post) {
-        postImageView.sd_setImageWithURL(NSURL(string: (post.postImage?.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        if let postImage = post.postImage {
+            postImageView.sd_setImageWithURL(NSURL(string: (postImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        } else {
+            postImageView.image = UIImage(named: "PostImagePlaceholder")
+        }
         postTextView.text = post.postText
         backgroundColor = UIColor.clearColor()
         Utils.setFontFamilyForView(self, includeSubViews: true)
