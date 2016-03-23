@@ -33,7 +33,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         tableView.estimatedRowHeight = 400
         
         // Populate data for testing layout purposes
-        let user1 = User(deviceId: "", name: "John Doe", imageURL: "", email: "john@doe.com", password: "test")
+        let user1 = User(deviceId: "", userName: "John Doe", imageURL: "", email: "john@doe.com", password: "test")
         
 //        let comment1 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
 //        let comment2 = PostComment(user: user1, text: "Great stuff!", date: NSDate())

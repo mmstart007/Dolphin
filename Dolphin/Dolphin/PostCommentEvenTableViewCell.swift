@@ -33,7 +33,7 @@ class PostCommentEvenTableViewCell : CustomFontTableViewCell {
     }
     
     func configureWithPostComment(comment: PostComment) {
-        postCommentUserImageView.sd_setImageWithURL(NSURL(string: (comment.postCommentUser?.userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+        postCommentUserImageView.sd_setImageWithURL(NSURL(string: (comment.postCommentUser?.userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
         self.layer.cornerRadius                               = 5
         postCommentTextView.text                              = comment.postCommentText
         postCommentTextView.textContainer.lineFragmentPadding = 0

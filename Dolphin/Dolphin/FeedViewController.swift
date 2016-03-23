@@ -153,7 +153,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         if !pullToRefresh {
             SVProgressHUD.showWithStatus("Loading")
         }
-        networkController.getAllPost { (posts, error) -> () in
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.isDataLoaded = true
                 self.allPosts = posts
@@ -180,11 +180,11 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                 }
             }
             self.postsTableView.pullToRefreshView.stopAnimating()
-        }
+        })
     }
     
     func loadTest() {
-        networkController.deletePost("58") { (error) -> () in
+        networkController.deletePost("6") { (error) -> () in
             if error == nil {
                 print("post deleted")
             } else {

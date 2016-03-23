@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BEMCheckBox.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HMSegmentedControl.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -49,11 +54,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SSKeychain.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SVProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -82,32 +82,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>073A8032DB9A10C1FE715D3CE6A9B908</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>33B48AFBA952729BD3B11031F0F68DDA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>373379D62A01697E49A9868FF5C46F81</key>
+		<key>566D684A68E09758048DBF71B5F34369</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3C4F65099069430C3C4D80EEC74CE42C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>49645AEF8BAF9598E66DDDF42D96A722</key>
+		<key>5855116C7019AEB6C92455C366911290</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>63D4020419748D12B33C0C04E0AF9DC7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6F629A73C61D1238189854F39A855334</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,22 +117,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7CCFC60E5613272014B182D2517C4DFA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7FE8154AFD0B8D7CB73A62FC2285B98F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>887089F26E2D435750153B19EC22F1F3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BA5FB2FFB894676626687504464FD0EB</key>
+		<key>95BEE38F1B777106730AD495BFC3E654</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BF4B2054A2990364101CEC407F585E2D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C3F4D49FBC47134164A50A91CD4E3715</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,17 +142,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CF6EA62D5A1135848A7D79A83D7B83B0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>D635F027F0A6FD04B98B790907265430</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EB18F8506824E59413333FC7C3BB5DC8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

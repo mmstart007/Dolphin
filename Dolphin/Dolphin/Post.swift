@@ -29,7 +29,7 @@ class Post : NSObject {
     var postImageData: UIImage?
     var postType: PostType?
     var postTopics: [Topic]?
-    var postUrl: String?
+    var postLink: Link?
     var postImageUrl: String?
     var postHeader: String?
     var postText: String?
@@ -40,7 +40,7 @@ class Post : NSObject {
     var isLikedByUser: Bool = false
     
     convenience init(user: User?, image: Image?, imageData: UIImage?, type: PostType?,
-        topics: [Topic]?, url: String?, imageUrl: String?, title: String?, text: String?,
+        topics: [Topic]?, link: Link?, imageUrl: String?, title: String?, text: String?,
         date: NSDate?, numberOfLikes: Int?, numberOfComments: Int?, comments: [PostComment]?) {
             self.init()
             
@@ -49,7 +49,7 @@ class Post : NSObject {
             self.postImageData        = imageData
             self.postType             = type
             self.postTopics           = topics
-            self.postUrl              = url
+            self.postLink             = link
             self.postImageUrl         = imageUrl
             self.postHeader           = title
             self.postText             = text
@@ -72,12 +72,16 @@ class Post : NSObject {
         if let typeJson = postJsonObject!["type"] as? [String: AnyObject] {
             self.postType = PostType(jsonObject: typeJson)
         }
+        if let linkJson = postJsonObject!["link"] as? [String: AnyObject] {
+            self.postLink = Link(jsonObject: linkJson)
+        }
         self.postTopics = []
         if let topicsJsonArray = postJsonObject!["topics"] as? [[String: AnyObject]] {
             for elem in topicsJsonArray {
                 self.postTopics?.append(Topic(jsonObject: elem))
             }
         }
+        
         
         /// read parameters depending on the type
         
@@ -87,6 +91,7 @@ class Post : NSObject {
         self.postText             = postJsonObject!["body"] as? String
         self.postHeader           = postJsonObject!["title"] as? String
         self.postId               = postJsonObject!["id"] as? Int
+        self.postImageUrl         = postJsonObject!["image_url"] as? String
         let dateString            = postJsonObject!["created_at"] as? String
         let dateFormatter         = NSDateFormatter()
         dateFormatter.dateFormat  = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
@@ -103,18 +108,13 @@ class Post : NSObject {
         if let body = self.postText {
             retDic["body"] = body
         }
-        if let type = self.postType {
-            switch type.name! {
-            case "link":
-                retDic["url"] = self.postUrl
-                break
-            case "image":
-                retDic["image_url"] = self.postImageUrl
-                break
-            default:
-                break
-            }
+        if let link = self.postLink {
+            retDic["url"] = link.url
+            retDic["image_url"] = link.imageURL
         }
+        if let imageUrl = self.postImageUrl {
+            retDic["image_url"] = imageUrl
+        }    
         if let topics = self.postTopics {
             var topicsNames: [String] = []
             for t in topics {

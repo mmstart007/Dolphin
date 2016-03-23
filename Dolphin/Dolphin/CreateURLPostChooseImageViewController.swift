@@ -8,12 +8,16 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 class CreateURLPostChooseImageViewController : DolphinViewController, UICollectionViewDataSource {
+    
+    let networkController = NetworkController.sharedInstance
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     var imageURLs: [String]?
+    var urlLoaded: String?
     
     init(images: [String]) {
         super.init(nibName: "CreateURLPostChooseImageViewController", bundle: nil)
@@ -32,7 +36,7 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
         collectionView.registerNib(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
     }
     
-    // MARK: CollectionView Datasource
+    // MARK: - CollectionView Datasource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -58,5 +62,42 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSizeMake(UIScreen.mainScreen().bounds.width / 3.0 - 30, view.frame.size.width / 3.0 - 30)
     }
+    
+    // MARK: - CollectionView delegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let selectedImageURL = imageURLs![indexPath.row]
+        let link = Link(url: urlLoaded!, imageURL: selectedImageURL)
+        // crate the pod
+        let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "link"), topics: nil, link: link, imageUrl: nil, title: nil, text: nil, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
+        SVProgressHUD.showWithStatus("Posting")
+        networkController.createPost(post, completionHandler: { (post, error) -> () in
+            if error == nil {
+                
+                if post?.postId != nil {
+                    // everything worked ok
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                } else {
+                    // there was an error saving the post
+                }
+                SVProgressHUD.dismiss()
+                
+            } else {
+                SVProgressHUD.dismiss()
+                let errors: [String]? = error!["errors"] as? [String]
+                var alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        })
+        
+    }
+
     
 }

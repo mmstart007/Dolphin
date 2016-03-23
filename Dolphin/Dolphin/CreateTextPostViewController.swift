@@ -79,18 +79,19 @@ class CreateTextPostViewController : DolphinViewController {
         let title: String = postTitleTextField.text!
         let text: String = postTextView.text!
         // crate the pod
-        let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "text"), topics: topics, url: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
+        let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
         SVProgressHUD.showWithStatus("Posting")
         networkController.createPost(post, completionHandler: { (post, error) -> () in
             if error == nil {
                 
+                SVProgressHUD.dismiss()
                 if post?.postId != nil {
                     // everything worked ok
-                    self.navigationController?.popToRootViewControllerAnimated(true)
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 } else {
                     // there was an error saving the post
                 }
-                SVProgressHUD.dismiss()
+                
                 
             } else {
                 SVProgressHUD.dismiss()

@@ -60,10 +60,12 @@ class PostTableViewCell : CustomFontTableViewCell {
         
         if let image = post.postImage {
             postImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        } else if let linkImage = post.postLink?.imageURL {
+            postImageView.sd_setImageWithURL(NSURL(string: linkImage), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         } else {
             postImageView.image = UIImage(named: "PostImagePlaceholder")
         }
-        if let userImageUrl = post.postUser?.userImageURL {
+        if let userImageUrl = post.postUser?.userAvatarImageURL {
             postuserImageView.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             postuserImageView.image = UIImage(named: "PostImagePlaceholder")
@@ -105,9 +107,10 @@ class PostTableViewCell : CustomFontTableViewCell {
         postNumberOfCommentsWidthConstraint.constant = sizeComments.width + 5
         numberOfCommentsLabel.text = String(post.postNumberOfComments!)
         
-        if post.postType?.name == "url" {
-            linkPostTitleLabel.text                    = post.postText
-            linkPostURLLabel.text                      = post.postHeader
+        if post.postType?.name == "link" {
+            // TODO: Fix the title of a link post
+            linkPostTitleLabel.text                    = "Link Post"
+            linkPostURLLabel.text                      = post.postLink?.url
             linkInfoContainerHeightConstraint.active   = true
             linkInfoContainerHeightConstraint.constant = 50
             linkTypePostContainer.hidden               = false

@@ -85,7 +85,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
                 // Sow image of user in POD
                 let x: CGFloat = podUsersContainerView.frame.size.width - podUsersContainerView.frame.size.width / 6 - (CGFloat(i) * (podUsersContainerView.frame.size.width / 6 + podUsersContainerView.frame.size.width / 24))
                 let userAvatarImageView = UIImageView(frame: CGRect(x: x, y: 0, width: podUsersContainerView.frame.size.width / 6, height: podUsersContainerView.frame.size.width / 6))
-                userAvatarImageView.sd_setImageWithURL(NSURL(string: (pod.podUsers![i].userImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+                userAvatarImageView.sd_setImageWithURL(NSURL(string: (pod.podUsers![i].userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
                 userAvatarImageView.layer.cornerRadius = userAvatarImageView.frame.size.width / 2.0
                 userAvatarImageView.layer.masksToBounds = true
                 podUsersContainerView.addSubview(userAvatarImageView)

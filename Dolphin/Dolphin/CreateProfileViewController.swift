@@ -9,12 +9,14 @@
 import UIKit
 import ActionSheetPicker_3_0
 
-class CreateProfileViewController: DolphinViewController {
+class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjectsDelegate {
     
     @IBOutlet weak var gradeButton: UIButton!
     @IBOutlet weak var subjectButton: UIButton!
     @IBOutlet weak var finishProfileButton: UIButton!
     
+    var selectedGrades: [String] = []
+    var selectedSubjects: [String] = []
     
     convenience init() {
         self.init(nibName: "CreateProfileViewController", bundle: nil)
@@ -25,7 +27,6 @@ class CreateProfileViewController: DolphinViewController {
         
         Utils.setFontFamilyForView(self.view, includeSubViews: true)
         navigationItem.hidesBackButton = true
-        setNavBarStyle()
     }
     
     override func viewDidLayoutSubviews() {
@@ -34,8 +35,14 @@ class CreateProfileViewController: DolphinViewController {
         setAppearance()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setNavBarStyle()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
         
         // put bar back to default
         navigationController?.navigationBar.translucent = false
@@ -50,45 +57,57 @@ class CreateProfileViewController: DolphinViewController {
     // MARK: - Actions
     
     @IBAction func finishProfileButtonTouchUpInside(sender: AnyObject) {
+        // TODO: Update the user with the collection of grades and subjects
+        
         navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
         
     }
     
     @IBAction func gradeButtonTouchUpInside(sender: AnyObject) {
         
-        let grades = ["Pre-K", "K", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
+        let pickGradesVC = PickGradesOrSubjectsViewController()
+        pickGradesVC.delegate = self
+        pickGradesVC.areSubjects = false
+        pickGradesVC.gradesSelected = selectedGrades
+        pickGradesVC.subjectsSelected = selectedSubjects
+        let pickGradesNavController = UINavigationController(rootViewController: pickGradesVC)
+        presentViewController(pickGradesNavController, animated: true, completion: nil)
         
-        ActionSheetStringPicker.showPickerWithTitle("Select a Grade", rows: grades, initialSelection: 1, doneBlock: {
-            picker, value, index in
-            
-            print("value = \(value)")
-            print("index = \(index)")
-            print("picker = \(picker)")
-            self.gradeButton.setTitle(String(index), forState: .Normal)
-            
-            return
-            
-            }, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
+        
     }
     
     @IBAction func subjectButtonTouchUpInside(sender: AnyObject) {
         
-        let subjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Music", "History", "Geography"
-            , "Physical", "Education", "Health", "Music", "Art", "Foreign Language", "Social Studies", "English Language Arts"
-            , "Counseling", "STEM", "Science"];
+        let pickSubjectsVC = PickGradesOrSubjectsViewController()
+        pickSubjectsVC.delegate = self
+        pickSubjectsVC.areSubjects = true
+        pickSubjectsVC.gradesSelected = selectedGrades
+        pickSubjectsVC.subjectsSelected = selectedSubjects
+        let pickSubjectsNavController = UINavigationController(rootViewController: pickSubjectsVC)
+        presentViewController(pickSubjectsNavController, animated: true, completion: nil)
         
-        ActionSheetStringPicker.showPickerWithTitle("Select a Subject", rows: subjects, initialSelection: 1, doneBlock: {
-            picker, value, index in
-            
-            print("value = \(value)")
-            print("index = \(index)")
-            print("picker = \(picker)")
-            self.subjectButton.setTitle(String(index), forState: .Normal)
-            
-            return
-            
-            }, cancelBlock: { ActionStringCancelBlock in return }, origin: sender)
     }
+    
+    // MARK: - PickerGradesOrSubjects delegate
+    
+    func gradesDidSelected(grades: [String]) {
+        selectedGrades = grades
+        let gradesString = selectedGrades.reduce("") { (accum, actual) -> String in
+            accum + ((accum == "") ? "" : ", ") + actual
+        }
+        gradeButton.titleLabel?.text = selectedGrades.count == 0 ? "grades" : gradesString
+        print(grades)
+    }
+    
+    func subjectsDidSelected(subjects: [String]) {
+        selectedSubjects = subjects
+        let subjectsString = selectedSubjects.reduce("") { (accum, actual) -> String in
+            accum + ((accum == "") ? "" : ", ") + actual
+        }
+        subjectButton.titleLabel?.text = selectedSubjects.count == 0 ? "subjects" : subjectsString
+        print(subjects)
+    }
+    
     
     
     

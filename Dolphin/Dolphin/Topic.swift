@@ -26,5 +26,11 @@ class Topic : NSObject {
         self.name = jsonObject["name"] as? String
     }
     
+    func toJson() -> [String: String] {
+        return ["name": self.name!]
+        
+        
+    }
+    
     
 }

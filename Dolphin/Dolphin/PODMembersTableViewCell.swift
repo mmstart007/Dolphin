@@ -71,7 +71,7 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
             cell?.configureAsMoreUsers(members.count - 3)
         }
         else {
-            cell?.configureAsUser(members[members.count - 1 - indexPath.row].userImageURL!)
+            cell?.configureAsUser(members[members.count - 1 - indexPath.row].userAvatarImageURL!)
         }
         var scalingTransform : CGAffineTransform!
         scalingTransform = CGAffineTransformMakeScale(-1, 1);

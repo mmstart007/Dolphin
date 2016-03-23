@@ -68,7 +68,7 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
         let resizedImage = Utils.resizeImage(self.postImage!, newWidth: newWidth)
         
         // crate the pod
-        let post = Post(user: nil, image: nil, imageData: resizedImage, type: PostType(name: "image"), topics: nil, url: nil, imageUrl: nil, title: nil, text: nil, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
+        let post = Post(user: nil, image: nil, imageData: resizedImage, type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: nil, text: nil, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
         SVProgressHUD.showWithStatus("Posting")
         networkController.createPost(post, completionHandler: { (post, error) -> () in
             if error == nil {

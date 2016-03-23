@@ -212,6 +212,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             if cell == nil {
                 cell = PostDetailsTopicsAndViewsTableViewCell()
             }
+            cell?.contentView.userInteractionEnabled = false
             (cell as? PostDetailsTopicsAndViewsTableViewCell)!.configureWithPost(post!, dataSource: self, delegate: self)
         } else {
             if indexPath.row % 2 == 1 {
@@ -443,6 +444,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     // MARK: - Auxiliary methods
+    
     func loadComments() {
         
         SVProgressHUD.showWithStatus("Loading")

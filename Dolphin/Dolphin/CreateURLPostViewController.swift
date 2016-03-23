@@ -14,12 +14,14 @@ import hpple
 
 class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, UIWebViewDelegate {
 
-
-    var webView: UIWebView!
+    
     @IBOutlet weak var topBarContainerView: UIView!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var refreshAndStopLoadingButton: UIButton!
+
     var isLoadingPage: Bool = true
+    var webView: UIWebView!
+    var urlToLoad: String = ""
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -55,7 +57,9 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         var urlText = textField.text!
         if !urlText.hasPrefix("http") {
-            urlText = "http://" + urlText        }
+            urlText = "http://" + urlText
+        }
+        urlToLoad = urlText
         loadRequest(urlText)
         textField.resignFirstResponder()
         return true
@@ -86,6 +90,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         }
         if imageURLs.count > 0 {
             let chooseImageVC = CreateURLPostChooseImageViewController(images: imageURLs)
+            chooseImageVC.urlLoaded = urlToLoad
             navigationController?.pushViewController(chooseImageVC, animated: true)
         } else {
             let alert = UIAlertController(title: "Error", message: "NO images Obtained from the WebSite", preferredStyle: .Alert)

@@ -11,7 +11,6 @@ import Fabric
 import Crashlytics
 import TwitterKit
 import OAuthSwift
-import SSKeychain
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,8 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self, Twitter.self])
         
-        // initialize SSKeychain to store the token encrypted
-        SSKeychain.setAccessibilityType(kSecAttrAccessibleWhenUnlocked)
         
         // Set appearance of Navigation and Status bars
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -50,19 +47,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginVC = LoginViewController()
         var userLogged: Bool
         // Access to the token to see if I'm logged
-        let lookupQuery = SSKeychainQuery()
-        lookupQuery.service = Constants.KeychainConfig.Service
-        lookupQuery.account = Constants.KeychainConfig.Account
-        do {
-            try lookupQuery.fetch()
-            apiToken = lookupQuery.password
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let token = defaults.stringForKey("api_token")
+        {
+            print("Api Token = \(token)")
+            apiToken = token
             userLogged = true
-        }
-        catch {
-            // Handle error
-            print("user not logged")
+        } else {
             userLogged = false
         }
+        
         networkController.token = apiToken
         let rootViewController = userLogged ? homeViewController : loginVC
         let initialViewController = UINavigationController(rootViewController: rootViewController)

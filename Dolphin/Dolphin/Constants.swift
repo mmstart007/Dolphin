@@ -15,11 +15,6 @@ class Constants {
             static let BaseUrl: String = "http://dolphin-api.ninthcoast.com/"
         }
     }
-    
-    struct KeychainConfig {
-        static let Service: String = "DolphinService"
-        static let Account: String = "com.dolphin.keychain"
-        static let TokenLabel: String = "Token"
-    }
+
     
 }
