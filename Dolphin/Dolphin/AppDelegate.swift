@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var homeViewController: UIViewController!
     var apiToken: String = ""
+    var currentUserId: Int?
     
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -48,18 +49,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var userLogged: Bool
         // Access to the token to see if I'm logged
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let token = defaults.stringForKey("api_token")
-        {
+        if let token = defaults.stringForKey("api_token") {
             print("Api Token = \(token)")
             apiToken = token
             userLogged = true
         } else {
             userLogged = false
         }
+        if let userId = defaults.stringForKey("current_user_id") {
+            print("Current User Id = \(userId)")
+            currentUserId = Int(userId)
+        }
         
-        networkController.token = apiToken
-        let rootViewController = userLogged ? homeViewController : loginVC
-        let initialViewController = UINavigationController(rootViewController: rootViewController)
+        networkController.currentUserId = currentUserId
+        networkController.token         = apiToken
+        let rootViewController          = userLogged ? homeViewController : loginVC
+        let initialViewController       = UINavigationController(rootViewController: rootViewController)
         
         // Initialize root controller with sidebar
         let rearViewController = SidebarViewController(homeVC: homeViewController as! HomeViewController)

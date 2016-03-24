@@ -20,12 +20,14 @@ class NetworkController: NSObject {
             return Constants.RESTAPIConfig.Developement.BaseUrl + "api/" + apiVersion.rawValue + "/"
         }
     }
-    
-    var token: String      = ""
+
+    var token: String?
     var posts: [Post]      = []
     var likedPosts: [Post] = []
     var pods: [POD]        = []
     var deals: [Deal]      = []
+    var currentUserId: Int?
+    var currentUser: User?
     
     enum MethodType: String {
         case PUT    = "PUT"
@@ -61,32 +63,40 @@ class NetworkController: NSObject {
     
     // MARK: - USERS
     
-    func login(userName: String, password: String, completionHandler: (String, AnyObject?) -> ()) -> () {
-        var retToken: String = ""
+    func login(userName: String, password: String, completionHandler: (String?, Int?, AnyObject?) -> ()) -> () {
+        var retToken: String?
+        var retUserId: Int?
         let loginParams = ["username": userName, "password": password]
         let parameters : [String : AnyObject]? = ["login": loginParams]
         performRequest(MethodType.POST, authenticated: true, method: .Login, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                retToken = (result!["token"] as? String)!
+                retToken = result!["token"] as? String
+                let retUser = result!["user"] as? [String: AnyObject]
+                retUserId = retUser!["id"] as? Int
                 self.token = retToken
-                completionHandler(retToken, nil)
+                self.currentUserId = retUserId
+                completionHandler(retToken, retUserId, nil)
             } else {
-                completionHandler(retToken, error)
+                completionHandler(retToken, retUserId, error)
             }
         }
         
     }
     
-    func registerUser(user: User, completionHandler: (String, AnyObject?) -> ()) -> () {
-        var retToken: String = ""
+    func registerUser(user: User, completionHandler: (String?, Int?, AnyObject?) -> ()) -> () {
+        var retToken: String?
+        var retUserId: Int?
         let parameters = ["user": user.toJson()]
         performRequest(MethodType.POST, authenticated: false, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 retToken = (result!["api_token"] as? String)!
+                let retUser = result!["user"] as? [String: AnyObject]
+                retUserId = retUser!["id"] as? Int
                 self.token = retToken
-                completionHandler(retToken, nil)
+                self.currentUserId = retUserId
+                completionHandler(retToken, retUserId, nil)
             } else {
-                completionHandler(retToken, error)
+                completionHandler(retToken, retUserId, error)
             }
         }
         
@@ -359,7 +369,7 @@ class NetworkController: NSObject {
     func createLike(postId: String, completionHandler: (Like?, AnyObject?) -> ()) -> () {
         var savedLike: Like?
         let urlParameters : [CVarArgType] = [postId]
-        performRequest(MethodType.POST, authenticated: true, method: .PostLikes, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+        performRequest(MethodType.POST, authenticated: true, method: .PostLikes, urlParams: urlParameters, params: nil, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 if let likeJson = result!["like"] as? [[String: AnyObject]] {
                     savedLike = Like(jsonObject: likeJson[0])
@@ -367,6 +377,37 @@ class NetworkController: NSObject {
                 completionHandler(savedLike, nil)
             } else {
                 completionHandler(savedLike, error)
+            }
+        }
+        
+    }
+    
+    func deleteLike(postId: String, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [postId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PostLikes, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
+    }
+    
+    // MARK: - COMMENTS
+    
+    func createComment(postId: String, postComment: PostComment, completionHandler: (PostComment?, AnyObject?) -> ()) -> () {
+        var savedPostComment: PostComment?
+        let urlParameters : [CVarArgType] = [postId]
+        let parameters : [String : AnyObject]? = ["comment": postComment.toJson()]
+        performRequest(MethodType.POST, authenticated: true, method: .PostComments, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let postJson = result!["comment"] as? [[String: AnyObject]] {
+                    savedPostComment = PostComment(jsonObject: postJson[0])
+                }
+                completionHandler(savedPostComment, nil)
+            } else {
+                completionHandler(savedPostComment, error)
             }
         }
         
@@ -420,7 +461,7 @@ class NetworkController: NSObject {
         
         var headers: [String: String]?
         if authenticated {
-            headers = ["X-Authorization": token]
+            headers = ["X-Authorization": token!]
         } else {
             headers = nil
         }
@@ -451,8 +492,12 @@ class NetworkController: NSObject {
                         completionHandler(nil, errorJson)
                     }
                 } else {
-                    
-                    completionHandler(nil, errorJson)
+                    if errorJson == nil {
+                        let dic = ["errors": [String(response.result.error!.localizedDescription)]]
+                        completionHandler(nil, dic)
+                    } else {
+                        completionHandler(nil, errorJson)
+                    }
                 }
             }.validate()
         

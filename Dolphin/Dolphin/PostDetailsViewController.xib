@@ -32,19 +32,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rsa-wZ-Qhr" userLabel="Write Comment View">
                     <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bT2-jf-4mx" userLabel="Camera Button">
-                            <rect key="frame" x="2" y="8" width="41" height="33"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="bT2-jf-4mx" secondAttribute="height" multiplier="41:33" id="Yjx-uP-hV3"/>
-                                <constraint firstAttribute="height" constant="33" id="be0-5B-Gi9"/>
-                            </constraints>
-                            <state key="normal" image="CameraIcon"/>
-                            <connections>
-                                <action selector="selectImageButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="hbd-Xg-e9x"/>
-                            </connections>
-                        </button>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KMG-uV-kz8" userLabel="Comment Text View">
-                            <rect key="frame" x="44" y="8" width="274" height="33"/>
+                            <rect key="frame" x="8" y="8" width="310" height="33"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -53,25 +42,25 @@
                             <rect key="frame" x="320" y="8" width="55" height="33"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="dfF-J2-AvW" secondAttribute="height" multiplier="5:3" id="V1z-Jx-hvO"/>
+                                <constraint firstAttribute="height" constant="33" id="rfQ-X8-apg"/>
                             </constraints>
                             <state key="normal" title="Post">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="postMessageTouchUpInside:" destination="-1" eventType="touchUpInside" id="iwA-Xk-sry"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="05U-2n-2ty"/>
                         <constraint firstItem="KMG-uV-kz8" firstAttribute="top" secondItem="dfF-J2-AvW" secondAttribute="top" id="22g-S4-b7t"/>
-                        <constraint firstItem="KMG-uV-kz8" firstAttribute="height" secondItem="bT2-jf-4mx" secondAttribute="height" id="3zb-GQ-Rgn"/>
+                        <constraint firstItem="KMG-uV-kz8" firstAttribute="leading" secondItem="Rsa-wZ-Qhr" secondAttribute="leading" constant="8" id="6rp-aK-mgg"/>
                         <constraint firstItem="dfF-J2-AvW" firstAttribute="leading" secondItem="KMG-uV-kz8" secondAttribute="trailing" constant="2" id="Ecp-rx-3tI"/>
                         <constraint firstAttribute="trailing" secondItem="dfF-J2-AvW" secondAttribute="trailing" id="MFK-VR-CjL"/>
-                        <constraint firstItem="KMG-uV-kz8" firstAttribute="top" secondItem="bT2-jf-4mx" secondAttribute="top" id="TLh-wD-Un4"/>
-                        <constraint firstItem="bT2-jf-4mx" firstAttribute="leading" secondItem="Rsa-wZ-Qhr" secondAttribute="leading" constant="2" id="cj4-1t-3cC"/>
                         <constraint firstItem="KMG-uV-kz8" firstAttribute="bottom" secondItem="dfF-J2-AvW" secondAttribute="bottom" id="egv-cP-0IH"/>
-                        <constraint firstItem="KMG-uV-kz8" firstAttribute="bottom" secondItem="bT2-jf-4mx" secondAttribute="bottom" id="iov-JE-nDw"/>
-                        <constraint firstItem="bT2-jf-4mx" firstAttribute="centerY" secondItem="Rsa-wZ-Qhr" secondAttribute="centerY" id="uyX-yE-t8t"/>
-                        <constraint firstItem="KMG-uV-kz8" firstAttribute="leading" secondItem="bT2-jf-4mx" secondAttribute="trailing" constant="1" id="uyx-yT-GhS"/>
+                        <constraint firstAttribute="bottom" secondItem="KMG-uV-kz8" secondAttribute="bottom" constant="9" id="ykF-fa-xXp"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u33-mK-VfI">
@@ -125,7 +114,6 @@
         </view>
     </objects>
     <resources>
-        <image name="CameraIcon" width="25" height="20"/>
         <image name="DeleteImageIcon" width="255" height="255"/>
     </resources>
 </document>

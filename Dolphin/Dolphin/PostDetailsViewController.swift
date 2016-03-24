@@ -61,7 +61,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        loadComments()
+        loadUserLikePost()
     }
     
     func setAppearance() {
@@ -89,6 +89,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         customViewActionButton.addTarget(self, action: "actionButtonPressed", forControlEvents: .TouchUpInside)
         let actionBarButton         = UIBarButtonItem(customView: customViewActionButton)
 
+        // comments new windows
         let customViewCommentButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Normal)
         customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Highlighted)
@@ -101,7 +102,8 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         customViewLikeButton.addTarget(self, action: "likeButtonPressed", forControlEvents: .TouchUpInside)
         let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
 
-        navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
+        //navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
+        navigationItem.rightBarButtonItems = [actionBarButton, likeBarButton]
         
     }
     
@@ -168,14 +170,45 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func likeButtonPressed() {
-        if (post?.isLikedByUser)! {
-            post?.isLikedByUser = false
-            post?.postNumberOfLikes = (post?.postNumberOfLikes)! - 1
+        if !(post?.isLikedByUser)! {
+            SVProgressHUD.showWithStatus("Loading")
+            networkController.createLike("\(post!.postId!)", completionHandler: { (like, error) -> () in
+                if error == nil {
+                    if like?.id != nil {
+                        self.post?.isLikedByUser = true
+                        self.post?.postNumberOfLikes = (self.post?.postNumberOfLikes)! + 1
+                        self.tableView.reloadData()
+                    }
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            })
         } else {
-            post?.isLikedByUser = true
-            post?.postNumberOfLikes = (post?.postNumberOfLikes)! + 1
+            
+            SVProgressHUD.showWithStatus("Loading")
+            networkController.deleteLike("\(post!.postId!)", completionHandler: { (error) -> () in
+                if error == nil {
+                    self.post?.postNumberOfLikes = (self.post?.postNumberOfLikes)! - 1
+                    self.tableView.reloadData()
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            })
         }
-        tableView.reloadData()
         print("Like Button Pressed")
     }
     
@@ -445,9 +478,30 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // MARK: - Auxiliary methods
     
+    func loadUserLikePost() {
+        SVProgressHUD.showWithStatus("Loading")
+        networkController.getUserLikePost("\(post!.postUser!.id!)", postId: "\(post!.postId!)") { (userLikeThisPost, error) -> () in
+            if error == nil {
+                self.post?.isLikedByUser = userLikeThisPost
+                self.loadComments()
+                
+            } else if error != nil && error!["errors"] != nil && (error!["errors"] as? [String])![0] == "Like not found." {
+                self.post?.isLikedByUser = false
+                self.loadComments()
+            }
+            else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
+            }
+        }
+    }
+    
     func loadComments() {
         
-        SVProgressHUD.showWithStatus("Loading")
         networkController.getPostComments(String(post!.postId!)) { (postComments, error) -> () in
             if error == nil {
                 self.post?.postComments = postComments
@@ -464,5 +518,53 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             }
         }
     }
+    
+    // MARK: - Actions
+    
+    @IBAction func postMessageTouchUpInside(sender: AnyObject) {
+        print("send message pressed")
+        commentTextView.resignFirstResponder()
+        if commentTextView.text != "" && commentTextView.text != "Write a comment..." {
+            SVProgressHUD.showWithStatus("Sending comment")
+            let commentToSend = PostComment(text: commentTextView.text, image: nil)
+            networkController.createComment("\(post!.postId!)", postComment: commentToSend, completionHandler: { (comment, error) -> () in
+                if error == nil {
+                    if comment?.postCommentId != nil {
+                        // add the comment returned locally
+                        self.post?.postComments?.append(comment!)
+                        // everything worked ok, reload the table of comments
+                        self.tableView.reloadData()
+                        // reset the field
+                        self.commentTextView.text = ""
+                        // after a delay, scroll the table to the last comment
+                        let delay = 0.1 * Double(NSEC_PER_SEC)
+                        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                        dispatch_after(time, dispatch_get_main_queue(), {
+                            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.post!.postComments!.count - 1, inSection: 2), atScrollPosition: .Bottom, animated: true)
+                        })
+                    } else {
+                        print("there was an error saving the post")
+                    }
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            })
+            
+        } else {
+            var alert: UIAlertController
+            alert = UIAlertController(title: "Error", message: "The message can't be empty!", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
     
 }

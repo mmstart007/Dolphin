@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class SettingsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, SettingsSwitchTableViewCellDelegate {
     
@@ -37,7 +38,8 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         tableViewSettings.delegate = self
         tableViewSettings.dataSource = self
         registerCells()
-        myPODS = networkController.pods
+        // TODO: loads pods from server
+        //myPODS = networkController.pods
     }
 
     override func didReceiveMemoryWarning() {
@@ -190,8 +192,32 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             navigationController?.pushViewController(PODSettingsVC, animated: true)
         }
     }
+    
         
     // MARK: - Auxiliary methods
+    
+    func loadUserInfo() {
+        SVProgressHUD.showWithStatus("Loading")
+        networkController.getUserById("\(networkController.currentUserId)") { (user, error) -> () in
+            if error == nil {
+                if user?.id != nil {
+                    self.networkController.currentUser = user
+                    // everything worked ok
+                    //loadFields()
+                } else {
+                    print("there was an error getting the user info")
+                }
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
+            }
+        }
+    }
     
     func registerCells() {
         tableViewSettings.registerNib(UINib(nibName: "SettingsTextFieldTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsTextFieldTableViewCell")

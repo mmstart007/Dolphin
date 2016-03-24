@@ -14,12 +14,12 @@ class PostComment : NSObject {
     var postCommentUser: User?
     var postCommentText: String?
     var postCommentDate: NSDate?
+    var postCommentImage: UIImage?
     
-    convenience init(user: User, text: String, date: NSDate) {
+    convenience init(text: String, image: UIImage?) {
         self.init()
-        self.postCommentUser = user
         self.postCommentText = text
-        self.postCommentDate = date
+        self.postCommentImage = image
     }
     
     convenience init(jsonObject: AnyObject) {
@@ -34,6 +34,18 @@ class PostComment : NSObject {
         let dateFormatter        = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
         self.postCommentDate     = dateFormatter.dateFromString(dateString!)
+        
+    }
+    
+    func toJson() -> [String: AnyObject] {
+        var retDic = [String: AnyObject]()
+        if let text = self.postCommentText {
+            retDic["body"] = text
+        }
+        if let image = self.postCommentImage {
+            retDic["image"] = Utils.encodeBase64(image)
+        }
+        return retDic
         
     }
     

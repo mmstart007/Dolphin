@@ -167,7 +167,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                 self.isDataLoaded = false
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
-                if errors != nil && errors![0] == "" {
+                if errors != nil && errors![0] != "" {
                     alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
                 } else {
                     alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
