@@ -8,6 +8,7 @@
 
 #import "SWRevealViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/SDWebImageManager.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "UIAppearance_Swift.h"

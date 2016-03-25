@@ -25,6 +25,7 @@
 		360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B41C0F6F3A00692668 /* PopularViewController.xib */; };
 		360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */; };
 		360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */; };
+		36129FA41CA5999C00446503 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36129FA31CA5999C00446503 /* AFDateExtension.swift */; };
 		3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */; };
 		3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */; };
 		3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */; };
@@ -187,6 +188,7 @@
 		360EA4B41C0F6F3A00692668 /* PopularViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularViewController.xib; sourceTree = "<group>"; };
 		360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularTrendingTopicsTableViewCell.swift; sourceTree = "<group>"; };
 		360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTrendingTopicsTableViewCell.xib; sourceTree = "<group>"; };
+		36129FA31CA5999C00446503 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
 		3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostChooseImageViewController.swift; sourceTree = "<group>"; };
 		3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostChooseImageViewController.xib; sourceTree = "<group>"; };
 		3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostChooseImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -734,6 +736,7 @@
 		36BE4D041C062162002E52D9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				36129FA31CA5999C00446503 /* AFDateExtension.swift */,
 				360993121C4049530082B995 /* UIAppearance_Swift.h */,
 				360993131C4049530082B995 /* UIAppearance_Swift.m */,
 				36BE4D051C06217D002E52D9 /* UIColor+DolphinAdditions.swift */,
@@ -1106,6 +1109,7 @@
 				3616E49C1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift in Sources */,
 				3607AAD51C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,
+				36129FA41CA5999C00446503 /* AFDateExtension.swift in Sources */,
 				36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */,
 				3607AADE1C8F7E6200B9DD8F /* PODSettingsViewController.swift in Sources */,
 				36736F681C6130790040A263 /* DolphinButton.swift in Sources */,

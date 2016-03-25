@@ -11,6 +11,8 @@ import UIKit
     
 class SidebarViewController : UIViewController {
     
+    let networkController = NetworkController.sharedInstance
+    
     // MARK: IBOutlets
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var myFeedIconImageView: UIImageView!
@@ -157,9 +159,16 @@ class SidebarViewController : UIViewController {
     
     @IBAction func settingsButtonTouchUpInside(sender: AnyObject) {
         print("Settings button pressed")
-        revealViewController().revealToggleAnimated(true)
-        let settingsVC = SettingsViewController()
-        homeViewController.navigationController?.pushViewController(settingsVC, animated: true)
+        if networkController.currentUserId == nil {
+            let alert = UIAlertController(title: "Warning", message: "You need to logout and login again, sorry this is for this time because we are in development", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        } else {
+            revealViewController().revealToggleAnimated(true)
+            let settingsVC = SettingsViewController()
+            homeViewController.navigationController?.pushViewController(settingsVC, animated: true)
+        }
     }
     
     // Set all items non selected before setting the chosen one

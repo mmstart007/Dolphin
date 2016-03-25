@@ -160,21 +160,17 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         
         if !checkValidMail(true) {
             fieldsValidated = false
-            errorTitle = "Mail Error"
+            errorTitle = "Email error"
             errorMsg = "Wrong format"
         } else if !checkValidPassword(true) {
             fieldsValidated = false
-            errorTitle = "Password Error"
+            errorTitle = "Password error"
             errorMsg = "Password should be at least 5 characters long"
         }
         if fieldsValidated {
             SVProgressHUD.showWithStatus("Signing in")
             networkController.login(userName!, password: password!, completionHandler: { (token, userId, error) -> () in
                 if error == nil {
-                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.apiToken = token!
-                    appDelegate.currentUserId = userId!
-                    
                     // Store the apiToken
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(token, forKey: "api_token")
@@ -208,15 +204,15 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         var errorMsg: String = ""
         if !checkValidUsername() {
             fieldsValidated = false
-            errorTitle = "Username Error"
+            errorTitle = "Username error"
             errorMsg = "Username empty"
         } else if !checkValidMail(false) {
             fieldsValidated = false
-            errorTitle = "Mail Error"
+            errorTitle = "Email error"
             errorMsg = "Wrong format"
         } else if !checkValidPassword(false) {
             fieldsValidated = false
-            errorTitle = "Password Error"
+            errorTitle = "Password error"
             errorMsg = "Password should be at least 5 characters long"
         }
         if fieldsValidated {
@@ -231,9 +227,6 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             SVProgressHUD.showWithStatus("Signing up")
             networkController.registerUser(user, completionHandler: { (token, userId, error) -> () in
                 if error == nil {
-                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    appDelegate.apiToken = token!
-                    appDelegate.currentUserId = userId!
                     
                     // Store the apiToken
                     let defaults = NSUserDefaults.standardUserDefaults()

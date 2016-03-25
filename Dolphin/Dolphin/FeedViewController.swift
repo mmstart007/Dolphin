@@ -21,6 +21,8 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     var filteredPosts: [Post] = []
     var searchText: String? = nil
     var isDataLoaded: Bool = false
+    var postIdsOfLikesForTheUser: [Int] = []
+    var dateLastPost: NSDate?
 
     init(likes: Bool) {
         super.init(nibName: "FeedViewController", bundle: nil)
@@ -38,8 +40,15 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.postsTableView.reloadData()
-        if !isDataLoaded {
-            loadData(false)
+        if networkController.currentUserId == nil {
+            let alert = UIAlertController(title: "Warning", message: "You need to logout and login again, sorry this is for this time because we are in development", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        } else {
+            if !isDataLoaded {
+                loadUserLikes(false)
+            }
         }
     }
     
@@ -62,7 +71,11 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         postsTableView.estimatedRowHeight = 400
         
         postsTableView.addPullToRefreshWithActionHandler { () -> Void in
-            self.loadData(true)
+            self.loadUserLikes(true)
+        }
+        
+        postsTableView.addInfiniteScrollingWithActionHandler { () -> Void in
+            self.loadNextPosts()
         }
 
     }
@@ -109,6 +122,20 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         return UITableViewAutomaticDimension
     }
     
+//    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        // adding the laod more button
+//        let loadMoreContainer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 120))
+//        let loadMoreLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 120))
+//        loadMoreLabel.text = "Load more"
+//        loadMoreLabel.textColor = UIColor.blueDolphin()
+//        loadMoreLabel.textAlignment = .Center
+//        loadMoreLabel.backgroundColor = UIColor.yellowColor()
+//        Utils.setFontFamilyForView(loadMoreLabel, includeSubViews: true)
+//        loadMoreContainer.addSubview(loadMoreLabel)
+//        return loadMoreContainer
+//        
+//    }
+    
     // MARK: Tableview delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -148,20 +175,60 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         postsTableView.reloadData()
     }
     
+    
+    
     // MARK: - Auxiliary methods
-    func loadData(pullToRefresh: Bool) {
+    
+    func loadUserLikes(pullToRefresh: Bool) {
         if !pullToRefresh {
             SVProgressHUD.showWithStatus("Loading")
         }
+        networkController.getUserLikes(String(networkController.currentUserId!)) { (likes, error) -> () in
+            if error == nil {
+                // build the list of post liked by the user
+                self.postIdsOfLikesForTheUser = likes.map({ (actual) -> Int in
+                    actual.likePost!.postId!
+                })
+                // load the feeds
+                self.loadData(pullToRefresh)
+                
+            } else {
+                self.isDataLoaded = false
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                }
+                self.postsTableView.pullToRefreshView.stopAnimating()
+            }
+        }
+    }
+    
+    func loadData(pullToRefresh: Bool) {
         networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.isDataLoaded = true
                 self.allPosts = posts
+                if self.allPosts.count > 0 {
+                    let lastPost = self.allPosts[self.allPosts.count - 1]
+                    self.dateLastPost = lastPost.postDate?.dateBySubtractingSeconds(1)
+                }
+                for eachPost in self.allPosts {
+                    eachPost.isLikedByUser = self.postIdsOfLikesForTheUser.contains(eachPost.postId!)
+                }
                 self.postsTableView.reloadData()
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
-                //self.loadTest()
+                //self.deletePost(15)
                 
             } else {
                 self.isDataLoaded = false
@@ -183,8 +250,9 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         })
     }
     
-    func loadTest() {
-        networkController.deletePost("6") { (error) -> () in
+    func deletePost(postId: Int) {
+        let postIdString = String(postId)
+        networkController.deletePost(postIdString) { (error) -> () in
             if error == nil {
                 print("post deleted")
             } else {
@@ -192,6 +260,36 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             }
             self.postsTableView.pullToRefreshView.stopAnimating()
         }
+    }
+    
+    func loadNextPosts() {
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: dateLastPost, userId: nil, quantity: nil, completionHandler: { (posts, error) -> () in
+            if error == nil {
+                self.allPosts.appendContentsOf(posts)
+                if self.allPosts.count > 0 {
+                    let lastPost = self.allPosts[self.allPosts.count - 1]
+                    self.dateLastPost = lastPost.postDate?.dateBySubtractingSeconds(1)
+                }
+                for eachPost in self.allPosts {
+                    eachPost.isLikedByUser = self.postIdsOfLikesForTheUser.contains(eachPost.postId!)
+                }
+                self.postsTableView.reloadData()
+                
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            self.postsTableView.infiniteScrollingView.stopAnimating()
+        })
     }
     
 }

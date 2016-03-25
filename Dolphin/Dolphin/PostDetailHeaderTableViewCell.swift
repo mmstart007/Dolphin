@@ -8,19 +8,49 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
     
+    var actualPost: Post?
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+    }
+    
     func configureWithPost(post: Post) {
-        if let postImage = post.postImage {
-            postImageView.sd_setImageWithURL(NSURL(string: (postImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-        } else if let postLink = post.postLink {
-            postImageView.sd_setImageWithURL(NSURL(string: (postLink.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-        } else {
-            postImageView.image = UIImage(named: "PostImagePlaceholder")
+        actualPost = post
+        if actualPost != nil {
+            if let postImage = actualPost!.postImage {
+                let manager = SDWebImageManager.sharedManager()
+                manager.downloadImageWithURL(NSURL(string: (postImage.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                    if error == nil {
+                        let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
+                        let croppedImage = Utils.cropToBounds(resizedImage, width: self.postImageView.frame.width, height: self.postImageView.frame.height)
+                        self.postImageView.image = croppedImage
+                    } else {
+                        self.postImageView.image = UIImage(named: "PostImagePlaceholder")
+                    }
+                })
+            } else if let postLink = actualPost!.postLink {
+                let manager = SDWebImageManager.sharedManager()
+                manager.downloadImageWithURL(NSURL(string: (postLink.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                    if error == nil {
+                        let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
+                        let croppedImage = Utils.cropToBounds(resizedImage, width: self.postImageView.frame.width, height: self.postImageView.frame.height)
+                        self.postImageView.image = croppedImage
+                    } else {
+                        self.postImageView.image = UIImage(named: "PostImagePlaceholder")
+                    }
+                })
+            } else {
+                postImageView.image = UIImage(named: "PostImagePlaceholder")
+            }
         }
         if post.postType?.name == "link" {
             postTextView.text = post.postLink?.url

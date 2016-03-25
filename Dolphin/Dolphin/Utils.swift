@@ -105,4 +105,20 @@ class Utils {
         return newImage
     }
     
+    // MARK: - Crop images
+    static func cropToBounds(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
+        
+        let contextImage: UIImage = UIImage(CGImage: image.CGImage!)
+
+        let rect = CGRectMake(0, 0, width, height)        
+        
+        // Create bitmap image from context using the rect
+        let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)!
+        
+        // Create a new image based on the imageRef and rotate back to the original orientation
+        let image: UIImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
+        
+        return image
+    }
+    
 }

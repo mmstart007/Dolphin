@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 class PostTableViewCell : CustomFontTableViewCell {
     
@@ -36,7 +37,7 @@ class PostTableViewCell : CustomFontTableViewCell {
             return super.frame
         }
         set (newFrame) {
-            var frame = newFrame
+            var frame               = newFrame
             let separation: CGFloat = 6.0
             frame.origin.x          += separation
             frame.origin.y          += separation
@@ -49,22 +50,17 @@ class PostTableViewCell : CustomFontTableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
        
-        if let post = cellPost {
+        if cellPost != nil {
             postuserImageView.layer.cornerRadius = postuserImageView.frame.size.width / 2.0
-            
+            adjustImages()
         }
+        
+        
     }
     
     func configureWithPost(post: Post) {
         self.cellPost = post
         
-        if let image = post.postImage {
-            postImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-        } else if let linkImage = post.postLink?.imageURL {
-            postImageView.sd_setImageWithURL(NSURL(string: linkImage), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-        } else {
-            postImageView.image = UIImage(named: "PostImagePlaceholder")
-        }
         if let userImageUrl = post.postUser?.userAvatarImageURL {
             postuserImageView.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
@@ -132,6 +128,38 @@ class PostTableViewCell : CustomFontTableViewCell {
             postImageViewHeightConstraint.active     = false
         }
     }
+    
+    func adjustImages() {
+        if let post = cellPost {
+            if let image = post.postImage {
+                
+                self.postImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"), completed: { (image, error, SDImageCacheType, imageUrl) -> Void in
+                    if error == nil {
+                        let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
+                        let croppedImage = Utils.cropToBounds(resizedImage, width: self.postImageView.frame.width, height: 130)
+                        self.postImageView.image = croppedImage
+                    } else {
+                        self.postImageView.image = UIImage(named: "PostImagePlaceholder")
+                    }
+                })
+                
+            } else if let linkImage = post.postLink {
+                
+                self.postImageView.sd_setImageWithURL(NSURL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"), completed: { (image, error, SDImageCacheType, imageUrl) -> Void in
+                    if error == nil {
+                        let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
+                        let croppedImage = Utils.cropToBounds(resizedImage, width: self.postImageView.frame.width, height: 130)
+                        self.postImageView.image = croppedImage
+                    } else {
+                        self.postImageView.image = UIImage(named: "PostImagePlaceholder")
+                    }
+                })
+            } else {
+                postImageView.image = UIImage(named: "PostImagePlaceholder")
+            }
+        }
+    }
+    
     
     func adjustViews() {
         if triangleView == nil {

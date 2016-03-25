@@ -20,9 +20,12 @@ class SettingsTextFieldTableViewCell: UITableViewCell {
     }
 
     
-    func configureWithSetting(name: String, placeholder: String) {
+    func configureWithSetting(name: String, placeholder: String, value: String?) {
         labelSettingName.text = name
         textFieldValue.placeholder = placeholder
+        if value != nil {
+            textFieldValue.text = value
+        }
         Utils.setFontFamilyForView(self, includeSubViews: true)
     }
     

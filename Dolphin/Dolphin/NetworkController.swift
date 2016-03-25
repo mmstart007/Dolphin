@@ -102,7 +102,7 @@ class NetworkController: NSObject {
         
     }
     
-    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, completionHandler: (User?, AnyObject?) -> ()) -> () {
+    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, completionHandler: (User?, AnyObject?) -> ()) -> () {
         
         var userUpdated: User?
         var updateValues = [String: String]()
@@ -130,8 +130,11 @@ class NetworkController: NSObject {
         if location != nil {
             updateValues["location"] = location
         }
+        if isPrivate != nil {
+            updateValues["is_private"] = String(isPrivate!)
+        }
         let parameters : [String : AnyObject]? = ["user": updateValues]
-        performRequest(MethodType.POST, authenticated: false, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+        performRequest(MethodType.PATCH, authenticated: true, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 if let userRet = result!["user"] as? [String: AnyObject] {
                     userUpdated = User(jsonObject: userRet)
@@ -179,8 +182,9 @@ class NetworkController: NSObject {
         let urlParameters : [CVarArgType] = [userId, postId]
         performRequest(MethodType.GET, authenticated: true, method: .GetUserLikePost, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let userLikeJson = result!["like"] as? [String: AnyObject]
-                userLikePost = userLikeJson!["id"] != nil
+                let userLikeJsonArray = result!["likes"] as? [[String: AnyObject]]
+                let userLikeJson = userLikeJsonArray![0]
+                userLikePost = userLikeJson["id"] != nil
                 completionHandler(userLikePost, nil)
             } else {
                 completionHandler(userLikePost, error)
@@ -369,7 +373,8 @@ class NetworkController: NSObject {
     func createLike(postId: String, completionHandler: (Like?, AnyObject?) -> ()) -> () {
         var savedLike: Like?
         let urlParameters : [CVarArgType] = [postId]
-        performRequest(MethodType.POST, authenticated: true, method: .PostLikes, urlParams: urlParameters, params: nil, jsonEconding: true) { (result, error) -> () in
+        let parameters : [String : AnyObject]? = ["like": ""]
+        performRequest(MethodType.POST, authenticated: true, method: .PostLikes, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 if let likeJson = result!["like"] as? [[String: AnyObject]] {
                     savedLike = Like(jsonObject: likeJson[0])
@@ -502,41 +507,5 @@ class NetworkController: NSObject {
             }.validate()
         
     }
-    
-    
-    //    func initializeNetworkController() {
-    //        let user1 = User(deviceId: "", name: "John Doe", imageURL: "", email: "john@doe.com", password: "test")
-    //
-    //        let comment1 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-    //        let comment2 = PostComment(user: user1, text: "I'll say!", date: NSDate())
-    //        let comment3 = PostComment(user: user1, text: "This is a larger comment than the previos one, I just want to test the cell height!", date: NSDate())
-    //        let comment4 = PostComment(user: user1, text: "This comment is even larger than the other one, and it is loooooooooooooooooooooooooooooooooooooooooooooooooooooong", date: NSDate())
-    //        let comment5 = PostComment(user: user1, text: "Great, the layout on the comments looks awesome!", date: NSDate())
-    //
-    //        let post1 = Post(user: user1, imageURL: "https://anprak.files.wordpress.com/2014/01/thevergebanner.png?w=630&h=189", type: .URL, header: "https://www.theverge.com/", text: "This is an awesome site!", date: NSDate(), numberOfLikes: 1228, numberOfComments: 43, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: true)
-    //        let post2 = Post(user: user1, imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRz1WiFnk8nU7JnT1KikESbt-SNIecF6GU1smWteRhyWWEaji9v", type: .Text, header: "", text: "This is the text of this awesome post!!!", date: NSDate(), numberOfLikes: 8, numberOfComments: 3, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: false)
-    //        let post3 = Post(user: user1, imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbUgMAg6ImQKs-nRmUnecDp_z-5SZjXbi2rxDot8LcV4eLQb8eIg", type: .Photo, header: "", text: "This is the text of another awesome post!!!", date: NSDate(), numberOfLikes: 1928, numberOfComments: 115, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: true)
-    //        posts = [post1, post2, post3]
-    //
-    //        let post4 = Post(user: user1, imageURL: "https://anprak.files.wordpress.com/2014/01/thevergebanner.png?w=630&h=189", type: .URL, header: "https://www.theverge.com/", text: "This is an awesome site!", date: NSDate(), numberOfLikes: 1228, numberOfComments: 43, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: true)
-    //        let post5 = Post(user: user1, imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRz1WiFnk8nU7JnT1KikESbt-SNIecF6GU1smWteRhyWWEaji9v", type: .Text, header: "", text: "This is the text of this awesome post!!!", date: NSDate(), numberOfLikes: 8, numberOfComments: 3, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: true)
-    //        let post6 = Post(user: user1, imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbUgMAg6ImQKs-nRmUnecDp_z-5SZjXbi2rxDot8LcV4eLQb8eIg", type: .Photo, header: "", text: "This is the text of another awesome post!!!", date: NSDate(), numberOfLikes: 1928, numberOfComments: 115, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: true)
-    //
-    //        likedPosts = [post4, post5, post6]
-    //
-    //        let pod1 = POD(name: "Aviation", imageURL: "https://wallpaperscraft.com/image/plane_sky_flying_sunset_64663_3840x1200.jpg", lastpostDate: NSDate(), users: [user1, user1, user1, user1, user1, user1], isPrivate: true)
-    //        let pod2 = POD(name: "Engineering", imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRcMgu3PJLY079zBrxFxZRDwl59nuVuluNdF6PtqJvIzoD39YCQKg", lastpostDate: NSDate(), users: [user1, user1, user1], isPrivate: false)
-    //        let pod3 = POD(name: "Electronics", imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTUTqYPZGV5hcCSTuoRf_VR1lbN6lFZvGn8ufGPBNCEVRj7gdN3TA", lastpostDate: NSDate(), users: [user1, user1, user1, user1, user1], isPrivate: true)
-    //
-    //        pods = [pod1, pod2, pod3]
-    //
-    //        let deal1 = Deal(image: "http://www.freelogovectors.net/wp-content/uploads/2013/01/staples-logo.jpg", description: "50% STAPLES purchase of $100 or more", date: NSDate(), code: "http://freebarcodefonts.dobsonsw.com/images/code128bar.jpg")
-    //        let deal2 = Deal(image: "http://i.ebayimg.com/00/s/NzY4WDEwMjQ=/z/1I4AAOSwDNdVtpOh/$_3.jpg", description: "XBOX ONE (NIB)", date: NSDate(), code: "http://smallbiztrends.com/wp-content/uploads/2015/05/qr-code-sample.jpg")
-    //        let deal3 = Deal(image: "http://ecx.images-amazon.com/images/I/41aawS8-fLL._SY300_.jpg", description: "Ninja Turtles Remote Control Adapter", date: NSDate(), code: "")
-    //        
-    //        deals.append(deal1)
-    //        deals.append(deal2)
-    //        deals.append(deal3)
-    //    }
     
 }

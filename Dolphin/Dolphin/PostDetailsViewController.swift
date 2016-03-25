@@ -196,6 +196,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             networkController.deleteLike("\(post!.postId!)", completionHandler: { (error) -> () in
                 if error == nil {
                     self.post?.postNumberOfLikes = (self.post?.postNumberOfLikes)! - 1
+                    self.post?.isLikedByUser = false
                     self.tableView.reloadData()
                     SVProgressHUD.dismiss()
                     
@@ -480,7 +481,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func loadUserLikePost() {
         SVProgressHUD.showWithStatus("Loading")
-        networkController.getUserLikePost("\(post!.postUser!.id!)", postId: "\(post!.postId!)") { (userLikeThisPost, error) -> () in
+        networkController.getUserLikePost("\(networkController.currentUserId!)", postId: "\(post!.postId!)") { (userLikeThisPost, error) -> () in
             if error == nil {
                 self.post?.isLikedByUser = userLikeThisPost
                 self.loadComments()

@@ -24,10 +24,11 @@ class SettingsSwitchTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func configureWithSetting(name: String, delegate: SettingsSwitchTableViewCellDelegate?, tag: Int) {
+    func configureWithSetting(name: String, delegate: SettingsSwitchTableViewCellDelegate?, tag: Int, enable: Bool) {
         self.tag = tag
         self.delegate = delegate
         labelSettingName.text = name
+        switchSetting.on = enable
         Utils.setFontFamilyForView(self, includeSubViews: true)
     }
     

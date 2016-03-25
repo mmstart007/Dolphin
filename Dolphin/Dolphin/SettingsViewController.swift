@@ -41,6 +41,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         // TODO: loads pods from server
         //myPODS = networkController.pods
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadUserInfo()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -57,8 +63,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         switch section {
         case 0:
             // profile
-            if publicProfile {
-                return 5
+            if let user = networkController.currentUser {
+                if user.isPrivate == 0 {
+                    return 5
+                } else {
+                    return 2
+                }
             } else {
                 return 2
             }
@@ -88,11 +98,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         
         if indexPath.section == 0 {
             if indexPath.row == 0 {
+                // username cell
                 cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                 if cell == nil {
                     cell = SettingsTextFieldTableViewCell()
                 }
-                (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Username", placeholder: "username")
+                (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Username", placeholder: "username", value: networkController.currentUser?.userName)
             }
             else {
                 if indexPath.row == 1 {
@@ -100,28 +111,28 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     if cell == nil {
                         cell = SettingsSwitchTableViewCell()
                     }
-                    (cell as? SettingsSwitchTableViewCell)?.configureWithSetting("Private/Public", delegate: self, tag: 0)
+                    (cell as? SettingsSwitchTableViewCell)?.configureWithSetting("Private/Public", delegate: self, tag: 0, enable: networkController.currentUser?.isPrivate == 0)
                     
                 } else if indexPath.row == 2 {
                     cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("First Name", placeholder: "enter your name")
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("First Name", placeholder: "enter your name", value: networkController.currentUser?.firstName)
                     
                 } else if indexPath.row == 3 {
                     cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Last Name", placeholder: "enter your last name")
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Last Name", placeholder: "enter your last name", value: networkController.currentUser?.lastName)
                     
                 } else if indexPath.row == 4 {
                     cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location")
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location", value: networkController.currentUser?.location)
                     
                 }
             }
@@ -130,7 +141,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             if cell == nil {
                 cell = SettingsSwitchTableViewCell()
             }
-            (cell as? SettingsSwitchTableViewCell)?.configureWithSetting("Enable Push Notifications", delegate: self, tag: 1)
+            (cell as? SettingsSwitchTableViewCell)?.configureWithSetting("Enable Push Notifications", delegate: self, tag: 1, enable: false)
         } else if indexPath.section == 2 {
             cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
             if (cell == nil) {
@@ -198,15 +209,16 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     
     func loadUserInfo() {
         SVProgressHUD.showWithStatus("Loading")
-        networkController.getUserById("\(networkController.currentUserId)") { (user, error) -> () in
+        networkController.getUserById("\(networkController.currentUserId!)") { (user, error) -> () in
             if error == nil {
                 if user?.id != nil {
                     self.networkController.currentUser = user
                     // everything worked ok
-                    //loadFields()
+                    self.tableViewSettings.reloadData()
                 } else {
                     print("there was an error getting the user info")
                 }
+                SVProgressHUD.dismiss()
                 
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
@@ -216,6 +228,68 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                 self.presentViewController(alert, animated: true, completion: nil)
                 SVProgressHUD.dismiss()
             }
+        }
+    }
+    
+    func updateUserInfo() {
+        var userNameChanged: Bool = false
+        if networkController.currentUser?.isPrivate == 0 {
+            // public
+            let cellUserName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? SettingsTextFieldTableViewCell
+            if cellUserName?.textFieldValue.text != networkController.currentUser?.userName {
+                networkController.currentUser?.userName = cellUserName?.textFieldValue.text
+                userNameChanged = true
+            }
+            let cellFirstName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as? SettingsTextFieldTableViewCell
+            networkController.currentUser?.firstName = cellFirstName?.textFieldValue.text
+            let cellLastName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as? SettingsTextFieldTableViewCell
+            networkController.currentUser?.lastName = cellLastName?.textFieldValue.text
+            let cellLocation = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 0)) as? SettingsTextFieldTableViewCell
+            networkController.currentUser?.location = cellLocation?.textFieldValue.text
+            
+            // call the api function to update the user info
+            SVProgressHUD.showWithStatus("Saving")
+            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: networkController.currentUser?.firstName, lastName: networkController.currentUser?.lastName, avatarImage: nil, email: nil, password: nil, location: networkController.currentUser?.location, isPrivate: networkController.currentUser?.isPrivate) { (user, error) -> () in
+                if error == nil {
+                    SVProgressHUD.dismiss()
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            }
+            
+        } else {
+            // private
+            
+            let cellUserName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? SettingsTextFieldTableViewCell
+            if cellUserName?.textFieldValue.text != networkController.currentUser?.userName {
+                networkController.currentUser?.userName = cellUserName?.textFieldValue.text
+                userNameChanged = true
+            }
+            
+            // call the api function to update the user info
+            SVProgressHUD.showWithStatus("Saving")
+            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: nil, email: nil, password: nil, location: nil, isPrivate: networkController.currentUser?.isPrivate) { (user, error) -> () in
+                if error == nil {
+                    SVProgressHUD.dismiss()
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            }
+            
         }
     }
     
@@ -229,12 +303,14 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         tableViewSettings.backgroundColor = UIColor.groupTableViewBackgroundColor()
     }
     
+    
+    
     // MARK: - SwitchTableViewCell delegate
     
     func toggleSwitch(enabled: Bool, tag: Int) {
         if tag == 0 {
             // Public/Private
-            publicProfile = enabled
+            networkController.currentUser?.isPrivate = enabled ? 0 : 1
             tableViewSettings.reloadData()
         } else if tag == 1 {
             // Push Notifications
@@ -245,6 +321,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     
     func saveSettingsPressed(sender: AnyObject) {
         print("Save Pressed")
+        updateUserInfo()
     }
 
 

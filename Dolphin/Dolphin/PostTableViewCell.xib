@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vwn-9g-sIl">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vwn-9g-sIl">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="129"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Vwn-9g-sIl" secondAttribute="height" multiplier="125:43" id="btF-p7-5B9"/>
