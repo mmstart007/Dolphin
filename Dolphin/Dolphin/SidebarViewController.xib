@@ -14,6 +14,7 @@
                 <outlet property="historyMenuItemLabel" destination="KsI-YC-hKi" id="WJy-7c-Wn9"/>
                 <outlet property="inviteFriendsIconImageView" destination="fhH-Lv-0Og" id="WyR-aZ-mIn"/>
                 <outlet property="inviteFriendsMenuItemLabel" destination="Po0-oL-dk8" id="TWw-yn-B5j"/>
+                <outlet property="labelUserName" destination="xza-hu-cTE" id="YJF-52-jVD"/>
                 <outlet property="myFeedIconImageView" destination="hEn-Ee-4dI" id="KfB-AT-zuF"/>
                 <outlet property="myFeedMenuItemLabel" destination="3se-GP-TMM" id="7FT-O2-dfF"/>
                 <outlet property="myPODsIconImageView" destination="zfa-pI-RjX" id="7tk-wX-fhr"/>

@@ -15,6 +15,7 @@ class SidebarViewController : UIViewController {
     
     // MARK: IBOutlets
     @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var labelUserName: UILabel!
     @IBOutlet weak var myFeedIconImageView: UIImageView!
     @IBOutlet weak var historyIconImageView: UIImageView!
     @IBOutlet weak var myPODsIconImageView: UIImageView!
@@ -52,6 +53,22 @@ class SidebarViewController : UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setAppearance()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if let user = networkController.currentUser {
+            let firstName = user.firstName
+            let lastName = user.lastName
+            if firstName != "" && lastName != "" {
+                labelUserName.text = String(format: "%@ %@", user.firstName!, user.lastName!)
+            } else {
+                labelUserName.text = user.userName!
+            }
+            
+            
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

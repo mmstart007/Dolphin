@@ -104,8 +104,7 @@ class PostTableViewCell : CustomFontTableViewCell {
         numberOfCommentsLabel.text = String(post.postNumberOfComments!)
         
         if post.postType?.name == "link" {
-            // TODO: Fix the title of a link post
-            linkPostTitleLabel.text                    = "Link Post"
+            linkPostTitleLabel.text                    = post.postText
             linkPostURLLabel.text                      = post.postLink?.url
             linkInfoContainerHeightConstraint.active   = true
             linkInfoContainerHeightConstraint.constant = 50

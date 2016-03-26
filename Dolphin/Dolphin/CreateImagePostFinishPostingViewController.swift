@@ -8,11 +8,9 @@
 
 import Foundation
 import UIKit
-import SVProgressHUD
 
 class CreateImagePostFinishPostingViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    let networkController = NetworkController.sharedInstance
     
     var postImage: UIImage?
     var picker: UIImagePickerController = UIImagePickerController()
@@ -32,7 +30,7 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
         super.viewDidLoad()
         
         setBackButton()
-        setRightButtonItemWithText("Post", target: self, action: "postButtonTouchUpInside")
+        setRightButtonItemWithText("Next", target: self, action: "nextButtonTouchUpInside")
         self.edgesForExtendedLayout = .None
         title = "New Post"
         
@@ -55,48 +53,21 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         navigationController?.popViewControllerAnimated(true)
     }
-    
-    func postButtonTouchUpInside() {
-        print("postButtonTouchUpInside")
 
-        var newWidth: CGFloat
-        if self.postImage?.size.width < 414 {
-            newWidth = self.postImage!.size.width
+    // MARK: - Actions
+    
+    func nextButtonTouchUpInside() {
+        let addDescriptionVC = CreateImagePostAddDescriptionViewController()
+        if postImage == nil {
+            var alert: UIAlertController
+            alert = UIAlertController(title: "Error", message: "You have to select an image", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            presentViewController(alert, animated: true, completion: nil)
         } else {
-            newWidth = 414
+            addDescriptionVC.postImage = postImage
+            navigationController?.pushViewController(addDescriptionVC, animated: true)
         }
-        let resizedImage = Utils.resizeImage(self.postImage!, newWidth: newWidth)
-        
-        // crate the pod
-        let post = Post(user: nil, image: nil, imageData: resizedImage, type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: nil, text: nil, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
-        SVProgressHUD.showWithStatus("Posting")
-        networkController.createPost(post, completionHandler: { (post, error) -> () in
-            if error == nil {
-                
-                if post?.postId != nil {
-                    // everything worked ok
-                    self.navigationController?.popToRootViewControllerAnimated(true)
-                } else {
-                    // there was an error saving the post
-                }
-                SVProgressHUD.dismiss()
-                
-            } else {
-                SVProgressHUD.dismiss()
-                let errors: [String]? = error!["errors"] as? [String]
-                var alert: UIAlertController
-                if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
-                } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
-                }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        })
-        
-        
     }
     
 

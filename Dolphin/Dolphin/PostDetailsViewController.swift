@@ -61,7 +61,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        loadUserLikePost()
+        loadComments()
     }
     
     func setAppearance() {
@@ -479,35 +479,12 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // MARK: - Auxiliary methods
     
-    func loadUserLikePost() {
-        SVProgressHUD.showWithStatus("Loading")
-        networkController.getUserLikePost("\(networkController.currentUserId!)", postId: "\(post!.postId!)") { (userLikeThisPost, error) -> () in
-            if error == nil {
-                self.post?.isLikedByUser = userLikeThisPost
-                self.loadComments()
-                
-            } else if error != nil && error!["errors"] != nil && (error!["errors"] as? [String])![0] == "Like not found." {
-                self.post?.isLikedByUser = false
-                self.loadComments()
-            }
-            else {
-                let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-                SVProgressHUD.dismiss()
-            }
-        }
-    }
-    
     func loadComments() {
-        
+        SVProgressHUD.showWithStatus("Loading")
         networkController.getPostComments(String(post!.postId!)) { (postComments, error) -> () in
             if error == nil {
                 self.post?.postComments = postComments
                 self.tableView.reloadData()
-                SVProgressHUD.dismiss()
                 
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
@@ -515,8 +492,8 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                 let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
                 alert.addAction(cancelAction)
                 self.presentViewController(alert, animated: true, completion: nil)
-                SVProgressHUD.dismiss()
             }
+            SVProgressHUD.dismiss()
         }
     }
     

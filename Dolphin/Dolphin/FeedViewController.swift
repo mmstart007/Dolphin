@@ -12,9 +12,11 @@ import SVProgressHUD
 
 class FeedViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {
     
+    let networkController = NetworkController.sharedInstance
+    let kPageQuantity: Int = 10
+    
     @IBOutlet weak var postsTableView: UITableView!
     
-    let networkController = NetworkController.sharedInstance
     var cells: [PostTableViewCell] = []
     var myLikes: Bool = false
     var allPosts: [Post] = []
@@ -22,7 +24,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     var searchText: String? = nil
     var isDataLoaded: Bool = false
     var postIdsOfLikesForTheUser: [Int] = []
-    var dateLastPost: NSDate?
+    var page: Int = 0
 
     init(likes: Bool) {
         super.init(nibName: "FeedViewController", bundle: nil)
@@ -47,7 +49,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             self.presentViewController(alert, animated: true, completion: nil)
         } else {
             if !isDataLoaded {
-                loadUserLikes(false)
+                loadData(false)
             }
         }
     }
@@ -71,7 +73,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         postsTableView.estimatedRowHeight = 400
         
         postsTableView.addPullToRefreshWithActionHandler { () -> Void in
-            self.loadUserLikes(true)
+            self.loadData(true)
         }
         
         postsTableView.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -179,10 +181,9 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     // MARK: - Auxiliary methods
     
+    
+    // Not used for now, the post has if the user likes it or not
     func loadUserLikes(pullToRefresh: Bool) {
-        if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
-        }
         networkController.getUserLikes(String(networkController.currentUserId!)) { (likes, error) -> () in
             if error == nil {
                 // build the list of post liked by the user
@@ -213,22 +214,25 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     }
     
     func loadData(pullToRefresh: Bool) {
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: nil, completionHandler: { (posts, error) -> () in
+        page = 0
+        if !pullToRefresh {
+            SVProgressHUD.showWithStatus("Loading")
+        }
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: 0, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.isDataLoaded = true
                 self.allPosts = posts
                 if self.allPosts.count > 0 {
-                    let lastPost = self.allPosts[self.allPosts.count - 1]
-                    self.dateLastPost = lastPost.postDate?.dateBySubtractingSeconds(1)
-                }
-                for eachPost in self.allPosts {
-                    eachPost.isLikedByUser = self.postIdsOfLikesForTheUser.contains(eachPost.postId!)
+                    self.removeTableEmtpyMessage()
+                } else {
+                    self.addTableEmptyMessage("No content has been posted\n\nwhy don't post someting?")
                 }
                 self.postsTableView.reloadData()
+                
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
-                //self.deletePost(15)
+                //self.deletePost(4)
                 
             } else {
                 self.isDataLoaded = false
@@ -263,16 +267,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     }
     
     func loadNextPosts() {
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: dateLastPost, userId: nil, quantity: nil, completionHandler: { (posts, error) -> () in
+        page = page + 1
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.allPosts.appendContentsOf(posts)
-                if self.allPosts.count > 0 {
-                    let lastPost = self.allPosts[self.allPosts.count - 1]
-                    self.dateLastPost = lastPost.postDate?.dateBySubtractingSeconds(1)
-                }
-                for eachPost in self.allPosts {
-                    eachPost.isLikedByUser = self.postIdsOfLikesForTheUser.contains(eachPost.postId!)
-                }
                 self.postsTableView.reloadData()
                 
                 
@@ -290,6 +288,20 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             }
             self.postsTableView.infiniteScrollingView.stopAnimating()
         })
+    }
+    
+    func addTableEmptyMessage(message: String) {
+        let labelBackground = UILabel(frame: CGRect(x: 0, y: 0, width: postsTableView.frame.width, height: 200))
+        labelBackground.text = message
+        labelBackground.textColor = UIColor.blueDolphin()
+        labelBackground.textAlignment = .Center
+        labelBackground.numberOfLines = 0
+        Utils.setFontFamilyForView(labelBackground, includeSubViews: true)
+        postsTableView.backgroundView = labelBackground
+    }
+    
+    func removeTableEmtpyMessage() {
+        postsTableView.backgroundView = nil
     }
     
 }

@@ -81,10 +81,9 @@ class Post : NSObject {
                 self.postTopics?.append(Topic(jsonObject: elem))
             }
         }
-        
-        
-        /// read parameters depending on the type
-        
+        if let likeIt = postJsonObject!["is_liked"] as? Int {
+            self.isLikedByUser = likeIt == 1
+        }
         
         self.postNumberOfLikes    = postJsonObject!["likes_count"] as? Int
         self.postNumberOfComments = postJsonObject!["comments_count"] as? Int

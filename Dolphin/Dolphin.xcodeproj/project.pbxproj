@@ -26,6 +26,10 @@
 		360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */; };
 		360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */; };
 		36129FA41CA5999C00446503 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36129FA31CA5999C00446503 /* AFDateExtension.swift */; };
+		36129FA71CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36129FA51CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift */; };
+		36129FA81CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36129FA61CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib */; };
+		36129FAA1CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36129FA91CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift */; };
+		36129FAC1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36129FAB1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib */; };
 		3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */; };
 		3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */; };
 		3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */; };
@@ -33,6 +37,8 @@
 		3616E49C1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3616E49A1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift */; };
 		3616E49F1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3616E49E1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib */; };
 		3616E4A11C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3616E4A01C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib */; };
+		361ADC491CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361ADC471CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift */; };
+		361ADC4A1CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361ADC481CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib */; };
 		361BFDAF1C9CA04C00F994F1 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BFDAE1C9CA04C00F994F1 /* Link.swift */; };
 		361F50841C652C3900153B6C /* UIView+DolphinExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361F50831C652C3900153B6C /* UIView+DolphinExtensions.swift */; };
 		361F50861C65337C00153B6C /* NewPostPrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361F50851C65337C00153B6C /* NewPostPrivacySettingsViewController.swift */; };
@@ -189,6 +195,10 @@
 		360EA4B71C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularTrendingTopicsTableViewCell.swift; sourceTree = "<group>"; };
 		360EA4B91C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularTrendingTopicsTableViewCell.xib; sourceTree = "<group>"; };
 		36129FA31CA5999C00446503 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
+		36129FA51CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateImagePostAddDescriptionViewController.swift; sourceTree = "<group>"; };
+		36129FA61CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateImagePostAddDescriptionViewController.xib; sourceTree = "<group>"; };
+		36129FA91CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostAddDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		36129FAB1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostAddDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostChooseImageViewController.swift; sourceTree = "<group>"; };
 		3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostChooseImageViewController.xib; sourceTree = "<group>"; };
 		3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostChooseImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -196,6 +206,8 @@
 		3616E49A1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsCodeSectionTableViewCell.swift; sourceTree = "<group>"; };
 		3616E49E1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealDetailsHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		3616E4A01C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealDetailsCodeSectionTableViewCell.xib; sourceTree = "<group>"; };
+		361ADC471CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostAddDescriptionViewController.swift; sourceTree = "<group>"; };
+		361ADC481CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostAddDescriptionViewController.xib; sourceTree = "<group>"; };
 		361BFDAE1C9CA04C00F994F1 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		361F50831C652C3900153B6C /* UIView+DolphinExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+DolphinExtensions.swift"; sourceTree = "<group>"; };
 		361F50851C65337C00153B6C /* NewPostPrivacySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostPrivacySettingsViewController.swift; sourceTree = "<group>"; };
@@ -376,6 +388,8 @@
 				361F508B1C65389D00153B6C /* NewPostPrivacySettingsVisibilityCell.xib */,
 				361F508D1C693AA500153B6C /* NewPostPrivacySettingsShareToPODCell.swift */,
 				361F508F1C693ABA00153B6C /* NewPostPrivacySettingsShareToPODCell.xib */,
+				36129FA91CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift */,
+				36129FAB1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib */,
 			);
 			name = CreatePost;
 			sourceTree = "<group>";
@@ -428,6 +442,10 @@
 				361FFE1D1C0CF381007EE366 /* PostDetailsViewController.xib */,
 				361F50851C65337C00153B6C /* NewPostPrivacySettingsViewController.swift */,
 				361F50871C65339000153B6C /* NewPostPrivacySettingsViewController.xib */,
+				36129FA51CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift */,
+				36129FA61CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib */,
+				361ADC471CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift */,
+				361ADC481CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib */,
 			);
 			name = Posts;
 			sourceTree = "<group>";
@@ -946,6 +964,7 @@
 				361F50881C65339000153B6C /* NewPostPrivacySettingsViewController.xib in Resources */,
 				36E9982A1C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib in Resources */,
 				3668B2FF1C6A7A7900469FF9 /* DealCollectionViewCell.xib in Resources */,
+				36129FAC1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib in Resources */,
 				3650E0B81C6D206700BB9301 /* CreatePodViewController.xib in Resources */,
 				362D4BDE1C1F336100F065E5 /* CreateImagePostViewController.xib in Resources */,
 				369382B91C31B8370005FCB0 /* FriendToInviteTableViewCell.xib in Resources */,
@@ -955,6 +974,7 @@
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
 				3616E49F1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib in Resources */,
 				3616E4A11C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib in Resources */,
+				36129FA81CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib in Resources */,
 				360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */,
 				3615B7031C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib in Resources */,
 				3607AADF1C8F7E6200B9DD8F /* PODSettingsViewController.xib in Resources */,
@@ -983,6 +1003,7 @@
 				361FFE261C0D0BBE007EE366 /* PostCommentOddTableViewCell.xib in Resources */,
 				36B1F41C1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib in Resources */,
 				361FFE2C1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib in Resources */,
+				361ADC4A1CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib in Resources */,
 				368798901C2B2BA70088AC24 /* Raleway-Regular.ttf in Resources */,
 				3607AADB1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib in Resources */,
 			);
@@ -1072,6 +1093,7 @@
 			files = (
 				368798661C29E1260088AC24 /* LoginViewController.swift in Sources */,
 				360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */,
+				36129FAA1CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift in Sources */,
 				3687989D1C2B482C0088AC24 /* CustomFontTableViewCell.swift in Sources */,
 				3650E0C21C6D4D6700BB9301 /* UserImageCollectionViewCell.swift in Sources */,
 				36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */,
@@ -1085,6 +1107,7 @@
 				36DCCD771C73EB8800D4B171 /* UserImagePODMemberCollectionViewCell.swift in Sources */,
 				361F508E1C693AA500153B6C /* NewPostPrivacySettingsShareToPODCell.swift in Sources */,
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
+				36129FA71CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift in Sources */,
 				3607AAD91C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift in Sources */,
 				3668B2F81C6A77B100469FF9 /* DealsListViewController.swift in Sources */,
 				3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */,
@@ -1135,6 +1158,7 @@
 				3668B2FD1C6A7A6200469FF9 /* DealCollectionViewCell.swift in Sources */,
 				3650E0BF1C6D42C200BB9301 /* FXBlurView.m in Sources */,
 				369697451C725ECB00774055 /* PODDetailsViewController.swift in Sources */,
+				361ADC491CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift in Sources */,
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				36DCCD731C73AC3A00D4B171 /* PODMembersTableViewCell.swift in Sources */,

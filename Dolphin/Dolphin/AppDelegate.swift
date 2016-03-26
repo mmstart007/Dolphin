@@ -1,4 +1,4 @@
-//
+
 //  AppDelegate.swift
 //  Dolphin
 //
@@ -11,6 +11,7 @@ import Fabric
 import Crashlytics
 import TwitterKit
 import OAuthSwift
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,6 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         UINavigationBar.appearance().backgroundColor = UIColor.blueDolphin()
         UINavigationBar.appearance().shadowImage = UIImage()
+        
+        // Set appearance for SVProgressHud
+        
+        SVProgressHUD.setBackgroundColor(UIColor.whiteColor())
+        SVProgressHUD.setForegroundColor(UIColor.blueDolphin())
+        SVProgressHUD.setDefaultMaskType(.Clear)
         
         let frame = UIScreen.mainScreen().bounds
         window = UIWindow(frame: frame)
