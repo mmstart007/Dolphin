@@ -11,32 +11,44 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="273"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iC8-hr-9mU">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XrN-h5-WtM">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="273"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iC8-hr-9mU">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                        </imageView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfA-9c-vKn">
+                            <rect key="frame" x="0.0" y="150" width="375" height="123"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="123" id="xzt-fy-W5Q"/>
+                            </constraints>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="150" id="mrb-cF-dWw"/>
+                        <constraint firstItem="iC8-hr-9mU" firstAttribute="leading" secondItem="XrN-h5-WtM" secondAttribute="leading" id="0l3-wC-g5h"/>
+                        <constraint firstAttribute="height" constant="273" id="4Ip-37-Axh"/>
+                        <constraint firstItem="qfA-9c-vKn" firstAttribute="top" secondItem="iC8-hr-9mU" secondAttribute="bottom" id="Igt-mg-jfD"/>
+                        <constraint firstAttribute="trailing" secondItem="qfA-9c-vKn" secondAttribute="trailing" id="LDg-DI-Vn9"/>
+                        <constraint firstItem="iC8-hr-9mU" firstAttribute="top" secondItem="XrN-h5-WtM" secondAttribute="top" id="Z5N-hP-nXS"/>
+                        <constraint firstAttribute="trailing" secondItem="iC8-hr-9mU" secondAttribute="trailing" id="eoA-Rb-DOR"/>
+                        <constraint firstItem="qfA-9c-vKn" firstAttribute="leading" secondItem="XrN-h5-WtM" secondAttribute="leading" id="zCV-OE-LBk"/>
                     </constraints>
-                </imageView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfA-9c-vKn">
-                    <rect key="frame" x="0.0" y="150" width="375" height="123"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="iC8-hr-9mU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0be-ib-U0V"/>
-                <constraint firstAttribute="bottom" secondItem="qfA-9c-vKn" secondAttribute="bottom" id="Gwp-L0-jby"/>
-                <constraint firstItem="qfA-9c-vKn" firstAttribute="top" secondItem="iC8-hr-9mU" secondAttribute="bottom" id="ggS-k9-8ps"/>
-                <constraint firstItem="iC8-hr-9mU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="k0d-2c-KJ4"/>
-                <constraint firstAttribute="trailing" secondItem="qfA-9c-vKn" secondAttribute="trailing" id="kTO-A1-Byz"/>
-                <constraint firstAttribute="trailing" secondItem="iC8-hr-9mU" secondAttribute="trailing" id="kc8-aY-3ms"/>
-                <constraint firstItem="qfA-9c-vKn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wSL-Lb-iRJ"/>
+                <constraint firstAttribute="bottom" secondItem="XrN-h5-WtM" secondAttribute="bottom" id="47Q-9g-EJS"/>
+                <constraint firstAttribute="trailing" secondItem="XrN-h5-WtM" secondAttribute="trailing" id="RZd-lR-4Ba"/>
+                <constraint firstItem="XrN-h5-WtM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ufm-dX-xYD"/>
+                <constraint firstItem="XrN-h5-WtM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="n4Y-wv-IQU"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="constraintHeightContainer" destination="4Ip-37-Axh" id="ofd-9e-SiF"/>
+                <outlet property="constraintHeightTextView" destination="xzt-fy-W5Q" id="z5N-kC-Q7f"/>
                 <outlet property="postImageView" destination="iC8-hr-9mU" id="nZv-jc-ykM"/>
                 <outlet property="postTextView" destination="qfA-9c-vKn" id="2Ob-cG-nok"/>
             </connections>

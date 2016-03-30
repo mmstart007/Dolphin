@@ -66,6 +66,9 @@ class SidebarViewController : UIViewController {
             } else {
                 labelUserName.text = user.userName!
             }
+            if let userImageURL = user.userAvatarImageURL {
+                userImageView.sd_setImageWithURL(NSURL(string: userImageURL), placeholderImage: UIImage(named: "UserPlaceholder"))
+            }
             
             
         }
@@ -108,7 +111,7 @@ class SidebarViewController : UIViewController {
     @IBAction func historyButtonTouchUpInside(sender: AnyObject) {
         print("History menu item selected")
         revealViewController().revealToggleAnimated(true)
-        homeViewController.navigationController?.pushViewController(FeedViewController(likes: true), animated: true)
+        homeViewController.navigationController?.pushViewController(FeedViewController(likes: true, showOnlyMyPosts: false), animated: true)
     }
     
     func setHistorySelected() {
@@ -168,6 +171,9 @@ class SidebarViewController : UIViewController {
         // remove user token
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey("api_token")
+        // remove the current user
+        networkController.currentUser = nil
+        
         
         let loginVC = LoginViewController()
         let rootViewController = (UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController

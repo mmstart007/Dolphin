@@ -21,6 +21,8 @@ class User : NSObject {
     var userEmail: String?
     var userPassword: String?
     var isPrivate: Int?
+    var grades: [Grade]?
+    var subjects: [Subject]?
     
     convenience init(deviceId: String?, userName: String?, imageURL: String?, email: String?, password: String?) {
         self.init()
@@ -42,6 +44,13 @@ class User : NSObject {
         self.isPrivate          = jsonObject["is_private"] as? Int
         self.id                 = jsonObject["id"] as? Int
         self.userAvatarImageURL = jsonObject["avatar_image_url"] as? String
+        self.grades = (jsonObject["grades"] as? [[String: AnyObject]])?.map({ (actual) -> Grade in
+            Grade(jsonObject: actual)
+        })
+        self.subjects = (jsonObject["subjects"] as? [[String: AnyObject]])?.map({ (actual) -> Subject in
+            Subject(jsonObject: actual)
+        })
+        
         
     }
     
@@ -67,6 +76,12 @@ class User : NSObject {
         }
         if let priv = self.isPrivate {
             retDic["is_private"] = priv
+        }
+        if let grds = self.grades {
+            retDic["grades"] = grds
+        }
+        if let sub = self.subjects {
+            retDic["subjects"] = sub
         }
         if let image = self.userAvatarImageData {
             retDic["avatar_image"] = Utils.encodeBase64(image)

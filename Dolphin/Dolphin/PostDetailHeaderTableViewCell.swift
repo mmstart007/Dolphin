@@ -14,25 +14,33 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
+    @IBOutlet weak var constraintHeightContainer: NSLayoutConstraint!
     
+    @IBOutlet weak var constraintHeightTextView: NSLayoutConstraint!
     var actualPost: Post?
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
     }
     
     func configureWithPost(post: Post) {
         actualPost = post
+        if post.postType?.name == "link" {
+            postTextView.text = post.postLink?.url
+        } else {
+            postTextView.text = post.postText
+        }
         if actualPost != nil {
             if let postImage = actualPost!.postImage {
                 let manager = SDWebImageManager.sharedManager()
                 manager.downloadImageWithURL(NSURL(string: (postImage.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
                         let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
-                        let croppedImage = Utils.cropToBounds(resizedImage, width: self.postImageView.frame.width, height: self.postImageView.frame.height)
-                        self.postImageView.image = croppedImage
+                        self.postImageView.image = resizedImage
+                        let calculatedHeight = self.calculateHeight()
+                        self.constraintHeightContainer.constant = self.postImageView.image!.size.height + calculatedHeight
+                        
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
                     }
@@ -42,8 +50,9 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
                 manager.downloadImageWithURL(NSURL(string: (postLink.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
                         let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
-                        let croppedImage = Utils.cropToBounds(resizedImage, width: self.postImageView.frame.width, height: self.postImageView.frame.height)
-                        self.postImageView.image = croppedImage
+                        self.postImageView.image = resizedImage
+                        let calculatedHeight = self.calculateHeight()
+                        self.constraintHeightContainer.constant = self.postImageView.image!.size.height + calculatedHeight
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
                     }
@@ -52,13 +61,20 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
                 postImageView.image = UIImage(named: "PostImagePlaceholder")
             }
         }
-        if post.postType?.name == "link" {
-            postTextView.text = post.postLink?.url
-        } else {
-            postTextView.text = post.postText
-        }
         backgroundColor = UIColor.clearColor()
         Utils.setFontFamilyForView(self, includeSubViews: true)
+    }
+    
+    func adjustCellViews() {
+
+    }
+    
+    func calculateHeight() -> CGFloat {
+        let fixedWidth = postTextView.frame.size.width
+        postTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        let newSize = postTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        var newFrame = postTextView.frame
+        return newSize.height
     }
     
 }

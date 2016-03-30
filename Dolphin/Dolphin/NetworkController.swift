@@ -23,7 +23,6 @@ class NetworkController: NSObject {
 
     var token: String?
     var posts: [Post]      = []
-    var likedPosts: [Post] = []
     var pods: [POD]        = []
     var deals: [Deal]      = []
     var currentUserId: Int?
@@ -42,19 +41,21 @@ class NetworkController: NSObject {
     }
     
     enum ApiMethod: String {
-        case Login = "login"
-        case User               = "users"
-        case GetUserById        = "users/%@"
-        case GetUserLikes       = "users/%@/likes"
-        case GetUserLikePost    = "users/%@/likes/%@"
-        case GetUserComments    = "users/%@/comments"
-        case CreatePost         = "posts"
-        case FilterPost         = "posts/filter"
-        case PostById           = "posts/%@"
-        case PostComments       = "posts/%@/comments"
-        case PostLikes          = "posts/%@/likes"
-        case CreateTopic        = "topics"
-        case TopicById          = "topics/%@"
+        case Login           = "login"
+        case User            = "users"
+        case GetUserById     = "users/%@"
+        case GetUserLikes    = "users/%@/likes"
+        case GetUserLikePost = "users/%@/likes/%@"
+        case GetUserComments = "users/%@/comments"
+        case CreatePost      = "posts"
+        case FilterPost      = "posts/filter"
+        case PostById        = "posts/%@"
+        case PostComments    = "posts/%@/comments"
+        case PostLikes       = "posts/%@/likes"
+        case CreateTopic     = "topics"
+        case TopicById       = "topics/%@"
+        case GetSubjects     = "subjects"
+        case GetGrades       = "grades"
         
     }
     
@@ -63,49 +64,47 @@ class NetworkController: NSObject {
     
     // MARK: - USERS
     
-    func login(userName: String, password: String, completionHandler: (String?, Int?, AnyObject?) -> ()) -> () {
+    func login(userName: String, password: String, completionHandler: (String?, User?, AnyObject?) -> ()) -> () {
         var retToken: String?
-        var retUserId: Int?
+        var retUser: User?
         let loginParams = ["username": userName, "password": password]
         let parameters : [String : AnyObject]? = ["login": loginParams]
         performRequest(MethodType.POST, authenticated: true, method: .Login, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 retToken = result!["token"] as? String
-                let retUser = result!["user"] as? [String: AnyObject]
-                retUserId = retUser!["id"] as? Int
+                retUser = User(jsonObject: result!["user"] as! [String: AnyObject])
                 self.token = retToken
-                self.currentUserId = retUserId
-                completionHandler(retToken, retUserId, nil)
+                self.currentUserId = retUser?.id
+                completionHandler(retToken, retUser, nil)
             } else {
-                completionHandler(retToken, retUserId, error)
+                completionHandler(retToken, retUser, error)
             }
         }
         
     }
     
-    func registerUser(user: User, completionHandler: (String?, Int?, AnyObject?) -> ()) -> () {
+    func registerUser(user: User, completionHandler: (String?, User?, AnyObject?) -> ()) -> () {
         var retToken: String?
-        var retUserId: Int?
+        var retUser: User?
         let parameters = ["user": user.toJson()]
         performRequest(MethodType.POST, authenticated: false, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 retToken = (result!["api_token"] as? String)!
-                let retUser = result!["user"] as? [String: AnyObject]
-                retUserId = retUser!["id"] as? Int
+                retUser = User(jsonObject: result!["user"] as! [String: AnyObject])
                 self.token = retToken
-                self.currentUserId = retUserId
-                completionHandler(retToken, retUserId, nil)
+                self.currentUserId = retUser?.id
+                completionHandler(retToken, retUser, nil)
             } else {
-                completionHandler(retToken, retUserId, error)
+                completionHandler(retToken, retUser, error)
             }
         }
         
     }
     
-    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, completionHandler: (User?, AnyObject?) -> ()) -> () {
+    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, subjects: [String]?, grades: [String]?, completionHandler: (User?, AnyObject?) -> ()) -> () {
         
         var userUpdated: User?
-        var updateValues = [String: String]()
+        var updateValues = [String: AnyObject]()
         if userName != nil {
             updateValues["username"] = userName
         }
@@ -131,7 +130,13 @@ class NetworkController: NSObject {
             updateValues["location"] = location
         }
         if isPrivate != nil {
-            updateValues["is_private"] = String(isPrivate!)
+            updateValues["is_private"] = isPrivate!
+        }
+        if grades != nil {
+            updateValues["grades"] = grades
+        }
+        if subjects != nil {
+            updateValues["subjects"] = subjects
         }
         let parameters : [String : AnyObject]? = ["user": updateValues]
         performRequest(MethodType.PATCH, authenticated: true, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
@@ -421,6 +426,37 @@ class NetworkController: NSObject {
         
     }
     
+    // MARK: - GRADES AND SUBJECTS
+    
+    func getSubjects(completionHandler: ([Subject]?, AnyObject?) -> ()) -> () {
+        performRequest(MethodType.GET, authenticated: true, method: .GetSubjects, urlParams: nil, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                let subjectJson = result as? [[String: AnyObject]]
+                let subjects: [Subject]? = subjectJson?.map({ (actual) -> Subject in
+                    Subject(jsonObject: actual)
+                })
+                completionHandler(subjects, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+        
+    }
+    
+    func getGrades(completionHandler: ([Grade]?, AnyObject?) -> ()) -> () {
+        performRequest(MethodType.GET, authenticated: true, method: .GetGrades, urlParams: nil, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                let subjectJson = result as? [[String: AnyObject]]
+                let subjects: [Grade]? = subjectJson?.map({ (actual) -> Grade in
+                    Grade(jsonObject: actual)
+                })
+                completionHandler(subjects, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+        
+    }
     
     // MARK: - Internal Methods
     

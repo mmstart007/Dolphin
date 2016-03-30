@@ -30,6 +30,8 @@
 		36129FA81CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36129FA61CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib */; };
 		36129FAA1CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36129FA91CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift */; };
 		36129FAC1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36129FAB1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib */; };
+		36154C231CAAF69F00BE457B /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36154C221CAAF69F00BE457B /* Subject.swift */; };
+		36154C251CAAF6A800BE457B /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36154C241CAAF6A800BE457B /* Grade.swift */; };
 		3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */; };
 		3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */; };
 		3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */; };
@@ -108,6 +110,8 @@
 		369382B91C31B8370005FCB0 /* FriendToInviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 369382B81C31B8370005FCB0 /* FriendToInviteTableViewCell.xib */; };
 		369697451C725ECB00774055 /* PODDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369697431C725ECA00774055 /* PODDetailsViewController.swift */; };
 		369697461C725ECB00774055 /* PODDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 369697441C725ECA00774055 /* PODDetailsViewController.xib */; };
+		369A384B1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369A384A1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift */; };
+		369A384D1CA9C1DE00B78C98 /* ProfileAvatarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 369A384C1CA9C1DE00B78C98 /* ProfileAvatarTableViewCell.xib */; };
 		36B1F41A1C0FA7780091A1B3 /* PopularPODsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F4191C0FA7780091A1B3 /* PopularPODsTableViewCell.swift */; };
 		36B1F41C1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */; };
 		36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */; };
@@ -199,6 +203,8 @@
 		36129FA61CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateImagePostAddDescriptionViewController.xib; sourceTree = "<group>"; };
 		36129FA91CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostAddDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		36129FAB1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostAddDescriptionTableViewCell.xib; sourceTree = "<group>"; };
+		36154C221CAAF69F00BE457B /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
+		36154C241CAAF6A800BE457B /* Grade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
 		3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostChooseImageViewController.swift; sourceTree = "<group>"; };
 		3615B6FD1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostChooseImageViewController.xib; sourceTree = "<group>"; };
 		3615B7001C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostChooseImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -280,6 +286,8 @@
 		369382B81C31B8370005FCB0 /* FriendToInviteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendToInviteTableViewCell.xib; sourceTree = "<group>"; };
 		369697431C725ECA00774055 /* PODDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODDetailsViewController.swift; sourceTree = "<group>"; };
 		369697441C725ECA00774055 /* PODDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODDetailsViewController.xib; sourceTree = "<group>"; };
+		369A384A1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileAvatarTableViewCell.swift; sourceTree = "<group>"; };
+		369A384C1CA9C1DE00B78C98 /* ProfileAvatarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileAvatarTableViewCell.xib; sourceTree = "<group>"; };
 		36B1F4191C0FA7780091A1B3 /* PopularPODsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularPODsTableViewCell.swift; sourceTree = "<group>"; };
 		36B1F41B1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularPODsTableViewCell.xib; sourceTree = "<group>"; };
 		36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -375,6 +383,8 @@
 				3607AAD81C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift */,
 				3607AADA1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib */,
 				3607AAE01C8F9F7500B9DD8F /* PODSettingsFooter.xib */,
+				369A384A1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift */,
+				369A384C1CA9C1DE00B78C98 /* ProfileAvatarTableViewCell.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -808,6 +818,8 @@
 				3609207D1C978575003F5CB8 /* Topic.swift */,
 				36C2CF6B1C98CD5400E7B4E3 /* Like.swift */,
 				361BFDAE1C9CA04C00F994F1 /* Link.swift */,
+				36154C221CAAF69F00BE457B /* Subject.swift */,
+				36154C241CAAF6A800BE457B /* Grade.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -995,6 +1007,7 @@
 				3650E0C41C6D4D8100BB9301 /* UserImageCollectionViewCell.xib in Resources */,
 				361FFE221C0CFAD1007EE366 /* PostDetailHeaderTableViewCell.xib in Resources */,
 				36BE4D0A1C06250B002E52D9 /* HomeViewController.xib in Resources */,
+				369A384D1CA9C1DE00B78C98 /* ProfileAvatarTableViewCell.xib in Resources */,
 				36E411711C8E3DE9002DC736 /* SettingsViewController.xib in Resources */,
 				36D0C6981C07A0F50002AE35 /* NewPostMenu.xib in Resources */,
 				361F50901C693ABA00153B6C /* NewPostPrivacySettingsShareToPODCell.xib in Resources */,
@@ -1109,6 +1122,7 @@
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
 				36129FA71CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift in Sources */,
 				3607AAD91C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift in Sources */,
+				36154C231CAAF69F00BE457B /* Subject.swift in Sources */,
 				3668B2F81C6A77B100469FF9 /* DealsListViewController.swift in Sources */,
 				3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */,
 				362D4BDC1C1F334800F065E5 /* CreateImagePostViewController.swift in Sources */,
@@ -1125,6 +1139,7 @@
 				36E4116C1C8DF1A3002DC736 /* CreateProfileViewController.swift in Sources */,
 				365D76CE1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift in Sources */,
 				361F50841C652C3900153B6C /* UIView+DolphinExtensions.swift in Sources */,
+				369A384B1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift in Sources */,
 				36B818B51C8504D5003563FE /* List.swift in Sources */,
 				3609207A1C9780D4003F5CB8 /* Image.swift in Sources */,
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
@@ -1157,6 +1172,7 @@
 				3636F9641C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift in Sources */,
 				3668B2FD1C6A7A6200469FF9 /* DealCollectionViewCell.swift in Sources */,
 				3650E0BF1C6D42C200BB9301 /* FXBlurView.m in Sources */,
+				36154C251CAAF6A800BE457B /* Grade.swift in Sources */,
 				369697451C725ECB00774055 /* PODDetailsViewController.swift in Sources */,
 				361ADC491CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift in Sources */,
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,

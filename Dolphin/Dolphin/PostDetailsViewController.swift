@@ -270,9 +270,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return self.view.frame.size.height / 3
-        } else if indexPath.section == 1 {
+        if indexPath.section == 1 {
             return 40
         } else {
             return UITableViewAutomaticDimension
@@ -281,6 +279,10 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        // Adjust views of image
+        if indexPath.section == 0 {
+            (cell as? PostDetailHeaderTableViewCell)?.adjustCellViews()
+        }
         // Adjust views of comment cells
         if indexPath.section == 2 {
             if indexPath.row % 2 == 0 {

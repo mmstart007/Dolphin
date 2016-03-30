@@ -11,6 +11,7 @@ PODS:
   - KTCenterFlowLayout (1.1.1)
   - NSDate-Time-Ago (1.0.1)
   - OAuthSwift (0.5.0)
+  - RSKImageCropper (1.5.1)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -34,6 +35,7 @@ DEPENDENCIES:
   - KTCenterFlowLayout
   - NSDate-Time-Ago
   - OAuthSwift (~> 0.5.0)
+  - RSKImageCropper
   - SDWebImage (~> 3.7)
   - SVProgressHUD
   - SVPullToRefresh
@@ -53,6 +55,7 @@ SPEC CHECKSUMS:
   KTCenterFlowLayout: eded079c349450dea12f7cf94b424d1bc3205519
   NSDate-Time-Ago: e9de167d0659ebe465c273e833e7b582f061fc41
   OAuthSwift: f2e0de083739da5697be095c9af2671242a4ed8b
+  RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
