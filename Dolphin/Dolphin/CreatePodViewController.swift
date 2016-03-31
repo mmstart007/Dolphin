@@ -151,12 +151,8 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 0 {
-            print("Add member")
-            
-            
-            
-        }
+        let selectMembersVC = SelectPODMembersViewController()
+        navigationController?.pushViewController(selectMembersVC, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {

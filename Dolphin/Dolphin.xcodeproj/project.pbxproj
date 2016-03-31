@@ -81,6 +81,10 @@
 		365D76C91C7540AA00A0833F /* DealDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365D76C71C7540AA00A0833F /* DealDetailsViewController.swift */; };
 		365D76CA1C7540AA00A0833F /* DealDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 365D76C81C7540AA00A0833F /* DealDetailsViewController.xib */; };
 		365D76CE1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365D76CC1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift */; };
+		365DBDDB1CACC0B600D20C02 /* SelectPODMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DBDDA1CACC0B600D20C02 /* SelectPODMembersViewController.swift */; };
+		365DBDDD1CACC0F600D20C02 /* SelectPODMembersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 365DBDDC1CACC0F600D20C02 /* SelectPODMembersViewController.xib */; };
+		365DBDE01CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DBDDF1CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift */; };
+		365DBDE21CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 365DBDE11CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib */; };
 		3668B2F61C6A761400469FF9 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3668B2F51C6A761300469FF9 /* Deal.swift */; };
 		3668B2F81C6A77B100469FF9 /* DealsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */; };
 		3668B2FA1C6A77E700469FF9 /* DealsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */; };
@@ -256,6 +260,10 @@
 		365D76C71C7540AA00A0833F /* DealDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsViewController.swift; sourceTree = "<group>"; };
 		365D76C81C7540AA00A0833F /* DealDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealDetailsViewController.xib; sourceTree = "<group>"; };
 		365D76CC1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		365DBDDA1CACC0B600D20C02 /* SelectPODMembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPODMembersViewController.swift; sourceTree = "<group>"; };
+		365DBDDC1CACC0F600D20C02 /* SelectPODMembersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectPODMembersViewController.xib; sourceTree = "<group>"; };
+		365DBDDF1CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODMemberToAddTableViewCell.swift; sourceTree = "<group>"; };
+		365DBDE11CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODMemberToAddTableViewCell.xib; sourceTree = "<group>"; };
 		3668B2F51C6A761300469FF9 /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealsListViewController.swift; sourceTree = "<group>"; };
 		3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealsListViewController.xib; sourceTree = "<group>"; };
@@ -469,6 +477,8 @@
 				369697441C725ECA00774055 /* PODDetailsViewController.xib */,
 				3689ECE11C0E58CE0087F828 /* PODsListViewController.swift */,
 				3689ECE31C0E58EF0087F828 /* PODsListViewController.xib */,
+				365DBDDA1CACC0B600D20C02 /* SelectPODMembersViewController.swift */,
+				365DBDDC1CACC0F600D20C02 /* SelectPODMembersViewController.xib */,
 			);
 			name = PODs;
 			sourceTree = "<group>";
@@ -532,6 +542,15 @@
 				3616E4A01C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib */,
 			);
 			name = "Deal Details";
+			sourceTree = "<group>";
+		};
+		365DBDDE1CACC49600D20C02 /* Create POD */ = {
+			isa = PBXGroup;
+			children = (
+				365DBDDF1CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift */,
+				365DBDE11CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib */,
+			);
+			name = "Create POD";
 			sourceTree = "<group>";
 		};
 		3668B2FB1C6A79CD00469FF9 /* Deals */ = {
@@ -787,6 +806,7 @@
 		36D0C69A1C08AC420002AE35 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				365DBDDE1CACC49600D20C02 /* Create POD */,
 				361FC0811CA1FBF400388FD0 /* Signup */,
 				3607AAD31C8F547800B9DD8F /* Settings */,
 				365D76CB1C7546FF00A0833F /* Deal Details */,
@@ -972,6 +992,7 @@
 				361F508C1C65389D00153B6C /* NewPostPrivacySettingsVisibilityCell.xib in Resources */,
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
 				36DCCD741C73AC3A00D4B171 /* PODMembersTableViewCell.xib in Resources */,
+				365DBDDD1CACC0F600D20C02 /* SelectPODMembersViewController.xib in Resources */,
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
 				361F50881C65339000153B6C /* NewPostPrivacySettingsViewController.xib in Resources */,
 				36E9982A1C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib in Resources */,
@@ -994,6 +1015,7 @@
 				364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */,
 				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
 				368798851C2B2BA70088AC24 /* Raleway-Bold.ttf in Resources */,
+				365DBDE21CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib in Resources */,
 				361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */,
 				3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */,
 				36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */,
@@ -1120,6 +1142,7 @@
 				36DCCD771C73EB8800D4B171 /* UserImagePODMemberCollectionViewCell.swift in Sources */,
 				361F508E1C693AA500153B6C /* NewPostPrivacySettingsShareToPODCell.swift in Sources */,
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
+				365DBDE01CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36129FA71CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift in Sources */,
 				3607AAD91C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift in Sources */,
 				36154C231CAAF69F00BE457B /* Subject.swift in Sources */,
@@ -1132,6 +1155,7 @@
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
 				36C2CF6C1C98CD5400E7B4E3 /* Like.swift in Sources */,
 				36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */,
+				365DBDDB1CACC0B600D20C02 /* SelectPODMembersViewController.swift in Sources */,
 				360993141C4049530082B995 /* UIAppearance_Swift.m in Sources */,
 				3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */,
 				361FC07F1CA1F7A200388FD0 /* PickGradesOrSubjectsViewController.swift in Sources */,
@@ -1334,6 +1358,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1356,6 +1381,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1369,6 +1395,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1391,6 +1418,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
 			};
 			name = Release;
