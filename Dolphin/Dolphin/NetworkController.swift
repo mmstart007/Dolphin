@@ -43,6 +43,7 @@ class NetworkController: NSObject {
     enum ApiMethod: String {
         case Login           = "login"
         case User            = "users"
+        case FilterUser      = "users/filter"
         case GetUserById     = "users/%@"
         case GetUserLikes    = "users/%@/likes"
         case GetUserLikePost = "users/%@/likes/%@"
@@ -57,7 +58,7 @@ class NetworkController: NSObject {
         case GetSubjects     = "subjects"
         case GetGrades       = "grades"
         case CreatePOD       = "pods"
-        case FilterPODs      = "pods/filter"
+        case FilterPOD       = "pods/filter"
         
     }
     
@@ -152,6 +153,51 @@ class NetworkController: NSObject {
             }
         }
     }
+    
+    
+    func filterUser(pattern: String?, podId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, completionHandler: ([User], AnyObject?) -> ()) -> () {
+        var users: [User] = []
+        var filters = [String: AnyObject]()
+        if pattern != nil {
+            filters["pattern"] = pattern
+        }
+        if podId != nil {
+            filters["pod_id"] = podId
+        }
+        if fromDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(fromDate!)
+            filters["from_date"]     = dateString
+        }
+        if toDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(toDate!)
+            filters["to_date"]       = dateString
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterUser, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let usersJsonArray = result!["users"] as? [[AnyObject]]
+                if usersJsonArray?.count > 0 {
+                    for elem in usersJsonArray! {
+                        users.append(User(jsonObject: elem[0]))
+                    }
+                }
+                completionHandler(users, nil)
+            } else {
+                completionHandler(users, error)
+            }
+        }
+    }
+    
     
     func getUserById(userId: String, completionHandler: (User?, AnyObject?) -> ()) -> () {
         let urlParameters : [CVarArgType] = [userId]
@@ -506,7 +552,7 @@ class NetworkController: NSObject {
             filters["page"] = page
         }
         let parameters : [String : AnyObject]? = ["filter": filters]
-        performRequest(MethodType.POST, authenticated: true, method: .FilterPODs, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+        performRequest(MethodType.POST, authenticated: true, method: .FilterPOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 let podsJsonArray = result!["pods"] as? [[AnyObject]]
                 if podsJsonArray?.count > 0 {
