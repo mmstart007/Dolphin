@@ -56,8 +56,8 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         
         podNameTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         leftCharactersLabel.text = String(format: "%li / %li", arguments: [(podNameTextField!.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))!, maxNameCharacters])
-        let tapViewGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
-        self.view.addGestureRecognizer(tapViewGesture)
+//        let tapViewGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
+//        self.view.addGestureRecognizer(tapViewGesture)
     }
 
     // MARK: Select POD Image
@@ -143,7 +143,8 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        let selectMembersVC = SelectPODMembersViewController()
+        navigationController?.pushViewController(selectMembersVC, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
