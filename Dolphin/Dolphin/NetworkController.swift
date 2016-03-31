@@ -554,10 +554,10 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["filter": filters]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let podsJsonArray = result!["pods"] as? [[AnyObject]]
+                let podsJsonArray = result!["pods"] as? [AnyObject]
                 if podsJsonArray?.count > 0 {
                     for elem in podsJsonArray! {
-                        pods.append(POD(jsonObject: elem[0]))
+                        pods.append(POD(jsonObject: elem))
                     }
                 }
                 completionHandler(pods, nil)

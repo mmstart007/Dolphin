@@ -196,7 +196,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
                 let resizedImage = Utils.resizeImage(imageSelected!, newWidth: newWidth)
                 // crate the pod
                 let podToSave = POD(name: podNameTextField.text, description: podDescriptionTextView.text, imageURL: nil, isPrivate: (switchIsPrivate.on ? 1 : 0), owner: nil, users: [], postsCount: nil, usersCount: nil, imageData: resizedImage)
-                SVProgressHUD.showWithStatus("Posting")
+                SVProgressHUD.showWithStatus("Creating POD")
                 networkController.createPOD(podToSave, completionHandler: { (pod, error) -> () in
                     if error == nil {
                         
