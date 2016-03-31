@@ -10,18 +10,30 @@ import Foundation
 
 class POD : NSObject {
     
-    var podName: String?
-    var podImageURL: String?
-    var podLastPostDate: NSDate?
-    var podUsers: [User]?
-    var podIsPrivate: Bool
+    var id: Int?
+    var name: String?
+    var descriptionText: String?
+    var imageURL: String?
+    var imageData: UIImage?
+    var isPrivate: Int?
+    var owner: User?
+    var users: [User]?
+    var postsCount: Int?
+    var usersCount: Int?
     
-    init(name: String, imageURL: String, lastpostDate: NSDate, users: [User], isPrivate: Bool) {
-        self.podName         = name
-        self.podImageURL     = imageURL
-        self.podLastPostDate = lastpostDate
-        self.podUsers        = users
-        self.podIsPrivate    = isPrivate
+    
+    convenience init(name: String?, description: String?, imageURL: String?, isPrivate: Int?, owner: User?, users: [User]?, postsCount: Int?, usersCount: Int?, imageData: UIImage?) {
+        self.init()
+        
+        self.name            = name
+        self.descriptionText = description
+        self.imageURL        = imageURL
+        self.isPrivate       = isPrivate
+        self.owner           = owner
+        self.users           = users
+        self.postsCount      = postsCount
+        self.usersCount      = usersCount
+        self.imageData       = imageData
     }
     
     func podColor() -> UIColor {
@@ -29,6 +41,55 @@ class POD : NSObject {
         let colors = [UIColor(red: 155/255.0, green: 230/255.0, blue: 88/255.0, alpha: 1), UIColor(red: 40/255.0, green: 231/255.0, blue: 216/255.0, alpha: 1),
             UIColor(red: 232/255.0, green: 97/255.0, blue: 39/255.0, alpha: 1)]
         return colors[color]
+    }
+    
+    convenience init(jsonObject: AnyObject) {
+        self.init()
+        
+        let podJsonObject = jsonObject as? [String: AnyObject]
+        if let ownerJson = podJsonObject!["owner"] as? [String: AnyObject] {
+            self.owner  = User(jsonObject: ownerJson)
+        }
+        self.users = (jsonObject["users"] as? [[String: AnyObject]])?.map({ (actual) -> User in
+            User(jsonObject: actual)
+        })
+        
+        self.id              = podJsonObject!["id"] as? Int
+        self.name            = podJsonObject!["name"] as? String
+        self.descriptionText = podJsonObject!["description"] as? String
+        self.imageURL        = podJsonObject!["image_url"] as? String
+        self.isPrivate       = podJsonObject!["is_private"] as? Int
+        
+//        let dateString            = podJsonObject!["last"] as? String
+//        let dateFormatter         = NSDateFormatter()
+//        dateFormatter.dateFormat  = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+//        self.postDate             = dateFormatter.dateFromString(dateString!)
+        
+        
+    }
+    
+    func toJson() -> [String: AnyObject] {
+        var retDic = [String: AnyObject]()
+        if let nm = self.name {
+            retDic["name"] = nm
+        }
+        if let descrip = self.descriptionText {
+            retDic["description"] = descrip
+        }
+        if let image = self.imageData {
+            retDic["image"] = Utils.encodeBase64(image)
+        }
+        if let priv = self.isPrivate {
+            retDic["is_private"] = priv
+        }
+        if let usrs = self.users {
+            let usersIds: [Int]? = usrs.map({ (actual) -> Int in
+                actual.id!
+            })
+            retDic["users"] = usersIds
+        }
+        
+        return retDic
     }
     
 }

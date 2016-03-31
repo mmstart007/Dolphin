@@ -14,8 +14,9 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTextView: UITextView!
+    @IBOutlet weak var postLabelTitle: UILabel!
     @IBOutlet weak var constraintHeightContainer: NSLayoutConstraint!
-    
+    @IBOutlet weak var constraintHeightImageView: NSLayoutConstraint!
     @IBOutlet weak var constraintHeightTextView: NSLayoutConstraint!
     var actualPost: Post?
     
@@ -26,11 +27,16 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
     
     func configureWithPost(post: Post) {
         actualPost = post
+        
+        
         if post.postType?.name == "link" {
+            postLabelTitle.text = post.postText
             postTextView.text = post.postLink?.url
         } else {
-            postTextView.text = post.postText
+            postLabelTitle.text = post.postHeader
+            postTextView.text   = post.postText
         }
+        postTextView.textColor = UIColor.lightGrayColor()
         if actualPost != nil {
             if let postImage = actualPost!.postImage {
                 let manager = SDWebImageManager.sharedManager()
@@ -39,7 +45,7 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
                         let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
                         self.postImageView.image = resizedImage
                         let calculatedHeight = self.calculateHeight()
-                        self.constraintHeightContainer.constant = self.postImageView.image!.size.height + calculatedHeight
+                        self.constraintHeightContainer.constant = self.postImageView.image!.size.height + self.postLabelTitle.frame.size.height + calculatedHeight
                         
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
@@ -52,11 +58,17 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
                         let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
                         self.postImageView.image = resizedImage
                         let calculatedHeight = self.calculateHeight()
-                        self.constraintHeightContainer.constant = self.postImageView.image!.size.height + calculatedHeight
+                        self.constraintHeightContainer.constant = self.postImageView.image!.size.height + self.postLabelTitle.frame.size.height + calculatedHeight
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
                     }
                 })
+            } else if actualPost?.postType?.name == "text" {
+                let calculatedHeight = self.calculateHeight()
+                // remove the image using this constraint
+                constraintHeightImageView.constant = 0
+                self.addConstraint(constraintHeightImageView)
+                constraintHeightContainer.constant = self.postLabelTitle.frame.size.height + calculatedHeight
             } else {
                 postImageView.image = UIImage(named: "PostImagePlaceholder")
             }
@@ -73,7 +85,6 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
         let fixedWidth = postTextView.frame.size.width
         postTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = postTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        var newFrame = postTextView.frame
         return newSize.height
     }
     

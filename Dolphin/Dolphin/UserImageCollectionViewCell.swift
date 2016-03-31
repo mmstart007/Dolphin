@@ -25,6 +25,7 @@ class UserImageCollectionViewCell : CustomFontCollectionViewCell  {
         userAvatarImageView.image = UIImage(named: "PlusIconSmall")
         userAvatarImageView.contentMode = .Center
         userNameLabel.text = "Add"
+        backgroundColor = UIColor.yellowColor()
     }
     
 }

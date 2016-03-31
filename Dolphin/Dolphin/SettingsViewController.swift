@@ -161,9 +161,9 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             if (cell == nil) {
                 cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
             }
-            cell?.detailTextLabel?.text = (myPODS[indexPath.row].podIsPrivate) ? "Private" : "Public"
+            cell?.detailTextLabel?.text = (myPODS[indexPath.row].isPrivate == 1) ? "Private" : "Public"
             cell?.accessoryType = .DisclosureIndicator
-            cell?.textLabel?.text = myPODS[indexPath.row].podName
+            cell?.textLabel?.text = myPODS[indexPath.row].name
         } else if indexPath.section == 4 {
             cell = tableView.dequeueReusableCellWithIdentifier(defaultCellIdentifier)
             if (cell == nil) {

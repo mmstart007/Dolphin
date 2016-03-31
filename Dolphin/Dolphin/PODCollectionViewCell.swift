@@ -15,9 +15,9 @@ class PODCollectionViewCell : CustomFontCollectionViewCell {
     @IBOutlet weak var podNameLabel: UILabel!
     
     func configureWithPOD(pod: POD) {
-        podImageView.sd_setImageWithURL(NSURL(string: (pod.podImageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        podImageView.sd_setImageWithURL(NSURL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         podImageView.contentMode = .ScaleAspectFill
-        self.podNameLabel.text   = pod.podName
+        self.podNameLabel.text   = pod.name
     }
     
     override func layoutSubviews() {

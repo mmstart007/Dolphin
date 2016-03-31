@@ -27,7 +27,7 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
     init(pod: POD) {
         super.init(nibName: "PODSettingsViewController", bundle: nil)
         self.pod = pod
-        members = pod.podUsers!
+        members = pod.users!
     }
     
     override func viewDidLoad() {
@@ -37,7 +37,7 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
         tableViewPODMembers.delegate = self
         registerCells()
         setBackButton()
-        title = pod?.podName
+        title = pod?.name
         
     }
 

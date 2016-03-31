@@ -30,7 +30,7 @@ class NewPostPrivacySettingsShareToPODCell : CustomFontTableViewCell {
             selectedImageView.backgroundColor = UIColor.lightGrayColor()
             selectedImageView.image           = nil
         }
-        podName.text = setting.pod!.podName
+        podName.text = setting.pod!.name
     }
     
 }

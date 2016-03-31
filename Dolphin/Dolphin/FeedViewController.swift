@@ -304,7 +304,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     func loadNextPosts() {
         page = page + 1
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, completionHandler: { (posts, error) -> () in
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: (showOnlyMyPosts ? networkController.currentUserId: nil), quantity: kPageQuantity, page: page, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.allPosts.appendContentsOf(posts)
                 self.postsTableView.reloadData()

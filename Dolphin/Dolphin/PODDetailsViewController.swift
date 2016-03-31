@@ -62,7 +62,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     func setupNavigationBar() {
         setBackButton()
-        title = pod?.podName
+        title = pod?.name
     }
     
     // MARK: - Auxiliary methods

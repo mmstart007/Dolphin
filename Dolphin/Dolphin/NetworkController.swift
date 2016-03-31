@@ -56,6 +56,8 @@ class NetworkController: NSObject {
         case TopicById       = "topics/%@"
         case GetSubjects     = "subjects"
         case GetGrades       = "grades"
+        case CreatePOD       = "pods"
+        case FilterPODs      = "pods/filter"
         
     }
     
@@ -457,6 +459,68 @@ class NetworkController: NSObject {
         }
         
     }
+    
+    // MARK: - PODS
+    
+    func createPOD(pod: POD, completionHandler: (POD?, AnyObject?) -> ()) -> () {
+        var savedPOD: POD?
+        let parameters : [String : AnyObject]? = ["pod": pod.toJson()]
+        performRequest(MethodType.POST, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let podJson = result!["pod"] as? [String: AnyObject] {
+                    savedPOD = POD(jsonObject: podJson)
+                }
+                completionHandler(savedPOD, nil)
+            } else {
+                completionHandler(savedPOD, error)
+            }
+        }
+        
+    }
+    
+    func filterPOD(pattern: String?, userId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, completionHandler: ([POD], AnyObject?) -> ()) -> () {
+        var pods: [POD] = []
+        var filters = [String: AnyObject]()
+        if pattern != nil {
+            filters["pattern"] = pattern
+        }
+        if userId != nil {
+            filters["user_id"] = userId
+        }
+        if fromDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(fromDate!)
+            filters["from_date"]     = dateString
+        }
+        if toDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(toDate!)
+            filters["to_date"]       = dateString
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterPODs, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let podsJsonArray = result!["pods"] as? [[AnyObject]]
+                if podsJsonArray?.count > 0 {
+                    for elem in podsJsonArray! {
+                        pods.append(POD(jsonObject: elem[0]))
+                    }
+                }
+                completionHandler(pods, nil)
+            } else {
+                completionHandler(pods, error)
+            }
+        }
+    }
+    
     
     // MARK: - Internal Methods
     

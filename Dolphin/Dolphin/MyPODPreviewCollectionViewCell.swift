@@ -47,9 +47,10 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         if pod != nil {
             podImageView.layer.cornerRadius  = 5
             podImageView.layer.masksToBounds = true
-            podImageView.sd_setImageWithURL(NSURL(string: pod!.podImageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-            podTitleLabel.text = pod!.podName
-            lastPostDateLabel.text = pod!.podLastPostDate?.formattedAsTimeAgo()
+            podImageView.sd_setImageWithURL(NSURL(string: pod!.imageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            podTitleLabel.text = pod!.name
+            // TODO: Fix the date of last post
+            //lastPostDateLabel.text = pod!.podLastPostDate?.formattedAsTimeAgo()
             createPODView.hidden = true
         } else {
             createPODView.hidden = false
@@ -63,7 +64,7 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
             otherUsersLabel.textColor = UIColor.lightTextColor()
             otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
             otherUsersLabel.layer.masksToBounds = true
-            otherUsersLabel.text = String(format: "+%li", arguments: [(pod.podUsers?.count)!])
+            otherUsersLabel.text = String(format: "+%li", arguments: [(pod.users?.count)!])
             otherUsersLabel.textAlignment = .Center
             otherUsersLabel.font = UIFont.systemFontOfSize(12)
             userImagesContainerView.addSubview(otherUsersLabel)

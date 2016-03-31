@@ -66,7 +66,11 @@ class PostTableViewCell : CustomFontTableViewCell {
         } else {
             postuserImageView.image = UIImage(named: "PostImagePlaceholder")
         }
-        postText.text = post.postText
+        if post.postType!.name == "link" {
+            postText.text = post.postText
+        } else {
+            postText.text = post.postHeader
+        }
         self.layer.cornerRadius               = 5
         postImageView.layer.cornerRadius      = 5
         postImageView.layer.masksToBounds     = true
