@@ -185,10 +185,10 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["filter": filters]
         performRequest(MethodType.POST, authenticated: true, method: .FilterUser, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let usersJsonArray = result!["users"] as? [[AnyObject]]
+                let usersJsonArray = result!["users"] as? [AnyObject]
                 if usersJsonArray?.count > 0 {
                     for elem in usersJsonArray! {
-                        users.append(User(jsonObject: elem[0]))
+                        users.append(User(jsonObject: elem))
                     }
                 }
                 completionHandler(users, nil)

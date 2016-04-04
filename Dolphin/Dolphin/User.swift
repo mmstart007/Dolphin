@@ -24,6 +24,18 @@ class User : NSObject {
     var grades: [Grade]?
     var subjects: [Subject]?
     
+    override func isEqual(object: AnyObject?) -> Bool {
+        if let object = object as? User {
+            return self.userName == object.userName
+        } else {
+            return false
+        }
+    }
+    
+    override var hash: Int {
+        return id!.hashValue
+    }
+    
     convenience init(deviceId: String?, userName: String?, imageURL: String?, email: String?, password: String?) {
         self.init()
         self.deviceId           = deviceId

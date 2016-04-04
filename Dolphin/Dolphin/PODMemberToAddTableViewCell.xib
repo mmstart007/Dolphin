@@ -49,6 +49,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="actionImageView" destination="u88-jQ-lnk" id="QxN-3E-pNC"/>
                 <outlet property="userImageView" destination="v2i-MZ-cTP" id="X9W-t7-6st"/>
                 <outlet property="userNameLabel" destination="7Im-fq-xJo" id="R9f-2D-4sr"/>
             </connections>
