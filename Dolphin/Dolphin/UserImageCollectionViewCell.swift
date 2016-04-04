@@ -18,6 +18,7 @@ class UserImageCollectionViewCell : CustomFontCollectionViewCell  {
         super.layoutSubviews()
         
         userAvatarImageView.layer.cornerRadius = userAvatarImageView.frame.size.width / 2
+        userAvatarImageView.clipsToBounds = true
     }
     
     func configureAsAddUser() {
@@ -25,7 +26,17 @@ class UserImageCollectionViewCell : CustomFontCollectionViewCell  {
         userAvatarImageView.image = UIImage(named: "PlusIconSmall")
         userAvatarImageView.contentMode = .Center
         userNameLabel.text = "Add"
-        backgroundColor = UIColor.yellowColor()
+    }
+    
+    func configureWithUser(user: User) {
+        userAvatarImageView.backgroundColor = UIColor.whiteColor()
+        userAvatarImageView.contentMode = .ScaleAspectFill
+        if let userAvatarURL = user.userAvatarImageURL {
+            userAvatarImageView.sd_setImageWithURL(NSURL(string: userAvatarURL), placeholderImage: UIImage(named: "UserPlaceholder"))
+        } else {
+            userAvatarImageView.image = UIImage(named: "UserPlaceholder")
+        }
+        userNameLabel.text = user.userName
     }
     
 }

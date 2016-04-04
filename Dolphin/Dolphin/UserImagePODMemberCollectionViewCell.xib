@@ -14,7 +14,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HuH-xu-nU1">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HuH-xu-nU1">
                         <rect key="frame" x="0.0" y="0.0" width="54" height="54"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="HuH-xu-nU1" secondAttribute="height" multiplier="1:1" id="3ce-yt-Px0"/>

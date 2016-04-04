@@ -9,12 +9,17 @@
 import Foundation
 import UIKit
 
+protocol SelectPODMembersDelegate {
+    func membersDidSelected(members: [User])
+}
+
 class SelectPODMembersViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    var searchTableView: UITableView?
     
+    var delegate: SelectPODMembersDelegate?
+    var searchTableView: UITableView?
     var selectedMembers: [User] = []
     var searchResults: [User] = []
     
@@ -30,14 +35,15 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         super.viewDidLoad()
         
         title = "POD Members"
+        setRightButtonItemWithText("Done", target: self, action: Selector("doneSelectingMembersPressed:"))
         setBackButton()
         
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.registerNib(UINib(nibName: "PODMemberToAddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
+            
         
-        searchBar.delegate = self
         showSearchBar()
     }
     
@@ -91,11 +97,21 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         if searchTableView == nil {
             searchTableView = UITableView(frame: CGRect(x: 0, y: searchBar.frame.size.height, width: view.frame.size.width, height: 0))
             view.addSubview(searchTableView!)
-            searchTableView!.backgroundColor = UIColor.groupTableViewBackgroundColor()
+            searchTableView!.backgroundColor = UIColor.lightGrayBackground()
             searchTableView!.registerNib(UINib(nibName: "PODMemberToAddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
             searchTableView!.dataSource = self
             searchTableView!.delegate   = self
         }
+        searchBar?.tintColor = UIColor.whiteColor()
+        searchBar?.barTintColor = UIColor.blueDolphin()
+        UITextField.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
+        UIBarButtonItem.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.whiteColor()
+        UIView.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.whiteColor()
+
+        searchBar?.becomeFirstResponder()
+        searchBar?.showsCancelButton = true
+        searchBar?.delegate          = self
+        
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -117,9 +133,19 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         }
         let tableFrame = self.searchTableView!.frame
         let newFrame = CGRect(x: tableFrame.origin.x, y: tableFrame.origin.y, width: tableFrame.size.width, height: newHeight)
-        self.searchTableView!.frame = newFrame
-        self.searchTableView!.reloadData()
-        self.tableView.reloadData()
+        searchTableView!.frame = newFrame
+        searchTableView!.reloadData()
+        tableView.reloadData()
+        
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100))
+        let labelFooter = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100))
+        labelFooter.textAlignment = .Center
+        labelFooter.textColor = UIColor.lightGrayColor()
+        labelFooter.text = String(format: "%i contacts selected", selectedMembers.count)
+        footerView.addSubview(labelFooter)
+        Utils.setFontFamilyForView(footerView, includeSubViews: true)
+        tableView.tableFooterView = footerView
+        
     }
     
     func filterContentForSearchText(searchText: String) {
@@ -145,6 +171,13 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
 
             }
         }
+    }
+    
+    // MARK: - Auxiliary methods
+    
+    func doneSelectingMembersPressed(sender: AnyObject) {
+        delegate?.membersDidSelected(selectedMembers)
+        navigationController?.popViewControllerAnimated(true)
     }
 
     

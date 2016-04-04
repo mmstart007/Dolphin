@@ -220,6 +220,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     func loadData(pullToRefresh: Bool) {
         page = 0
+        self.postsTableView.showsInfiniteScrolling = true
         if !pullToRefresh {
             SVProgressHUD.showWithStatus("Loading")
         }
@@ -306,11 +307,18 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         page = page + 1
         networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: (showOnlyMyPosts ? networkController.currentUserId: nil), quantity: kPageQuantity, page: page, completionHandler: { (posts, error) -> () in
             if error == nil {
-                self.allPosts.appendContentsOf(posts)
-                self.postsTableView.reloadData()
+                if posts.count > 0 {
+                    self.allPosts.appendContentsOf(posts)
+                    self.postsTableView.reloadData()
+                } else {
+                    // remove the infinite scrolling because we don't have more elements
+                    self.postsTableView.showsInfiniteScrolling = false
+                }
                 
                 
             } else {
+                // decrease the page
+                self.page = self.page - 1
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {

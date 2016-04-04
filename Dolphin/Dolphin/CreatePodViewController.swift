@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 import SVProgressHUD
 
-class CreatePodViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageCropViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate {
+
+class CreatePodViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageCropViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, SelectPODMembersDelegate {
     
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIButton!
@@ -25,6 +26,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     let maxNameCharacters = 20
     
     var imageSelected: UIImage?
+    var selectedMembers: [User] = []
     
     required init() {
         super.init(nibName: "CreatePodViewController", bundle: NSBundle.mainBundle())
@@ -135,7 +137,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return selectedMembers.count + 1
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -143,7 +145,11 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         if cell == nil {
             cell = UserImageCollectionViewCell()
         }
-        cell?.configureAsAddUser()
+        if indexPath.row == 0 {
+            cell?.configureAsAddUser()
+        } else {
+            cell?.configureWithUser(selectedMembers[indexPath.row - 1])
+        }
         return cell!
     }
     
@@ -151,8 +157,12 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let selectMembersVC = SelectPODMembersViewController()
-        navigationController?.pushViewController(selectMembersVC, animated: true)
+        if indexPath.row == 0 {
+            let selectMembersVC = SelectPODMembersViewController()
+            selectMembersVC.delegate = self
+            selectMembersVC.selectedMembers = selectedMembers
+            navigationController?.pushViewController(selectMembersVC, animated: true)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -195,7 +205,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
                 }
                 let resizedImage = Utils.resizeImage(imageSelected!, newWidth: newWidth)
                 // crate the pod
-                let podToSave = POD(name: podNameTextField.text, description: podDescriptionTextView.text, imageURL: nil, isPrivate: (switchIsPrivate.on ? 1 : 0), owner: nil, users: [], postsCount: nil, usersCount: nil, imageData: resizedImage)
+                let podToSave = POD(name: podNameTextField.text, description: podDescriptionTextView.text, imageURL: nil, isPrivate: (switchIsPrivate.on ? 1 : 0), owner: nil, users: selectedMembers, postsCount: nil, usersCount: nil, imageData: resizedImage)
                 SVProgressHUD.showWithStatus("Creating POD")
                 networkController.createPOD(podToSave, completionHandler: { (pod, error) -> () in
                     if error == nil {
@@ -236,6 +246,13 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
             alert.addAction(cancelAction)
             self.presentViewController(alert, animated: true, completion: nil)
         }
+    }
+    
+    // MARK: - SelectPODMembersDelegate
+    
+    func membersDidSelected(members: [User]) {
+        selectedMembers = members
+        membersCollectionView.reloadData()
     }
     
 }
