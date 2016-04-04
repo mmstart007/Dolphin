@@ -52,21 +52,13 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
-//        allPODstableView.addPullToRefreshWithActionHandler { () -> Void in
-//            self.loadData(true)
-//        }
-//        
-//        allPODstableView.addInfiniteScrollingWithActionHandler { () -> Void in
-//            self.loadNextPODs()
-//        }
-//        
-//        myPODsCollectionView.addPullToRefreshWithActionHandler { () -> Void in
-//            self.loadMyData(true)
-//        }
-//        
-//        myPODsCollectionView.addInfiniteScrollingWithActionHandler { () -> Void in
-//            self.loadMyNextPODs()
-//        }
+        allPODstableView.addPullToRefreshWithActionHandler { () -> Void in
+            self.loadData(true)
+        }
+        
+        allPODstableView.addInfiniteScrollingWithActionHandler { () -> Void in
+            self.loadNextPODs()
+        }
         
         
     }
@@ -291,7 +283,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: 0) { (pods, error) -> () in
             
             if error == nil {
-                self.isDataLoaded = true
+                
                 self.allPods = pods
                 if self.allPods.count > 0 {
                     self.removeTableEmtpyMessage()
@@ -299,6 +291,64 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                     self.addTableEmptyMessage("No PODs has been created\n\nwhy don't create a POD?")
                 }
                 self.allPODstableView.reloadData()
+                
+                // load mypods info
+                self.loadMyData(pullToRefresh)
+                
+            } else {
+                self.isDataLoaded = false
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                }
+                self.allPODstableView.pullToRefreshView.stopAnimating()
+            }
+        }
+    }
+    
+    func loadNextPODs() {
+        page = page + 1
+        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page) {  (pods, error) -> () in
+            if error == nil {
+                self.allPods.appendContentsOf(pods)
+                self.allPODstableView.reloadData()
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            self.allPODstableView.infiniteScrollingView.stopAnimating()
+        }
+    }
+    
+    func loadMyData(pullToRefresh: Bool) {
+        if !pullToRefresh {
+            SVProgressHUD.showWithStatus("Loading")
+        }
+        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0) { (pods, error) -> () in
+            
+            if error == nil {
+                self.isDataLoaded = true
+                self.myPods = pods
+                
+                self.myPODsCollectionView.reloadData()
                 
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
