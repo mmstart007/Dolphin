@@ -121,6 +121,7 @@
 		36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */; };
 		36B1F4201C0FA97D0091A1B3 /* PODCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B1F41F1C0FA97D0091A1B3 /* PODCollectionViewCell.xib */; };
 		36B818B51C8504D5003563FE /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B818B41C8504D5003563FE /* List.swift */; };
+		36B9BBE71CB46C9E00EDBA3D /* NewPostMenuFromPOD.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36B9BBE61CB46C9E00EDBA3D /* NewPostMenuFromPOD.xib */; };
 		36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BE4CCB1C061524002E52D9 /* AppDelegate.swift */; };
 		36BE4CD11C061524002E52D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CCF1C061524002E52D9 /* Main.storyboard */; };
 		36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CD21C061524002E52D9 /* Assets.xcassets */; };
@@ -301,6 +302,7 @@
 		36B1F41D1C0FA9720091A1B3 /* PODCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODCollectionViewCell.swift; sourceTree = "<group>"; };
 		36B1F41F1C0FA97D0091A1B3 /* PODCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODCollectionViewCell.xib; sourceTree = "<group>"; };
 		36B818B41C8504D5003563FE /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		36B9BBE61CB46C9E00EDBA3D /* NewPostMenuFromPOD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPostMenuFromPOD.xib; sourceTree = "<group>"; };
 		36BE4CC81C061524002E52D9 /* Dolphin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dolphin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36BE4CCB1C061524002E52D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36BE4CD01C061524002E52D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -799,6 +801,7 @@
 			children = (
 				36D0C6971C07A0F50002AE35 /* NewPostMenu.xib */,
 				36736F651C5FEE170040A263 /* PostDetailsActionView.xib */,
+				36B9BBE61CB46C9E00EDBA3D /* NewPostMenuFromPOD.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -993,6 +996,7 @@
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
 				36DCCD741C73AC3A00D4B171 /* PODMembersTableViewCell.xib in Resources */,
 				365DBDDD1CACC0F600D20C02 /* SelectPODMembersViewController.xib in Resources */,
+				36B9BBE71CB46C9E00EDBA3D /* NewPostMenuFromPOD.xib in Resources */,
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
 				361F50881C65339000153B6C /* NewPostPrivacySettingsViewController.xib in Resources */,
 				36E9982A1C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib in Resources */,

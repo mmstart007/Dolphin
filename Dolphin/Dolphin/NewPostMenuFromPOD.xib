@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PODDetailsViewController" customModule="Dolphin" customModuleProvider="target">
+            <connections>
+                <outlet property="actionMenuBackground" destination="1QL-Lc-rYY" id="AnZ-Xp-nag"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="050-2l-1lx">
+                    <rect key="frame" x="0.0" y="400" width="375" height="267"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9W-xK-3Gn" userLabel="Close Button">
+                            <rect key="frame" x="8" y="8" width="15" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="M9W-xK-3Gn" secondAttribute="height" multiplier="1:1" id="Ozb-pf-NhK"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="CloseOverlayIcon"/>
+                            <connections>
+                                <action selector="closeNewPostViewButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="Yb0-kF-5EX"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post to Dolphin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3oM-ZM-buU" userLabel="Title Label">
+                            <rect key="frame" x="61" y="5" width="253" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iuc-B0-ENg" userLabel="Post Photo Button">
+                            <rect key="frame" x="142" y="76" width="90" height="115"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Iuc-B0-ENg" secondAttribute="height" multiplier="18:23" id="tkP-yj-mLR"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="PhotoPostIcon"/>
+                            <state key="highlighted" backgroundImage="PhotoPostIcon"/>
+                            <connections>
+                                <action selector="postPhotoButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="wMf-ZF-Zfa"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y1A-Xx-jsv" userLabel="Post Text Button">
+                            <rect key="frame" x="277" y="76" width="90" height="115"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Y1A-Xx-jsv" secondAttribute="height" multiplier="18:23" id="1eI-2G-RzT"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="TextPostIcon"/>
+                            <state key="highlighted" backgroundImage="TextPostIcon"/>
+                            <connections>
+                                <action selector="postTextButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="GsP-mt-aqj"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xbd-UX-b3Q" userLabel="Post Link Button">
+                            <rect key="frame" x="8" y="76" width="90" height="115"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Xbd-UX-b3Q" secondAttribute="height" multiplier="18:23" id="eDA-sf-8gY"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="URLPostIcon"/>
+                            <state key="highlighted" backgroundImage="URLPostIcon"/>
+                            <connections>
+                                <action selector="postLinkButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="fBv-Lm-9Cr"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Y1A-Xx-jsv" secondAttribute="trailing" constant="8" id="2C4-u5-DwM"/>
+                        <constraint firstItem="Xbd-UX-b3Q" firstAttribute="centerY" secondItem="050-2l-1lx" secondAttribute="centerY" id="5Wb-lp-YSC"/>
+                        <constraint firstItem="Xbd-UX-b3Q" firstAttribute="width" secondItem="050-2l-1lx" secondAttribute="height" multiplier="30:89" id="7lx-hi-uSh"/>
+                        <constraint firstItem="Iuc-B0-ENg" firstAttribute="centerY" secondItem="050-2l-1lx" secondAttribute="centerY" id="CW8-6G-WZv"/>
+                        <constraint firstItem="Xbd-UX-b3Q" firstAttribute="leading" secondItem="050-2l-1lx" secondAttribute="leading" constant="8" id="LIS-sE-5qI"/>
+                        <constraint firstItem="Y1A-Xx-jsv" firstAttribute="width" secondItem="050-2l-1lx" secondAttribute="height" multiplier="30:89" id="QIc-N6-AcE"/>
+                        <constraint firstItem="Iuc-B0-ENg" firstAttribute="centerX" secondItem="050-2l-1lx" secondAttribute="centerX" id="Qnx-yo-YwJ"/>
+                        <constraint firstItem="M9W-xK-3Gn" firstAttribute="top" secondItem="050-2l-1lx" secondAttribute="top" constant="8" id="S16-k0-k0a"/>
+                        <constraint firstItem="M9W-xK-3Gn" firstAttribute="leading" secondItem="050-2l-1lx" secondAttribute="leading" constant="8" id="Z7Y-kv-Q4q"/>
+                        <constraint firstItem="3oM-ZM-buU" firstAttribute="width" secondItem="050-2l-1lx" secondAttribute="height" multiplier="253:267" id="dom-2K-wLX"/>
+                        <constraint firstItem="M9W-xK-3Gn" firstAttribute="width" secondItem="050-2l-1lx" secondAttribute="height" multiplier="5:89" id="hsl-cO-rGS"/>
+                        <constraint firstItem="3oM-ZM-buU" firstAttribute="top" secondItem="050-2l-1lx" secondAttribute="top" constant="5.5" id="tTW-dj-vLe"/>
+                        <constraint firstItem="Y1A-Xx-jsv" firstAttribute="centerY" secondItem="050-2l-1lx" secondAttribute="centerY" id="vYV-xn-Xnx"/>
+                        <constraint firstItem="3oM-ZM-buU" firstAttribute="centerX" secondItem="050-2l-1lx" secondAttribute="centerX" id="ydN-7g-d2t"/>
+                        <constraint firstItem="Iuc-B0-ENg" firstAttribute="width" secondItem="050-2l-1lx" secondAttribute="height" multiplier="30:89" id="zdf-vC-Giq"/>
+                    </constraints>
+                </view>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QL-Lc-rYY" userLabel="Transparent View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="401"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="1QL-Lc-rYY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0Om-hg-9oB"/>
+                <constraint firstAttribute="bottom" secondItem="050-2l-1lx" secondAttribute="bottom" id="59m-Ki-gJk"/>
+                <constraint firstItem="050-2l-1lx" firstAttribute="width" secondItem="1QL-Lc-rYY" secondAttribute="height" multiplier="375:401" id="LbR-NM-86c"/>
+                <constraint firstItem="050-2l-1lx" firstAttribute="top" secondItem="1QL-Lc-rYY" secondAttribute="bottom" constant="-1" id="THo-6j-0AP"/>
+                <constraint firstItem="050-2l-1lx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="UNp-rU-y7d"/>
+                <constraint firstAttribute="trailing" secondItem="1QL-Lc-rYY" secondAttribute="trailing" id="iru-Dq-AcA"/>
+                <constraint firstItem="1QL-Lc-rYY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jfI-s1-SZh"/>
+                <constraint firstAttribute="trailing" secondItem="050-2l-1lx" secondAttribute="trailing" id="s8z-cO-uzq"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="CloseOverlayIcon" width="24" height="24"/>
+        <image name="PhotoPostIcon" width="171" height="209"/>
+        <image name="TextPostIcon" width="146" height="209"/>
+        <image name="URLPostIcon" width="146" height="209"/>
+    </resources>
+</document>

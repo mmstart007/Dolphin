@@ -330,7 +330,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         picker.delegate = self
         let alert = UIAlertController(title: "Choose an image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         alert.view.tintColor = UIColor.blueDolphin()
-        let libButton = UIAlertAction(title: "Library", style: UIAlertActionStyle.Default) { (alert) -> Void in
+        let libButton = UIAlertAction(title: "Camera Roll", style: UIAlertActionStyle.Default) { (alert) -> Void in
             self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
             self.picker.navigationBar.translucent = false
             self.picker.navigationBar.barTintColor = UIColor.blueDolphin()

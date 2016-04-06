@@ -24,6 +24,7 @@ class Post : NSObject {
     }
     
     var postId: Int?
+    var postPODId: Int?
     var postUser: User?
     var postImage: Image?
     var postImageData: UIImage?
@@ -41,9 +42,10 @@ class Post : NSObject {
     
     convenience init(user: User?, image: Image?, imageData: UIImage?, type: PostType?,
         topics: [Topic]?, link: Link?, imageUrl: String?, title: String?, text: String?,
-        date: NSDate?, numberOfLikes: Int?, numberOfComments: Int?, comments: [PostComment]?) {
+        date: NSDate?, numberOfLikes: Int?, numberOfComments: Int?, comments: [PostComment]?, PODId: Int?) {
             self.init()
             
+            self.postPODId            = PODId
             self.postUser             = user
             self.postImage            = image
             self.postImageData        = imageData
@@ -123,6 +125,9 @@ class Post : NSObject {
         }
         if let image = self.postImageData {
             retDic["image"] = Utils.encodeBase64(image)
+        }
+        if let podId = self.postPODId {
+            retDic["pod_id"] = podId
         }
         return retDic
     }

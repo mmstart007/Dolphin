@@ -14,6 +14,7 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
     
     var postImage: UIImage?
     var picker: UIImagePickerController = UIImagePickerController()
+    var podId: Int?
     
     @IBOutlet weak var postImagePreviewImageView: UIImageView!
     
@@ -66,6 +67,7 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
             presentViewController(alert, animated: true, completion: nil)
         } else {
             addDescriptionVC.postImage = postImage
+            addDescriptionVC.podId = podId
             navigationController?.pushViewController(addDescriptionVC, animated: true)
         }
     }

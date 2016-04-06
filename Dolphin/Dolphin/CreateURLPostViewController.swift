@@ -22,6 +22,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     var isLoadingPage: Bool = true
     var webView: UIWebView!
     var urlToLoad: String = ""
+    var podId: Int?
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -91,6 +92,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         if imageURLs.count > 0 {
             let chooseImageVC = CreateURLPostChooseImageViewController(images: imageURLs)
             chooseImageVC.urlLoaded = urlToLoad
+            chooseImageVC.podId     = podId
             navigationController?.pushViewController(chooseImageVC, animated: true)
         } else {
             let alert = UIAlertController(title: "Error", message: "NO images Obtained from the WebSite", preferredStyle: .Alert)

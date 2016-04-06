@@ -25,6 +25,9 @@ class CreateTextPostViewController : DolphinViewController {
     @IBOutlet weak var postTagsTextView: KSTokenView!    
     @IBOutlet weak var scrollViewContainer: UIScrollView!
     
+    // if this var is set, I'm creating a text post from a POD
+    var podId: Int?
+    
     convenience init() {
         self.init(nibName: "CreateTextPostViewController", bundle: nil)
     }
@@ -79,7 +82,7 @@ class CreateTextPostViewController : DolphinViewController {
         let title: String = postTitleTextField.text!
         let text: String = postTextView.text!
         // crate the pod
-        let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
+        let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
         SVProgressHUD.showWithStatus("Posting")
         networkController.createPost(post, completionHandler: { (post, error) -> () in
             if error == nil {

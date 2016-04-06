@@ -17,6 +17,8 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
     
     var chosenImage: UIImage? = nil
     var images: [UIImage]! = []
+    // if this var is set, I'm creating a text post from a POD
+    var podId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,6 +128,7 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
                     imgManager.requestImageDataForAsset(fetchResult.objectAtIndex(indexPath.row - 1) as! PHAsset, options: options, resultHandler: { (data, dataUTI, orientation, info) -> Void in
                         let image = UIImage(data: data!)!
                         let finishImagePostVC = CreateImagePostFinishPostingViewController(image: image)
+                        finishImagePostVC.podId = self.podId
                         self.navigationController?.pushViewController(finishImagePostVC, animated: true)
                     })
                 }

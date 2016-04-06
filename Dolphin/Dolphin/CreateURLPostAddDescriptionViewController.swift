@@ -17,6 +17,8 @@ class CreateURLPostAddDescriptionViewController: DolphinViewController, UITableV
     
     var postImageURL: String?
     var postURL: String?
+    // if this var is set, I'm creating a text post from a POD
+    var podId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +49,7 @@ class CreateURLPostAddDescriptionViewController: DolphinViewController, UITableV
         if description != "" {
             let link = Link(url: postURL!, imageURL: postImageURL!)
             // crate the pod
-            let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "link"), topics: nil, link: link, imageUrl: nil, title: nil, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
+            let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "link"), topics: nil, link: link, imageUrl: nil, title: nil, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
             SVProgressHUD.showWithStatus("Posting")
             networkController.createPost(post, completionHandler: { (post, error) -> () in
                 if error == nil {
