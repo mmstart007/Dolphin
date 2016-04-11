@@ -20,7 +20,7 @@ class NetworkController: NSObject {
             return Constants.RESTAPIConfig.Developement.BaseUrl + "api/" + apiVersion.rawValue + "/"
         }
     }
-
+    
     var token: String?
     var posts: [Post]      = []
     var pods: [POD]        = []
@@ -59,6 +59,7 @@ class NetworkController: NSObject {
         case GetGrades       = "grades"
         case CreatePOD       = "pods"
         case FilterPOD       = "pods/filter"
+        case PodMember       = "pods/%@/users/%@"
         
     }
     
@@ -570,17 +571,28 @@ class NetworkController: NSObject {
         }
     }
     
+    func deletePodMember(podId: String, userId: String,completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [podId, userId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PodMember, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
+    }
     
     // MARK: - Internal Methods
     
     /**
-    Prepare the URL for an invocation to the API
-    
-    :param: method        Specific method that will be executed
-    :param: urlParams     Group of params to add in the URL
-    
-    :returns: Returns the complete URL for the invocation
-    */
+     Prepare the URL for an invocation to the API
+     
+     :param: method        Specific method that will be executed
+     :param: urlParams     Group of params to add in the URL
+     
+     :returns: Returns the complete URL for the invocation
+     */
     private func prepareRequestURL(method: ApiMethod, urlParams: [CVarArgType]?) -> String? {
         if urlParams != nil {
             return String(format: basePath + method.rawValue, arguments: urlParams!)

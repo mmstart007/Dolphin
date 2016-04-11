@@ -9,7 +9,7 @@
 import UIKit
 
 class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     
     @IBOutlet weak var tableViewPODMembers: UITableView!
     
@@ -32,7 +32,7 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableViewPODMembers.dataSource = self
         tableViewPODMembers.delegate = self
         registerCells()
@@ -40,7 +40,7 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
         title = pod?.name
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -53,10 +53,14 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
             let alert = UIAlertController(title: "Delete", message: "Do you want to remove this member from the POD?", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
-                self.members.removeAtIndex(indexPath.row)
-                self.tableViewPODMembers.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-                
-                
+                NetworkController.sharedInstance.deletePodMember(String(self.pod!.id!), userId: String(self.members[indexPath.row].id!), completionHandler: { (error) in
+                    if error == nil {
+                        self.members.removeAtIndex(indexPath.row)
+                        self.tableViewPODMembers.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+                    } else {
+                        Utils.presentAlertMessage("Error", message: "An error occurred trying to delete the member", cancelActionText: "Ok", presentingViewContoller: self)
+                    }
+                })
             }))
             alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
             
@@ -72,7 +76,7 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {        
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
         
     }
@@ -139,7 +143,7 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
         
         // show the alert
         self.presentViewController(alert, animated: true, completion: nil)
-
+        
     }
     
     
