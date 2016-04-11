@@ -66,6 +66,8 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         podNameLabel.text                = pod.name
         if let lastPostDate = pod.lastPostDate {
             podLastPostDateLabel.text    = lastPostDate.formattedAsTimeAgo()
+        } else {
+            podLastPostDateLabel.text    = "No posts yet"
         }
     }
     

@@ -51,6 +51,8 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
             podTitleLabel.text = pod!.name
             if let lastPostDate = pod?.lastPostDate {
                 lastPostDateLabel.text = lastPostDate.formattedAsTimeAgo()
+            } else {
+                lastPostDateLabel.text = "No posts yet"
             }
             
             createPODView.hidden = true
