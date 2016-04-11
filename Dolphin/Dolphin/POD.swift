@@ -20,6 +20,7 @@ class POD : NSObject {
     var users: [User]?
     var postsCount: Int?
     var usersCount: Int?
+    var lastPostDate: NSDate?
     
     
     convenience init(name: String?, description: String?, imageURL: String?, isPrivate: Int?, owner: User?, users: [User]?, postsCount: Int?, usersCount: Int?, imageData: UIImage?) {
@@ -60,10 +61,18 @@ class POD : NSObject {
         self.imageURL        = podJsonObject!["image_url"] as? String
         self.isPrivate       = podJsonObject!["is_private"] as? Int
         
-//        let dateString            = podJsonObject!["last"] as? String
-//        let dateFormatter         = NSDateFormatter()
-//        dateFormatter.dateFormat  = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
-//        self.postDate             = dateFormatter.dateFromString(dateString!)
+        if let lastPostsJson = podJsonObject!["last_post"] as? [AnyObject] {
+            if lastPostsJson.count > 0 {
+                if let lastPostJson = lastPostsJson[0] as? [String: AnyObject] {
+                    let dateString = lastPostJson["created_at"] as? String
+                    let dateFormatter         = NSDateFormatter()
+                    dateFormatter.dateFormat  = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+                    self.lastPostDate             = dateFormatter.dateFromString(dateString!)
+
+                }
+            }
+            
+        }
         
         
     }

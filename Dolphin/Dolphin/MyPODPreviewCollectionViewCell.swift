@@ -49,8 +49,10 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
             podImageView.layer.masksToBounds = true
             podImageView.sd_setImageWithURL(NSURL(string: pod!.imageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             podTitleLabel.text = pod!.name
-            // TODO: Fix the date of last post
-            //lastPostDateLabel.text = pod!.podLastPostDate?.formattedAsTimeAgo()
+            if let lastPostDate = pod?.lastPostDate {
+                lastPostDateLabel.text = lastPostDate.formattedAsTimeAgo()
+            }
+            
             createPODView.hidden = true
         } else {
             createPODView.hidden = false

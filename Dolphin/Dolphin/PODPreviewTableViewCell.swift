@@ -64,8 +64,9 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         podImageView.layer.cornerRadius  = 5
         podImageView.layer.masksToBounds = true
         podNameLabel.text                = pod.name
-        // TODO: Fix the date of last post
-        //podLastPostDateLabel.text        = pod.podLastPostDate?.formattedAsTimeAgo()
+        if let lastPostDate = pod.lastPostDate {
+            podLastPostDateLabel.text    = lastPostDate.formattedAsTimeAgo()
+        }
     }
     
     func addUserImages(pod: POD) {
