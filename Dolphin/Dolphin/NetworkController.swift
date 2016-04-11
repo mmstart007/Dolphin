@@ -59,6 +59,7 @@ class NetworkController: NSObject {
         case GetGrades       = "grades"
         case CreatePOD       = "pods"
         case FilterPOD       = "pods/filter"
+        case PODById         = "pods/%@"
         
     }
     
@@ -568,6 +569,18 @@ class NetworkController: NSObject {
                 completionHandler(pods, error)
             }
         }
+    }
+    
+    func deletePOD(podId: String, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [podId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
     }
     
     
