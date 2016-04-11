@@ -15,6 +15,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     RSKImageCropViewControllerDelegate, ProfileAvatarTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let networkController = NetworkController.sharedInstance
+    let kPageQuantity: Int = 10
     let picker = UIImagePickerController()
     let titles = ["PROFILE", "PUSH NOTIFICATIONS", "MY PODS", "DOLPHIN", "SUPPORT"]
     let dolphinItems = ["Like us on Facebook", "Follow us on Instagram", "Follow us on Twitter", "Rate our app"]
@@ -22,8 +23,9 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
 
     @IBOutlet weak var tableViewSettings: UITableView!
     
-    var myPODS: [POD] = []
+    var myPODS: [POD]       = []
     var publicProfile: Bool = false
+    var page: Int           = 0
     
     required init() {
         super.init(nibName: "SettingsViewController", bundle: NSBundle.mainBundle())
@@ -44,12 +46,13 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         registerCells()
         // reset image data from the user
         networkController.currentUser?.userAvatarImageData = nil
-        // TODO: loads pods from server
-        //myPODS = networkController.pods
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        loadData()
         
     }
 
@@ -219,7 +222,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     // MARK: - TableView delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 2 {
+        if indexPath.section == 3 {
             let PODSettingsVC = PODSettingsViewController(pod: myPODS[indexPath.row])
             navigationController?.pushViewController(PODSettingsVC, animated: true)
         }
@@ -323,6 +326,41 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         tableViewSettings.backgroundColor = UIColor.groupTableViewBackgroundColor()
     }
     
+    func loadData() {
+        page = 0
+        
+        SVProgressHUD.showWithStatus("Loading")
+        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page) { (pods, error) -> () in
+            
+            if error == nil {
+                
+                self.myPODS = pods
+                if self.myPODS.count > 0 {
+                    // TODO: Remove the message added when the POD table is empty
+                } else {
+                    // TODO: Put some message if you don't have any POD
+                }
+                self.tableViewSettings.reloadData()
+                SVProgressHUD.dismiss()
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+
+                SVProgressHUD.dismiss()
+                
+            }
+        }
+    }
+    
     // MARK: - ProfileAvatarTableViewCell delegate
     
     func onSelectImageTouchUpInside() {
@@ -421,5 +459,6 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         // Use when `applyMaskToCroppedImage` set to YES.
         SVProgressHUD.show()
     }
+    
 
 }

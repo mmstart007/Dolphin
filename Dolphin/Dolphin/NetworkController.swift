@@ -59,6 +59,7 @@ class NetworkController: NSObject {
         case GetGrades       = "grades"
         case CreatePOD       = "pods"
         case FilterPOD       = "pods/filter"
+        case PODById         = "pods/%@"
         case PodMember       = "pods/%@/users/%@"
         
     }
@@ -571,6 +572,17 @@ class NetworkController: NSObject {
         }
     }
     
+    func deletePOD(podId: String, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [podId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
+    }
     func deletePodMember(podId: String, userId: String,completionHandler: (AnyObject?) -> ()) -> () {
         let urlParameters : [CVarArgType] = [podId, userId]
         performRequest(MethodType.DELETE, authenticated: true, method: .PodMember, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
@@ -582,6 +594,7 @@ class NetworkController: NSObject {
         }
         
     }
+    
     
     // MARK: - Internal Methods
     
