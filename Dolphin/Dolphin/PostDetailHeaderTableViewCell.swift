@@ -28,7 +28,7 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
     func configureWithPost(post: Post) {
         actualPost = post
         
-        
+        contentView.userInteractionEnabled = false
         if post.postType?.name == "link" {
             postLabelTitle.text = post.postText
             postTextView.text = post.postLink?.url
@@ -52,6 +52,9 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
                     }
                 })
             } else if let postLink = actualPost!.postLink {
+                postTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openWebPage)))
+                postTextView.textColor              = UIColor.blueColor()
+                postTextView.userInteractionEnabled = true
                 let manager = SDWebImageManager.sharedManager()
                 manager.downloadImageWithURL(NSURL(string: (postLink.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
@@ -86,6 +89,16 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
         postTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = postTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         return newSize.height
+    }
+    
+    // MARK: - Handle links
+    
+    func openWebPage() {
+        if postTextView.text != "" {
+            if UIApplication.sharedApplication().canOpenURL(NSURL(string: postTextView.text!)!) {
+                UIApplication.sharedApplication().openURL(NSURL(string: postTextView.text!)!)
+            }
+        }
     }
     
 }

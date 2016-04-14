@@ -67,7 +67,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         )
         
         if !Utils.verifyUrl(urlToLoad) {
-            urlToLoad = "http://www.google.com/search?q=".stringByAppendingString(urlToLoad)
+            urlToLoad = "http://www.google.com/search?q=".stringByAppendingString(urlToLoad.stringByReplacingOccurrencesOfString(" ", withString: "+").stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
         }
         urlTextField.text = urlToLoad
         loadRequest(urlToLoad)
