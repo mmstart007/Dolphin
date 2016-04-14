@@ -21,4 +21,5 @@ target 'Dolphin' do
     pod 'BEMCheckBox'
     pod 'RSKImageCropper'
     pod 'BSKeyboardControls', '~> 2.2'
+    pod 'KeychainSwift', '~> 3.0'
 end

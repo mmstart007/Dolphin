@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SVProgressHUD
+import KeychainSwift
 
 class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     
@@ -32,6 +33,10 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var signUpFieldView: UIView!
     
     @IBOutlet weak var loginLabel: UILabel!
+    
+    @IBOutlet weak var rememberUserAndPasswordSwitch: UISwitch!
+    
+    let keychain = KeychainSwift()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -88,8 +93,13 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             self.loginFieldsView.hidden = false
         }
         
-        loginEmailTextField.keyboardType  = .EmailAddress
-        signUpEmailTextField.keyboardType = .EmailAddress
+        loginEmailTextField.keyboardType           = .EmailAddress
+        signUpEmailTextField.keyboardType          = .EmailAddress
+        signUpEmailTextField.autocorrectionType    = .No
+        loginEmailTextField.autocorrectionType     = .No
+        signUpUsernameTextField.autocorrectionType = .No
+        
+        getLoginValuesFromKeychain()
     }
     
     func setAppearance() {
@@ -232,6 +242,12 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             networkController.registerUser(user, completionHandler: { (token, user, error) -> () in
                 if error == nil {
                     
+                    if self.rememberUserAndPasswordSwitch.on {
+                        self.saveCredentialsInKeychain(email, password: password)
+                    } else {
+                        self.resetKeyChain()
+                    }
+                    
                     // Store the apiToken
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(token, forKey: "api_token")
@@ -294,5 +310,25 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         signUpUsernameTextField.resignFirstResponder()
         signUpEmailTextField.resignFirstResponder()
         signUpPasswordTextField.resignFirstResponder()
+    }
+    
+    // MARK: - Keychain Handling
+    
+    func getLoginValuesFromKeychain() {
+        let email = keychain.get("email")
+        let password = keychain.get("password")
+        if email != nil && password != nil {
+            loginEmailTextField.text    = email
+            loginPasswordTextField.text = password
+        }
+    }
+    
+    func saveCredentialsInKeychain(email: String, password: String) {
+        keychain.set(email, forKey: "email")
+        keychain.set(password, forKey: "password")
+    }
+    
+    func resetKeyChain() {
+        keychain.clear()
     }
 }

@@ -122,7 +122,7 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
             }
             dismissViewControllerAnimated(true, completion: nil)
         } else {
-            SVProgressHUD.show()
+            SVProgressHUD.showWithStatus("Saving")
             NetworkController.sharedInstance.updateUser(nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: nil, email: nil, password: nil, location: nil, isPrivate: nil, subjects: subjectsSelected, grades: gradesSelected, completionHandler: { (user, error) in
                 if error == nil && user != nil {
                     NetworkController.sharedInstance.currentUser = user
