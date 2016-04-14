@@ -12,7 +12,6 @@ target 'Dolphin' do
     pod 'HMSegmentedControl'
     pod "OAuthSwift", "~> 0.5.0"
     pod 'UITextView+Placeholder'
-    pod 'NSDate-Time-Ago'
     pod 'KSTokenView', '~> 2.3.0'
     pod 'ActionSheetPicker-3.0'
     pod 'Alamofire', '~> 3.0'
@@ -22,4 +21,5 @@ target 'Dolphin' do
     pod 'RSKImageCropper'
     pod 'BSKeyboardControls', '~> 2.2'
     pod 'KeychainSwift', '~> 3.0'
+    pod 'NSDate+TimeAgo'
 end

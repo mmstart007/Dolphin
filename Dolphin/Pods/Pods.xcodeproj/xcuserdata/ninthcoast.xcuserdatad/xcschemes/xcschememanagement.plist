@@ -44,7 +44,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>NSDate-Time-Ago.xcscheme</key>
+		<key>NSDate+TimeAgo.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -97,27 +97,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0CB99D74281332FF095A554037B64E8E</key>
+		<key>20FEE02C66AB0E207F223C4B47C7C058</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>19400A16001AADF4D86CCA7F22CE372C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>33B48AFBA952729BD3B11031F0F68DDA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>40E7034A0C6A1BEE53D826E9595CF9BF</key>
+		<key>3608C918D70176DCFFBD2ABAED4AB0ED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>4C698C648EE4D43C6B8BE0BE1FE91737</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>524F3AA8BB891D04E2737D464FF8E5B5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -128,6 +123,11 @@
 			<true/>
 		</dict>
 		<key>63D4020419748D12B33C0C04E0AF9DC7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6F86718079A7D265779F1C1562F57DFD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,7 +147,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B863655B0E9230FA7005460AD8B1FCA3</key>
+		<key>A2E525B3F0A7DE1EE8733E2484155410</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B91B2C2F421DCEC6047B0C8A7FEDA644</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -157,17 +162,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CF3EFC1F16CEA5DB1FC2B567C02BAEC8</key>
+		<key>D17BEF15E77D839B942EE48B2B0E102F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>D635F027F0A6FD04B98B790907265430</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E5761E5DFFFCD39D6757B7097A4CE2ED</key>
 		<dict>
 			<key>primary</key>
 			<true/>

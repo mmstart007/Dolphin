@@ -11,7 +11,7 @@ PODS:
   - KeychainSwift (3.0.11)
   - KSTokenView (2.3.1)
   - KTCenterFlowLayout (1.1.1)
-  - NSDate-Time-Ago (1.0.1)
+  - NSDate+TimeAgo (1.0.6)
   - OAuthSwift (0.5.0)
   - RSKImageCropper (1.5.1)
   - SDWebImage (3.7.5):
@@ -37,7 +37,7 @@ DEPENDENCIES:
   - KeychainSwift (~> 3.0)
   - KSTokenView (~> 2.3.0)
   - KTCenterFlowLayout
-  - NSDate-Time-Ago
+  - NSDate+TimeAgo
   - OAuthSwift (~> 0.5.0)
   - RSKImageCropper
   - SDWebImage (~> 3.7)
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   KeychainSwift: 0a4214c910423543a42b0f30f25987d46178b6a5
   KSTokenView: 15150f0aec162ac5b61e7cc10ba356e02da8f355
   KTCenterFlowLayout: eded079c349450dea12f7cf94b424d1bc3205519
-  NSDate-Time-Ago: e9de167d0659ebe465c273e833e7b582f061fc41
+  NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
   OAuthSwift: f2e0de083739da5697be095c9af2671242a4ed8b
   RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461

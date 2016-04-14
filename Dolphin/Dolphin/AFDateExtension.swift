@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import NSDate_TimeAgo
 
 // DotNet: "/Date(1268123281843)/"
 let DefaultFormat = "EEE MMM dd HH:mm:ss Z yyyy"
@@ -966,6 +967,8 @@ public extension NSDate {
         }
     }
     
-    
+    func formattedAsTimeAgo() -> String! {
+        return self.timeAgo()
+    }
     
 }
