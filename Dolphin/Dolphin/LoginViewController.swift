@@ -87,6 +87,9 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             self.view.layoutIfNeeded()
             self.loginFieldsView.hidden = false
         }
+        
+        loginEmailTextField.keyboardType  = .EmailAddress
+        signUpEmailTextField.keyboardType = .EmailAddress
     }
     
     func setAppearance() {

@@ -12,7 +12,7 @@ import RSKImageCropper
 import SDWebImage
 
 class SettingsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, SettingsSwitchTableViewCellDelegate,
-    RSKImageCropViewControllerDelegate, ProfileAvatarTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    RSKImageCropViewControllerDelegate, ProfileAvatarTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PickerGradesOrSubjectsDelegate {
     
     let networkController = NetworkController.sharedInstance
     let kPageQuantity: Int = 10
@@ -26,6 +26,11 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     var myPODS: [POD]       = []
     var publicProfile: Bool = false
     var page: Int           = 0
+    
+    var availableGrades: [Grade]     = []
+    var availableSubjects: [Subject] = []
+    var selectedGrades: [String]     = []
+    var selectedSubjects: [String]   = []
     
     required init() {
         super.init(nibName: "SettingsViewController", bundle: NSBundle.mainBundle())
@@ -46,7 +51,8 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         registerCells()
         // reset image data from the user
         networkController.currentUser?.userAvatarImageData = nil
-        
+        loadGradesAndSubjects()
+        initializeUsersGradesAndSubjects()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -75,7 +81,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             // profile
             if let user = networkController.currentUser {
                 if user.isPrivate == 0 {
-                    return 5
+                    return 7
                 } else {
                     return 2
                 }
@@ -151,6 +157,24 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     }
                     (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location", value: networkController.currentUser?.location)
                     
+                } else if indexPath.row == 5 {
+                    cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
+                    if (cell == nil) {
+                        cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
+                    }
+                    cell?.detailTextLabel?.text = ""
+                    cell?.accessoryType = .DisclosureIndicator
+                    cell?.textLabel?.text = "My Grades"
+                    
+                } else if indexPath.row == 6 {
+                    cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
+                    if (cell == nil) {
+                        cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
+                    }
+                    cell?.detailTextLabel?.text = ""
+                    cell?.accessoryType = .DisclosureIndicator
+                    cell?.textLabel?.text = "My Subjects"
+                    
                 }
             }
         } else if indexPath.section == 2 {
@@ -225,6 +249,14 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         if indexPath.section == 3 {
             let PODSettingsVC = PODSettingsViewController(pod: myPODS[indexPath.row])
             navigationController?.pushViewController(PODSettingsVC, animated: true)
+        } else if indexPath.section == 1 {
+            if let user = networkController.currentUser {
+                if user.isPrivate == 0 && indexPath.row == 5 {
+                    selectGrades()
+                } else if user.isPrivate == 0  && indexPath.row == 6 {
+                    selectSubjects()
+                }
+            }
         }
     }
     
@@ -460,5 +492,102 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         SVProgressHUD.show()
     }
     
+    // MARK: - Handle grades and subjects
+    
+    func loadGradesAndSubjects() {
+        SVProgressHUD.showWithStatus("Loading")
+        networkController.getGrades { (grades, error) -> () in
+            if error == nil {
+                self.availableGrades = grades!
+                
+                self.networkController.getSubjects { (subjects, error) -> () in
+                    if error == nil {
+                        
+                        self.availableSubjects = subjects!
+                        SVProgressHUD.dismiss()
+                        
+                    } else {
+                        let errors: [String]? = error!["errors"] as? [String]
+                        let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        SVProgressHUD.dismiss()
+                    }
+                }
+                
+                
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
+            }
+        }
+        
+    }
+    
+    func selectGrades() {
+        
+        let pickGradesVC              = PickGradesOrSubjectsViewController()
+        pickGradesVC.delegate         = self
+        pickGradesVC.areSubjects      = false
+        pickGradesVC.grades           = availableGrades
+        pickGradesVC.gradesSelected   = selectedGrades
+        pickGradesVC.subjectsSelected = selectedSubjects
+        let pickGradesNavController   = UINavigationController(rootViewController: pickGradesVC)
+        presentViewController(pickGradesNavController, animated: true, completion: nil)
+        
+        
+    }
+    
+    func selectSubjects() {
+        
+        let pickSubjectsVC              = PickGradesOrSubjectsViewController()
+        pickSubjectsVC.delegate         = self
+        pickSubjectsVC.areSubjects      = true
+        pickSubjectsVC.subjects         = availableSubjects
+        pickSubjectsVC.gradesSelected   = selectedGrades
+        pickSubjectsVC.subjectsSelected = selectedSubjects
+        let pickSubjectsNavController   = UINavigationController(rootViewController: pickSubjectsVC)
+        presentViewController(pickSubjectsNavController, animated: true, completion: nil)
+        
+    }
+    
+    func gradesDidSelected(grades: [String]) {
+        initializeUsersGradesAndSubjects()
+    }
+    
+    func subjectsDidSelected(subjects: [String]) {
+        initializeUsersGradesAndSubjects()
+    }
+    
+    func initializeUsersGradesAndSubjects() {
+        
+        if let user = networkController.currentUser {
+            
+            // Initialize user's grades
+            selectedGrades.removeAll()
+            if user.grades != nil {
+                for grade in user.grades! {
+                    let gradeName = String(grade.name!)
+                    selectedGrades.append(gradeName)
+                }
+            }
+            
+            // Initialize user's subjects
+            selectedSubjects.removeAll()
+            if user.subjects != nil {
+                for subject in user.subjects! {
+                    let subjectName = String(subject.name!)
+                    selectedSubjects.append(subjectName)
+                }
+            }
+        }
+        
+    }
 
 }

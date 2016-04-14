@@ -67,6 +67,12 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
         navigationItem.rightBarButtonItem = rightButton;
     }
     
+    func setLeftButtonItemWithText(text: String, target: AnyObject?, action: Selector) {
+        let leftButton = UIBarButtonItem(title: text, style: .Plain, target: target, action: action)
+        leftButton.tintColor = UIColor.whiteColor()
+        navigationItem.leftBarButtonItem = leftButton;
+    }
+    
     func addRightButtonItemWithImage(imageName: String, target: AnyObject?, action: Selector) {
         let rightButton = UIBarButtonItem(image: UIImage(named: imageName), style: .Plain, target: target, action: action)
         rightButton.tintColor = UIColor.whiteColor()

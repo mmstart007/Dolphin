@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 protocol PickerGradesOrSubjectsDelegate {
     func gradesDidSelected(grades: [String])
@@ -28,6 +29,7 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     var gradesSelected: [String]   = []
     var grades: [Grade]            = []
     var subjects: [Subject]        = []
+    var user = NetworkController.sharedInstance.currentUser
     
     convenience init() {
         self.init(nibName: "PickGradesOrSubjectsViewController", bundle: nil)
@@ -38,6 +40,10 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         
         title = areSubjects ? "Select subjects" : "Select grades"
         setRightButtonItemWithText("Done", target: self, action: Selector("doneTouchUpInside:"))
+        
+        if user != nil {
+            setLeftButtonItemWithText("Close", target: self, action: #selector(closeButtonTouchUpInside))
+        }
         
         tableViewGradesOrSubjects.delegate = self
         tableViewGradesOrSubjects.dataSource = self
@@ -108,11 +114,43 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     // MARK: - Actions
     
     func doneTouchUpInside(sender: AnyObject) {
-        if areSubjects {
-            delegate?.subjectsDidSelected(subjectsSelected)
+        if user == nil {
+            if areSubjects {
+                delegate?.subjectsDidSelected(subjectsSelected)
+            } else {
+                delegate?.gradesDidSelected(gradesSelected)
+            }
+            dismissViewControllerAnimated(true, completion: nil)
         } else {
-            delegate?.gradesDidSelected(gradesSelected)
+            SVProgressHUD.show()
+            NetworkController.sharedInstance.updateUser(nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: nil, email: nil, password: nil, location: nil, isPrivate: nil, subjects: subjectsSelected, grades: gradesSelected, completionHandler: { (user, error) in
+                if error == nil && user != nil {
+                    NetworkController.sharedInstance.currentUser = user
+                    if self.areSubjects {
+                        self.delegate?.subjectsDidSelected(self.subjectsSelected)
+                    } else {
+                        self.delegate?.gradesDidSelected(self.gradesSelected)
+                    }
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    SVProgressHUD.dismiss()
+                    let errors: [String]? = error!["errors"] as? [String]
+                    var alert: UIAlertController
+                    if errors != nil && errors![0] != "" {
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                    } else {
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    }
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+
+                }
+            })
         }
+    }
+    
+    func closeButtonTouchUpInside(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -120,7 +158,6 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     
     func registerCells() {
         tableViewGradesOrSubjects.registerNib(UINib(nibName: "SubjectOrGradeTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SubjectOrGradeTableViewCell")
-        
     }
     
     
