@@ -47,7 +47,9 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         print("didFinishPickingMediaWithInfo")
-        postImagePreviewImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        postImagePreviewImageView.image = image
+        postImage = image
         dismissViewControllerAnimated(true, completion: nil)
     }
     
