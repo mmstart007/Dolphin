@@ -11,7 +11,6 @@ import UIKit
 import WebKit
 import hpple
 
-
 class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, UIWebViewDelegate {
 
     
@@ -35,13 +34,14 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         super.viewDidLoad()
         self.edgesForExtendedLayout = .None
         setBackButton()
-        title = "Dolphin"
+        title                           = "Dolphin"
+        webView                         = UIWebView()
+        webView.delegate                = self
+        urlTextField.text               = "http://google.com"
+        urlTextField.autocorrectionType = .No
+        addTextFieldToKeyboradControlsTextFields(urlTextField)
         
-        webView = UIWebView()
-        webView.delegate = self
-        
-        urlTextField.text = "http://apple.com"
-        loadRequest("http://apple.com")
+        loadRequest("http://google.com")
         self.webView.scalesPageToFit = true;
         self.webView.contentMode = .ScaleAspectFit;
     }
@@ -57,13 +57,27 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         var urlText = textField.text!
-        if !urlText.hasPrefix("http") {
-            urlText = "http://" + urlText
+        if Utils.verifyUrl(urlToLoad) {
+            if !urlText.hasPrefix("http") {
+                urlText = "http://" + urlText
+            }
         }
-        urlToLoad = urlText
-        loadRequest(urlText)
+        urlToLoad = urlText.stringByTrimmingCharactersInSet(
+            NSCharacterSet.whitespaceAndNewlineCharacterSet()
+        )
+        
+        if !Utils.verifyUrl(urlToLoad) {
+            urlToLoad = "http://www.google.com/search?q=".stringByAppendingString(urlToLoad)
+        }
+        urlTextField.text = urlToLoad
+        loadRequest(urlToLoad)
+        
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.selectedTextRange = textField.textRangeFromPosition(textField.beginningOfDocument, toPosition: textField.endOfDocument)
     }
     
     // MARK: Actions

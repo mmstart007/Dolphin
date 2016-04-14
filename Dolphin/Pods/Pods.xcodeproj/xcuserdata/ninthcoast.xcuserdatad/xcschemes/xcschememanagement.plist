@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BSKeyboardControls.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HMSegmentedControl.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -87,7 +92,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>27E02BFB78D45D9B528846E214798F9A</key>
+		<key>1EFCB80231DE9D7F3F01E569E7C32491</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2A79AF73B263C1EC99416F3CA7B9BEC5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,7 +107,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>37829839294FC9EA616D99F54E90AE4D</key>
+		<key>51EB0F3189F254CB0E6BCA238DCD4239</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -127,12 +137,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B2E2AE0EAAC5C58E65E0FFB9FEF192A7</key>
+		<key>8C4C7B22C3B7723B0906C30DC02E2FD6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CB4B6E098A391D01E5ACD18BD7D8611E</key>
+		<key>8FDE059C259E3B73B3D7267CB41C485C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -147,12 +157,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D6A83609FB6924BCF5FB09F63B4389F5</key>
+		<key>EF51FBA1625B1AB8A4234E39C919836E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E5E3993A6F4F362D5290135F3C0CCD93</key>
+		<key>FE950F7E66C10883BEF0A48D6FEC5F4D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

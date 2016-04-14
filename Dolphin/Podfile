@@ -20,4 +20,5 @@ target 'Dolphin' do
     pod 'SVPullToRefresh'
     pod 'BEMCheckBox'
     pod 'RSKImageCropper'
+    pod 'BSKeyboardControls', '~> 2.2'
 end

@@ -8,14 +8,18 @@
 
 import Foundation
 import UIKit
+import BSKeyboardControls
 
-class DolphinViewController : DolphinCustomFontViewController {
+class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControlsDelegate {
     
     var parentScrollView: UIScrollView?
+    var textFieldsForKeyboardControls: [UITextField] = []
+    var keyboardControls: BSKeyboardControls = BSKeyboardControls()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        keyboardControls.delegate = self
         //        let tapGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
         //        self.view.addGestureRecognizer(tapGesture)
         
@@ -103,6 +107,24 @@ class DolphinViewController : DolphinCustomFontViewController {
         
     }
     
+    // MARK: - Keyboard Controls
+    
+    func keyboardControls(keyboardControls: BSKeyboardControls!, selectedField field: UIView!, inDirection direction: BSKeyboardControlsDirection) {
+        print("Changed seletion")
+        if let scrollView = parentScrollView as! UIScrollView? {
+            scrollView.scrollRectToVisible((keyboardControls.activeField.superview?.superview?.frame)!, animated: true)
+        }
+    }
+    
+    func keyboardControlsDonePressed(keyboardControls: BSKeyboardControls!) {
+        resignResponder()
+    }
+    
+    func addTextFieldToKeyboradControlsTextFields(textField: UITextField) {
+        textFieldsForKeyboardControls.append(textField)
+        textFieldsForKeyboardControls      = textFieldsForKeyboardControls.sort({ $0.tag < $1.tag})
+        keyboardControls.fields            = textFieldsForKeyboardControls
+    }
     
 }
 
