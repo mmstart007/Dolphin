@@ -171,6 +171,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 let addressBookContact = AddressBookContact(name: contactName, image: currentContactImage, user_id: String(currentContactid))
                 addressBookContacts.append(addressBookContact)
             }
+            addressBookContacts = addressBookContacts.sort({ $0.userName < $1.userName })
             tableView.reloadData()
             print("Authorized")
         case .NotDetermined:
