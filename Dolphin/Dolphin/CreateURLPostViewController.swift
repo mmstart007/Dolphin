@@ -84,6 +84,10 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     
     @IBAction func pinPageButtonTouchUpInside(sender: AnyObject) {
         
+        var siteURLString = ""
+        if let siteToPinURL = webView.request?.URL {
+            siteURLString = siteToPinURL.absoluteString
+        }
         let pageData = NSData(contentsOfURL: (webView.request?.URL!)!)
         let doc = TFHpple(HTMLData: pageData)
         let images = doc.searchWithXPathQuery("//img")
@@ -105,7 +109,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         }
         if imageURLs.count > 0 {
             let chooseImageVC = CreateURLPostChooseImageViewController(images: imageURLs)
-            chooseImageVC.urlLoaded = urlToLoad
+            chooseImageVC.urlLoaded = siteURLString
             chooseImageVC.podId     = podId
             navigationController?.pushViewController(chooseImageVC, animated: true)
         } else {
@@ -141,6 +145,11 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     
     func webViewDidStartLoad(webView: UIWebView) {
         print("Started Loading")
+        if let siteURL = webView.request?.URL {
+            if siteURL.absoluteString != ""{
+                urlTextField.text = siteURL.absoluteString
+            }
+        }
         isLoadingPage = true
         setRefreshButton(isLoadingPage)
     }
