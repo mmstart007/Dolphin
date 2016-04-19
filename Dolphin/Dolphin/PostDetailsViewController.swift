@@ -103,7 +103,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
 
         //navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
-        navigationItem.rightBarButtonItems = [actionBarButton, likeBarButton]
+        navigationItem.rightBarButtonItems = [actionBarButton]
         
     }
     

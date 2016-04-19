@@ -19,7 +19,7 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
     @IBOutlet weak var viewLabelWidthConstraint: NSLayoutConstraint!
     var post: Post!
     
-    func configureWithPost(post: Post, dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate) {
+    func configureWithPost(post: Post, dataSource: AnyObject, delegate: AnyObject) {
         self.post = post
         let collectionViewFlowControl = UICollectionViewFlowLayout()
         collectionViewFlowControl.scrollDirection = UICollectionViewScrollDirection.Horizontal
@@ -28,8 +28,8 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
         collectionView.scrollEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = UIColor.clearColor()
-        collectionView?.dataSource = dataSource
-        collectionView?.delegate   = delegate
+        collectionView?.dataSource = dataSource as? UICollectionViewDataSource
+        collectionView?.delegate   = delegate as? UICollectionViewDelegate
         collectionView?.tag        = 0
         self.addSubview(collectionView!)
         self.backgroundColor = UIColor.clearColor()
@@ -38,6 +38,9 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
         } else {
             likedImageView.image = UIImage(named: "SunglassesIconNotLiked")
         }
+        
+        likedImageView.addGestureRecognizer(UITapGestureRecognizer(target: delegate as! PostDetailsViewController, action: "likeButtonPressed"))
+        likedImageView.userInteractionEnabled = true
     }
     
     override func layoutSubviews() {
