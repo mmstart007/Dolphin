@@ -54,8 +54,33 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         } else {
             if myLikes {
                 loadUserLikes()
-            } else if !isDataLoaded || networkController.currentUser == nil {
-                loadData(false)
+            } else if networkController.currentUser == nil {
+                networkController.getUserById("\(networkController.currentUserId!)") { (user, error) -> () in
+                    if error == nil {
+                        if user?.id != nil {
+                            self.networkController.currentUser = user
+                            // everything worked ok
+                        } else {
+                            print("there was an error getting the user info")
+                        }
+                        SVProgressHUD.dismiss()
+                        if !self.isDataLoaded {
+                            self.loadData(false)
+                        }
+                    } else {
+                        let errors: [String]? = error!["errors"] as? [String]
+                        let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        SVProgressHUD.dismiss()
+                    }
+                    self.postsTableView.pullToRefreshView.stopAnimating()
+                }
+            } else {
+                if !self.isDataLoaded {
+                    self.loadData(false)
+                }
             }
         }
     }
@@ -132,20 +157,6 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         return UITableViewAutomaticDimension
     }
     
-//    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        // adding the laod more button
-//        let loadMoreContainer = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 120))
-//        let loadMoreLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 120))
-//        loadMoreLabel.text = "Load more"
-//        loadMoreLabel.textColor = UIColor.blueDolphin()
-//        loadMoreLabel.textAlignment = .Center
-//        loadMoreLabel.backgroundColor = UIColor.yellowColor()
-//        Utils.setFontFamilyForView(loadMoreLabel, includeSubViews: true)
-//        loadMoreContainer.addSubview(loadMoreLabel)
-//        return loadMoreContainer
-//        
-//    }
-    
     // MARK: Tableview delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -185,8 +196,6 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         postsTableView.reloadData()
     }
     
-    
-    
     // MARK: - Auxiliary methods
     
     
@@ -224,7 +233,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         if !pullToRefresh {
             SVProgressHUD.showWithStatus("Loading")
         }
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: (showOnlyMyPosts ? networkController.currentUserId: nil), quantity: kPageQuantity, page: 0, podId: nil, completionHandler: { (posts, error) -> () in
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: 0, podId: nil, filterByUserInterests: showOnlyMyPosts,completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.isDataLoaded = true
                 self.allPosts = posts
@@ -305,7 +314,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     func loadNextPosts() {
         page = page + 1
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: (showOnlyMyPosts ? networkController.currentUserId: nil), quantity: kPageQuantity, page: page, podId: nil, completionHandler: { (posts, error) -> () in
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, podId: nil, filterByUserInterests: showOnlyMyPosts, completionHandler: { (posts, error) -> () in
             if error == nil {
                 if posts.count > 0 {
                     self.allPosts.appendContentsOf(posts)

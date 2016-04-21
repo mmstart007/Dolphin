@@ -299,7 +299,7 @@ class NetworkController: NSObject {
     }
     
     
-    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, podId: Int?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
+    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, podId: Int?, filterByUserInterests: Bool, completionHandler: ([Post], AnyObject?) -> ()) -> () {
         var posts: [Post] = []
         var filters = [String: AnyObject]()
         if topics != nil {
@@ -336,6 +336,22 @@ class NetworkController: NSObject {
         if podId != nil {
             filters["pod_id"] = podId
         }
+        
+        if filterByUserInterests && currentUser != nil {
+            if let grades = currentUser!.grades {
+                if grades.count > 0 {
+                    let gradesArray   = grades.map({ $0.id! })
+                    filters["grades"] = gradesArray
+                }
+            }
+            if let subjects = currentUser!.subjects {
+                if subjects.count > 0 {
+                    let subjectsArray   = subjects.map({ $0.id! })
+                    filters["subjects"] = subjectsArray
+                }
+            }
+        }
+        
         let parameters : [String : AnyObject]? = ["filter": filters]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
