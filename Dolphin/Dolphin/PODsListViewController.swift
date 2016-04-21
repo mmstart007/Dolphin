@@ -66,9 +66,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !isDataLoaded {
-            loadData(false)
-        }
+        loadData(false)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -86,8 +85,6 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         } else {
             parent?.searchBar?.becomeFirstResponder()
         }
-        
-        
     }
     
     override func viewWillDisappear(animated: Bool) {

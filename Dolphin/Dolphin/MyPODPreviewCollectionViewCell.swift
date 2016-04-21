@@ -18,6 +18,7 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
     @IBOutlet weak var createPODView: UIView!
     
     var pod: POD?
+    var triangleView: TriangleView?
     
     override var frame: CGRect {
         get {
@@ -37,6 +38,22 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         super.layoutSubviews()
         if pod != nil {
             addUserImages(pod!)
+            if pod!.isPrivate == 1 {
+                if triangleView == nil {
+                    triangleView        = TriangleView()
+                    triangleView!.frame = CGRect(x: self.frame.size.width - 50, y: 0, width: 50, height: 50)
+                }
+                triangleView?.hidden             = false
+                triangleView!.color              = pod!.podColor()
+                triangleView!.backgroundColor    = UIColor.clearColor()
+                triangleView!.layer.cornerRadius = 5
+                self.addSubview(triangleView!)
+                triangleView!.addImage("PrivatePODIcon")
+            } else {
+                if triangleView != nil {
+                    triangleView?.hidden = true
+                }
+            }
         }
     }
     
