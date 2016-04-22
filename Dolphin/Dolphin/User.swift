@@ -26,7 +26,7 @@ class User : NSObject {
     
     override func isEqual(object: AnyObject?) -> Bool {
         if let object = object as? User {
-            return self.userName == object.userName
+            return self.id == object.id
         } else {
             return false
         }

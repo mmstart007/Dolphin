@@ -257,7 +257,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     // MARK: - Auxiliary methods
     
     func checkPrivatePODs(goToViewController: UIViewController, pod: POD?) {
-        if pod != nil && pod!.isPrivate == 1 {
+        if pod != nil && pod!.isPrivate == 1 && pod?.owner != networkController.currentUser && (pod!.users != nil && !pod!.users!.contains(networkController.currentUser!)) {
             let alert = UIAlertController(title: "Access", message: "This is a PRIVATE POD, do you want to request access to it?", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "Request", style: UIAlertActionStyle.Default, handler: { action in
