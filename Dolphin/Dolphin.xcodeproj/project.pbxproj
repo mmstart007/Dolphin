@@ -72,6 +72,7 @@
 		364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140601C110F900022D1BE /* PostCommentsViewController.xib */; };
 		364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364140641C173B810022D1BE /* CreateURLPostViewController.swift */; };
 		364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */; };
+		3642C3C01CCA7DEC00BA3BE9 /* NSURL+DolphinExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3642C3BF1CCA7DEC00BA3BE9 /* NSURL+DolphinExtensions.swift */; };
 		3650E0B61C6D1AFA00BB9301 /* CreatePodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3650E0B51C6D1AFA00BB9301 /* CreatePodViewController.swift */; };
 		3650E0B81C6D206700BB9301 /* CreatePodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3650E0B71C6D206700BB9301 /* CreatePodViewController.xib */; };
 		3650E0BC1C6D428400BB9301 /* ImageCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3650E0BB1C6D428400BB9301 /* ImageCropView.m */; };
@@ -250,6 +251,7 @@
 		364140601C110F900022D1BE /* PostCommentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCommentsViewController.xib; sourceTree = "<group>"; };
 		364140641C173B810022D1BE /* CreateURLPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostViewController.swift; sourceTree = "<group>"; };
 		364140661C173B8D0022D1BE /* CreateURLPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostViewController.xib; sourceTree = "<group>"; };
+		3642C3BF1CCA7DEC00BA3BE9 /* NSURL+DolphinExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+DolphinExtensions.swift"; sourceTree = "<group>"; };
 		3650E0B51C6D1AFA00BB9301 /* CreatePodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePodViewController.swift; sourceTree = "<group>"; };
 		3650E0B71C6D206700BB9301 /* CreatePodViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePodViewController.xib; sourceTree = "<group>"; };
 		3650E0BA1C6D428400BB9301 /* ImageCropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCropView.h; sourceTree = "<group>"; };
@@ -792,6 +794,7 @@
 				36E998251C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift */,
 				36736F671C6130780040A263 /* DolphinButton.swift */,
 				361F50831C652C3900153B6C /* UIView+DolphinExtensions.swift */,
+				3642C3BF1CCA7DEC00BA3BE9 /* NSURL+DolphinExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1131,6 +1134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				368798661C29E1260088AC24 /* LoginViewController.swift in Sources */,
+				3642C3C01CCA7DEC00BA3BE9 /* NSURL+DolphinExtensions.swift in Sources */,
 				360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */,
 				36129FAA1CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift in Sources */,
 				3687989D1C2B482C0088AC24 /* CustomFontTableViewCell.swift in Sources */,

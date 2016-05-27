@@ -111,9 +111,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         if (url.host == "oauth-callback") {
             OAuthSwift.handleOpenURL(url)
-        } else
+        } else if (url.scheme == "dolphin-app") {
+            if let params = url.queryItems {
+                if let postId = params["post_id"] {
+                    print("Post Id is \(postId)")
+                }
+            }
+        } else {
             if url.absoluteString.hasPrefix("fb") {
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+            }
         }
         return true
     }

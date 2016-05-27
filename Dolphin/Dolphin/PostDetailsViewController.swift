@@ -111,26 +111,15 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func actionButtonPressed() {
         print("Action Button Pressed")
-//        let subViewsArray = NSBundle.mainBundle().loadNibNamed("PostDetailsActionView", owner: self, options: nil)
-//        
-//        self.actionMenu = subViewsArray[0] as? UIView
-//        setupActionMenuFields()
-//        actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "actionMenuBackgroundTapped"))
-//        self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-//        UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
-//        UIView.animateWithDuration(0.2, animations: { () -> Void in
-//            self.actionMenu?.frame = CGRect(x: 0, y: 0, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-//            }) { (finished) -> Void in
-//                UIView.animateWithDuration(0.2, animations: { () -> Void in
-//                    self.actionMenuBackground.alpha = 0.4
-//                })
-//        }
-        
-        let myShare = NSURL(string: "http://google.com")!
-        let image: UIImage = UIImage(named: "DolphinDealHeader")!
-        
-        let shareVC: UIActivityViewController = UIActivityViewController(activityItems: ["This is the text for an awesome website!", myShare], applicationActivities: nil)
-        self.presentViewController(shareVC, animated: true, completion: nil)
+
+        if let postId = post?.postId {
+            let urlString = "dolphin-app://?post_id=\(postId)&name=test_name"
+            let myShare = NSURL(string: urlString)
+            let image: UIImage = UIImage(named: "DolphinDealHeader")!
+            
+            let shareVC: UIActivityViewController = UIActivityViewController(activityItems: ["This is the text for an awesome website!", myShare!], applicationActivities: nil)
+            self.presentViewController(shareVC, animated: true, completion: nil)
+        }
         
     }
     
