@@ -22,4 +22,8 @@ target 'Dolphin' do
     pod 'BSKeyboardControls', '~> 2.2'
     pod 'KeychainSwift', '~> 3.0'
     pod 'NSDate+TimeAgo'
+    pod 'FBSDKCoreKit'
+    pod 'FBSDKShareKit'
+    pod 'FBSDKLoginKit'
+    pod 'FBSDKMessengerShareKit'
 end
