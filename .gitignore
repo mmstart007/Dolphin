@@ -1,0 +1,8 @@
+
+*.xcuserstate
+
+*.xcscheme
+
+Dolphin/Dolphin.xcodeproj/xcuserdata/joachim.xcuserdatad/xcschemes/xcschememanagement.plist
+
+Dolphin/Pods/Pods.xcodeproj/xcuserdata/joachim.xcuserdatad/xcschemes/xcschememanagement.plist
