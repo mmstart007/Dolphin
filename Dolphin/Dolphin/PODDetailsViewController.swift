@@ -7,12 +7,20 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableViewPosts: UITableView!
+    @IBOutlet weak var actionMenuBackground: UIView!
+    
     let networkController = NetworkController.sharedInstance
+    let kPageQuantity: Int = 10
+    
     var pod: POD?
+    var postOfPOD: [Post] = []
+    var actionMenu: UIView? = nil
+    var page: Int = 0
     
     required init() {
         super.init(nibName: "PODDetailsViewController", bundle: NSBundle.mainBundle())
@@ -35,6 +43,14 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         tableViewPosts.estimatedRowHeight = 400
         tableViewPosts.backgroundColor    = UIColor.lightGrayBackground()
         
+        tableViewPosts.addPullToRefreshWithActionHandler { () -> Void in
+            self.loadData(true)
+        }
+        
+        tableViewPosts.addInfiniteScrollingWithActionHandler { () -> Void in
+            self.loadNextPosts()
+        }
+        
         // Add bottom blue bar
         let fakeTabBar = UIView(frame: CGRect(x: 0, y: UIScreen.mainScreen().bounds.size.height - 113, width: UIScreen.mainScreen().bounds.size.width, height: 49))
         fakeTabBar.backgroundColor = UIColor.blueDolphin()
@@ -52,6 +68,13 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         self.view.addSubview(plusButton)
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableViewPosts.reloadData()
+        loadData(false)
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -62,7 +85,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     func setupNavigationBar() {
         setBackButton()
-        title = pod?.podName
+        title = pod?.name
     }
     
     // MARK: - Auxiliary methods
@@ -108,7 +131,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         if section == 0 {
             return 1;
         } else {
-            return networkController.posts.count
+            return postOfPOD.count
         }
     }
     
@@ -128,7 +151,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             if cell == nil {
                 cell = PostTableViewCell()
             }
-            cell?.configureWithPost(networkController.posts[indexPath.row])
+            cell?.configureWithPost(postOfPOD[indexPath.row])
             
             cell?.selectionStyle = .None
             return cell!
@@ -141,11 +164,168 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         
     }
     
-    // MARK: - Actions
+    // MARK: - TableView delegate
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            let postDetailsVC = PostDetailsViewController()
+            postDetailsVC.post = postOfPOD[indexPath.row]
+            navigationController?.pushViewController(postDetailsVC, animated: true)
+        }
+    }
+    
+    // MARK: - Plus button Actions
     
     func plusButtonTouchUpInside() {
-        let createPODVC = CreatePodViewController()
-        navigationController?.pushViewController(createPODVC, animated: true)
+        
+        print("Plus button pressed")
+        let subViewsArray = NSBundle.mainBundle().loadNibNamed("NewPostMenu", owner: self, options: nil)
+        self.actionMenu = subViewsArray[0] as? UIView
+        actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "actionMenuBackgroundTapped"))
+        self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
+        UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.actionMenu?.frame = CGRect(x: 0, y: 0, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
+            }) { (finished) -> Void in
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.actionMenuBackground.alpha = 0.4
+                })
+        }
     }
+    
+    @IBAction func closeNewPostViewButtonTouchUpInside(sender: AnyObject) {
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.actionMenuBackground.alpha = 0
+            }) { (finished) -> Void in
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
+                    }) { (finished) -> Void in
+                        self.actionMenu?.removeFromSuperview()
+                }
+        }
+    }
+    
+    @IBAction func postLinkButtonTouchUpInside(sender: AnyObject) {
+        let createLinkPostVC = CreateURLPostViewController()
+        createLinkPostVC.podId = pod?.id
+        navigationController?.pushViewController(createLinkPostVC, animated: true)
+        actionMenu?.removeFromSuperview()
+        print("Post link button pressed")
+        
+    }
+    @IBAction func postPhotoButtonTouchUpInside(sender: AnyObject) {
+        
+        let createImagePostVC = CreateImagePostViewController()
+        createImagePostVC.podId = pod?.id
+        navigationController?.pushViewController(createImagePostVC, animated: true)
+        actionMenu?.removeFromSuperview()
+        print("Post photo button pressed")
+        
+    }
+    @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
+        closeNewPostViewButtonTouchUpInside(self)
+        let createTextPostVC = CreateTextPostViewController()
+        createTextPostVC.pod = pod
+        let textPostNavController = UINavigationController(rootViewController: createTextPostVC)
+        presentViewController(textPostNavController, animated: true, completion: nil)
+        print("Post text button pressed")
+        
+    }
+    
+    func actionMenuBackgroundTapped() {
+        // Overlay was tapped, so we close the new post view
+        closeNewPostViewButtonTouchUpInside(self)
+    }
+    
+    // MARK: - Network
+    
+    func loadData(pullToRefresh: Bool) {
+        page = 0
+        tableViewPosts.showsInfiniteScrolling = true
+        if !pullToRefresh {
+            SVProgressHUD.showWithStatus("Loading")
+        }
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId:  nil, quantity: kPageQuantity, page: 0, podId: pod?.id, filterByUserInterests: false,completionHandler: { (posts, error) -> () in
+            if error == nil {
+                self.postOfPOD = posts
+                if self.postOfPOD.count > 0 {
+                    self.removeTableEmtpyMessage()
+                } else {
+                    self.addTableEmptyMessage("No content has been posted\n\nwhy don't post something?")
+                }
+                self.tableViewPosts.reloadData()
+                
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                } else {
+                    self.tableViewPosts.pullToRefreshView.stopAnimating()
+                }
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                }
+                self.tableViewPosts.pullToRefreshView.stopAnimating()
+            }
+        })
+    }
+    
+    
+    func loadNextPosts() {
+        page = page + 1
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, podId: pod?.id, filterByUserInterests: false, completionHandler: { (posts, error) -> () in
+            if error == nil {
+                if posts.count > 0 {
+                    self.postOfPOD.appendContentsOf(posts)
+                    self.tableViewPosts.reloadData()
+                } else {
+                    // remove the infinite scrolling because we don't have more elements
+                    self.tableViewPosts.showsInfiniteScrolling = false
+                }
+                
+                
+            } else {
+                // decrease the page
+                self.page = self.page - 1
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            self.tableViewPosts.infiniteScrollingView.stopAnimating()
+        })
+    }
+    
+    func addTableEmptyMessage(message: String) {
+        let labelBackground = UILabel(frame: CGRect(x: 0, y: 0, width: tableViewPosts.frame.width, height: 200))
+        labelBackground.text = message
+        labelBackground.textColor = UIColor.blueDolphin()
+        labelBackground.textAlignment = .Center
+        labelBackground.numberOfLines = 0
+        Utils.setFontFamilyForView(labelBackground, includeSubViews: true)
+        tableViewPosts.backgroundView = labelBackground
+    }
+    
+    func removeTableEmtpyMessage() {
+        tableViewPosts.backgroundView = nil
+    }
+    
+    
     
 }

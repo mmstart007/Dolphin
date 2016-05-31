@@ -16,6 +16,8 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     @IBOutlet weak var tableViewPostDetails: UITableView!
     
     var postImage: UIImage?
+    // if this var is set, I'm creating a text post from a POD
+    var podId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +57,7 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
             }
             let resizedImage = Utils.resizeImage(self.postImage!, newWidth: newWidth)
             // crate the image pod
-            let post = Post(user: nil, image: nil, imageData: resizedImage, type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
+            let post = Post(user: nil, image: nil, imageData: resizedImage, type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
             SVProgressHUD.showWithStatus("Posting")
             networkController.createPost(post, completionHandler: { (post, error) -> () in
                 if error == nil {

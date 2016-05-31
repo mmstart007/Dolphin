@@ -207,7 +207,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         if collectionView.tag == 0 {
             print("Topic %@ pressed", topics[indexPath.row])
         } else if collectionView.tag == 1 {
-            print("Pod %@ pressed", pods[indexPath.row].podName)
+            print("Pod %@ pressed", pods[indexPath.row].name)
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = pods[indexPath.row]
             podDetailsVC.pod = selectedPOD

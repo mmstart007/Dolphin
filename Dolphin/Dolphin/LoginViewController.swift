@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SVProgressHUD
+import KeychainSwift
 
 class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     
@@ -32,6 +33,10 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var signUpFieldView: UIView!
     
     @IBOutlet weak var loginLabel: UILabel!
+    
+    @IBOutlet weak var rememberUserAndPasswordSwitch: UISwitch!
+    
+    let keychain = KeychainSwift()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -87,6 +92,14 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             self.view.layoutIfNeeded()
             self.loginFieldsView.hidden = false
         }
+        
+        loginEmailTextField.keyboardType           = .EmailAddress
+        signUpEmailTextField.keyboardType          = .EmailAddress
+        signUpEmailTextField.autocorrectionType    = .No
+        loginEmailTextField.autocorrectionType     = .No
+        signUpUsernameTextField.autocorrectionType = .No
+        
+        getLoginValuesFromKeychain()
     }
     
     func setAppearance() {
@@ -132,7 +145,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         revealAnimation.duration = 0.5
         signUpFieldView.layer.addAnimation(revealAnimation, forKey: nil)
         signUpFieldView.hidden = false
-
+    
     }
     
     func loginLabelTapped() {
@@ -169,12 +182,13 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         }
         if fieldsValidated {
             SVProgressHUD.showWithStatus("Signing in")
-            networkController.login(userName!, password: password!, completionHandler: { (token, userId, error) -> () in
+            networkController.login(userName!, password: password!, completionHandler: { (token, user, error) -> () in
                 if error == nil {
                     // Store the apiToken
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(token, forKey: "api_token")
                     // Store the currentUserId
+                    let userId = user?.id
                     defaults.setObject(userId, forKey: "current_user_id")
                     
                     self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
@@ -225,13 +239,20 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             let password: String = signUpPasswordTextField.text!
             let user = User(deviceId: deviceId, userName: userName, imageURL: avatarImage, email: email, password: password)
             SVProgressHUD.showWithStatus("Signing up")
-            networkController.registerUser(user, completionHandler: { (token, userId, error) -> () in
+            networkController.registerUser(user, completionHandler: { (token, user, error) -> () in
                 if error == nil {
+                    
+                    if self.rememberUserAndPasswordSwitch.on {
+                        self.saveCredentialsInKeychain(email, password: password)
+                    } else {
+                        self.resetKeyChain()
+                    }
                     
                     // Store the apiToken
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(token, forKey: "api_token")
                     // Store the currentUserId
+                    let userId = user?.id
                     defaults.setObject(userId, forKey: "current_user_id")
                     
                     let createProfileVC = CreateProfileViewController()
@@ -289,5 +310,25 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         signUpUsernameTextField.resignFirstResponder()
         signUpEmailTextField.resignFirstResponder()
         signUpPasswordTextField.resignFirstResponder()
+    }
+    
+    // MARK: - Keychain Handling
+    
+    func getLoginValuesFromKeychain() {
+        let email = keychain.get("email")
+        let password = keychain.get("password")
+        if email != nil && password != nil {
+            loginEmailTextField.text    = email
+            loginPasswordTextField.text = password
+        }
+    }
+    
+    func saveCredentialsInKeychain(email: String, password: String) {
+        keychain.set(email, forKey: "email")
+        keychain.set(password, forKey: "password")
+    }
+    
+    func resetKeyChain() {
+        keychain.clear()
     }
 }

@@ -37,7 +37,7 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         imageViewAdd.backgroundColor = UIColor.whiteColor()
         imageViewAdd.layer.cornerRadius = imageViewAdd.frame.size.width / 2
         registerCells()
-        members = pod.podUsers!
+        members = pod.users!
         collectionViewMembers.reloadData()
         
     }

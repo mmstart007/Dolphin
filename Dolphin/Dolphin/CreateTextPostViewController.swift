@@ -12,7 +12,7 @@ import UITextView_Placeholder
 import KSTokenView
 import SVProgressHUD
 
-class CreateTextPostViewController : DolphinViewController {
+class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettingsViewControllerDelegate {
     
     let tags: Array<String> = List.names()
     let networkController = NetworkController.sharedInstance
@@ -24,6 +24,11 @@ class CreateTextPostViewController : DolphinViewController {
     @IBOutlet weak var visibilityLabel: UILabel!
     @IBOutlet weak var postTagsTextView: KSTokenView!    
     @IBOutlet weak var scrollViewContainer: UIScrollView!
+    @IBOutlet weak var adjustVisitivilitySettingsIndicator: UIImageView!
+    
+    // if this var is set, I'm creating a text post from a POD
+    var pod: POD?
+    var podsToShare: [POD] = []
     
     convenience init() {
         self.init(nibName: "CreateTextPostViewController", bundle: nil)
@@ -35,8 +40,6 @@ class CreateTextPostViewController : DolphinViewController {
         setDismissButton()
         title = "Write"
         setRightSystemButtonItem(.Done, target: self, action: Selector("donePressed:"))
-        let tapVisibilityViewGesture = UITapGestureRecognizer(target: self, action: "goToPrivacySettings")
-        postToFieldView.addGestureRecognizer(tapVisibilityViewGesture)
         
         setupFields()
     }
@@ -45,23 +48,39 @@ class CreateTextPostViewController : DolphinViewController {
         postTextView.placeholderColor = UIColor.lightGrayColor()
         postTextView.placeholder = "Write your moment..."
         
-        postTagsTextView.delegate = self
-        postTagsTextView.promptText = ""
-        postTagsTextView.placeholder = ""
-        postTagsTextView.descriptionText = "Tags"
-        postTagsTextView.maxTokenLimit = 15 //default is -1 for unlimited number of tokens
-        postTagsTextView.style = .Rounded
+        postTagsTextView.delegate         = self
+        postTagsTextView.promptText       = ""
+        postTagsTextView.placeholder      = ""
+        postTagsTextView.descriptionText  = "Tags"
+        postTagsTextView.maxTokenLimit    = 15//default is -1 for unlimited number of tokens
+        postTagsTextView.style            = .Rounded
         postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 150)
-        postTagsTextView.font = UIFont.systemFontOfSize(14)
+        postTagsTextView.font             = UIFont.systemFontOfSize(14)
         
         parentScrollView = scrollViewContainer
+        
+        var visibilityString = ""
+        if podsToShare.count > 0 {
+            visibilityString = podsToShare.map({"\($0.name!)"}).joinWithSeparator(", ")
+        } else if pod != nil {
+            visibilityString = pod!.name!
+        } else {
+            visibilityString = "Public"
+        }
+        visibilityLabel.text = visibilityString
+        if pod != nil {
+            adjustVisitivilitySettingsIndicator.hidden = true
+        } else {
+            let tapVisibilityViewGesture = UITapGestureRecognizer(target: self, action: "goToPrivacySettings")
+            postToFieldView.addGestureRecognizer(tapVisibilityViewGesture)
+        }
         
     }
     
     // MARK: Privacy Settings
     
     func goToPrivacySettings() {
-        let privacySettingsVC = NewPostPrivacySettingsViewController()
+        let privacySettingsVC = NewPostPrivacySettingsViewController(selectedPODs: podsToShare, delegate: self)
         let privacySettingsNavController = UINavigationController(rootViewController: privacySettingsVC)
         presentViewController(privacySettingsNavController, animated: true, completion: nil)
     }
@@ -69,47 +88,70 @@ class CreateTextPostViewController : DolphinViewController {
     // MARK: - Actions
     func donePressed(sender: AnyObject) {
         print("Create post pressed")
-        var topics: [Topic] = []
-        if postTagsTextView.tokens() != nil {
-            let topicsStringArray = postTagsTextView.tokens()
-            for t in topicsStringArray! {
-                topics.append(Topic(name: t.title))
+        if postTitleTextField.text == nil || postTitleTextField.text == "" || postTextView.text == "" {
+            var alert: UIAlertController
+            alert = UIAlertController(title: "Error", message: "Please, fill all the fields", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        } else {
+            var topics: [Topic] = []
+            if postTagsTextView.tokens() != nil {
+                let topicsStringArray = postTagsTextView.tokens()
+                for t in topicsStringArray! {
+                    topics.append(Topic(name: t.title))
+                }
             }
+            let title: String = postTitleTextField.text!
+            let text: String = postTextView.text!
+            // crate the pod
+            var podToShare = pod
+            if podsToShare.count > 0 {
+                podToShare = podsToShare[0]
+            }
+            let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podToShare?.id)
+            SVProgressHUD.showWithStatus("Posting")
+            networkController.createPost(post, completionHandler: { (post, error) -> () in
+                if error == nil {
+                    
+                    SVProgressHUD.dismiss()
+                    if post?.postId != nil {
+                        // everything worked ok
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    } else {
+                        // there was an error saving the post
+                    }
+                    
+                    
+                } else {
+                    SVProgressHUD.dismiss()
+                    let errors: [String]? = error!["errors"] as? [String]
+                    var alert: UIAlertController
+                    if errors != nil && errors![0] != "" {
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                    } else {
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    }
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            })
         }
-        let title: String = postTitleTextField.text!
-        let text: String = postTextView.text!
-        // crate the pod
-        let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil)
-        SVProgressHUD.showWithStatus("Posting")
-        networkController.createPost(post, completionHandler: { (post, error) -> () in
-            if error == nil {
-                
-                SVProgressHUD.dismiss()
-                if post?.postId != nil {
-                    // everything worked ok
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                } else {
-                    // there was an error saving the post
-                }
-                
-                
-            } else {
-                SVProgressHUD.dismiss()
-                let errors: [String]? = error!["errors"] as? [String]
-                var alert: UIAlertController
-                if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
-                } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
-                }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        })
     }
     
+    // MARK: - NewPostPrivacySettingsViewControllerDelegate
     
+    func didFinishSettingOptions(selectedPods: [POD]) {
+        podsToShare = selectedPods
+        var visibilityString = ""
+        if podsToShare.count > 0 {
+            visibilityString = podsToShare.map({"\($0.name!)"}).joinWithSeparator(", ")
+        } else {
+            visibilityString = "Public"
+        }
+        visibilityLabel.text = visibilityString
+    }
     
 }
 
@@ -128,3 +170,5 @@ extension CreateTextPostViewController: KSTokenViewDelegate {
         return object as! String
     }
 }
+
+

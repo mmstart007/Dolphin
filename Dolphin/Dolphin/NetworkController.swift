@@ -20,10 +20,9 @@ class NetworkController: NSObject {
             return Constants.RESTAPIConfig.Developement.BaseUrl + "api/" + apiVersion.rawValue + "/"
         }
     }
-
+    
     var token: String?
     var posts: [Post]      = []
-    var likedPosts: [Post] = []
     var pods: [POD]        = []
     var deals: [Deal]      = []
     var currentUserId: Int?
@@ -42,19 +41,26 @@ class NetworkController: NSObject {
     }
     
     enum ApiMethod: String {
-        case Login = "login"
-        case User               = "users"
-        case GetUserById        = "users/%@"
-        case GetUserLikes       = "users/%@/likes"
-        case GetUserLikePost    = "users/%@/likes/%@"
-        case GetUserComments    = "users/%@/comments"
-        case CreatePost         = "posts"
-        case FilterPost         = "posts/filter"
-        case PostById           = "posts/%@"
-        case PostComments       = "posts/%@/comments"
-        case PostLikes          = "posts/%@/likes"
-        case CreateTopic        = "topics"
-        case TopicById          = "topics/%@"
+        case Login           = "login"
+        case User            = "users"
+        case FilterUser      = "users/filter"
+        case GetUserById     = "users/%@"
+        case GetUserLikes    = "users/%@/likes"
+        case GetUserLikePost = "users/%@/likes/%@"
+        case GetUserComments = "users/%@/comments"
+        case CreatePost      = "posts"
+        case FilterPost      = "posts/filter"
+        case PostById        = "posts/%@"
+        case PostComments    = "posts/%@/comments"
+        case PostLikes       = "posts/%@/likes"
+        case CreateTopic     = "topics"
+        case TopicById       = "topics/%@"
+        case GetSubjects     = "subjects"
+        case GetGrades       = "grades"
+        case CreatePOD       = "pods"
+        case FilterPOD       = "pods/filter"
+        case PODById         = "pods/%@"
+        case PodMember       = "pods/%@/users/%@"
         
     }
     
@@ -63,49 +69,47 @@ class NetworkController: NSObject {
     
     // MARK: - USERS
     
-    func login(userName: String, password: String, completionHandler: (String?, Int?, AnyObject?) -> ()) -> () {
+    func login(userName: String, password: String, completionHandler: (String?, User?, AnyObject?) -> ()) -> () {
         var retToken: String?
-        var retUserId: Int?
+        var retUser: User?
         let loginParams = ["username": userName, "password": password]
         let parameters : [String : AnyObject]? = ["login": loginParams]
         performRequest(MethodType.POST, authenticated: true, method: .Login, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 retToken = result!["token"] as? String
-                let retUser = result!["user"] as? [String: AnyObject]
-                retUserId = retUser!["id"] as? Int
+                retUser = User(jsonObject: result!["user"] as! [String: AnyObject])
                 self.token = retToken
-                self.currentUserId = retUserId
-                completionHandler(retToken, retUserId, nil)
+                self.currentUserId = retUser?.id
+                completionHandler(retToken, retUser, nil)
             } else {
-                completionHandler(retToken, retUserId, error)
+                completionHandler(retToken, retUser, error)
             }
         }
         
     }
     
-    func registerUser(user: User, completionHandler: (String?, Int?, AnyObject?) -> ()) -> () {
+    func registerUser(user: User, completionHandler: (String?, User?, AnyObject?) -> ()) -> () {
         var retToken: String?
-        var retUserId: Int?
+        var retUser: User?
         let parameters = ["user": user.toJson()]
         performRequest(MethodType.POST, authenticated: false, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 retToken = (result!["api_token"] as? String)!
-                let retUser = result!["user"] as? [String: AnyObject]
-                retUserId = retUser!["id"] as? Int
+                retUser = User(jsonObject: result!["user"] as! [String: AnyObject])
                 self.token = retToken
-                self.currentUserId = retUserId
-                completionHandler(retToken, retUserId, nil)
+                self.currentUserId = retUser?.id
+                completionHandler(retToken, retUser, nil)
             } else {
-                completionHandler(retToken, retUserId, error)
+                completionHandler(retToken, retUser, error)
             }
         }
         
     }
     
-    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, completionHandler: (User?, AnyObject?) -> ()) -> () {
+    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, subjects: [String]?, grades: [String]?, completionHandler: (User?, AnyObject?) -> ()) -> () {
         
         var userUpdated: User?
-        var updateValues = [String: String]()
+        var updateValues = [String: AnyObject]()
         if userName != nil {
             updateValues["username"] = userName
         }
@@ -131,7 +135,13 @@ class NetworkController: NSObject {
             updateValues["location"] = location
         }
         if isPrivate != nil {
-            updateValues["is_private"] = String(isPrivate!)
+            updateValues["is_private"] = isPrivate!
+        }
+        if grades != nil {
+            updateValues["grades"] = grades
+        }
+        if subjects != nil {
+            updateValues["subjects"] = subjects
         }
         let parameters : [String : AnyObject]? = ["user": updateValues]
         performRequest(MethodType.PATCH, authenticated: true, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
@@ -145,6 +155,51 @@ class NetworkController: NSObject {
             }
         }
     }
+    
+    
+    func filterUser(pattern: String?, podId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, completionHandler: ([User], AnyObject?) -> ()) -> () {
+        var users: [User] = []
+        var filters = [String: AnyObject]()
+        if pattern != nil {
+            filters["pattern"] = pattern
+        }
+        if podId != nil {
+            filters["pod_id"] = podId
+        }
+        if fromDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(fromDate!)
+            filters["from_date"]     = dateString
+        }
+        if toDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(toDate!)
+            filters["to_date"]       = dateString
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterUser, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let usersJsonArray = result!["users"] as? [AnyObject]
+                if usersJsonArray?.count > 0 {
+                    for elem in usersJsonArray! {
+                        users.append(User(jsonObject: elem))
+                    }
+                }
+                completionHandler(users, nil)
+            } else {
+                completionHandler(users, error)
+            }
+        }
+    }
+    
     
     func getUserById(userId: String, completionHandler: (User?, AnyObject?) -> ()) -> () {
         let urlParameters : [CVarArgType] = [userId]
@@ -244,7 +299,7 @@ class NetworkController: NSObject {
     }
     
     
-    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
+    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, podId: Int?, filterByUserInterests: Bool, completionHandler: ([Post], AnyObject?) -> ()) -> () {
         var posts: [Post] = []
         var filters = [String: AnyObject]()
         if topics != nil {
@@ -278,6 +333,25 @@ class NetworkController: NSObject {
         if page != nil {
             filters["page"] = page
         }
+        if podId != nil {
+            filters["pod_id"] = podId
+        }
+        
+        if filterByUserInterests && currentUser != nil {
+            if let grades = currentUser!.grades {
+                if grades.count > 0 {
+                    let gradesArray   = grades.map({ $0.id! })
+                    filters["grades"] = gradesArray
+                }
+            }
+            if let subjects = currentUser!.subjects {
+                if subjects.count > 0 {
+                    let subjectsArray   = subjects.map({ $0.id! })
+                    filters["subjects"] = subjectsArray
+                }
+            }
+        }
+        
         let parameters : [String : AnyObject]? = ["filter": filters]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
@@ -421,17 +495,133 @@ class NetworkController: NSObject {
         
     }
     
+    // MARK: - GRADES AND SUBJECTS
+    
+    func getSubjects(completionHandler: ([Subject]?, AnyObject?) -> ()) -> () {
+        performRequest(MethodType.GET, authenticated: true, method: .GetSubjects, urlParams: nil, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                let subjectJson = result as? [[String: AnyObject]]
+                let subjects: [Subject]? = subjectJson?.map({ (actual) -> Subject in
+                    Subject(jsonObject: actual)
+                })
+                completionHandler(subjects, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+        
+    }
+    
+    func getGrades(completionHandler: ([Grade]?, AnyObject?) -> ()) -> () {
+        performRequest(MethodType.GET, authenticated: true, method: .GetGrades, urlParams: nil, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                let subjectJson = result as? [[String: AnyObject]]
+                let subjects: [Grade]? = subjectJson?.map({ (actual) -> Grade in
+                    Grade(jsonObject: actual)
+                })
+                completionHandler(subjects, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+        
+    }
+    
+    // MARK: - PODS
+    
+    func createPOD(pod: POD, completionHandler: (POD?, AnyObject?) -> ()) -> () {
+        var savedPOD: POD?
+        let parameters : [String : AnyObject]? = ["pod": pod.toJson()]
+        performRequest(MethodType.POST, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let podJson = result!["pod"] as? [String: AnyObject] {
+                    savedPOD = POD(jsonObject: podJson)
+                }
+                completionHandler(savedPOD, nil)
+            } else {
+                completionHandler(savedPOD, error)
+            }
+        }
+        
+    }
+    
+    func filterPOD(pattern: String?, userId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, completionHandler: ([POD], AnyObject?) -> ()) -> () {
+        var pods: [POD] = []
+        var filters = [String: AnyObject]()
+        if pattern != nil {
+            filters["pattern"] = pattern
+        }
+        if userId != nil {
+            filters["user_id"] = userId
+        }
+        if fromDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(fromDate!)
+            filters["from_date"]     = dateString
+        }
+        if toDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(toDate!)
+            filters["to_date"]       = dateString
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterPOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let podsJsonArray = result!["pods"] as? [AnyObject]
+                if podsJsonArray?.count > 0 {
+                    for elem in podsJsonArray! {
+                        pods.append(POD(jsonObject: elem))
+                    }
+                }
+                completionHandler(pods, nil)
+            } else {
+                completionHandler(pods, error)
+            }
+        }
+    }
+    
+    func deletePOD(podId: String, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [podId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
+    }
+    func deletePodMember(podId: String, userId: String,completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [podId, userId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PodMember, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
+    }
+    
     
     // MARK: - Internal Methods
     
     /**
-    Prepare the URL for an invocation to the API
-    
-    :param: method        Specific method that will be executed
-    :param: urlParams     Group of params to add in the URL
-    
-    :returns: Returns the complete URL for the invocation
-    */
+     Prepare the URL for an invocation to the API
+     
+     :param: method        Specific method that will be executed
+     :param: urlParams     Group of params to add in the URL
+     
+     :returns: Returns the complete URL for the invocation
+     */
     private func prepareRequestURL(method: ApiMethod, urlParams: [CVarArgType]?) -> String? {
         if urlParams != nil {
             return String(format: basePath + method.rawValue, arguments: urlParams!)

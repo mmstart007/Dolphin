@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
-class CreatePodViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageCropViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate {
+
+class CreatePodViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageCropViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, SelectPODMembersDelegate {
     
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIButton!
@@ -17,9 +19,14 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     @IBOutlet weak var leftCharactersLabel: UILabel!
     @IBOutlet weak var podNameTextField: UITextField!
     @IBOutlet weak var podDescriptionTextView: UITextView!
+    @IBOutlet weak var switchIsPrivate: UISwitch!
     
+    let networkController = NetworkController.sharedInstance
     let picker = UIImagePickerController()
     let maxNameCharacters = 20
+    
+    var imageSelected: UIImage?
+    var selectedMembers: [User] = []
     
     required init() {
         super.init(nibName: "CreatePodViewController", bundle: NSBundle.mainBundle())
@@ -36,6 +43,13 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         cameraButton.layer.borderWidth = 1
         cameraButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         
+        podDescriptionTextView.placeholder = "POD Description"
+        podDescriptionTextView.placeholderColor = UIColor.lightGrayColor()
+        podDescriptionTextView.textContainerInset = UIEdgeInsets(top: 0, left: 31, bottom: 0, right: 0)
+        
+        podNameTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        leftCharactersLabel.text = String(format: "%li / %li", arguments: [(podNameTextField!.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))!, maxNameCharacters])
+        
     }
     
     override func viewDidLoad() {
@@ -50,14 +64,8 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         membersCollectionView.dataSource = self
         membersCollectionView.delegate   = self
         
-        podDescriptionTextView.placeholder = "POD Description"
-        podDescriptionTextView.placeholderColor = UIColor.lightGrayColor()
-        podDescriptionTextView.textContainerInset = UIEdgeInsets(top: 0, left: 31, bottom: 0, right: 0)
-        
-        podNameTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
-        leftCharactersLabel.text = String(format: "%li / %li", arguments: [(podNameTextField!.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))!, maxNameCharacters])
-        let tapViewGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
-        self.view.addGestureRecognizer(tapViewGesture)
+//        let tapViewGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
+//        self.view.addGestureRecognizer(tapViewGesture)
     }
 
     // MARK: Select POD Image
@@ -111,6 +119,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     }
     
     func ImageCropViewControllerSuccess(controller: UIViewController!, didFinishCroppingImage croppedImage: UIImage!) {
+        imageSelected = croppedImage
         podImageView.image = croppedImage
         podImageView.contentMode = .ScaleAspectFill
 
@@ -128,7 +137,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return selectedMembers.count + 1
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -136,14 +145,24 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         if cell == nil {
             cell = UserImageCollectionViewCell()
         }
-        cell?.configureAsAddUser()
+        if indexPath.row == 0 {
+            cell?.configureAsAddUser()
+        } else {
+            cell?.configureWithUser(selectedMembers[indexPath.row - 1])
+        }
         return cell!
     }
     
     // MARK: UICollectionViewDelegate
     
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        if indexPath.row == 0 {
+            let selectMembersVC = SelectPODMembersViewController()
+            selectMembersVC.delegate = self
+            selectMembersVC.selectedMembers = selectedMembers
+            navigationController?.pushViewController(selectMembersVC, animated: true)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -174,6 +193,66 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     
     func saveSettingsPressed(sender: AnyObject) {
         print("Save Pressed")
+        
+        // create the POD
+        var newWidth: CGFloat
+        if podNameTextField.text != "" && podDescriptionTextView.text != "" {
+            if imageSelected != nil {
+                if imageSelected!.size.width < 414 {
+                    newWidth = imageSelected!.size.width
+                } else {
+                    newWidth = 414
+                }
+                let resizedImage = Utils.resizeImage(imageSelected!, newWidth: newWidth)
+                // crate the pod
+                let podToSave = POD(name: podNameTextField.text, description: podDescriptionTextView.text, imageURL: nil, isPrivate: (switchIsPrivate.on ? 1 : 0), owner: nil, users: selectedMembers, postsCount: nil, usersCount: nil, imageData: resizedImage)
+                SVProgressHUD.showWithStatus("Creating POD")
+                networkController.createPOD(podToSave, completionHandler: { (pod, error) -> () in
+                    if error == nil {
+                        
+                        if pod?.id != nil {
+                            // everything worked ok
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        } else {
+                            // there was an error saving the post
+                        }
+                        SVProgressHUD.dismiss()
+                        
+                    } else {
+                        SVProgressHUD.dismiss()
+                        let errors: [String]? = error!["errors"] as? [String]
+                        var alert: UIAlertController
+                        if errors != nil && errors![0] != "" {
+                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        } else {
+                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        }
+                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                })
+            } else {
+                var alert: UIAlertController
+                alert = UIAlertController(title: "Error", message: "Please, select an image", preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        } else {
+            var alert: UIAlertController
+            alert = UIAlertController(title: "Error", message: "Please, complete all the fields", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - SelectPODMembersDelegate
+    
+    func membersDidSelected(members: [User]) {
+        selectedMembers = members
+        membersCollectionView.reloadData()
     }
     
 }

@@ -2,15 +2,18 @@ PODS:
   - ActionSheetPicker-3.0 (2.0.5)
   - Alamofire (3.2.1)
   - BEMCheckBox (1.2.0)
+  - BSKeyboardControls (2.2)
   - Crashlytics (3.6.0):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.5)
   - HMSegmentedControl (1.5.2)
   - hpple (0.2.0)
+  - KeychainSwift (3.0.11)
   - KSTokenView (2.3.1)
   - KTCenterFlowLayout (1.1.1)
-  - NSDate-Time-Ago (1.0.1)
+  - NSDate+TimeAgo (1.0.6)
   - OAuthSwift (0.5.0)
+  - RSKImageCropper (1.5.1)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -26,14 +29,17 @@ DEPENDENCIES:
   - ActionSheetPicker-3.0
   - Alamofire (~> 3.0)
   - BEMCheckBox
+  - BSKeyboardControls (~> 2.2)
   - Crashlytics
   - Fabric
   - HMSegmentedControl
   - hpple
+  - KeychainSwift (~> 3.0)
   - KSTokenView (~> 2.3.0)
   - KTCenterFlowLayout
-  - NSDate-Time-Ago
+  - NSDate+TimeAgo
   - OAuthSwift (~> 0.5.0)
+  - RSKImageCropper
   - SDWebImage (~> 3.7)
   - SVProgressHUD
   - SVPullToRefresh
@@ -45,14 +51,17 @@ SPEC CHECKSUMS:
   ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
   Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
   BEMCheckBox: fcfbbf42cf23d38fbb605c72f63db9ae82d6acd3
+  BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
   Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
   Fabric: 338ffd3c2afcab120638907b4251189de9ad17b3
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
+  KeychainSwift: 0a4214c910423543a42b0f30f25987d46178b6a5
   KSTokenView: 15150f0aec162ac5b61e7cc10ba356e02da8f355
   KTCenterFlowLayout: eded079c349450dea12f7cf94b424d1bc3205519
-  NSDate-Time-Ago: e9de167d0659ebe465c273e833e7b582f061fc41
+  NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
   OAuthSwift: f2e0de083739da5697be095c9af2671242a4ed8b
+  RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c

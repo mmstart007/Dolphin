@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 protocol PickerGradesOrSubjectsDelegate {
     func gradesDidSelected(grades: [String])
@@ -15,17 +16,20 @@ protocol PickerGradesOrSubjectsDelegate {
 
 class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource {
 
-    let grades = ["Pre-K", "K", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
-    let subjects = ["Mathematics", "Biology", "Chemistry", "Physics", "History", "Geography"
-        , "Physical", "Education", "Health", "Music", "Art", "Foreign Language", "Social Studies", "English Language Arts"
-        , "Counseling", "STEM", "Science"];
+//    let grades = ["Pre-K", "K", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
+//    let subjects = ["Mathematics", "Biology", "Chemistry", "Physics", "History", "Geography"
+//        , "Physical", "Education", "Health", "Music", "Art", "Foreign Language", "Social Studies", "English Language Arts"
+//        , "Counseling", "STEM", "Science"];
     
     @IBOutlet weak var tableViewGradesOrSubjects: UITableView!
     
     var delegate: PickerGradesOrSubjectsDelegate?
-    var areSubjects: Bool = false
+    var areSubjects: Bool          = false
     var subjectsSelected: [String] = []
-    var gradesSelected: [String] = []
+    var gradesSelected: [String]   = []
+    var grades: [Grade]            = []
+    var subjects: [Subject]        = []
+    var user = NetworkController.sharedInstance.currentUser
     
     convenience init() {
         self.init(nibName: "PickGradesOrSubjectsViewController", bundle: nil)
@@ -36,6 +40,10 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         
         title = areSubjects ? "Select subjects" : "Select grades"
         setRightButtonItemWithText("Done", target: self, action: Selector("doneTouchUpInside:"))
+        
+        if user != nil {
+            setLeftButtonItemWithText("Close", target: self, action: #selector(closeButtonTouchUpInside))
+        }
         
         tableViewGradesOrSubjects.delegate = self
         tableViewGradesOrSubjects.dataSource = self
@@ -69,9 +77,9 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
             cell = SubjectOrGradeTableViewCell()
         }
         if areSubjects {
-            cell?.configureWithGradeOrSubjectName(subjects[indexPath.row], checked: subjectsSelected.contains(subjects[indexPath.row]))
+            cell?.configureWithGradeOrSubjectName(subjects[indexPath.row].name!, checked: subjectsSelected.contains(subjects[indexPath.row].name!))
         } else {
-            cell?.configureWithGradeOrSubjectName(grades[indexPath.row], checked: gradesSelected.contains(grades[indexPath.row]))
+            cell?.configureWithGradeOrSubjectName(grades[indexPath.row].name!, checked: gradesSelected.contains(grades[indexPath.row].name!))
         }
         
         cell?.selectionStyle = .None
@@ -86,18 +94,18 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if areSubjects {
-            if subjectsSelected.contains(subjects[indexPath.row]) {
-                let indexToRemove = subjectsSelected.indexOf(subjects[indexPath.row])
+            if subjectsSelected.contains(subjects[indexPath.row].name!) {
+                let indexToRemove = subjectsSelected.indexOf(subjects[indexPath.row].name!)
                 subjectsSelected.removeAtIndex(indexToRemove!)
             } else {
-                subjectsSelected.append(subjects[indexPath.row])
+                subjectsSelected.append(subjects[indexPath.row].name!)
             }
         } else {
-            if gradesSelected.contains(grades[indexPath.row]) {
-                let indexToRemove = gradesSelected.indexOf(grades[indexPath.row])
+            if gradesSelected.contains(grades[indexPath.row].name!) {
+                let indexToRemove = gradesSelected.indexOf(grades[indexPath.row].name!)
                 gradesSelected.removeAtIndex(indexToRemove!)
             } else {
-                gradesSelected.append(grades[indexPath.row])
+                gradesSelected.append(grades[indexPath.row].name!)
             }
         }
         tableViewGradesOrSubjects.reloadData()
@@ -106,11 +114,43 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     // MARK: - Actions
     
     func doneTouchUpInside(sender: AnyObject) {
-        if areSubjects {
-            delegate?.subjectsDidSelected(subjectsSelected)
+        if user == nil {
+            if areSubjects {
+                delegate?.subjectsDidSelected(subjectsSelected)
+            } else {
+                delegate?.gradesDidSelected(gradesSelected)
+            }
+            dismissViewControllerAnimated(true, completion: nil)
         } else {
-            delegate?.gradesDidSelected(gradesSelected)
+            SVProgressHUD.showWithStatus("Saving")
+            NetworkController.sharedInstance.updateUser(nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: nil, email: nil, password: nil, location: nil, isPrivate: nil, subjects: subjectsSelected, grades: gradesSelected, completionHandler: { (user, error) in
+                if error == nil && user != nil {
+                    NetworkController.sharedInstance.currentUser = user
+                    if self.areSubjects {
+                        self.delegate?.subjectsDidSelected(self.subjectsSelected)
+                    } else {
+                        self.delegate?.gradesDidSelected(self.gradesSelected)
+                    }
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    SVProgressHUD.dismiss()
+                    let errors: [String]? = error!["errors"] as? [String]
+                    var alert: UIAlertController
+                    if errors != nil && errors![0] != "" {
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                    } else {
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    }
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+
+                }
+            })
         }
+    }
+    
+    func closeButtonTouchUpInside(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -118,7 +158,6 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     
     func registerCells() {
         tableViewGradesOrSubjects.registerNib(UINib(nibName: "SubjectOrGradeTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SubjectOrGradeTableViewCell")
-        
     }
     
     

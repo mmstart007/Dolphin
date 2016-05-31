@@ -27,7 +27,7 @@ class UserImagePODMemberCollectionViewCell: UICollectionViewCell {
         let url : NSURL = NSURL(string: imageUrl)!
         imageViewUserAvatar.backgroundColor = UIColor.whiteColor()
         imageViewUserAvatar.sd_setImageWithURL(url, placeholderImage: UIImage(named: "UserPlaceholder"))
-        imageViewUserAvatar.contentMode = .ScaleAspectFit
+        imageViewUserAvatar.contentMode = .ScaleAspectFill
         imageViewUserAvatar.subviews.forEach { subview in
             subview.removeFromSuperview()
         }

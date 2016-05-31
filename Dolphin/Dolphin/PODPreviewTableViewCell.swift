@@ -38,7 +38,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         if pod != nil {
-            if pod!.podIsPrivate {
+            if pod!.isPrivate == 1 {
                 if triangleView == nil {
                     triangleView        = TriangleView()
                     triangleView!.frame = CGRect(x: self.frame.size.width - 60, y: 0, width: 60, height: 60)
@@ -59,36 +59,46 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
     
     func configureWithPOD(pod: POD) {
         self.pod = pod
-        podImageView.sd_setImageWithURL(NSURL(string: (pod.podImageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        podImageView.sd_setImageWithURL(NSURL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         self.layer.cornerRadius          = 5
         podImageView.layer.cornerRadius  = 5
         podImageView.layer.masksToBounds = true
-        podNameLabel.text                = pod.podName
-        podLastPostDateLabel.text        = pod.podLastPostDate?.formattedAsTimeAgo()
+        podNameLabel.text                = pod.name
+        if let lastPostDate = pod.lastPostDate {
+            podLastPostDateLabel.text    = lastPostDate.formattedAsTimeAgo()
+        } else {
+            podLastPostDateLabel.text    = "No posts yet"
+        }
     }
     
     func addUserImages(pod: POD) {
-        for (var i = 0; (i < pod.podUsers?.count && i < 5); i++) {
-            if i == 0 && pod.podUsers?.count > 5 {
-                // Add Label that shows number of remaining users in POD
-                let x: CGFloat = podUsersContainerView.frame.size.width - podUsersContainerView.frame.size.width / 6 - (CGFloat(i) * (podUsersContainerView.frame.size.width / 6 + podUsersContainerView.frame.size.width / 24))
-                let otherUsersLabel = UILabel(frame: CGRect(x: x, y: 0, width: podUsersContainerView.frame.size.width / 6, height: podUsersContainerView.frame.size.width / 6))
-                otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
-                otherUsersLabel.textColor = UIColor.lightTextColor()
-                otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
-                otherUsersLabel.layer.masksToBounds = true
-                otherUsersLabel.text = String(format: "+%li", arguments: [(pod.podUsers?.count)! - 4])
-                otherUsersLabel.textAlignment = .Center
-                otherUsersLabel.font = UIFont.systemFontOfSize(12)
-                podUsersContainerView.addSubview(otherUsersLabel)
-            } else {
-                // Sow image of user in POD
-                let x: CGFloat = podUsersContainerView.frame.size.width - podUsersContainerView.frame.size.width / 6 - (CGFloat(i) * (podUsersContainerView.frame.size.width / 6 + podUsersContainerView.frame.size.width / 24))
-                let userAvatarImageView = UIImageView(frame: CGRect(x: x, y: 0, width: podUsersContainerView.frame.size.width / 6, height: podUsersContainerView.frame.size.width / 6))
-                userAvatarImageView.sd_setImageWithURL(NSURL(string: (pod.podUsers![i].userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
-                userAvatarImageView.layer.cornerRadius = userAvatarImageView.frame.size.width / 2.0
-                userAvatarImageView.layer.masksToBounds = true
-                podUsersContainerView.addSubview(userAvatarImageView)
+        for userView in podUsersContainerView.subviews {
+            userView.removeFromSuperview()
+        }
+        if pod.isPrivate != nil && pod.isPrivate! == 0 {
+            for (var i = 0; (i < pod.users?.count && i < 5); i++) {
+                if i == 0 && pod.users?.count > 5 {
+                    // Add Label that shows number of remaining users in POD
+                    let x: CGFloat = podUsersContainerView.frame.size.width - podUsersContainerView.frame.size.width / 6 - (CGFloat(i) * (podUsersContainerView.frame.size.width / 6 + podUsersContainerView.frame.size.width / 24))
+                    let otherUsersLabel = UILabel(frame: CGRect(x: x, y: 0, width: podUsersContainerView.frame.size.width / 6, height: podUsersContainerView.frame.size.width / 6))
+                    otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
+                    otherUsersLabel.textColor = UIColor.lightTextColor()
+                    otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
+                    otherUsersLabel.layer.masksToBounds = true
+                    otherUsersLabel.text = String(format: "+%li", arguments: [(pod.users?.count)! - 4])
+                    otherUsersLabel.textAlignment = .Center
+                    otherUsersLabel.font = UIFont.systemFontOfSize(12)
+                    podUsersContainerView.addSubview(otherUsersLabel)
+                } else {
+                    // Sow image of user in POD
+                    let x: CGFloat = podUsersContainerView.frame.size.width - podUsersContainerView.frame.size.width / 6 - (CGFloat(i) * (podUsersContainerView.frame.size.width / 6 + podUsersContainerView.frame.size.width / 24))
+                    let userAvatarImageView = UIImageView(frame: CGRect(x: x, y: 0, width: podUsersContainerView.frame.size.width / 6, height: podUsersContainerView.frame.size.width / 6))
+                    userAvatarImageView.sd_setImageWithURL(NSURL(string: (pod.users![i].userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+                    userAvatarImageView.layer.cornerRadius  = userAvatarImageView.frame.size.width / 2.0
+                    userAvatarImageView.layer.masksToBounds = true
+                    userAvatarImageView.contentMode         = .ScaleAspectFill
+                    podUsersContainerView.addSubview(userAvatarImageView)
+                }
             }
         }
     }

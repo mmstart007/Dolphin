@@ -8,17 +8,24 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 class PODsListViewController : UIViewController, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    let networkController = NetworkController.sharedInstance
+    let kPageQuantity: Int = 10
     
     @IBOutlet weak var allPODstableView: UITableView!
     @IBOutlet weak var myPODsCollectionView: UICollectionView!
     var segmentedControl: UISegmentedControl!
     
+    
     var allPods: [POD]      = []
     var myPods: [POD]       = []
     var filteredPODs: [POD] = []
     var searchText: String? = nil
+    var isDataLoaded: Bool  = false
+    var page: Int           = 0
     
     required init() {
         super.init(nibName: "PODsListViewController", bundle: NSBundle.mainBundle())
@@ -39,22 +46,27 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         myPODsCollectionView.dataSource = self
         myPODsCollectionView.delegate   = self
         
-        let user1 = User(deviceId: "", userName: "John Doe", imageURL: "", email: "john@doe.com", password: "test")
-        
-        let pod1 = POD(name: "Aviation", imageURL: "https://wallpaperscraft.com/image/plane_sky_flying_sunset_64663_3840x1200.jpg", lastpostDate: NSDate(), users: [user1, user1, user1, user1, user1, user1], isPrivate: true)
-        let pod2 = POD(name: "Engineering", imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRcMgu3PJLY079zBrxFxZRDwl59nuVuluNdF6PtqJvIzoD39YCQKg", lastpostDate: NSDate(), users: [user1, user1, user1], isPrivate: false)
-        let pod3 = POD(name: "Electronics", imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTUTqYPZGV5hcCSTuoRf_VR1lbN6lFZvGn8ufGPBNCEVRj7gdN3TA", lastpostDate: NSDate(), users: [user1, user1, user1, user1, user1], isPrivate: true)
-        
-        allPods = [pod1, pod2, pod3]
-        myPods = [pod1, pod2, pod3]
-        
         segmentedControl = UISegmentedControl(items: ["All PODs", "My PODs"])
         segmentedControl.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
         segmentedControl.sizeToFit()
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
+        allPODstableView.addPullToRefreshWithActionHandler { () -> Void in
+            self.loadData(true)
+        }
         
+        allPODstableView.addInfiniteScrollingWithActionHandler { () -> Void in
+            self.loadNextPODs()
+        }
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadData(false)
         
     }
     
@@ -73,8 +85,6 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         } else {
             parent?.searchBar?.becomeFirstResponder()
         }
-        
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -222,12 +232,12 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         searchText = textToSearch
         if segmentedControl.selectedSegmentIndex == 0 {
             filteredPODs = allPods.filter({( pod : POD) -> Bool in
-                return (pod.podName!.lowercaseString.containsString(textToSearch.lowercaseString))
+                return (pod.name!.lowercaseString.containsString(textToSearch.lowercaseString))
             })
             allPODstableView.reloadData()
         } else {
             filteredPODs = myPods.filter({( pod : POD) -> Bool in
-                return (pod.podName!.lowercaseString.containsString(textToSearch.lowercaseString))
+                return (pod.name!.lowercaseString.containsString(textToSearch.lowercaseString))
             })
             myPODsCollectionView.reloadData()
         }
@@ -247,7 +257,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     // MARK: - Auxiliary methods
     
     func checkPrivatePODs(goToViewController: UIViewController, pod: POD?) {
-        if pod != nil && pod!.podIsPrivate {
+        if pod != nil && pod!.isPrivate == 1 && pod?.owner != networkController.currentUser && (pod!.users != nil && !pod!.users!.contains(networkController.currentUser!)) {
             let alert = UIAlertController(title: "Access", message: "This is a PRIVATE POD, do you want to request access to it?", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "Request", style: UIAlertActionStyle.Default, handler: { action in
@@ -260,6 +270,121 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         } else {
             navigationController?.pushViewController(goToViewController, animated: true)
         }
+    }
+    
+    func loadData(pullToRefresh: Bool) {
+        page = 0
+        if !pullToRefresh {
+            SVProgressHUD.showWithStatus("Loading")
+        }
+        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: 0) { (pods, error) -> () in
+            
+            if error == nil {
+                
+                self.allPods = pods
+                if self.allPods.count > 0 {
+                    self.removeTableEmtpyMessage()
+                } else {
+                    self.addTableEmptyMessage("No PODs has been created\n\nwhy don't create a POD?")
+                }
+                self.allPODstableView.reloadData()
+                
+                // load mypods info
+                self.loadMyData(pullToRefresh)
+                
+            } else {
+                self.isDataLoaded = false
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                }
+                self.allPODstableView.pullToRefreshView.stopAnimating()
+            }
+        }
+    }
+    
+    func loadNextPODs() {
+        page = page + 1
+        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page) {  (pods, error) -> () in
+            if error == nil {
+                self.allPods.appendContentsOf(pods)
+                self.allPODstableView.reloadData()
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            self.allPODstableView.infiniteScrollingView.stopAnimating()
+        }
+    }
+    
+    func loadMyData(pullToRefresh: Bool) {
+        if !pullToRefresh {
+            SVProgressHUD.showWithStatus("Loading")
+        }
+        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0) { (pods, error) -> () in
+            
+            if error == nil {
+                self.isDataLoaded = true
+                self.myPods = pods
+                
+                self.myPODsCollectionView.reloadData()
+                
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                } else {
+                    self.allPODstableView.pullToRefreshView.stopAnimating()
+                }
+                
+            } else {
+                self.isDataLoaded = false
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                if !pullToRefresh {
+                    SVProgressHUD.dismiss()
+                }
+                self.allPODstableView.pullToRefreshView.stopAnimating()
+            }
+        }
+    }
+    
+    func addTableEmptyMessage(message: String) {
+        let labelBackground = UILabel(frame: CGRect(x: 0, y: 0, width: allPODstableView.frame.width, height: 200))
+        labelBackground.text = message
+        labelBackground.textColor = UIColor.blueDolphin()
+        labelBackground.textAlignment = .Center
+        labelBackground.numberOfLines = 0
+        Utils.setFontFamilyForView(labelBackground, includeSubViews: true)
+        allPODstableView.backgroundView = labelBackground
+    }
+    
+    func removeTableEmtpyMessage() {
+        allPODstableView.backgroundView = nil
     }
     
 }

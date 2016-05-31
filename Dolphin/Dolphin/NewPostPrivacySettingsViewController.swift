@@ -8,6 +8,11 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
+
+protocol NewPostPrivacySettingsViewControllerDelegate {
+    func didFinishSettingOptions(selectedPods: [POD])
+}
 
 class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {
  
@@ -39,18 +44,23 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
     }
     
     @IBOutlet weak var tableView: UITableView!
-    var privacySettings: [VisibilitySetting] = []
+    var privacySettings: [VisibilitySetting]       = []
     var podShareSettings: [PODSharePrivacySetting] = []
-    var selectedPrivacySettingIndex: Int = 0
+    var selectedPrivacySettingIndex: Int           = 0
+    var selectedPODs: [POD]!
+    let networkController                          = NetworkController.sharedInstance
+    var delegate: NewPostPrivacySettingsViewControllerDelegate?
     
-    convenience init() {
+    convenience init(selectedPODs: [POD], delegate: NewPostPrivacySettingsViewControllerDelegate) {
         self.init(nibName: "NewPostPrivacySettingsViewController", bundle: nil)
+        self.selectedPODs = selectedPODs
+        self.delegate = delegate
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setRightSystemButtonItem(.Done, target: self, action: "dismissButtonPressed:")
+        setRightSystemButtonItem(.Done, target: self, action: "doneButtonPressed:")
         title = "Post Privacy Settings"
         
         tableView.registerNib(UINib(nibName: "NewPostPrivacySettingsVisibilityCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "NewPostPrivacySettingsVisibilityCell")
@@ -65,15 +75,44 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
     
     func setupFields() {
         
+        if selectedPODs.count > 0 {
+            selectedPrivacySettingIndex = -1
+        }
         let setting1 = VisibilitySetting(settingName: "Public", settingImage: "EarthIcon", settingInformativeText: "People who are not friends with you can see this post when their friends share it.")
         privacySettings.append(setting1)
         tableView.reloadData()
-     
-        for pod in NetworkController.sharedInstance.pods {
-            let podShareSetting  = PODSharePrivacySetting(pod: pod, selected: false)
-            podShareSettings.append(podShareSetting)
+        getMyPODs()
+    }
+    
+    func getMyPODs() {
+        SVProgressHUD.showWithStatus("Loading")
+        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0) { (pods, error) -> () in
+            SVProgressHUD.dismiss()
+            if error == nil {
+                for pod in pods {
+                    var selected = false
+                    for selectedPOD in self.selectedPODs {
+                        if pod.id == selectedPOD.id {
+                            selected = true
+                        }
+                    }
+                    let podShareSetting  = PODSharePrivacySetting(pod: pod, selected: selected)
+                    self.podShareSettings.append(podShareSetting)
+                }
+                self.tableView.reloadData()
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
         }
-        
     }
     
     // MARK: TableView DataSource
@@ -139,13 +178,14 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
             for (var i = 0; i < podShareSettings.count; i++) {
                 podShareSettings[i].selected = false
             }
+            
         } else {
             selectedPrivacySettingIndex = -1
             podShareSettings[indexPath.row].selected = !podShareSettings[indexPath.row].selected
-            var oneSelected = false
+            var oneSelected = podShareSettings[indexPath.row].selected
             for (var i = 0; i < podShareSettings.count; i++) {
-                if podShareSettings[i].selected == true {
-                    oneSelected = true
+                if i != indexPath.row {
+                    podShareSettings[i].selected = false
                 }
             }
             if !oneSelected {
@@ -153,6 +193,20 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
             }
         }
         tableView.reloadData()
+    }
+    
+    // MARK: - Navigation
+    
+    func doneButtonPressed(sender: AnyObject) {
+        
+        var selectedPODs: [POD] = []
+        for podSetting in podShareSettings {
+            if let podToAdd = podSetting.pod where podSetting.selected {
+                selectedPODs.append(podToAdd)
+            }
+        }
+        delegate?.didFinishSettingOptions(selectedPODs)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 }

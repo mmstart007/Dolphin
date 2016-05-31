@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BSKeyboardControls.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>HMSegmentedControl.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,7 +39,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>NSDate-Time-Ago.xcscheme</key>
+		<key>KeychainSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>NSDate+TimeAgo.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -45,6 +55,11 @@
 			<false/>
 		</dict>
 		<key>Pods-Dolphin.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RSKImageCropper.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -82,12 +97,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>073A8032DB9A10C1FE715D3CE6A9B908</key>
+		<key>20FEE02C66AB0E207F223C4B47C7C058</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>33B48AFBA952729BD3B11031F0F68DDA</key>
+		<key>3608C918D70176DCFFBD2ABAED4AB0ED</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4C698C648EE4D43C6B8BE0BE1FE91737</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>524F3AA8BB891D04E2737D464FF8E5B5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,12 +122,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5855116C7019AEB6C92455C366911290</key>
+		<key>63D4020419748D12B33C0C04E0AF9DC7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>63D4020419748D12B33C0C04E0AF9DC7</key>
+		<key>6F86718079A7D265779F1C1562F57DFD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -122,17 +147,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>95BEE38F1B777106730AD495BFC3E654</key>
+		<key>A2E525B3F0A7DE1EE8733E2484155410</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF4B2054A2990364101CEC407F585E2D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C3F4D49FBC47134164A50A91CD4E3715</key>
+		<key>B91B2C2F421DCEC6047B0C8A7FEDA644</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,7 +162,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>D17BEF15E77D839B942EE48B2B0E102F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D635F027F0A6FD04B98B790907265430</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EF51FBA1625B1AB8A4234E39C919836E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -18,6 +18,7 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
     
     var imageURLs: [String]?
     var urlLoaded: String?
+    var podId: Int?
     
     init(images: [String]) {
         super.init(nibName: "CreateURLPostChooseImageViewController", bundle: nil)
@@ -69,7 +70,8 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
         let selectedImageURL = imageURLs![indexPath.row]
         let addDescriptionVC = CreateURLPostAddDescriptionViewController()
         addDescriptionVC.postImageURL = selectedImageURL
-        addDescriptionVC.postURL = urlLoaded
+        addDescriptionVC.postURL      = urlLoaded
+        addDescriptionVC.podId        = podId
         navigationController?.pushViewController(addDescriptionVC, animated: true)
         
         

@@ -15,11 +15,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0.23</string>
+	<string>1.0.0.27</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
 	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.menloed.Dolphin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dolphin-app</string>
+			</array>
+		</dict>
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
@@ -29,7 +37,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.0.23</string>
+	<string>1.0.0.27</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

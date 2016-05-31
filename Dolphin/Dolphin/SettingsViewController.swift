@@ -8,18 +8,29 @@
 
 import UIKit
 import SVProgressHUD
+import RSKImageCropper
+import SDWebImage
 
-class SettingsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, SettingsSwitchTableViewCellDelegate {
+class SettingsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, SettingsSwitchTableViewCellDelegate,
+    RSKImageCropViewControllerDelegate, ProfileAvatarTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PickerGradesOrSubjectsDelegate {
     
     let networkController = NetworkController.sharedInstance
+    let kPageQuantity: Int = 10
+    let picker = UIImagePickerController()
     let titles = ["PROFILE", "PUSH NOTIFICATIONS", "MY PODS", "DOLPHIN", "SUPPORT"]
     let dolphinItems = ["Like us on Facebook", "Follow us on Instagram", "Follow us on Twitter", "Rate our app"]
     let supportItems = ["Frequently Asked Questions", "Email Support", "Terms of Use", "Privacy Policy"]
 
     @IBOutlet weak var tableViewSettings: UITableView!
     
-    var myPODS: [POD] = []
+    var myPODS: [POD]       = []
     var publicProfile: Bool = false
+    var page: Int           = 0
+    
+    var availableGrades: [Grade]     = []
+    var availableSubjects: [Subject] = []
+    var selectedGrades: [String]     = []
+    var selectedSubjects: [String]   = []
     
     required init() {
         super.init(nibName: "SettingsViewController", bundle: NSBundle.mainBundle())
@@ -38,14 +49,17 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         tableViewSettings.delegate = self
         tableViewSettings.dataSource = self
         registerCells()
-        // TODO: loads pods from server
-        //myPODS = networkController.pods
+        // reset image data from the user
+        networkController.currentUser?.userAvatarImageData = nil
+        loadGradesAndSubjects()
+        initializeUsersGradesAndSubjects()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadUserInfo()
+        loadData()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,32 +70,34 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     // MARK: - TableView DataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return titles.count
+        return titles.count + 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
+            return 1
+        case 1:
             // profile
             if let user = networkController.currentUser {
                 if user.isPrivate == 0 {
-                    return 5
+                    return 7
                 } else {
                     return 2
                 }
             } else {
                 return 2
             }
-        case 1:
+        case 2:
             // push notifications
             return 1
-        case 2:
+        case 3:
             // my pods
             return myPODS.count
-        case 3:
+        case 4:
             // dolphin
             return dolphinItems.count
-        case 4:
+        case 5:
             // support
             return supportItems.count
         default:
@@ -97,6 +113,13 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
 
         
         if indexPath.section == 0 {
+            // profile avatar cell
+            cell = tableView.dequeueReusableCellWithIdentifier("ProfileAvatarTableViewCell") as? ProfileAvatarTableViewCell
+            if cell == nil {
+                cell = ProfileAvatarTableViewCell()
+            }
+            (cell as? ProfileAvatarTableViewCell)?.configureWithImage(networkController.currentUser?.userAvatarImageURL, imageData: networkController.currentUser?.userAvatarImageData, delegate: self)
+        } else if indexPath.section == 1 {
             if indexPath.row == 0 {
                 // username cell
                 cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
@@ -134,29 +157,47 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     }
                     (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location", value: networkController.currentUser?.location)
                     
+                } else if indexPath.row == 5 {
+                    cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
+                    if (cell == nil) {
+                        cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
+                    }
+                    cell?.detailTextLabel?.text = ""
+                    cell?.accessoryType = .DisclosureIndicator
+                    cell?.textLabel?.text = "My Grades"
+                    
+                } else if indexPath.row == 6 {
+                    cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
+                    if (cell == nil) {
+                        cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
+                    }
+                    cell?.detailTextLabel?.text = ""
+                    cell?.accessoryType = .DisclosureIndicator
+                    cell?.textLabel?.text = "My Subjects"
+                    
                 }
             }
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
             cell = tableView.dequeueReusableCellWithIdentifier("SettingsSwitchTableViewCell") as? SettingsSwitchTableViewCell
             if cell == nil {
                 cell = SettingsSwitchTableViewCell()
             }
             (cell as? SettingsSwitchTableViewCell)?.configureWithSetting("Enable Push Notifications", delegate: self, tag: 1, enable: false)
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 3 {
             cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
             if (cell == nil) {
                 cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
             }
-            cell?.detailTextLabel?.text = (myPODS[indexPath.row].podIsPrivate) ? "Private" : "Public"
+            cell?.detailTextLabel?.text = (myPODS[indexPath.row].isPrivate == 1) ? "Private" : "Public"
             cell?.accessoryType = .DisclosureIndicator
-            cell?.textLabel?.text = myPODS[indexPath.row].podName
-        } else if indexPath.section == 3 {
+            cell?.textLabel?.text = myPODS[indexPath.row].name
+        } else if indexPath.section == 4 {
             cell = tableView.dequeueReusableCellWithIdentifier(defaultCellIdentifier)
             if (cell == nil) {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: defaultCellIdentifier)
             }
             cell?.textLabel?.text = dolphinItems[indexPath.row]
-        } else if indexPath.section == 4 {
+        } else if indexPath.section == 5 {
             cell = tableView.dequeueReusableCellWithIdentifier(defaultCellIdentifier)
             if (cell == nil) {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: defaultCellIdentifier)
@@ -173,13 +214,20 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        if indexPath.section == 0 {
+            return 200
+        } else {
+            return UITableViewAutomaticDimension
+        }
     }
     
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        // Header for comments
-        return 40
+        if section == 0 {
+            return 0
+        } else {
+            return 40
+        }
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -188,7 +236,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         let headerLabel = UILabel(frame: CGRect(x: 15, y: 10, width: self.view.frame.size.width, height: 30))
         headerView.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         headerLabel.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
-        headerLabel.text = titles[section]
+        headerLabel.text = titles[section - 1]
         headerLabel.textColor = UIColor.grayColor()
         headerLabel.font = headerLabel.font.fontWithSize(12)
         headerView.addSubview(headerLabel)
@@ -198,59 +246,54 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     // MARK: - TableView delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 2 {
+        if indexPath.section == 3 {
             let PODSettingsVC = PODSettingsViewController(pod: myPODS[indexPath.row])
             navigationController?.pushViewController(PODSettingsVC, animated: true)
+        } else if indexPath.section == 1 {
+            if let user = networkController.currentUser {
+                if user.isPrivate == 0 && indexPath.row == 5 {
+                    selectGrades()
+                } else if user.isPrivate == 0  && indexPath.row == 6 {
+                    selectSubjects()
+                }
+            }
         }
     }
     
         
     // MARK: - Auxiliary methods
     
-    func loadUserInfo() {
-        SVProgressHUD.showWithStatus("Loading")
-        networkController.getUserById("\(networkController.currentUserId!)") { (user, error) -> () in
-            if error == nil {
-                if user?.id != nil {
-                    self.networkController.currentUser = user
-                    // everything worked ok
-                    self.tableViewSettings.reloadData()
-                } else {
-                    print("there was an error getting the user info")
-                }
-                SVProgressHUD.dismiss()
-                
-            } else {
-                let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-                SVProgressHUD.dismiss()
-            }
-        }
-    }
-    
     func updateUserInfo() {
         var userNameChanged: Bool = false
         if networkController.currentUser?.isPrivate == 0 {
             // public
-            let cellUserName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? SettingsTextFieldTableViewCell
+            let cellUserName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1)) as? SettingsTextFieldTableViewCell
             if cellUserName?.textFieldValue.text != networkController.currentUser?.userName {
                 networkController.currentUser?.userName = cellUserName?.textFieldValue.text
                 userNameChanged = true
             }
-            let cellFirstName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as? SettingsTextFieldTableViewCell
+            let cellFirstName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 1)) as? SettingsTextFieldTableViewCell
             networkController.currentUser?.firstName = cellFirstName?.textFieldValue.text
-            let cellLastName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 0)) as? SettingsTextFieldTableViewCell
+            let cellLastName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 1)) as? SettingsTextFieldTableViewCell
             networkController.currentUser?.lastName = cellLastName?.textFieldValue.text
-            let cellLocation = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 0)) as? SettingsTextFieldTableViewCell
+            let cellLocation = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 1)) as? SettingsTextFieldTableViewCell
             networkController.currentUser?.location = cellLocation?.textFieldValue.text
+            
+            var encodedImage: String?
+            if let imageToEncode = networkController.currentUser?.userAvatarImageData {
+                let resizedImage = Utils.resizeImage(imageToEncode, newWidth: 200)
+                encodedImage = Utils.encodeBase64(resizedImage)
+            }
             
             // call the api function to update the user info
             SVProgressHUD.showWithStatus("Saving")
-            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: networkController.currentUser?.firstName, lastName: networkController.currentUser?.lastName, avatarImage: nil, email: nil, password: nil, location: networkController.currentUser?.location, isPrivate: networkController.currentUser?.isPrivate) { (user, error) -> () in
+            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: networkController.currentUser?.firstName, lastName: networkController.currentUser?.lastName, avatarImage: encodedImage, email: nil, password: nil, location: networkController.currentUser?.location, isPrivate: networkController.currentUser?.isPrivate, subjects: nil, grades: nil) { (user, error) -> () in
                 if error == nil {
+                    // update the user modified
+                    self.networkController.currentUser = user
+                    if let imageURLToRemove = user?.userAvatarImageURL {
+                        SDImageCache.sharedImageCache().removeImageForKey(imageURLToRemove)
+                    }
                     SVProgressHUD.dismiss()
                     self.navigationController?.popViewControllerAnimated(true)
                     
@@ -267,16 +310,27 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         } else {
             // private
             
-            let cellUserName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? SettingsTextFieldTableViewCell
+            let cellUserName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1)) as? SettingsTextFieldTableViewCell
             if cellUserName?.textFieldValue.text != networkController.currentUser?.userName {
                 networkController.currentUser?.userName = cellUserName?.textFieldValue.text
                 userNameChanged = true
             }
             
+            var encodedImage: String?
+            if let imageToEncode = networkController.currentUser?.userAvatarImageData {
+                let resizedImage = Utils.resizeImage(imageToEncode, newWidth: 200)
+                encodedImage = Utils.encodeBase64(resizedImage)
+            }
+            
             // call the api function to update the user info
             SVProgressHUD.showWithStatus("Saving")
-            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: nil, email: nil, password: nil, location: nil, isPrivate: networkController.currentUser?.isPrivate) { (user, error) -> () in
+            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: encodedImage, email: nil, password: nil, location: nil, isPrivate: networkController.currentUser?.isPrivate, subjects: nil, grades: nil) { (user, error) -> () in
                 if error == nil {
+                    // update the user modified
+                    self.networkController.currentUser = user
+                    if let imageURLToRemove = user?.userAvatarImageURL {
+                        SDImageCache.sharedImageCache().removeImageForKey(imageURLToRemove)
+                    }
                     SVProgressHUD.dismiss()
                     self.navigationController?.popViewControllerAnimated(true)
                     
@@ -294,6 +348,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     }
     
     func registerCells() {
+        tableViewSettings.registerNib(UINib(nibName: "ProfileAvatarTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "ProfileAvatarTableViewCell")
         tableViewSettings.registerNib(UINib(nibName: "SettingsTextFieldTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsTextFieldTableViewCell")
         tableViewSettings.registerNib(UINib(nibName: "SettingsSwitchTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsSwitchTableViewCell")
     
@@ -301,6 +356,77 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     
     func setAppearence() {
         tableViewSettings.backgroundColor = UIColor.groupTableViewBackgroundColor()
+    }
+    
+    func loadData() {
+        page = 0
+        
+        SVProgressHUD.showWithStatus("Loading")
+        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page) { (pods, error) -> () in
+            
+            if error == nil {
+                
+                self.myPODS = pods
+                if self.myPODS.count > 0 {
+                    // TODO: Remove the message added when the POD table is empty
+                } else {
+                    // TODO: Put some message if you don't have any POD
+                }
+                self.tableViewSettings.reloadData()
+                SVProgressHUD.dismiss()
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+
+                SVProgressHUD.dismiss()
+                
+            }
+        }
+    }
+    
+    // MARK: - ProfileAvatarTableViewCell delegate
+    
+    func onSelectImageTouchUpInside() {
+        resignResponder()
+        picker.delegate = self
+        let alert = UIAlertController(title: "Choose an image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.view.tintColor = UIColor.blueDolphin()
+        let libButton = UIAlertAction(title: "Camera Roll", style: UIAlertActionStyle.Default) { (alert) -> Void in
+            self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            self.picker.navigationBar.translucent = false
+            self.picker.navigationBar.barTintColor = UIColor.blueDolphin()
+            self.presentViewController(self.picker, animated: true, completion: nil)
+        }
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
+            let cameraButton = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) { (alert) -> Void in
+                print("Take Photo")
+                self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+                self.presentViewController(self.picker, animated: true, completion: nil)
+            }
+            alert.addAction(cameraButton)
+        } else {
+            print("Camera not available")
+            
+        }
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+            print("Cancel Pressed")
+        }
+        
+        alert.addAction(libButton)
+        alert.addAction(cancelButton)
+        self.presentViewController(alert, animated: true, completion: {
+            //alert.view.tintColor = UIColor.orangeSecondaryGoRun()
+        })
     }
     
     
@@ -323,6 +449,145 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         print("Save Pressed")
         updateUserInfo()
     }
+    
 
+    // MARK: - ImagePickController delegate
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        print("didFinishPickingMediaWithInfo")
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        let cropController = RSKImageCropViewController(image: chosenImage)
+        cropController.delegate = self
+        navigationController?.pushViewController(cropController, animated: true)
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        print("imagePickerControllerDidCancel")
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - RSKImageCropViewControllerDelegate
+    
+    // The original image has been cropped.
+    func imageCropViewController(controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
+        networkController.currentUser?.userAvatarImageData = croppedImage;
+        navigationController?.popViewControllerAnimated(true)
+        tableViewSettings.reloadData()
+        SVProgressHUD.dismiss()
+    }
+
+    func imageCropViewControllerDidCancelCrop(controller: RSKImageCropViewController) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    
+    
+    // The original image will be cropped.
+    func imageCropViewController(controller: RSKImageCropViewController, willCropImage originalImage: UIImage)
+    {
+        // Use when `applyMaskToCroppedImage` set to YES.
+        SVProgressHUD.show()
+    }
+    
+    // MARK: - Handle grades and subjects
+    
+    func loadGradesAndSubjects() {
+        SVProgressHUD.showWithStatus("Loading")
+        networkController.getGrades { (grades, error) -> () in
+            if error == nil {
+                self.availableGrades = grades!
+                
+                self.networkController.getSubjects { (subjects, error) -> () in
+                    if error == nil {
+                        
+                        self.availableSubjects = subjects!
+                        SVProgressHUD.dismiss()
+                        
+                    } else {
+                        let errors: [String]? = error!["errors"] as? [String]
+                        let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        SVProgressHUD.dismiss()
+                    }
+                }
+                
+                
+                
+            } else {
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
+            }
+        }
+        
+    }
+    
+    func selectGrades() {
+        
+        let pickGradesVC              = PickGradesOrSubjectsViewController()
+        pickGradesVC.delegate         = self
+        pickGradesVC.areSubjects      = false
+        pickGradesVC.grades           = availableGrades
+        pickGradesVC.gradesSelected   = selectedGrades
+        pickGradesVC.subjectsSelected = selectedSubjects
+        let pickGradesNavController   = UINavigationController(rootViewController: pickGradesVC)
+        presentViewController(pickGradesNavController, animated: true, completion: nil)
+        
+        
+    }
+    
+    func selectSubjects() {
+        
+        let pickSubjectsVC              = PickGradesOrSubjectsViewController()
+        pickSubjectsVC.delegate         = self
+        pickSubjectsVC.areSubjects      = true
+        pickSubjectsVC.subjects         = availableSubjects
+        pickSubjectsVC.gradesSelected   = selectedGrades
+        pickSubjectsVC.subjectsSelected = selectedSubjects
+        let pickSubjectsNavController   = UINavigationController(rootViewController: pickSubjectsVC)
+        presentViewController(pickSubjectsNavController, animated: true, completion: nil)
+        
+    }
+    
+    func gradesDidSelected(grades: [String]) {
+        initializeUsersGradesAndSubjects()
+    }
+    
+    func subjectsDidSelected(subjects: [String]) {
+        initializeUsersGradesAndSubjects()
+    }
+    
+    func initializeUsersGradesAndSubjects() {
+        
+        if let user = networkController.currentUser {
+            
+            // Initialize user's grades
+            selectedGrades.removeAll()
+            if user.grades != nil {
+                for grade in user.grades! {
+                    let gradeName = String(grade.name!)
+                    selectedGrades.append(gradeName)
+                }
+            }
+            
+            // Initialize user's subjects
+            selectedSubjects.removeAll()
+            if user.subjects != nil {
+                for subject in user.subjects! {
+                    let subjectName = String(subject.name!)
+                    selectedSubjects.append(subjectName)
+                }
+            }
+        }
+        
+    }
 
 }

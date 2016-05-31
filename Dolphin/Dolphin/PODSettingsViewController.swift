@@ -10,6 +10,8 @@ import UIKit
 
 class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource {
 
+    let networkController = NetworkController.sharedInstance
+    
     
     @IBOutlet weak var tableViewPODMembers: UITableView!
     
@@ -27,20 +29,20 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
     init(pod: POD) {
         super.init(nibName: "PODSettingsViewController", bundle: nil)
         self.pod = pod
-        members = pod.podUsers!
+        members = pod.users!
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableViewPODMembers.dataSource = self
         tableViewPODMembers.delegate = self
         registerCells()
         setBackButton()
-        title = pod?.podName
+        title = pod?.name
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -53,10 +55,14 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
             let alert = UIAlertController(title: "Delete", message: "Do you want to remove this member from the POD?", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
-                self.members.removeAtIndex(indexPath.row)
-                self.tableViewPODMembers.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
-                
-                
+                NetworkController.sharedInstance.deletePodMember(String(self.pod!.id!), userId: String(self.members[indexPath.row].id!), completionHandler: { (error) in
+                    if error == nil {
+                        self.members.removeAtIndex(indexPath.row)
+                        self.tableViewPODMembers.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Automatic)
+                    } else {
+                        Utils.presentAlertMessage("Error", message: "An error occurred trying to delete the member", cancelActionText: "Ok", presentingViewContoller: self)
+                    }
+                })
             }))
             alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
             
@@ -72,7 +78,7 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {        
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
         
     }
@@ -130,15 +136,45 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
     @IBAction func deleteButtonTouchUpInside(sender: AnyObject) {
         print("Delete pressed")
         
-        let alert = UIAlertController(title: "Delete", message: "Do you want to delete this POD, are you sure?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.Alert)
         
-        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
-            self.navigationController?.popViewControllerAnimated(true)
+        alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+            // ask to delete again
+            let alertDeleteConfirmation = UIAlertController(title: "Delete", message: "Do you want to delete this POD?", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alertDeleteConfirmation.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+                // delete the pod
+                let podIdString = String(self.pod!.id!)
+                self.networkController.deletePOD(podIdString) { (error) -> () in
+                    if error == nil {
+                        print("pod deleted")
+                        self.navigationController?.popViewControllerAnimated(true)
+                    } else {
+                        let errors: [String]? = error!["errors"] as? [String]
+                        let alert: UIAlertController
+                        if errors != nil && errors![0] != "" {
+                            alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                        } else {
+                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        }
+                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                }
+                
+            }))
+            alertDeleteConfirmation.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            // show the alert
+            self.presentViewController(alertDeleteConfirmation, animated: true, completion: nil)
+            
+            
         }))
-        alert.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
+        alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
         
         // show the alert
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alertWarning, animated: true, completion: nil)
 
     }
     

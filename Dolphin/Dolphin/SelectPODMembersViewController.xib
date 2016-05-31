@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectPODMembersViewController" customModule="Dolphin" customModuleProvider="target">
+            <connections>
+                <outlet property="searchBar" destination="X7f-Rm-N0N" id="x4c-mO-ASS"/>
+                <outlet property="tableView" destination="5HP-q9-YOe" id="17e-un-akw"/>
+                <outlet property="view" destination="iN0-l3-epB" id="iKE-xZ-MEK"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X7f-Rm-N0N">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="cll-TV-7mT"/>
+                    </constraints>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5HP-q9-YOe">
+                    <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="X7f-Rm-N0N" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0tQ-SL-bF7"/>
+                <constraint firstAttribute="trailing" secondItem="X7f-Rm-N0N" secondAttribute="trailing" id="I08-oy-aSu"/>
+                <constraint firstAttribute="trailing" secondItem="5HP-q9-YOe" secondAttribute="trailing" id="Mix-DP-BVZ"/>
+                <constraint firstItem="5HP-q9-YOe" firstAttribute="top" secondItem="X7f-Rm-N0N" secondAttribute="bottom" id="aj5-Ju-uSU"/>
+                <constraint firstAttribute="bottom" secondItem="5HP-q9-YOe" secondAttribute="bottom" id="grv-AE-xCm"/>
+                <constraint firstItem="X7f-Rm-N0N" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="o2r-aR-PSU"/>
+                <constraint firstItem="5HP-q9-YOe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="spQ-DL-Whj"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="588.5" y="328.5"/>
+        </view>
+    </objects>
+</document>

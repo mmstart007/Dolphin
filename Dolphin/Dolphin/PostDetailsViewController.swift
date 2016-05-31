@@ -103,7 +103,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
 
         //navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
-        navigationItem.rightBarButtonItems = [actionBarButton, likeBarButton]
+        navigationItem.rightBarButtonItems = [actionBarButton]
         
     }
     
@@ -111,20 +111,16 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func actionButtonPressed() {
         print("Action Button Pressed")
-        let subViewsArray = NSBundle.mainBundle().loadNibNamed("PostDetailsActionView", owner: self, options: nil)
-        
-        self.actionMenu = subViewsArray[0] as? UIView
-        setupActionMenuFields()
-        actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "actionMenuBackgroundTapped"))
-        self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-        UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            self.actionMenu?.frame = CGRect(x: 0, y: 0, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-            }) { (finished) -> Void in
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.actionMenuBackground.alpha = 0.4
-                })
+
+        if let postId = post?.postId {
+            let urlString = "dolphin-app://?post_id=\(postId)&name=test_name"
+            let myShare = NSURL(string: urlString)
+            let image: UIImage = UIImage(named: "DolphinDealHeader")!
+            
+            let shareVC: UIActivityViewController = UIActivityViewController(activityItems: ["This is the text for an awesome website!", myShare!], applicationActivities: nil)
+            self.presentViewController(shareVC, animated: true, completion: nil)
         }
+        
     }
     
     func setupActionMenuFields() {
@@ -140,8 +136,8 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             sixthActionButton.layer.cornerRadius  = 5
             sixthActionButton.layer.borderWidth   = 1
             sixthActionButton.layer.borderColor   = UIColor.darkGrayColor().CGColor
-            
-            secondActionButton.layer.cornerRadius  = 5
+
+            secondActionButton.layer.cornerRadius = 5
             thirdActionButton.layer.cornerRadius  = 5
             fifthActionButton.layer.cornerRadius  = 5
         }
@@ -221,11 +217,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if (post?.postType?.name != "text") {
-                return 1
-            } else {
-                return 0
-            }
+            return 1
         } else if section == 1 {
             return 1
         } else {
@@ -270,9 +262,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return self.view.frame.size.height / 3
-        } else if indexPath.section == 1 {
+        if indexPath.section == 1 {
             return 40
         } else {
             return UITableViewAutomaticDimension
@@ -281,6 +271,10 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        // Adjust views of image
+        if indexPath.section == 0 {
+            (cell as? PostDetailHeaderTableViewCell)?.adjustCellViews()
+        }
         // Adjust views of comment cells
         if indexPath.section == 2 {
             if indexPath.row % 2 == 0 {

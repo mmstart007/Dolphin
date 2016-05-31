@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -15,6 +15,7 @@
                 <outlet property="loginLabel" destination="RYz-PM-dFS" id="7IO-ee-vpW"/>
                 <outlet property="loginPasswordTextField" destination="sa2-lK-IcE" id="JlT-6S-hhe"/>
                 <outlet property="logoTopSpaceToViewConstraint" destination="1f9-Qn-jGw" id="QjU-y2-JRh"/>
+                <outlet property="rememberUserAndPasswordSwitch" destination="wvM-rL-AZm" id="Jdd-5d-eyJ"/>
                 <outlet property="signUpButton" destination="Fd8-dZ-ZKE" id="oiu-8S-ZGf"/>
                 <outlet property="signUpEmailTextField" destination="E86-CF-PRV" id="ZTq-Fn-anp"/>
                 <outlet property="signUpFieldView" destination="z22-7Q-bX5" id="Vha-eE-RgV"/>
@@ -103,7 +104,7 @@
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z22-7Q-bX5" userLabel="Sign Up Fields View">
-                    <rect key="frame" x="62" y="448" width="250" height="270"/>
+                    <rect key="frame" x="62" y="448" width="250" height="318"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jZ8-Ta-fer" userLabel="User Name">
                             <rect key="frame" x="0.0" y="0.0" width="250" height="40"/>
@@ -154,21 +155,36 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember user and password?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmg-ps-OcC">
+                            <rect key="frame" x="0.0" y="278" width="185" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wvM-rL-AZm">
+                            <rect key="frame" x="193" y="278" width="51" height="31"/>
+                        </switch>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Fd8-dZ-ZKE" firstAttribute="top" secondItem="pnt-2d-6RO" secondAttribute="bottom" constant="40" id="4jz-TN-pc9"/>
                         <constraint firstItem="pnt-2d-6RO" firstAttribute="top" secondItem="E86-CF-PRV" secondAttribute="bottom" constant="20" id="9yl-S1-u0U"/>
                         <constraint firstItem="pnt-2d-6RO" firstAttribute="trailing" secondItem="E86-CF-PRV" secondAttribute="trailing" id="BaW-gh-Csv"/>
+                        <constraint firstItem="hmg-ps-OcC" firstAttribute="top" secondItem="RYz-PM-dFS" secondAttribute="bottom" constant="8" id="Cge-6d-TLm"/>
+                        <constraint firstAttribute="trailing" secondItem="wvM-rL-AZm" secondAttribute="trailing" constant="8" id="EaH-te-RiQ"/>
                         <constraint firstItem="E86-CF-PRV" firstAttribute="leading" secondItem="jZ8-Ta-fer" secondAttribute="leading" id="GKT-Pz-gtU"/>
                         <constraint firstItem="jZ8-Ta-fer" firstAttribute="leading" secondItem="z22-7Q-bX5" secondAttribute="leading" id="HFk-rU-9WC"/>
                         <constraint firstItem="RYz-PM-dFS" firstAttribute="top" secondItem="Fd8-dZ-ZKE" secondAttribute="bottom" id="Hj9-96-602"/>
+                        <constraint firstItem="hmg-ps-OcC" firstAttribute="height" secondItem="RYz-PM-dFS" secondAttribute="height" id="JHf-9l-uOd"/>
+                        <constraint firstItem="hmg-ps-OcC" firstAttribute="leading" secondItem="z22-7Q-bX5" secondAttribute="leading" id="Js4-BW-XUH"/>
                         <constraint firstItem="RYz-PM-dFS" firstAttribute="leading" secondItem="Fd8-dZ-ZKE" secondAttribute="leading" id="K4x-Fn-xTX"/>
-                        <constraint firstItem="jZ8-Ta-fer" firstAttribute="width" secondItem="z22-7Q-bX5" secondAttribute="height" multiplier="25:27" id="Mch-vN-3vJ"/>
-                        <constraint firstAttribute="width" secondItem="z22-7Q-bX5" secondAttribute="height" multiplier="25:24" constant="-31.25" id="Moq-rT-YpN"/>
+                        <constraint firstItem="jZ8-Ta-fer" firstAttribute="width" secondItem="z22-7Q-bX5" secondAttribute="height" multiplier="25:27" constant="-44.444444444444457" id="Mch-vN-3vJ"/>
+                        <constraint firstAttribute="width" secondItem="z22-7Q-bX5" secondAttribute="height" multiplier="25:24" constant="-81.25" id="Moq-rT-YpN"/>
                         <constraint firstItem="Fd8-dZ-ZKE" firstAttribute="trailing" secondItem="pnt-2d-6RO" secondAttribute="trailing" id="TNI-sL-BZj"/>
                         <constraint firstItem="jZ8-Ta-fer" firstAttribute="top" secondItem="z22-7Q-bX5" secondAttribute="top" id="Uh2-z8-pPh"/>
+                        <constraint firstItem="hmg-ps-OcC" firstAttribute="top" secondItem="wvM-rL-AZm" secondAttribute="top" id="XDQ-hE-Jdo"/>
                         <constraint firstItem="Fd8-dZ-ZKE" firstAttribute="leading" secondItem="pnt-2d-6RO" secondAttribute="leading" id="eA3-Vq-mbN"/>
+                        <constraint firstItem="wvM-rL-AZm" firstAttribute="leading" secondItem="hmg-ps-OcC" secondAttribute="trailing" constant="8" id="fwi-Ct-vKh"/>
                         <constraint firstItem="RYz-PM-dFS" firstAttribute="trailing" secondItem="Fd8-dZ-ZKE" secondAttribute="trailing" id="qNj-dk-CWE"/>
                         <constraint firstItem="Fd8-dZ-ZKE" firstAttribute="top" secondItem="pnt-2d-6RO" secondAttribute="bottom" constant="40" id="t0C-kZ-HLx"/>
                         <constraint firstAttribute="trailing" secondItem="jZ8-Ta-fer" secondAttribute="trailing" id="utf-7p-Y9q"/>
@@ -189,9 +205,9 @@
                 <constraint firstAttribute="trailing" secondItem="LX2-vQ-GC0" secondAttribute="trailing" id="UIo-eK-cBe"/>
                 <constraint firstItem="sB5-JS-YTj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Y3l-2Y-1r0"/>
                 <constraint firstItem="z22-7Q-bX5" firstAttribute="top" secondItem="sB5-JS-YTj" secondAttribute="bottom" constant="52" id="Yni-v2-ha8"/>
-                <constraint firstItem="z22-7Q-bX5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="250:667" id="hPr-EK-myB"/>
-                <constraint firstItem="sB5-JS-YTj" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="250:667" id="j0v-Jw-9yM"/>
-                <constraint firstItem="4xx-Ax-qOI" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="250:667" id="mDd-Xz-PFk"/>
+                <constraint firstItem="z22-7Q-bX5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="250:667" constant="2.8421709430404007e-14" id="hPr-EK-myB"/>
+                <constraint firstItem="sB5-JS-YTj" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="250:667" constant="2.8421709430404007e-14" id="j0v-Jw-9yM"/>
+                <constraint firstItem="4xx-Ax-qOI" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="250:667" constant="2.8421709430404007e-14" id="mDd-Xz-PFk"/>
                 <constraint firstItem="4xx-Ax-qOI" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yWV-5W-Q1d"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

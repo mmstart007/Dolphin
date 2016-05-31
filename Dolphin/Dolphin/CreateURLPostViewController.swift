@@ -11,7 +11,6 @@ import UIKit
 import WebKit
 import hpple
 
-
 class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, UIWebViewDelegate {
 
     
@@ -22,6 +21,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     var isLoadingPage: Bool = true
     var webView: UIWebView!
     var urlToLoad: String = ""
+    var podId: Int?
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -34,13 +34,14 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         super.viewDidLoad()
         self.edgesForExtendedLayout = .None
         setBackButton()
-        title = "Dolphin"
+        title                           = "Dolphin"
+        webView                         = UIWebView()
+        webView.delegate                = self
+        urlTextField.text               = "http://google.com"
+        urlTextField.autocorrectionType = .No
+        addTextFieldToKeyboradControlsTextFields(urlTextField)
         
-        webView = UIWebView()
-        webView.delegate = self
-        
-        urlTextField.text = "http://apple.com"
-        loadRequest("http://apple.com")
+        loadRequest("http://google.com")
         self.webView.scalesPageToFit = true;
         self.webView.contentMode = .ScaleAspectFit;
     }
@@ -56,19 +57,37 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         var urlText = textField.text!
-        if !urlText.hasPrefix("http") {
-            urlText = "http://" + urlText
+        if Utils.verifyUrl(urlToLoad) {
+            if !urlText.hasPrefix("http") {
+                urlText = "http://" + urlText
+            }
         }
-        urlToLoad = urlText
-        loadRequest(urlText)
+        urlToLoad = urlText.stringByTrimmingCharactersInSet(
+            NSCharacterSet.whitespaceAndNewlineCharacterSet()
+        )
+        
+        if !Utils.verifyUrl(urlToLoad) {
+            urlToLoad = "http://www.google.com/search?q=".stringByAppendingString(urlToLoad.stringByReplacingOccurrencesOfString(" ", withString: "+").stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
+        }
+        urlTextField.text = urlToLoad
+        loadRequest(urlToLoad)
+        
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.selectedTextRange = textField.textRangeFromPosition(textField.beginningOfDocument, toPosition: textField.endOfDocument)
     }
     
     // MARK: Actions
     
     @IBAction func pinPageButtonTouchUpInside(sender: AnyObject) {
         
+        var siteURLString = ""
+        if let siteToPinURL = webView.request?.URL {
+            siteURLString = siteToPinURL.absoluteString
+        }
         let pageData = NSData(contentsOfURL: (webView.request?.URL!)!)
         let doc = TFHpple(HTMLData: pageData)
         let images = doc.searchWithXPathQuery("//img")
@@ -90,7 +109,8 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         }
         if imageURLs.count > 0 {
             let chooseImageVC = CreateURLPostChooseImageViewController(images: imageURLs)
-            chooseImageVC.urlLoaded = urlToLoad
+            chooseImageVC.urlLoaded = siteURLString
+            chooseImageVC.podId     = podId
             navigationController?.pushViewController(chooseImageVC, animated: true)
         } else {
             let alert = UIAlertController(title: "Error", message: "NO images Obtained from the WebSite", preferredStyle: .Alert)
@@ -125,6 +145,11 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     
     func webViewDidStartLoad(webView: UIWebView) {
         print("Started Loading")
+        if let siteURL = webView.request?.URL {
+            if siteURL.absoluteString != ""{
+                urlTextField.text = siteURL.absoluteString
+            }
+        }
         isLoadingPage = true
         setRefreshButton(isLoadingPage)
     }
