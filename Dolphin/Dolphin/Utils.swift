@@ -79,9 +79,9 @@ class Utils {
     static func encodeBase64(srcImage: UIImage) -> String {
         //Now use image to create into NSData format
         let imageData = UIImagePNGRepresentation(srcImage)
-        let base64String = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        let base64String = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)        
         return base64String
-        
+
     }
     
     static func decodeBase64(encodedBase64String: String) -> UIImage? {
@@ -109,8 +109,8 @@ class Utils {
     static func cropToBounds(image: UIImage, width: CGFloat, height: CGFloat) -> UIImage {
         
         let contextImage: UIImage = UIImage(CGImage: image.CGImage!)
-        
-        let rect = CGRectMake(0, 0, width, height)
+
+        let rect = CGRectMake(0, 0, width, height)        
         
         // Create bitmap image from context using the rect
         let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)!
@@ -119,15 +119,6 @@ class Utils {
         let image: UIImage = UIImage(CGImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
         
         return image
-    }
-    
-    // MARK: - Validations
-    
-    static func verifyUrl (urlString: String) -> Bool {
-        let webSiteRegEx = "((https?)://)?(([\\w\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\+\\=\\(\\)\\[\\]\\{\\}\\?\\<\\>])*)+([\\.|/](([\\w\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\+\\=\\(\\)\\[\\]\\{\\}\\?\\<\\>])+))+"
-        
-        let webSitePredicate = NSPredicate(format:"SELF MATCHES %@", webSiteRegEx)
-        return webSitePredicate.evaluateWithObject(urlString)
     }
     
 }
