@@ -121,4 +121,13 @@ class Utils {
         return image
     }
     
+    // MARK: - Validations
+    
+    static func verifyUrl (urlString: String) -> Bool {
+        let webSiteRegEx = "((https?)://)?(([\\w\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\+\\=\\(\\)\\[\\]\\{\\}\\?\\<\\>])*)+([\\.|/](([\\w\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\-\\+\\=\\(\\)\\[\\]\\{\\}\\?\\<\\>])+))+"
+        
+        let webSitePredicate = NSPredicate(format:"SELF MATCHES %@", webSiteRegEx)
+        return webSitePredicate.evaluateWithObject(urlString)
+    }
+    
 }

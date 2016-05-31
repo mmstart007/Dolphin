@@ -12,7 +12,7 @@ import TwitterKit
 import AddressBook
 import OAuthSwift
 import HMSegmentedControl
-
+import FBSDKLoginKit
 
 class InviteFriendsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate {
     
