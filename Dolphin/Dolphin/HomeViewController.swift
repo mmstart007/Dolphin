@@ -66,21 +66,40 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     func setupTabbarController() {
         // Set appearance of TabBar
         UITabBar.appearance().barTintColor = UIColor.blueDolphin()
-        UITabBar.appearance().tintColor = UIColor.redColor()
-        UITabBar.appearance().selectedImageTintColor = UIColor.yellowHighlightedMenuItem()
-        tabBarController?.tabBar.tintColor = UIColor.redColor()
+        UITabBar.appearance().tintColor = UIColor.yellowHighlightedMenuItem()
+        UITabBarItem.appearance().setTitleTextAttributes(
+            [NSFontAttributeName: UIFont(name:"ArialRoundedMTBold", size:11)!,
+                NSForegroundColorAttributeName: UIColor.whiteColor()],
+            forState: .Normal)
+        UITabBarItem.appearance().setTitleTextAttributes(
+            [NSFontAttributeName: UIFont(name:"ArialRoundedMTBold", size:11)!,
+                NSForegroundColorAttributeName: UIColor.yellowHighlightedMenuItem()],
+            forState: .Selected)
         
-        let controller1 = FeedViewController(likes: false, showOnlyMyPosts: false)
-        let controller2 = FeedViewController(likes: false, showOnlyMyPosts: true)
+        let controller1 = RecentsViewController(likes: false)
+        let controller2 = MyFeedViewController(likes: false)
         let controller3 = UIViewController()
         let controller4 = PopularViewController()
         let controller5 = PODsListViewController()
         
-        controller1.tabBarItem = UITabBarItem(title: "Recent", image: UIImage(named: "TabbarLatestIcon"), selectedImage: UIImage(named: "TabbarLatestIcon"))
-        controller2.tabBarItem = UITabBarItem(title: "My Feed", image: UIImage(named: "SidebarDolphinIcon"), selectedImage: UIImage(named: "SidebarDolphinIcon"))
+        
+        controller1.tabBarItem = UITabBarItem(title: "Recent",
+            image: UIImage(named:"TabbarLatestIcon")!.imageWithRenderingMode(.AlwaysOriginal),
+            selectedImage: UIImage(named:"TabbarLatestIcon"))
+        
+        controller2.tabBarItem = UITabBarItem(title: "My Feed",
+            image: UIImage(named:"SidebarDolphinIcon")!.imageWithRenderingMode(.AlwaysOriginal),
+            selectedImage: UIImage(named:"SidebarDolphinIcon"))
+        
         controller3.tabBarItem = UITabBarItem(title: "", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
-        controller4.tabBarItem = UITabBarItem(title: "Popular", image: UIImage(named: "SidebarGlassesIcon"), selectedImage: UIImage(named: "SidebarGlassesIcon"))
-        controller5.tabBarItem = UITabBarItem(title: "PODs", image: UIImage(named: "SidebarMyPODsIcon"), selectedImage: UIImage(named: "SidebarMyPODsIcon"))
+        
+        controller4.tabBarItem = UITabBarItem(title: "Popular",
+            image: UIImage(named:"SidebarGlassesIcon")!.imageWithRenderingMode(.AlwaysOriginal),
+            selectedImage: UIImage(named:"SidebarGlassesIcon"))
+        
+        controller5.tabBarItem = UITabBarItem(title: "PODs",
+            image: UIImage(named:"SidebarMyPODsIcon")!.imageWithRenderingMode(.AlwaysOriginal),
+            selectedImage: UIImage(named:"SidebarMyPODsIcon"))
         
         let tabViewControllers = [controller1, controller2, controller3, controller4, controller5]
         viewControllers = tabViewControllers

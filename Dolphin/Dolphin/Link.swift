@@ -13,6 +13,8 @@ class Link : NSObject {
     var id: Int?
     var url: String?
     var imageURL: String?
+    var imageWidth: CGFloat?
+    var imageHeight: CGFloat?
     
     convenience init(url: String, imageURL: String) {
         self.init()
@@ -27,6 +29,8 @@ class Link : NSObject {
         self.id       = jsonObject["id"] as? Int
         self.url      = jsonObject["url"] as? String
         self.imageURL = jsonObject["image_url"] as? String
+        self.imageWidth = jsonObject["image_width"] as? CGFloat
+        self.imageHeight = jsonObject["image_height"] as? CGFloat
     }
     
     

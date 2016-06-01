@@ -6,12 +6,11 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "sunglasses_icon2x-1.png",
+      "filename" : "menu_sunglasses_icon@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "sunglasses_icon3x.png",
       "scale" : "3x"
     }
   ],

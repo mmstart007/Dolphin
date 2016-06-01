@@ -166,6 +166,10 @@
 		36F4AC3E1C64EFB900323672 /* CreateTextPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */; };
 		890B04FF265D7EA4ECA25CE0 /* Pods_Dolphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */; };
 		F8483E6B1CFE6FB90060CC8C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6A1CFE6FB90060CC8C /* Globals.swift */; };
+		F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6C1CFE7BFA0060CC8C /* MyFeedViewController.swift */; };
+		F8483E711CFE7BFA0060CC8C /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */; };
+		F8483E721CFE7BFA0060CC8C /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6E1CFE7BFA0060CC8C /* WebViewController.swift */; };
+		F8483E731CFE7BFA0060CC8C /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8483E6F1CFE7BFA0060CC8C /* WebViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -358,6 +362,10 @@
 		AD9E99804B93529D712BC626 /* Pods-Dolphin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.debug.xcconfig"; sourceTree = "<group>"; };
 		DCFBF776029220B30C3A087B /* Pods-Dolphin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.release.xcconfig"; sourceTree = "<group>"; };
 		F8483E6A1CFE6FB90060CC8C /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		F8483E6C1CFE7BFA0060CC8C /* MyFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyFeedViewController.swift; sourceTree = "<group>"; };
+		F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentsViewController.swift; sourceTree = "<group>"; };
+		F8483E6E1CFE7BFA0060CC8C /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		F8483E6F1CFE7BFA0060CC8C /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -421,6 +429,12 @@
 		361FC0781CA1F57400388FD0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				36BE4D071C062404002E52D9 /* HomeViewController.swift */,
+				36BE4D091C06250B002E52D9 /* HomeViewController.xib */,
+				F8483E6C1CFE7BFA0060CC8C /* MyFeedViewController.swift */,
+				F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */,
+				F8483E6E1CFE7BFA0060CC8C /* WebViewController.swift */,
+				F8483E6F1CFE7BFA0060CC8C /* WebViewController.xib */,
 				365D76C71C7540AA00A0833F /* DealDetailsViewController.swift */,
 				365D76C81C7540AA00A0833F /* DealDetailsViewController.xib */,
 				3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */,
@@ -429,8 +443,6 @@
 				36D129091C2C39FE002E3F47 /* InviteFriendsViewController.xib */,
 				360EA4B21C0F6F1400692668 /* PopularViewController.swift */,
 				360EA4B41C0F6F3A00692668 /* PopularViewController.xib */,
-				36BE4D071C062404002E52D9 /* HomeViewController.swift */,
-				36BE4D091C06250B002E52D9 /* HomeViewController.xib */,
 				36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */,
 				36D0C6A71C08E3790002AE35 /* FeedViewController.xib */,
 			);
@@ -992,6 +1004,7 @@
 				3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */,
 				36DCCD781C73EB8800D4B171 /* UserImagePODMemberCollectionViewCell.xib in Resources */,
 				369697461C725ECB00774055 /* PODDetailsViewController.xib in Resources */,
+				F8483E731CFE7BFA0060CC8C /* WebViewController.xib in Resources */,
 				361FC0851CA1FD0000388FD0 /* SubjectOrGradeTableViewCell.xib in Resources */,
 				364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */,
 				365D76CA1C7540AA00A0833F /* DealDetailsViewController.xib in Resources */,
@@ -1170,6 +1183,7 @@
 				365DBDDB1CACC0B600D20C02 /* SelectPODMembersViewController.swift in Sources */,
 				360993141C4049530082B995 /* UIAppearance_Swift.m in Sources */,
 				3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */,
+				F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */,
 				361FC07F1CA1F7A200388FD0 /* PickGradesOrSubjectsViewController.swift in Sources */,
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
 				36E4116C1C8DF1A3002DC736 /* CreateProfileViewController.swift in Sources */,
@@ -1198,6 +1212,7 @@
 				36D841151C31EDC500C3065C /* TwitterFriend.swift in Sources */,
 				36E998281C28C14A007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.swift in Sources */,
 				361FFE241C0D0BA8007EE366 /* PostCommentOddTableViewCell.swift in Sources */,
+				F8483E711CFE7BFA0060CC8C /* RecentsViewController.swift in Sources */,
 				36D129081C2C39E6002E3F47 /* InviteFriendsViewController.swift in Sources */,
 				361F508A1C65388100153B6C /* NewPostPrivacySettingsVisibilityCell.swift in Sources */,
 				36F4AC3C1C64EF9B00323672 /* CreateTextPostViewController.swift in Sources */,
@@ -1205,6 +1220,7 @@
 				3689ECE21C0E58CE0087F828 /* PODsListViewController.swift in Sources */,
 				361BFDAF1C9CA04C00F994F1 /* Link.swift in Sources */,
 				361F50861C65337C00153B6C /* NewPostPrivacySettingsViewController.swift in Sources */,
+				F8483E721CFE7BFA0060CC8C /* WebViewController.swift in Sources */,
 				3636F9641C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift in Sources */,
 				3668B2FD1C6A7A6200469FF9 /* DealCollectionViewCell.swift in Sources */,
 				3650E0BF1C6D42C200BB9301 /* FXBlurView.m in Sources */,

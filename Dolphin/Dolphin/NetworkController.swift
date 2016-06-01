@@ -416,6 +416,55 @@ class NetworkController: NSObject {
         }
     }
 
+    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
+        var posts: [Post] = []
+        var filters = [String: AnyObject]()
+        if topics != nil {
+            let topicsNameArray = topics?.map({ $0.name })
+            filters["topics"]   = topicsNameArray as? [String]
+            print(topicsNameArray)
+        }
+        if types != nil {
+            let typesNameArray = types?.map({ $0.name })
+            filters["types"]   = typesNameArray as? [String]
+            print(typesNameArray)
+        }
+        if fromDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(fromDate!)
+            filters["from_date"]     = dateString
+        }
+        if toDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(toDate!)
+            filters["to_date"]       = dateString
+        }
+        if userId != nil {
+            filters["user_id"] = userId
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let postJsonArray = result!["posts"] as? [[AnyObject]]
+                if postJsonArray?.count > 0 {
+                    for elem in postJsonArray! {
+                        posts.append(Post(jsonObject: elem[0]))
+                    }
+                }
+                completionHandler(posts, nil)
+            } else {
+                completionHandler(posts, error)
+            }
+        }
+    }
     
     func filterMyFeedsPost(quantity: Int?, page: Int?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
         var posts: [Post] = []

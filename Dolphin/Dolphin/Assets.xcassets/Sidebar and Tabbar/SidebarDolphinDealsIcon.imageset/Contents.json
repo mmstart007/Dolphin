@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "dolphinDealsIcon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dolphinDealsIcon.png",
+      "filename" : "deal.png",
       "scale" : "2x"
     },
     {

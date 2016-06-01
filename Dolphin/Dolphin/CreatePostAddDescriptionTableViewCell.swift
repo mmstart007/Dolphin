@@ -15,6 +15,9 @@ class CreatePostAddDescriptionTableViewCell: UITableViewCell {
     @IBOutlet weak var textFieldPostTitle: UITextField!
     @IBOutlet weak var textViewDescription: UITextView!
     
+    internal static func getHeight() -> CGFloat {
+        return 600
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,24 +38,19 @@ class CreatePostAddDescriptionTableViewCell: UITableViewCell {
             let manager = SDWebImageManager.sharedManager()
             manager.downloadImageWithURL(NSURL(string: postImageURL!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                 if error == nil {
-                    let resizedImage = Utils.resizeImage(image, newWidth: self.imageViewPostImage.frame.width)
-                    let croppedImage = Utils.cropToBounds(resizedImage, width: self.imageViewPostImage.frame.width, height: self.imageViewPostImage.frame.height)
-                    self.imageViewPostImage.image = croppedImage
+                    self.imageViewPostImage.image = image
                 } else {
                     self.imageViewPostImage.image = UIImage(named: "PostImagePlaceholder")
                 }
             })
         } else {
-            let resizedImage = Utils.resizeImage(postImage!, newWidth: imageViewPostImage.frame.width)
-            let croppedImage = Utils.cropToBounds(resizedImage, width: imageViewPostImage.frame.width, height: imageViewPostImage.frame.height)
-            imageViewPostImage.image = croppedImage
+            imageViewPostImage.image = postImage!
         }
         if isLink {
             textFieldPostTitle.text = postURL
             textFieldPostTitle.userInteractionEnabled = false
         } else {
             textFieldPostTitle.userInteractionEnabled = true
-            
         }
     }
 

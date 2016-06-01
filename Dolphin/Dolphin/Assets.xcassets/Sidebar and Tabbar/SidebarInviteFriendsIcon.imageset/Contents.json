@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "sidebarInviteFriend.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "sidebarInviteFriend.png",
+      "filename" : "sidebarInviteFriend@2x.png",
       "scale" : "2x"
     },
     {

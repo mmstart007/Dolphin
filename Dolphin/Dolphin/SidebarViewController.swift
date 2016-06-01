@@ -14,6 +14,7 @@ class SidebarViewController : UIViewController {
     let networkController = NetworkController.sharedInstance
     
     // MARK: IBOutlets
+    @IBOutlet weak var avatarView: UIView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var labelUserName: UILabel!
     @IBOutlet weak var myFeedIconImageView: UIImageView!
@@ -55,6 +56,10 @@ class SidebarViewController : UIViewController {
         setAppearance()
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
@@ -65,9 +70,6 @@ class SidebarViewController : UIViewController {
                 labelUserName.text = String(format: "%@ %@", user.firstName!, user.lastName!)
             } else {
                 labelUserName.text = user.userName!
-            }
-            if let userImageURL = user.userAvatarImageURL {
-                userImageView.sd_setImageWithURL(NSURL(string: userImageURL), placeholderImage: UIImage(named: "UserPlaceholder"))
             }
             
             
@@ -83,6 +85,10 @@ class SidebarViewController : UIViewController {
     // MARK: Customize Appearance
     
     func setAppearance() {
+        
+        avatarView.layer.masksToBounds = true
+        avatarView.layer.cornerRadius = avatarView.frame.size.width / 2.0
+        
         userImageView.layer.borderColor = UIColor.whiteColor().CGColor
         userImageView.layer.borderWidth = 3
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2.0
@@ -111,7 +117,7 @@ class SidebarViewController : UIViewController {
     @IBAction func historyButtonTouchUpInside(sender: AnyObject) {
         print("History menu item selected")
         revealViewController().revealToggleAnimated(true)
-        homeViewController.navigationController?.pushViewController(FeedViewController(likes: true, showOnlyMyPosts: false), animated: true)
+        homeViewController.navigationController?.pushViewController(FeedViewController(likes: true), animated: true)
     }
     
     func setHistorySelected() {
@@ -171,9 +177,6 @@ class SidebarViewController : UIViewController {
         // remove user token
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey("api_token")
-        // remove the current user
-        networkController.currentUser = nil
-        
         
         let loginVC = LoginViewController()
         let rootViewController = (UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController
