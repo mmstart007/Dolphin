@@ -21,20 +21,8 @@ class User : NSObject {
     var userEmail: String?
     var userPassword: String?
     var isPrivate: Int?
-    var grades: [Grade]?
-    var subjects: [Subject]?
-    
-    override func isEqual(object: AnyObject?) -> Bool {
-        if let object = object as? User {
-            return self.id == object.id
-        } else {
-            return false
-        }
-    }
-    
-    override var hash: Int {
-        return id!.hashValue
-    }
+    var grades: [Grade]?  = []
+    var subjects: [Subject]? = []
     
     convenience init(deviceId: String?, userName: String?, imageURL: String?, email: String?, password: String?) {
         self.init()
@@ -56,18 +44,33 @@ class User : NSObject {
         self.isPrivate          = jsonObject["is_private"] as? Int
         self.id                 = jsonObject["id"] as? Int
         self.userAvatarImageURL = jsonObject["avatar_image_url"] as? String
-        self.grades = (jsonObject["grades"] as? [[String: AnyObject]])?.map({ (actual) -> Grade in
-            Grade(jsonObject: actual)
-        })
-        self.subjects = (jsonObject["subjects"] as? [[String: AnyObject]])?.map({ (actual) -> Subject in
-            Subject(jsonObject: actual)
-        })
         
+        let arrayGrades         = jsonObject["grades"] as? [NSDictionary]
+        if(arrayGrades != nil)
+        {
+            for item in arrayGrades! {
+                let g = Grade(jsonObject: item)
+                self.grades?.append(g)
+            }
+        }
         
+        let arraySubjects        = jsonObject["subjects"] as? [NSDictionary]
+        if(arraySubjects != nil)
+        {
+            for item in arraySubjects! {
+                let s = Subject(jsonObject: item)
+                self.subjects?.append(s)
+            }
+        }
     }
     
     func toJson() -> [String: AnyObject] {
-        var retDic: [String: AnyObject] = ["device_id": self.deviceId!]
+        var retDic: [String: AnyObject] = [:]
+        
+        if self.deviceId != nil {
+            retDic["device_id"] = self.deviceId!
+        }
+        
         if let uname = self.userName {
             retDic["username"] = uname
         }
@@ -89,17 +92,83 @@ class User : NSObject {
         if let priv = self.isPrivate {
             retDic["is_private"] = priv
         }
-        if let grds = self.grades {
-            retDic["grades"] = grds
-        }
-        if let sub = self.subjects {
-            retDic["subjects"] = sub
-        }
         if let image = self.userAvatarImageData {
             retDic["avatar_image"] = Utils.encodeBase64(image)
         }
-        return retDic
         
+        if self.subjects != nil {
+            
+            var array: [AnyObject] = []
+            for item in self.subjects! {
+                array.append(item.toJson())
+            }
+            
+            retDic["subjects"] = array
+        }
+        
+        if self.grades != nil {
+            
+            var array: [AnyObject] = []
+            for item in self.grades! {
+                array.append(item.toJson())
+            }
+            
+            retDic["grades"] = array
+        }
+        return retDic
+    }
+    
+    
+    func getSubjectIds() -> [String] {
+        
+        var subject_ids: [String] = []
+        
+        if(self.subjects != nil)
+        {
+            for item in self.subjects! {
+                subject_ids.append(String(format: "%d", item.id!))
+            }
+        }
+        
+        return subject_ids
+    }
+    
+    func getSubjectNames() -> String {
+        var subject_name: [String] = []
+        
+        if(self.subjects != nil)
+        {
+            for item in self.subjects! {
+                subject_name.append(item.name!)
+            }
+        }
+        return subject_name.joinWithSeparator(",")
+    }
+    
+    func getGradeIds() -> [String] {
+        
+        var grade_ids: [String] = []
+        
+        if(self.grades != nil)
+        {
+            for item in self.grades! {
+                grade_ids.append(String(format: "%d", item.id!))
+            }
+        }
+        
+        return grade_ids
+    }
+    
+    func getGradeNames() -> String {
+        var grade_name: [String] = []
+        
+        if(self.grades != nil)
+        {
+            for item in self.grades! {
+                grade_name.append(item.name!)
+            }
+        }
+        return grade_name.joinWithSeparator(",")
     }
     
 }

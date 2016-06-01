@@ -26,5 +26,10 @@ class Grade : NSObject {
         self.name      = jsonObject["name"] as? String
     }
     
-    
+    func toJson() -> [String: AnyObject] {
+        var retDic: [String: AnyObject] = [:]
+        retDic["id"] = self.id
+        retDic["name"] = self.name
+        return retDic
+    }
 }

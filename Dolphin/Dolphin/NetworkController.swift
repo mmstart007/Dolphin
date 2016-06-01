@@ -44,6 +44,7 @@ class NetworkController: NSObject {
     enum ApiMethod: String {
         case Login              = "login"
         case User               = "users"
+        case FilterUser         = "users/filter"
         case GetUserById        = "users/%@"
         case GetUserLikes       = "users/%@/likes"
         case GetUserLikePost    = "users/%@/likes/%@"
@@ -58,7 +59,10 @@ class NetworkController: NSObject {
         case PostReport         = "posts/%@/reports"
         case CreateTopic        = "topics"
         case TopicById          = "topics/%@"
-        
+        case CreatePOD          = "pods"
+        case FilterPOD          = "pods/filter"
+        case PODById            = "pods/%@"
+        case PodMember          = "pods/%@/users/%@"
     }
     
     
@@ -106,10 +110,10 @@ class NetworkController: NSObject {
         
     }
     
-    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, completionHandler: (User?, AnyObject?) -> ()) -> () {
+    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, subjects: [String]?, grades: [String]?, completionHandler: (User?, AnyObject?) -> ()) -> () {
         
         var userUpdated: User?
-        var updateValues = [String: String]()
+        var updateValues = [String: AnyObject]()
         if userName != nil {
             updateValues["username"] = userName
         }
@@ -135,7 +139,13 @@ class NetworkController: NSObject {
             updateValues["location"] = location
         }
         if isPrivate != nil {
-            updateValues["is_private"] = String(isPrivate!)
+            updateValues["is_private"] = isPrivate!
+        }
+        if grades != nil {
+            updateValues["grades"] = grades
+        }
+        if subjects != nil {
+            updateValues["subjects"] = subjects
         }
         let parameters : [String : AnyObject]? = ["user": updateValues]
         performRequest(MethodType.PATCH, authenticated: true, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
@@ -146,6 +156,49 @@ class NetworkController: NSObject {
                 completionHandler(userUpdated, nil)
             } else {
                 completionHandler(userUpdated, error)
+            }
+        }
+    }
+    
+    func filterUser(pattern: String?, podId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, completionHandler: ([User], AnyObject?) -> ()) -> () {
+        var users: [User] = []
+        var filters = [String: AnyObject]()
+        if pattern != nil {
+            filters["pattern"] = pattern
+        }
+        if podId != nil {
+            filters["pod_id"] = podId
+        }
+        if fromDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(fromDate!)
+            filters["from_date"]     = dateString
+        }
+        if toDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(toDate!)
+            filters["to_date"]       = dateString
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterUser, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let usersJsonArray = result!["users"] as? [AnyObject]
+                if usersJsonArray?.count > 0 {
+                    for elem in usersJsonArray! {
+                        users.append(User(jsonObject: elem))
+                    }
+                }
+                completionHandler(users, nil)
+            } else {
+                completionHandler(users, error)
             }
         }
     }
@@ -294,7 +347,7 @@ class NetworkController: NSObject {
         
     }
     
-    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
+    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, podId: Int?, filterByUserInterests: Bool, completionHandler: ([Post], AnyObject?) -> ()) -> () {
         var posts: [Post] = []
         var filters = [String: AnyObject]()
         if topics != nil {
@@ -328,6 +381,25 @@ class NetworkController: NSObject {
         if page != nil {
             filters["page"] = page
         }
+        if podId != nil {
+            filters["pod_id"] = podId
+        }
+        
+        if filterByUserInterests && currentUser != nil {
+            if let grades = currentUser!.grades {
+                if grades.count > 0 {
+                    let gradesArray   = grades.map({ $0.id! })
+                    filters["grades"] = gradesArray
+                }
+            }
+            if let subjects = currentUser!.subjects {
+                if subjects.count > 0 {
+                    let subjectsArray   = subjects.map({ $0.id! })
+                    filters["subjects"] = subjectsArray
+                }
+            }
+        }
+        
         let parameters : [String : AnyObject]? = ["filter": filters]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
@@ -343,6 +415,7 @@ class NetworkController: NSObject {
             }
         }
     }
+
     
     func filterMyFeedsPost(quantity: Int?, page: Int?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
         var posts: [Post] = []
@@ -495,6 +568,90 @@ class NetworkController: NSObject {
         
     }
     
+    // MARK: - PODS
+    
+    func createPOD(pod: POD, completionHandler: (POD?, AnyObject?) -> ()) -> () {
+        var savedPOD: POD?
+        let parameters : [String : AnyObject]? = ["pod": pod.toJson()]
+        performRequest(MethodType.POST, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let podJson = result!["pod"] as? [String: AnyObject] {
+                    savedPOD = POD(jsonObject: podJson)
+                }
+                completionHandler(savedPOD, nil)
+            } else {
+                completionHandler(savedPOD, error)
+            }
+        }
+        
+    }
+    
+    func filterPOD(pattern: String?, userId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, completionHandler: ([POD], AnyObject?) -> ()) -> () {
+        var pods: [POD] = []
+        var filters = [String: AnyObject]()
+        if pattern != nil {
+            filters["pattern"] = pattern
+        }
+        if userId != nil {
+            filters["user_id"] = userId
+        }
+        if fromDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(fromDate!)
+            filters["from_date"]     = dateString
+        }
+        if toDate != nil {
+            let dateFormatter        = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
+            let dateString           = dateFormatter.stringFromDate(toDate!)
+            filters["to_date"]       = dateString
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterPOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let podsJsonArray = result!["pods"] as? [AnyObject]
+                if podsJsonArray?.count > 0 {
+                    for elem in podsJsonArray! {
+                        pods.append(POD(jsonObject: elem))
+                    }
+                }
+                completionHandler(pods, nil)
+            } else {
+                completionHandler(pods, error)
+            }
+        }
+    }
+    
+    func deletePOD(podId: String, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [podId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
+    }
+    func deletePodMember(podId: String, userId: String,completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [podId, userId]
+        performRequest(MethodType.DELETE, authenticated: true, method: .PodMember, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+        
+    }
+
     // MARK: - COMMENTS
     
     func createComment(postId: String, postComment: PostComment, completionHandler: (PostComment?, AnyObject?) -> ()) -> () {

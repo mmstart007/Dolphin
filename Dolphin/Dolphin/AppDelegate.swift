@@ -68,6 +68,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             currentUserId = Int(userId)
         }
         
+        //User.
+        if let userData = defaults.objectForKey("current_user") {
+            let json = Globals.nsdataToJSON(userData as! NSData)
+            let user = User(jsonObject: json!)
+            networkController.currentUser = user
+        }
+        
         networkController.currentUserId = currentUserId
         networkController.token         = apiToken
         let rootViewController          = userLogged ? homeViewController : loginVC

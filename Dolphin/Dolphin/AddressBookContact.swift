@@ -13,11 +13,15 @@ class AddressBookContact {
     var userName: String!
     var userImage: UIImage?
     var userId: String!
+    var userPhone: [String]
+    var userEmail: [String]
     
-    init(name: String!, image: UIImage?, user_id: String!) {
+    init(name: String!, image: UIImage?, user_id: String!, phone: [String], email: [String]) {
         self.userName  = name
         self.userImage = image
         self.userId    = user_id
+        self.userPhone = phone
+        self.userEmail = email
     }
     
 }

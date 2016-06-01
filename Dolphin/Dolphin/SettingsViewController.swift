@@ -10,9 +10,10 @@ import UIKit
 import SVProgressHUD
 import RSKImageCropper
 import SDWebImage
+import MessageUI
 
 class SettingsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, SettingsSwitchTableViewCellDelegate,
-    RSKImageCropViewControllerDelegate, ProfileAvatarTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PickerGradesOrSubjectsDelegate {
+    RSKImageCropViewControllerDelegate, ProfileAvatarTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PickerGradesOrSubjectsDelegate, MFMailComposeViewControllerDelegate{
     
     let networkController = NetworkController.sharedInstance
     let kPageQuantity: Int = 10
@@ -51,8 +52,8 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         registerCells()
         // reset image data from the user
         networkController.currentUser?.userAvatarImageData = nil
-        loadGradesAndSubjects()
-        initializeUsersGradesAndSubjects()
+//        loadGradesAndSubjects()
+//        initializeUsersGradesAndSubjects()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -126,7 +127,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                 if cell == nil {
                     cell = SettingsTextFieldTableViewCell()
                 }
-                (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Username", placeholder: "username", value: networkController.currentUser?.userName)
+                (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Username", placeholder: "username", value: networkController.currentUser?.userName, isEdit: true, subItem: false)
             }
             else {
                 if indexPath.row == 1 {
@@ -141,39 +142,35 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("First Name", placeholder: "enter your name", value: networkController.currentUser?.firstName)
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("First Name", placeholder: "enter your name", value: networkController.currentUser?.firstName, isEdit: true, subItem: false)
                     
                 } else if indexPath.row == 3 {
                     cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Last Name", placeholder: "enter your last name", value: networkController.currentUser?.lastName)
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Last Name", placeholder: "enter your last name", value: networkController.currentUser?.lastName, isEdit: true, subItem: false)
                     
                 } else if indexPath.row == 4 {
                     cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location", value: networkController.currentUser?.location)
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location", value: Globals.currentAddress, isEdit: false, subItem: false)
                     
                 } else if indexPath.row == 5 {
-                    cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
-                    if (cell == nil) {
-                        cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
+                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                    if cell == nil {
+                        cell = SettingsTextFieldTableViewCell()
                     }
-                    cell?.detailTextLabel?.text = ""
-                    cell?.accessoryType = .DisclosureIndicator
-                    cell?.textLabel?.text = "My Grades"
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Grades", placeholder: "select your grades", value: networkController.currentUser?.getGradeNames(), isEdit: false, subItem: true)
                     
                 } else if indexPath.row == 6 {
-                    cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
-                    if (cell == nil) {
-                        cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
+                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                    if cell == nil {
+                        cell = SettingsTextFieldTableViewCell()
                     }
-                    cell?.detailTextLabel?.text = ""
-                    cell?.accessoryType = .DisclosureIndicator
-                    cell?.textLabel?.text = "My Subjects"
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Subjects", placeholder: "select your subjects", value: networkController.currentUser?.getSubjectNames(), isEdit: false, subItem: true)
                     
                 }
             }
@@ -258,9 +255,76 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                 }
             }
         }
+        
+            //Dolphin.
+        else if indexPath.section == 4 {
+            
+            //Like Us on Facebook.
+            if indexPath.row == 0 {
+                UIApplication.sharedApplication().openURL(NSURL(string: Constants.FacebookURL)!)
+            }
+                
+                //Follow us on Instagram
+            else if indexPath.row == 1 {
+                UIApplication.sharedApplication().openURL(NSURL(string: Constants.InstagramURL)!)
+            }
+                
+                //Follow us on Twitter
+            else if indexPath.row == 2 {
+                UIApplication.sharedApplication().openURL(NSURL(string: Constants.TwitterURL)!)
+            }
+                
+                //Rate our app
+            else if indexPath.row == 3 {
+                UIApplication.sharedApplication().openURL(NSURL(string: Constants.iTunesURL)!)
+            }
+        }
+            
+            //Support
+        else if indexPath.section == 5 {
+            
+            //Frequently Asked Questions.
+            if indexPath.row == 0 {
+                UIApplication.sharedApplication().openURL(NSURL(string: Constants.FrequentlyAskedQuestionsURL)!)
+            }
+                
+                //Email Support
+            else if indexPath.row == 1 {
+                emailSupport()
+            }
+                
+                //Terms of Use
+            else if indexPath.row == 2 {
+                UIApplication.sharedApplication().openURL(NSURL(string: Constants.TermsOfUseURL)!)
+            }
+                
+                //Privacy Policy
+            else if indexPath.row == 3 {
+                UIApplication.sharedApplication().openURL(NSURL(string: Constants.PrivacyPolicyURL)!)
+            }
+        }
     }
     
-        
+    func emailSupport() {
+        if MFMailComposeViewController.canSendMail() {
+            
+            let mailComposerVC = MFMailComposeViewController()
+            mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+            mailComposerVC.setToRecipients([Constants.AdminEmail])
+            self.presentViewController(mailComposerVC, animated: true, completion: nil)
+            
+        } else {
+            Utils.presentAlertMessage(Constants.Messages.UnsupportedEmailTitle,
+                message: Constants.Messages.UnsupportedEmail,
+                cancelActionText: "Ok",
+                presentingViewContoller: self)
+        }
+    }
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     // MARK: - Auxiliary methods
     
     func updateUserInfo() {
@@ -533,61 +597,71 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     func selectGrades() {
         
         let pickGradesVC              = PickGradesOrSubjectsViewController()
-        pickGradesVC.delegate         = self
-        pickGradesVC.areSubjects      = false
-        pickGradesVC.grades           = availableGrades
-        pickGradesVC.gradesSelected   = selectedGrades
-        pickGradesVC.subjectsSelected = selectedSubjects
-        let pickGradesNavController   = UINavigationController(rootViewController: pickGradesVC)
-        presentViewController(pickGradesNavController, animated: true, completion: nil)
-        
-        
+        pickGradesVC.delegate = self
+        pickGradesVC.areSubjects = false
+        pickGradesVC.fromSettings = true
+        pickGradesVC.gradesSelected = (networkController.currentUser?.grades)!
+        pickGradesVC.subjectsSelected = (networkController.currentUser?.subjects)!
+        navigationController?.pushViewController(pickGradesVC, animated: true)
     }
     
     func selectSubjects() {
         
         let pickSubjectsVC              = PickGradesOrSubjectsViewController()
-        pickSubjectsVC.delegate         = self
-        pickSubjectsVC.areSubjects      = true
-        pickSubjectsVC.subjects         = availableSubjects
-        pickSubjectsVC.gradesSelected   = selectedGrades
-        pickSubjectsVC.subjectsSelected = selectedSubjects
-        let pickSubjectsNavController   = UINavigationController(rootViewController: pickSubjectsVC)
-        presentViewController(pickSubjectsNavController, animated: true, completion: nil)
-        
+        pickSubjectsVC.delegate = self
+        pickSubjectsVC.areSubjects = true
+        pickSubjectsVC.fromSettings = true
+        pickSubjectsVC.gradesSelected = (networkController.currentUser?.grades)!
+        pickSubjectsVC.subjectsSelected = (networkController.currentUser?.subjects)!
+        navigationController?.pushViewController(pickSubjectsVC, animated: true)
     }
     
-    func gradesDidSelected(grades: [String]) {
-        initializeUsersGradesAndSubjects()
-    }
-    
-    func subjectsDidSelected(subjects: [String]) {
-        initializeUsersGradesAndSubjects()
-    }
-    
-    func initializeUsersGradesAndSubjects() {
-        
-        if let user = networkController.currentUser {
-            
-            // Initialize user's grades
-            selectedGrades.removeAll()
-            if user.grades != nil {
-                for grade in user.grades! {
-                    let gradeName = String(grade.name!)
-                    selectedGrades.append(gradeName)
-                }
-            }
-            
-            // Initialize user's subjects
-            selectedSubjects.removeAll()
-            if user.subjects != nil {
-                for subject in user.subjects! {
-                    let subjectName = String(subject.name!)
-                    selectedSubjects.append(subjectName)
-                }
-            }
+    func gradesDidSelected(grades: [Grade]) {
+        networkController.currentUser?.grades?.removeAll()
+        for item in grades {
+            networkController.currentUser?.grades?.append(item)
         }
-        
+        tableViewSettings.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
     }
-
+    
+    func subjectsDidSelected(subjects: [Subject]) {
+        networkController.currentUser?.subjects?.removeAll()
+        for item in subjects {
+            networkController.currentUser?.subjects?.append(item)
+        }
+        tableViewSettings.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+    }
+    
+//    func gradesDidSelected(grades: [String]) {
+//        initializeUsersGradesAndSubjects()
+//    }
+//    
+//    func subjectsDidSelected(subjects: [String]) {
+//        initializeUsersGradesAndSubjects()
+//    }
+//    
+//    func initializeUsersGradesAndSubjects() {
+//        
+//        if let user = networkController.currentUser {
+//            
+//            // Initialize user's grades
+//            selectedGrades.removeAll()
+//            if user.grades != nil {
+//                for grade in user.grades! {
+//                    let gradeName = String(grade.name!)
+//                    selectedGrades.append(gradeName)
+//                }
+//            }
+//            
+//            // Initialize user's subjects
+//            selectedSubjects.removeAll()
+//            if user.subjects != nil {
+//                for subject in user.subjects! {
+//                    let subjectName = String(subject.name!)
+//                    selectedSubjects.append(subjectName)
+//                }
+//            }
+//        }
+//        
+//    }
 }

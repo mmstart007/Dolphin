@@ -12,7 +12,7 @@ class SettingsTextFieldTableViewCell: UITableViewCell {
     
     @IBOutlet weak var labelSettingName: UILabel!
     @IBOutlet weak var textFieldValue: UITextField!
-    
+    @IBOutlet weak var layoutTextRight: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,13 +20,23 @@ class SettingsTextFieldTableViewCell: UITableViewCell {
     }
 
     
-    func configureWithSetting(name: String, placeholder: String, value: String?) {
+    func configureWithSetting(name: String, placeholder: String, value: String?, isEdit: Bool, subItem: Bool) {
         labelSettingName.text = name
         textFieldValue.placeholder = placeholder
+        textFieldValue.enabled = isEdit
+        
         if value != nil {
             textFieldValue.text = value
         }
-        Utils.setFontFamilyForView(self, includeSubViews: true)
+        
+        if subItem {
+            self.accessoryType = .DisclosureIndicator
+            self.layoutTextRight.constant = 25
+        } else
+        {
+            self.accessoryType = .None
+            self.layoutTextRight.constant = 15
+        }
     }
     
 

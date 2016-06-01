@@ -17,11 +17,9 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
     @IBOutlet weak var gradeButton: UIButton!
     @IBOutlet weak var subjectButton: UIButton!
     @IBOutlet weak var finishProfileButton: UIButton!
-
-    var availableGrades: [Grade]     = []
-    var availableSubjects: [Subject] = []
-    var selectedGrades: [String]     = []
-    var selectedSubjects: [String]   = []
+    
+    var selectedGrades: [Grade] = []
+    var selectedSubjects: [Subject] = []
     
     convenience init() {
         self.init(nibName: "CreateProfileViewController", bundle: nil)
@@ -32,7 +30,6 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
         
         Utils.setFontFamilyForView(self.view, includeSubViews: true)
         navigationItem.hidesBackButton = true
-        loadGradesAndSubjects()
     }
     
     override func viewDidLayoutSubviews() {
@@ -63,38 +60,42 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
     // MARK: - Actions
     
     @IBAction func finishProfileButtonTouchUpInside(sender: AnyObject) {
-        // call the api function to update the user info
-        SVProgressHUD.showWithStatus("Saving")
-        networkController.updateUser(nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: nil, email: nil, password: nil, location: nil, isPrivate: nil, subjects: selectedSubjects, grades: selectedGrades) { (user, error) -> () in
-            if error == nil {
-                // update the user modified
-                self.networkController.currentUser = user
-                
-                SVProgressHUD.dismiss()
-                self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
-                
-            } else {
-                let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-                SVProgressHUD.dismiss()
-            }
+        // TODO: Update the user with the collection of grades and subjects
+        
+        var grade_ids: [String] = []
+        for item in selectedGrades {
+            grade_ids.append(String(format: "%d", item.id!))
+        }
+
+        var subject_ids: [String] = []
+        for item in selectedSubjects {
+            subject_ids.append(String(format: "%d", item.id!))
         }
         
-        
+        SVProgressHUD.showWithStatus("Saving...")
+        networkController.updateGradesAndSubjects(grade_ids, subjects: subject_ids) { (user, error) -> () in
+            
+            SVProgressHUD.dismiss()
+            
+            if((error) != nil) {
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
+                defaults.synchronize()
+            }
+            else {
+                self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+            }
+        }
     }
     
     @IBAction func gradeButtonTouchUpInside(sender: AnyObject) {
         
-        let pickGradesVC              = PickGradesOrSubjectsViewController()
-        pickGradesVC.delegate         = self
-        pickGradesVC.areSubjects      = false
-        pickGradesVC.grades           = availableGrades
-        pickGradesVC.gradesSelected   = selectedGrades
+        let pickGradesVC = PickGradesOrSubjectsViewController()
+        pickGradesVC.delegate = self
+        pickGradesVC.areSubjects = false
+        pickGradesVC.gradesSelected = selectedGrades
         pickGradesVC.subjectsSelected = selectedSubjects
-        let pickGradesNavController   = UINavigationController(rootViewController: pickGradesVC)
+        let pickGradesNavController = UINavigationController(rootViewController: pickGradesVC)
         presentViewController(pickGradesNavController, animated: true, completion: nil)
         
         
@@ -102,39 +103,51 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
     
     @IBAction func subjectButtonTouchUpInside(sender: AnyObject) {
         
-        let pickSubjectsVC              = PickGradesOrSubjectsViewController()
-        pickSubjectsVC.delegate         = self
-        pickSubjectsVC.areSubjects      = true
-        pickSubjectsVC.subjects         = availableSubjects
-        pickSubjectsVC.gradesSelected   = selectedGrades
+        let pickSubjectsVC = PickGradesOrSubjectsViewController()
+        pickSubjectsVC.delegate = self
+        pickSubjectsVC.areSubjects = true
+        pickSubjectsVC.gradesSelected = selectedGrades
         pickSubjectsVC.subjectsSelected = selectedSubjects
-        let pickSubjectsNavController   = UINavigationController(rootViewController: pickSubjectsVC)
+        let pickSubjectsNavController = UINavigationController(rootViewController: pickSubjectsVC)
         presentViewController(pickSubjectsNavController, animated: true, completion: nil)
         
     }
     
     // MARK: - PickerGradesOrSubjects delegate
     
-    func gradesDidSelected(grades: [String]) {
+    func gradesDidSelected(grades: [Grade]) {
         selectedGrades = grades
-        let gradesString = selectedGrades.reduce("") { (accum, actual) -> String in
+
+        var names: [String] = []
+        for item in selectedGrades {
+            names.append(item.name!)
+        }
+        
+        let gradesString = names.reduce("") { (accum, actual) -> String in
             accum + ((accum == "") ? "" : ", ") + actual
         }
-        gradeButton.titleLabel?.text = selectedGrades.count == 0 ? "grades" : gradesString
-        print(grades)
+        
+        let title = selectedGrades.count == 0 ? "grades" : gradesString
+        gradeButton.setTitle(title, forState: .Normal)
+        gradeButton.setTitle(title, forState: .Selected)
     }
     
-    func subjectsDidSelected(subjects: [String]) {
+    func subjectsDidSelected(subjects: [Subject]) {
         selectedSubjects = subjects
-        let subjectsString = selectedSubjects.reduce("") { (accum, actual) -> String in
+        
+        var names: [String] = []
+        for item in selectedSubjects {
+            names.append(item.name!)
+        }
+        
+        let subjectsString = names.reduce("") { (accum, actual) -> String in
             accum + ((accum == "") ? "" : ", ") + actual
         }
-        subjectButton.titleLabel?.text = selectedSubjects.count == 0 ? "subjects" : subjectsString
-        print(subjects)
+        
+        let title = selectedGrades.count == 0 ? "subjects" : subjectsString
+        subjectButton.setTitle(title, forState: .Normal)
+        subjectButton.setTitle(title, forState: .Selected)
     }
-    
-    
-    
     
     // MARK: - Auxilary methods
     
@@ -167,42 +180,5 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
         navigationController?.navigationBar.backgroundColor = UIColor.clearColor()
     }
     
-    func loadGradesAndSubjects() {
-        SVProgressHUD.showWithStatus("Loading")
-        networkController.getGrades { (grades, error) -> () in
-            if error == nil {
-                self.availableGrades = grades!
-                
-                self.networkController.getSubjects { (subjects, error) -> () in
-                    if error == nil {
-                        
-                        self.availableSubjects = subjects!
-                        SVProgressHUD.dismiss()
-                        
-                    } else {
-                        let errors: [String]? = error!["errors"] as? [String]
-                        let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                        alert.addAction(cancelAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        SVProgressHUD.dismiss()
-                    }
-                }
-                
-                
-                
-            } else {
-                let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-                SVProgressHUD.dismiss()
-            }
-        }
-        
-        
-
-    }
 
 }

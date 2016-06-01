@@ -182,15 +182,14 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         }
         if fieldsValidated {
             SVProgressHUD.showWithStatus("Signing in")
-            networkController.login(userName!, password: password!, completionHandler: { (token, user, error) -> () in
+            networkController.login(userName!, password: password!, completionHandler: { (user, token, userId, error) -> () in
                 if error == nil {
                     // Store the apiToken
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(token, forKey: "api_token")
                     // Store the currentUserId
-                    let userId = user?.id
                     defaults.setObject(userId, forKey: "current_user_id")
-                    
+                    defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
                     self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
                     SVProgressHUD.dismiss()
                     
@@ -239,20 +238,13 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             let password: String = signUpPasswordTextField.text!
             let user = User(deviceId: deviceId, userName: userName, imageURL: avatarImage, email: email, password: password)
             SVProgressHUD.showWithStatus("Signing up")
-            networkController.registerUser(user, completionHandler: { (token, user, error) -> () in
+            networkController.registerUser(user, completionHandler: { (token, userId, error) -> () in
                 if error == nil {
-                    
-                    if self.rememberUserAndPasswordSwitch.on {
-                        self.saveCredentialsInKeychain(email, password: password)
-                    } else {
-                        self.resetKeyChain()
-                    }
                     
                     // Store the apiToken
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(token, forKey: "api_token")
                     // Store the currentUserId
-                    let userId = user?.id
                     defaults.setObject(userId, forKey: "current_user_id")
                     
                     let createProfileVC = CreateProfileViewController()
