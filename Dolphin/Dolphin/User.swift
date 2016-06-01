@@ -95,6 +95,9 @@ class User : NSObject {
         if let image = self.userAvatarImageData {
             retDic["avatar_image"] = Utils.encodeBase64(image)
         }
+        if let image_url = self.userAvatarImageURL {
+            retDic["avatar_image_url"] = image_url
+        }
         
         if self.subjects != nil {
             

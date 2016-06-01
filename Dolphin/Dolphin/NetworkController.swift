@@ -91,7 +91,7 @@ class NetworkController: NSObject {
         
     }
     
-    func registerUser(user: User, completionHandler: (String?, Int?, AnyObject?) -> ()) -> () {
+    func registerUser(user: User, completionHandler: (User?, String?, Int?, AnyObject?) -> ()) -> () {
         var retToken: String?
         var retUserId: Int?
         let parameters = ["user": user.toJson()]
@@ -102,9 +102,10 @@ class NetworkController: NSObject {
                 retUserId = retUser!["id"] as? Int
                 self.token = retToken
                 self.currentUserId = retUserId
-                completionHandler(retToken, retUserId, nil)
+                self.currentUser = User(jsonObject: retUser!)
+                completionHandler(self.currentUser, retToken, retUserId, nil)
             } else {
-                completionHandler(retToken, retUserId, error)
+                completionHandler(nil, retToken, retUserId, error)
             }
         }
         

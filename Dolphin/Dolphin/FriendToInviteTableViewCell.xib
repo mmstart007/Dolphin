@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,21 +15,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wdA-qP-lbu">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wdA-qP-lbu">
                         <rect key="frame" x="8" y="8" width="34" height="34"/>
                         <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="34" id="3zh-rh-9RS"/>
+                            <constraint firstAttribute="width" constant="34" id="bwE-fw-3aH"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2iX-Qw-cbf">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2iX-Qw-cbf">
                         <rect key="frame" x="50" y="8" width="230" height="34"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9lq-yV-22E">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9lq-yV-22E">
                         <rect key="frame" x="288" y="10" width="79" height="30"/>
                         <animations/>
                         <color key="backgroundColor" red="0.031372549020000001" green="0.29411764709999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="79" id="Pvv-Fd-Sw7"/>
+                            <constraint firstAttribute="height" constant="30" id="QO9-VU-f2W"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="14"/>
                         <state key="normal" title="Invite">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,6 +48,16 @@
                     </button>
                 </subviews>
                 <animations/>
+                <constraints>
+                    <constraint firstItem="9lq-yV-22E" firstAttribute="centerY" secondItem="xMt-DW-diM" secondAttribute="centerY" id="3KX-R6-E5Z"/>
+                    <constraint firstItem="2iX-Qw-cbf" firstAttribute="leading" secondItem="wdA-qP-lbu" secondAttribute="trailing" constant="8" id="95E-8n-l6n"/>
+                    <constraint firstItem="9lq-yV-22E" firstAttribute="leading" secondItem="2iX-Qw-cbf" secondAttribute="trailing" constant="8" id="Asu-Lf-ZuR"/>
+                    <constraint firstItem="2iX-Qw-cbf" firstAttribute="top" secondItem="xMt-DW-diM" secondAttribute="topMargin" id="Pwz-MZ-GAT"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="2iX-Qw-cbf" secondAttribute="bottom" constant="-1" id="WoM-GO-beH"/>
+                    <constraint firstItem="9lq-yV-22E" firstAttribute="trailing" secondItem="xMt-DW-diM" secondAttribute="trailingMargin" id="XvB-rf-bGZ"/>
+                    <constraint firstItem="wdA-qP-lbu" firstAttribute="centerY" secondItem="xMt-DW-diM" secondAttribute="centerY" id="hfR-kD-SVK"/>
+                    <constraint firstItem="wdA-qP-lbu" firstAttribute="leading" secondItem="xMt-DW-diM" secondAttribute="leadingMargin" id="oNt-yu-Vzo"/>
+                </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>

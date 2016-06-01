@@ -151,7 +151,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             if cell == nil {
                 cell = PostTableViewCell()
             }
-            cell?.configureWithPost(postOfPOD[indexPath.row])
+            cell?.configureWithPost(postOfPOD[indexPath.row], indexPath: indexPath)
             
             cell?.selectionStyle = .None
             return cell!

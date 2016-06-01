@@ -59,6 +59,10 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         getContactsFromAddressBook()
     }
     
+    override func viewDidLayoutSubviews() {
+        segmentedControl.frame = CGRect(x: 0, y: 0, width: headerView.frame.size.width, height: headerView.frame.size.height)
+    }
+    
     func initializeSegmentedControl() {
         
         segmentedControl = HMSegmentedControl(sectionImages: [UIImage(named: "TopBarContactsNotSelectedIcon")!, UIImage(named: "TopBarFacebookNotSelectedIcon")!, UIImage(named: "TopBarTwitterNotSelectedIcon")!, UIImage(named: "TopBarMoreNotSelectedIcon")!], sectionSelectedImages: [UIImage(named: "TopBarContactsSelectedIcon")!, UIImage(named: "TopBarFacebookSelectedIcon")!, UIImage(named: "TopBarTwitterSelectedIcon")!, UIImage(named: "TopBarMoreSelectedIcon")!])

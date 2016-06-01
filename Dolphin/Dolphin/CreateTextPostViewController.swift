@@ -109,7 +109,8 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
             if podsToShare.count > 0 {
                 podToShare = podsToShare[0]
             }
-            let post = Post(user: nil, image: nil, imageData: nil, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podToShare?.id)
+            
+            let post = Post(user: nil, image: nil, imageData: nil, imageWidth: 0, imageHeight: 0, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podToShare?.id)
             SVProgressHUD.showWithStatus("Posting")
             networkController.createPost(post, completionHandler: { (post, error) -> () in
                 if error == nil {

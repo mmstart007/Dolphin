@@ -52,15 +52,13 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         registerCells()
         // reset image data from the user
         networkController.currentUser?.userAvatarImageData = nil
-//        loadGradesAndSubjects()
-//        initializeUsersGradesAndSubjects()
+        
+        loadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        loadData()
-        
+        self.tableViewSettings.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -358,6 +356,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     if let imageURLToRemove = user?.userAvatarImageURL {
                         SDImageCache.sharedImageCache().removeImageForKey(imageURLToRemove)
                     }
+                    
+                    // Store the apiToken
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
+                    defaults.synchronize()
+                    
                     SVProgressHUD.dismiss()
                     self.navigationController?.popViewControllerAnimated(true)
                     

@@ -90,7 +90,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             if cell == nil {
                 cell = PostTableViewCell()
             }
-            (cell as? PostTableViewCell)!.configureWithPost(posts[indexPath.row])
+            (cell as? PostTableViewCell)!.configureWithPost(posts[indexPath.row], indexPath: indexPath)
         }
         
         

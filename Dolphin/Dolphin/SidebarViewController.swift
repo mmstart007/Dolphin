@@ -46,14 +46,10 @@ class SidebarViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        setAppearance()
         myFeedButtonTouchUpInside(self)
         Utils.setFontFamilyForView(self.view, includeSubViews: true)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        setAppearance()
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -72,14 +68,14 @@ class SidebarViewController : UIViewController {
                 labelUserName.text = user.userName!
             }
             
-            
+            if user.userAvatarImageURL != nil {
+                userImageView.sd_setImageWithURL(NSURL(string: user.userAvatarImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
+            }
         }
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // Added to fix rendering problem with corner radius in user avatar imageview
-        setAppearance()
     }
     
     // MARK: Customize Appearance

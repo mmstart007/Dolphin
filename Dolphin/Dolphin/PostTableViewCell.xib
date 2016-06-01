@@ -89,14 +89,14 @@
                         <constraint firstItem="VxP-4j-T9D" firstAttribute="top" secondItem="HeZ-yR-vrk" secondAttribute="bottom" constant="1" id="xwH-Wo-wdZ"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yu9-Xg-Cku">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yu9-Xg-Cku" userLabel="View - Bottom">
                     <rect key="frame" x="0.0" y="492" width="375" height="54"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="posted by JohnDoe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMW-dD-7uX">
-                            <rect key="frame" x="56" y="6" width="311" height="20"/>
+                            <rect key="frame" x="56" y="7" width="311" height="22"/>
                             <animations/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="20" id="l3M-uT-uHa"/>
+                                <constraint firstAttribute="height" constant="22" id="l3M-uT-uHa"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Raleway-Bold" family="Raleway" pointSize="12"/>
                             <color key="textColor" red="0.61176470588235299" green="0.61176470588235299" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
@@ -142,7 +142,7 @@
                                 <constraint firstAttribute="height" constant="20" id="Jpm-8j-wXv"/>
                             </constraints>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wl9-ZP-bOE">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wl9-ZP-bOE">
                             <rect key="frame" x="8" y="7" width="40" height="40"/>
                             <animations/>
                             <constraints>
@@ -157,9 +157,12 @@
                             </variation>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ILk-Ka-Q4y">
-                            <rect key="frame" x="56" y="31" width="163" height="15"/>
+                            <rect key="frame" x="56" y="28" width="163" height="15"/>
                             <animations/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="bIO-I1-FNL"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="Raleway-Bold" family="Raleway" pointSize="12"/>
                             <color key="textColor" red="0.61176470589999998" green="0.61176470589999998" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -168,13 +171,14 @@
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="tMW-dD-7uX" firstAttribute="top" secondItem="Yu9-Xg-Cku" secondAttribute="top" constant="6" id="20u-iG-lKu"/>
+                        <constraint firstItem="tMW-dD-7uX" firstAttribute="top" secondItem="Yu9-Xg-Cku" secondAttribute="top" constant="7" id="20u-iG-lKu"/>
                         <constraint firstItem="lv9-vG-g6E" firstAttribute="leading" secondItem="sgv-V8-0Uu" secondAttribute="trailing" constant="1" id="Dvd-or-trQ"/>
                         <constraint firstAttribute="trailing" secondItem="S2e-iu-7hV" secondAttribute="trailing" constant="8" id="NbC-BH-n6P"/>
                         <constraint firstAttribute="bottom" secondItem="lv9-vG-g6E" secondAttribute="bottom" constant="8" id="NbZ-wa-ghi"/>
                         <constraint firstAttribute="trailing" secondItem="tMW-dD-7uX" secondAttribute="trailing" constant="8" id="VWB-Fu-cTg"/>
                         <constraint firstItem="S2e-iu-7hV" firstAttribute="leading" secondItem="lv9-vG-g6E" secondAttribute="trailing" constant="8" id="VYI-43-FF2"/>
-                        <constraint firstAttribute="bottom" secondItem="ILk-Ka-Q4y" secondAttribute="bottom" constant="8" id="WGK-3q-Ytz"/>
+                        <constraint firstItem="ILk-Ka-Q4y" firstAttribute="top" secondItem="tMW-dD-7uX" secondAttribute="bottom" constant="-1" id="Ve8-af-b3W"/>
+                        <constraint firstAttribute="bottom" secondItem="ILk-Ka-Q4y" secondAttribute="bottom" constant="11" id="WGK-3q-Ytz"/>
                         <constraint firstAttribute="bottom" secondItem="S2e-iu-7hV" secondAttribute="bottom" constant="8" id="WIe-CT-bwD"/>
                         <constraint firstItem="ILk-Ka-Q4y" firstAttribute="leading" secondItem="Wl9-ZP-bOE" secondAttribute="trailing" constant="8" id="ZnT-9I-UTI"/>
                         <constraint firstItem="Wl9-ZP-bOE" firstAttribute="centerY" secondItem="Yu9-Xg-Cku" secondAttribute="centerY" id="Zuf-OY-Rg6"/>

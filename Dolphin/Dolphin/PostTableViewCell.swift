@@ -14,6 +14,7 @@ import NSDate_TimeAgo
 @objc protocol PostTableViewCellDelegate{
     optional func tapURL(url: String?)
     optional func tapLike(post: Post?, cell: PostTableViewCell?)
+    optional func downloadedPostImage(indexPath: NSIndexPath?)
 }
 
 class PostTableViewCell : UITableViewCell {
@@ -38,6 +39,7 @@ class PostTableViewCell : UITableViewCell {
     @IBOutlet var postImageViewHeightConstraint: NSLayoutConstraint!
     
     var cellPost: Post?
+    var cellIndexPath: NSIndexPath?
     var triangleView: TriangleView?
     
     override var frame: CGRect {
@@ -70,8 +72,26 @@ class PostTableViewCell : UITableViewCell {
         super.layoutSubviews()
     }
     
+    func adjustImageSize(image_width: CGFloat, image_height: CGFloat) {
+        if image_width == 0 || image_height == 0 {
+            let real_width = postImageView.frame.size.width
+            postImageViewHeightConstraint.constant = real_width
+        }
+        else {
+            let real_width = postImageView.frame.size.width
+            let real_height = real_width * image_height / image_width
+            postImageViewHeightConstraint.constant = real_height
+        }
+        layoutIfNeeded()
+    }
+    
     func configureWithPost(post: Post) {
+        configureWithPost(post, indexPath: self.cellIndexPath!)
+    }
+    
+    func configureWithPost(post: Post, indexPath: NSIndexPath) {
         self.cellPost = post
+        self.cellIndexPath = indexPath
         
         if let userImageUrl = post.postUser?.userAvatarImageURL {
             postuserImageView.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
@@ -97,35 +117,17 @@ class PostTableViewCell : UITableViewCell {
             let image_width = image.imageWidth
             let image_height = image.imageHeight
             
-            if image_width == 0 || image_height == 0 {
-                let real_width = postImageView.frame.size.width
-                postImageViewHeightConstraint.constant = real_width
-            }
-            else {
-                let real_width = postImageView.frame.size.width
-                let real_height = real_width * image_height! / image_width!
-                postImageViewHeightConstraint.constant = real_height
-            }
+            adjustImageSize(image_width!, image_height: image_height!)
         }
             
         //Link Image
         else if let linkImage = post.postLink {
             let image_width = linkImage.imageWidth
             let image_height = linkImage.imageHeight
-            
-            if image_width == 0 || image_height == 0 {
-                let real_width = postImageView.frame.size.width
-                postImageViewHeightConstraint.constant = real_width
-            }
-            else {
-                let real_width = postImageView.frame.size.width
-                let real_height = real_width * image_height! / image_width!
-                postImageViewHeightConstraint.constant = real_height
-            }
-
+            adjustImageSize(image_width!, image_height: image_height!)
         }
         else {
-            postImageViewHeightConstraint.constant = 0
+            postImageViewHeightConstraint.constant = 1
         }
         
         adjustImages()
@@ -206,10 +208,17 @@ class PostTableViewCell : UITableViewCell {
                 
                 self.postImageView.sd_setImageWithURL(NSURL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"), completed: { (image, error, SDImageCacheType, imageUrl) -> Void in
                     if error == nil {
-//                        let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
-//                        let croppedImage = Utils.cropToBounds(resizedImage, width: self.postImageView.frame.width, height: 130)
-//                        self.postImageView.image = croppedImage
+
                         self.postImageView.image = image
+                        
+//                        let image_width = image.size.width
+//                        let image_height = image.size.height
+//                        self.adjustImageSize(image_width, image_height: image_height)
+//                        
+//                        if(self.cellIndexPath != nil) {
+//                            self.delegate?.downloadedPostImage!(self.cellIndexPath)
+//                        }
+                        
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
                     }

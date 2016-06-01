@@ -238,7 +238,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
             let password: String = signUpPasswordTextField.text!
             let user = User(deviceId: deviceId, userName: userName, imageURL: avatarImage, email: email, password: password)
             SVProgressHUD.showWithStatus("Signing up")
-            networkController.registerUser(user, completionHandler: { (token, userId, error) -> () in
+            networkController.registerUser(user, completionHandler: { (user, token, userId, error) -> () in
                 if error == nil {
                     
                     // Store the apiToken
@@ -246,6 +246,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
                     defaults.setObject(token, forKey: "api_token")
                     // Store the currentUserId
                     defaults.setObject(userId, forKey: "current_user_id")
+                    defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
                     
                     let createProfileVC = CreateProfileViewController()
                     self.navigationController?.pushViewController(createProfileVC, animated: true)

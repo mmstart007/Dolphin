@@ -121,12 +121,12 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         }
         
         if myLikes {
-            cell?.configureWithPost(networkController.likedPosts[indexPath.row])
+            cell?.configureWithPost(networkController.likedPosts[indexPath.row], indexPath: indexPath)
         } else {
             if searchText != nil && searchText != "" {
-                cell?.configureWithPost(filteredPosts[indexPath.row])
+                cell?.configureWithPost(filteredPosts[indexPath.row], indexPath: indexPath)
             } else {
-                cell?.configureWithPost(allPosts[indexPath.row])
+                cell?.configureWithPost(allPosts[indexPath.row], indexPath: indexPath)
             }
         }
         
@@ -162,6 +162,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     }
     
     // MARK: PostTableViewCell Delegate.
+    
+    func downloadedPostImage(indexPath: NSIndexPath?) {
+        postsTableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.None)
+    }
     
     func tapURL(url: String?) {
         let webVC = WebViewController()
@@ -232,8 +236,6 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     
     // MARK: - Auxiliary methods
-    
-    
     // Not used for now, the post has if the user likes it or not
     func loadUserLikes(pullToRefresh: Bool) {
         networkController.getUserLikes(String(networkController.currentUserId!)) { (likes, error) -> () in

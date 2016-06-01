@@ -32,6 +32,8 @@ class Post : NSObject {
     var postTopics: [Topic]?
     var postLink: Link?
     var postImageUrl: String?
+    var postImageWidth: Float?
+    var postImageHeight: Float?
     var postHeader: String?
     var postText: String?
     var postDate: NSDate?
@@ -40,7 +42,7 @@ class Post : NSObject {
     var postComments: [PostComment]?
     var isLikedByUser: Bool = false
     
-    convenience init(user: User?, image: Image?, imageData: UIImage?, type: PostType?,
+    convenience init(user: User?, image: Image?, imageData: UIImage?, imageWidth: Float?, imageHeight: Float?, type: PostType?,
         topics: [Topic]?, link: Link?, imageUrl: String?, title: String?, text: String?,
         date: NSDate?, numberOfLikes: Int?, numberOfComments: Int?, comments: [PostComment]?, PODId: Int?) {
             self.init()
@@ -49,6 +51,8 @@ class Post : NSObject {
             self.postUser             = user
             self.postImage            = image
             self.postImageData        = imageData
+            self.postImageWidth       = imageWidth
+            self.postImageHeight      = imageHeight
             self.postType             = type
             self.postTopics           = topics
             self.postLink             = link
@@ -115,7 +119,16 @@ class Post : NSObject {
         }
         if let imageUrl = self.postImageUrl {
             retDic["image_url"] = imageUrl
-        }    
+        }
+        
+        if let image_width = self.postImageWidth {
+            retDic["image_width"] = image_width
+        }
+        
+        if let image_height = self.postImageHeight {
+            retDic["image_height"] = image_height
+        }
+        
         if let topics = self.postTopics {
             var topicsNames: [String] = []
             for t in topics {

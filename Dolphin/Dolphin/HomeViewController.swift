@@ -8,11 +8,13 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
-class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UITabBarControllerDelegate {
+class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UITabBarControllerDelegate, CLLocationManagerDelegate {
     
     var actionMenu: UIView? = nil
     var searchBar: UISearchBar?
+    var locationManager: CLLocationManager!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -49,8 +51,9 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         setMenuLeftButton()
         setSearchRightButton()
         setupTabbarController()
-        self.delegate = self
+        initLocationService()
         
+        self.delegate = self
     }
     
     
@@ -192,7 +195,6 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         searchBar?.becomeFirstResponder()
         searchBar?.showsCancelButton = true
         searchBar?.delegate          = self
-        
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -224,4 +226,61 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         setSearchRightButton()
     }
     
+    // MARK: Location Services.
+    func initLocationService() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if locations.count > 0 {
+            let firstLoc = locations[0]
+            Globals.currentLat = firstLoc.coordinate.latitude
+            Globals.currentLng = firstLoc.coordinate.longitude
+            
+            CLGeocoder().reverseGeocodeLocation(manager.location!, completionHandler: {(placemarks, error)->Void in
+                if (error != nil) {
+//                    print("Reverse geocoder failed with error" + error!.localizedDescription)
+                    return
+                }
+                
+                if placemarks?.count > 0 {
+                    let pm = placemarks![0] as CLPlacemark
+                    
+                    var locality: String = ""
+                    if pm.locality != nil {
+                        locality = pm.locality!
+                    }
+                    
+                    var postalCode: String = ""
+                    if pm.postalCode != nil {
+                        postalCode = "," + pm.postalCode!
+                    }
+                    
+                    var administrativeArea: String = ""
+                    if pm.administrativeArea != nil {
+                        administrativeArea = "," + pm.administrativeArea!
+                    }
+                    
+                    var country: String = ""
+                    if pm.country != nil {
+                        country = "," + pm.country!
+                    }
+                    
+                    Globals.currentAddress = locality + postalCode + administrativeArea + country
+                    
+                } else {
+                    print("Problem with the data received from geocoder")
+                }
+            })
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("location service error = \(error)")
+    }
+   
 }

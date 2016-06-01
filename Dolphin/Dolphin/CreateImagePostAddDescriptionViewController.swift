@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class CreateImagePostAddDescriptionViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource {
+class CreateImagePostAddDescriptionViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
 
     let networkController = NetworkController.sharedInstance
     
@@ -44,20 +44,16 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
         print("postButtonTouchUpInside")
         
         let cellInfo = tableViewPostDetails.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? CreatePostAddDescriptionTableViewCell
+        cellInfo?.textFieldPostTitle.resignFirstResponder()
+        cellInfo?.textViewDescription.resignFirstResponder()
+        
         let title = cellInfo?.textFieldPostTitle.text
         let description = cellInfo?.textViewDescription.text
         
         if title != "" && description != "" {
-            
-            var newWidth: CGFloat
-            if self.postImage?.size.width < 414 {
-                newWidth = self.postImage!.size.width
-            } else {
-                newWidth = 414
-            }
-            let resizedImage = Utils.resizeImage(self.postImage!, newWidth: newWidth)
+
             // crate the image pod
-            let post = Post(user: nil, image: nil, imageData: resizedImage, type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
+            let post = Post(user: nil, image: nil, imageData: self.postImage, imageWidth: Float(self.postImage!.size.width), imageHeight: Float(self.postImage!.size.height), type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
             SVProgressHUD.showWithStatus("Posting")
             networkController.createPost(post, completionHandler: { (post, error) -> () in
                 if error == nil {
@@ -107,13 +103,16 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell?
+        var cell: CreatePostAddDescriptionTableViewCell?
         if indexPath.section == 0 {
             cell = tableView.dequeueReusableCellWithIdentifier("CreatePostAddDescriptionTableViewCell") as? CreatePostAddDescriptionTableViewCell
             if cell == nil {
                 cell = CreatePostAddDescriptionTableViewCell()
             }
-            (cell as? CreatePostAddDescriptionTableViewCell)?.configureWithImage(false, postImage: postImage, postURL: nil, postImageURL: nil)
+            
+            cell?.textFieldPostTitle.delegate = self
+            cell?.textViewDescription.delegate = self
+            cell?.configureWithImage(false, postImage: postImage, postURL: nil, postImageURL: nil)
         }
         cell?.contentView.userInteractionEnabled = false
         cell?.selectionStyle = .None
@@ -131,6 +130,21 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
         
     }
     
-
-
+    // MARK: UITextField Delegate.
+    func textFieldDidBeginEditing(textField: UITextField) {
+        tableViewPostDetails.setContentOffset(CGPointMake(0.0, 200.0), animated: true)
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        tableViewPostDetails.setContentOffset(CGPointZero, animated: true)
+    }
+    
+    // MARK: UITextView Delegate.
+    func textViewDidBeginEditing(textView: UITextView) {
+        tableViewPostDetails.setContentOffset(CGPointMake(0.0, 200.0), animated: true)
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        tableViewPostDetails.setContentOffset(CGPointZero, animated: true)
+    }
 }

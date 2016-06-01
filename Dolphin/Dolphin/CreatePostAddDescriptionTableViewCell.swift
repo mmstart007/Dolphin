@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class CreatePostAddDescriptionTableViewCell: UITableViewCell {
+class CreatePostAddDescriptionTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet weak var imageViewPostImage: UIImageView!
     @IBOutlet weak var textFieldPostTitle: UITextField!
@@ -53,5 +53,4 @@ class CreatePostAddDescriptionTableViewCell: UITableViewCell {
             textFieldPostTitle.userInteractionEnabled = true
         }
     }
-
 }
