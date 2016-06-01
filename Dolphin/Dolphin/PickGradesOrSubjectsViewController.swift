@@ -42,7 +42,7 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         setRightButtonItemWithText("Done", target: self, action: Selector("doneTouchUpInside:"))
         
         if user != nil {
-            setLeftButtonItemWithText("Close", target: self, action: #selector(closeButtonTouchUpInside))
+            setLeftButtonItemWithText("Close", target: self, action: Selector("closeButtonTouchUpInside"))
         }
         
         tableViewGradesOrSubjects.delegate = self

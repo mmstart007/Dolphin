@@ -52,7 +52,7 @@ class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
                     }
                 })
             } else if let postLink = actualPost!.postLink {
-                postTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openWebPage)))
+                postTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("openWebPage")))
                 postTextView.textColor              = UIColor.blueColor()
                 postTextView.userInteractionEnabled = true
                 let manager = SDWebImageManager.sharedManager()
