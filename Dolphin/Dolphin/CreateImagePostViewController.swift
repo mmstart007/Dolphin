@@ -88,12 +88,14 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
         return cell!
     }
     
+
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(UIScreen.mainScreen().bounds.width / 3.0 - 30, view.frame.size.width / 3.0 - 30)
+        let width = (UIScreen.mainScreen().bounds.width - 10.0) / 3.0 - 10.0
+        return CGSizeMake(width, width)
     }
     
     // MARK: CollectionView Delegate

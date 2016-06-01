@@ -121,7 +121,7 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 375
+        return CreatePostAddDescriptionTableViewCell.getHeight()
     }
     
     // MARK: - Auxiliary methods
