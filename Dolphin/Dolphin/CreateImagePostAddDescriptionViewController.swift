@@ -52,34 +52,37 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
         
         if title != "" && description != "" {
 
-            // crate the image pod
-            let post = Post(user: nil, image: nil, imageData: self.postImage, imageWidth: Float(self.postImage!.size.width), imageHeight: Float(self.postImage!.size.height), type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
             SVProgressHUD.showWithStatus("Posting")
-            networkController.createPost(post, completionHandler: { (post, error) -> () in
-                if error == nil {
-                    
-                    if post?.postId != nil {
-                        // everything worked ok
-                        self.navigationController?.popToRootViewControllerAnimated(true)
+            dispatch_async(dispatch_get_main_queue()) {
+                // do your stuff here
+                // crate the image pod
+                let post = Post(user: nil, image: nil, imageData: self.postImage, imageWidth: Float(self.postImage!.size.width), imageHeight: Float(self.postImage!.size.height), type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: self.podId)
+                self.networkController.createPost(post, completionHandler: { (post, error) -> () in
+                    if error == nil {
+                        
+                        if post?.postId != nil {
+                            // everything worked ok
+                            self.navigationController?.popToRootViewControllerAnimated(true)
+                        } else {
+                            // there was an error saving the post
+                        }
+                        SVProgressHUD.dismiss()
+                        
                     } else {
-                        // there was an error saving the post
+                        SVProgressHUD.dismiss()
+                        let errors: [String]? = error!["errors"] as? [String]
+                        var alert: UIAlertController
+                        if errors != nil && errors![0] != "" {
+                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        } else {
+                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        }
+                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
                     }
-                    SVProgressHUD.dismiss()
-                    
-                } else {
-                    SVProgressHUD.dismiss()
-                    let errors: [String]? = error!["errors"] as? [String]
-                    var alert: UIAlertController
-                    if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
-                    } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
-                    }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                    alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            })
+                })
+            }
         } else {
             var alert: UIAlertController
             alert = UIAlertController(title: "Error", message: "Please, fill all the fields", preferredStyle: .Alert)            

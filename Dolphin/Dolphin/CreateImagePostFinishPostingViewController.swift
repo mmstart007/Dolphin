@@ -41,13 +41,14 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
         } else {
             self.picker.sourceType = UIImagePickerControllerSourceType.Camera
             self.picker.delegate   = self
+            self.picker.allowsEditing = true
             self.presentViewController(picker, animated: true, completion: nil)
         }
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         print("didFinishPickingMediaWithInfo")
-        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let image = info[UIImagePickerControllerEditedImage] as? UIImage
         postImagePreviewImageView.image = image
         postImage = image
         dismissViewControllerAnimated(true, completion: nil)
