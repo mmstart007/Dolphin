@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         UINavigationBar.appearance().backgroundColor = UIColor.blueDolphin()
         UINavigationBar.appearance().shadowImage = UIImage()
-        
+        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: Constants.Fonts.Raleway_Bold, size: 16)!]
         // Set appearance for SVProgressHud
         
         SVProgressHUD.setBackgroundColor(UIColor.whiteColor())

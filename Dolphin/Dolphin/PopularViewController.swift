@@ -8,18 +8,25 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 class PopularViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var tableView: UITableView!
+    let networkController = NetworkController.sharedInstance
     
-    var topics: [String] = []
-    var pods: [POD]      = []
-    var posts: [Post]    = []
+    var topics: [Topic]        = []
+    var filteredTopics:[Topic] = []
+    var pods: [POD]             = []
+    var filteredPods: [POD]     = []
+    
+    var posts: [Post]           = []
+    var filteredPosts: [Post]   = []
+    var searchText: String?     = nil
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        (parentViewController as? HomeViewController)?.removeRightButton()
+//        (parentViewController as? HomeViewController)?.removeRightButton()
     }
     
     override func viewDidLoad() {
@@ -31,28 +38,42 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         tableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
         tableView.separatorStyle = .None
         tableView.estimatedRowHeight = 400
+
+        loadData()
+    }
+    
+    func loadData() {
         
-        // Populate data for testing layout purposes
-        let user1 = User(deviceId: "", userName: "John Doe", imageURL: "", email: "john@doe.com", password: "test")
-        
-//        let comment1 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-//        let comment2 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-//        let comment3 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-//        let comment4 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-//        let comment5 = PostComment(user: user1, text: "Great stuff!", date: NSDate())
-        
-//        let post1 = Post(user: user1, imageURL: "https://anprak.files.wordpress.com/2014/01/thevergebanner.png?w=630&h=189", type: "url", header: "https://www.theverge.com/", text: "This is an awesome site!", date: NSDate(), numberOfLikes: 1228, numberOfComments: 43, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: true)
-//        let post2 = Post(user: user1, imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRz1WiFnk8nU7JnT1KikESbt-SNIecF6GU1smWteRhyWWEaji9v", type: .Text, header: "", text: "This is the text of this awesome post!!!", date: NSDate(), numberOfLikes: 8, numberOfComments: 3, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: false)
-//        let post3 = Post(user: user1, imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRbUgMAg6ImQKs-nRmUnecDp_z-5SZjXbi2rxDot8LcV4eLQb8eIg", type: .Photo, header: "", text: "This is the text of this awesome post!!!", date: NSDate(), numberOfLikes: 1928, numberOfComments: 115, comments:[comment1, comment2, comment3, comment4, comment5], isLiked: true)
-//        posts = [post1, post2, post3]
-//        
-//        let pod1 = POD(name: "Aviation", imageURL: "https://wallpaperscraft.com/image/plane_sky_flying_sunset_64663_3840x1200.jpg", lastpostDate: NSDate(), users: [user1, user1, user1, user1, user1, user1], isPrivate: true)
-//        let pod2 = POD(name: "Engineering", imageURL: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRcMgu3PJLY079zBrxFxZRDwl59nuVuluNdF6PtqJvIzoD39YCQKg", lastpostDate: NSDate(), users: [user1, user1, user1], isPrivate: false)
-//        let pod3 = POD(name: "Electronics", imageURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTUTqYPZGV5hcCSTuoRf_VR1lbN6lFZvGn8ufGPBNCEVRj7gdN3TA", lastpostDate: NSDate(), users: [user1, user1, user1, user1, user1], isPrivate: true)
-//        
-//        pods = [pod1, pod2, pod3]
-        
-        topics = ["ECONOMICS", "POLITICS", "COMPUTER SCIENCE", "SYRIA", "K-12"]
+        SVProgressHUD.showWithStatus("Loading")
+        //Load Topic.
+        networkController.filterTopic(nil, quantity: Constants.Popular.Topic_Limit, page: 0, sort_by: "posts_count") { (topics, error) -> () in 
+            
+            if error == nil {
+                self.topics = topics
+            } else {
+                
+            }
+            
+            //Load Popular Pods.
+            self.networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: Constants.Popular.Pod_Limit, page: 0, sort_by: "users_count") { (pods, error) -> () in
+                if error == nil {
+                    self.pods = pods
+                } else {
+                    
+                }
+                
+                //Load Popular Posts.
+                self.networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: Constants.Popular.Post_Limit, page: 0, sort_by: "likes_count", completionHandler: { (posts, error) -> () in
+                    if error == nil {
+                        self.posts = posts
+                    } else {
+                    }
+                    
+                    SVProgressHUD.dismiss()
+                    self.tableView.reloadData()
+                })
+            }
+        }
     }
     
     // MARK: - TableView DataSource
@@ -67,7 +88,11 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         } else if section == 1{
             return 1
         } else {
-            return posts.count
+            if searchText != nil && searchText != "" {
+                return filteredPosts.count
+            } else {
+                return posts.count
+            }
         }
     }
     
@@ -79,20 +104,27 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
                 cell = PopularTrendingTopicsTableViewCell()
             }
             (cell as? PopularTrendingTopicsTableViewCell)!.configureWithDataSource(self, delegate: self, centerAligned: true)
+            (cell as? PopularTrendingTopicsTableViewCell)!.collectionView.reloadData()
+            
         } else if indexPath.section == 1 {
             cell = tableView.dequeueReusableCellWithIdentifier("PopularPODsTableViewCell") as? PopularPODsTableViewCell
             if cell == nil {
                 cell = PopularPODsTableViewCell()
             }
             (cell as? PopularPODsTableViewCell)!.configureWithDataSource(self, delegate: self)
+            (cell as? PopularPODsTableViewCell)!.podsCollectionView.reloadData()
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as? PostTableViewCell
             if cell == nil {
                 cell = PostTableViewCell()
             }
-            (cell as? PostTableViewCell)!.configureWithPost(posts[indexPath.row], indexPath: indexPath)
+            
+            if searchText != nil && searchText != "" {
+                (cell as? PostTableViewCell)!.configureWithPost(filteredPosts[indexPath.row], indexPath: indexPath)
+            } else {
+                (cell as? PostTableViewCell)!.configureWithPost(posts[indexPath.row], indexPath: indexPath)
+            }
         }
-        
         
         cell?.selectionStyle = .None
         return cell!
@@ -112,13 +144,13 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
         let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
-        headerView.backgroundColor = UIColor.clearColor()
+        headerView.backgroundColor = self.view.backgroundColor
         headerLabel.backgroundColor = UIColor.clearColor()
         headerLabel.textAlignment = .Center
-        headerLabel.font = UIFont.boldSystemFontOfSize(11)
-        headerLabel.textColor = UIColor.darkGrayColor()
+        headerLabel.font = UIFont(name: Constants.Fonts.Raleway_Bold, size: 11.0)
+        headerLabel.textColor = UIColor(red: 83.0/255.0, green: 83.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         if section == 0 {
-            headerLabel.text = "TRENDING TOPICS"
+            headerLabel.text = "BIG WAVES"
         } else if section == 1 {
             headerLabel.text = "POPULAR PODS"
         } else if section == 2 {
@@ -153,9 +185,18 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 0 {
-            return topics.count
+            if searchText != nil && searchText != "" {
+                return filteredTopics.count
+            } else {
+                return topics.count
+            }
+
         } else if collectionView.tag == 1 {
-            return pods.count
+            if searchText != nil && searchText != "" {
+                return filteredPods.count
+            } else {
+                return pods.count
+            }
         } else {
             return 0
         }
@@ -167,21 +208,32 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             if cell == nil {
                 cell = TopicCollectionViewCell()
             }
-            cell?.configureWithName(topics[indexPath.row].uppercaseString, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
+            
+            if searchText != nil && searchText != "" {
+                cell?.configureWithName(filteredTopics[indexPath.row].name!.uppercaseString, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
+            } else {
+                cell?.configureWithName(topics[indexPath.row].name!.uppercaseString, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
+            }
             return cell!
         } else {
             var cell: PODCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("PODCollectionViewCell", forIndexPath: indexPath) as? PODCollectionViewCell
             if cell == nil {
                 cell = PODCollectionViewCell()
             }
-            cell?.configureWithPOD(pods[indexPath.row])
+            
+            if searchText != nil && searchText != "" {
+                cell?.configureWithPOD(filteredPods[indexPath.row])
+            } else {
+                cell?.configureWithPOD(pods[indexPath.row])
+            }
+
             return cell!
         }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         if collectionView.tag == 0 {
-            let text = topics[indexPath.row].uppercaseString
+            let text = topics[indexPath.row].name!.uppercaseString
             let font = UIFont.systemFontOfSize(16)
             let textString = text as NSString
             
@@ -212,9 +264,35 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             let selectedPOD = pods[indexPath.row]
             podDetailsVC.pod = selectedPOD
             navigationController?.pushViewController(podDetailsVC, animated: true)
-            
         }
-
     }
 
+    // MARK: Search Posts
+    
+    func filterResults(textToSearch: String) {
+        print("Search text: \(textToSearch)")
+        filteredPosts.removeAll()
+        filteredPosts = posts.filter({( post : Post) -> Bool in
+            return (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
+        })
+        
+        filteredPods.removeAll()
+        filteredPods = pods.filter({( pod : POD) -> Bool in
+            return (pod.name?.lowercaseString.containsString(textToSearch.lowercaseString))!
+        })
+        
+        filteredTopics.removeAll()
+        filteredTopics = topics.filter({( topic : Topic) -> Bool in
+            return (topic.name!.lowercaseString.containsString(textToSearch.lowercaseString))
+        })
+
+        searchText = textToSearch
+        tableView.reloadData()
+    }
+    
+    func userDidCancelSearch() {
+        print("User cancelled search")
+        searchText = ""
+        tableView.reloadData()
+    }
 }

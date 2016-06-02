@@ -86,7 +86,7 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
     
     func getMyPODs() {
         SVProgressHUD.showWithStatus("Loading")
-        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0) { (pods, error) -> () in
+        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0, sort_by: "") { (pods, error) -> () in
             SVProgressHUD.dismiss()
             if error == nil {
                 for pod in pods {

@@ -59,6 +59,9 @@ class NetworkController: NSObject {
         case PostReport         = "posts/%@/reports"
         case CreateTopic        = "topics"
         case TopicById          = "topics/%@"
+        case TopicByUser        = "topics/user/%@"
+        case FilterTopic        = "topics/filter"
+        
         case CreatePOD          = "pods"
         case FilterPOD          = "pods/filter"
         case PODById            = "pods/%@"
@@ -108,7 +111,6 @@ class NetworkController: NSObject {
                 completionHandler(nil, retToken, retUserId, error)
             }
         }
-        
     }
     
     func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, subjects: [String]?, grades: [String]?, completionHandler: (User?, AnyObject?) -> ()) -> () {
@@ -348,7 +350,7 @@ class NetworkController: NSObject {
         
     }
     
-    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, podId: Int?, filterByUserInterests: Bool, completionHandler: ([Post], AnyObject?) -> ()) -> () {
+    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, podId: Int?, filterByUserInterests: Bool, sort_by: String?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
         var posts: [Post] = []
         var filters = [String: AnyObject]()
         if topics != nil {
@@ -385,7 +387,10 @@ class NetworkController: NSObject {
         if podId != nil {
             filters["pod_id"] = podId
         }
-        
+        if sort_by != nil {
+            filters["sort_by"] = sort_by
+        }
+
         if filterByUserInterests && currentUser != nil {
             if let grades = currentUser!.grades {
                 if grades.count > 0 {
@@ -417,7 +422,7 @@ class NetworkController: NSObject {
         }
     }
 
-    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
+    func filterPost(topics: [Topic]?, types: [PostType]?, fromDate: NSDate?, toDate: NSDate?, userId: Int?, quantity: Int?, page: Int?, sort_by: String?, completionHandler: ([Post], AnyObject?) -> ()) -> () {
         var posts: [Post] = []
         var filters = [String: AnyObject]()
         if topics != nil {
@@ -451,6 +456,10 @@ class NetworkController: NSObject {
         if page != nil {
             filters["page"] = page
         }
+        if sort_by != nil {
+            filters["sort_by"] = sort_by
+        }
+        
         let parameters : [String : AnyObject]? = ["filter": filters]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
@@ -587,6 +596,58 @@ class NetworkController: NSObject {
         
     }
     
+    func getTopicByUser(userId: String, completionHandler: ([Topic], AnyObject?) -> ()) -> () {
+        var topics: [Topic] = []
+        let urlParameters : [CVarArgType] = [userId]
+
+        performRequest(MethodType.GET, authenticated: true, method: .TopicByUser, urlParams: urlParameters, params: nil, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let podsJsonArray = result!["topics"] as? [AnyObject]
+                if podsJsonArray?.count > 0 {
+                    for elem in podsJsonArray! {
+                        topics.append(Topic(jsonObject: elem))
+                    }
+                }
+                completionHandler(topics, nil)
+            } else {
+                completionHandler(topics, error)
+            }
+        }
+    }
+    
+    func filterTopic(pattern: String?, quantity: Int?, page: Int?, sort_by: String?, completionHandler: ([Topic], AnyObject?) -> ()) -> () {
+        var topics: [Topic] = []
+        var filters = [String: AnyObject]()
+        if pattern != nil {
+            filters["pattern"] = pattern
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        if sort_by != nil {
+            filters["sort_by"] = sort_by
+        }
+        
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterTopic, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let topicJsonArray = result!["topics"] as? [AnyObject]
+                if topicJsonArray?.count > 0 {
+                    for elem in topicJsonArray! {
+                        topics.append(Topic(jsonObject: elem))
+                    }
+                }
+                completionHandler(topics, nil)
+            } else {
+                completionHandler(topics, error)
+            }
+        }
+    }
+
+    
     // MARK: - LIKES
     
     func createLike(postId: String, completionHandler: (Like?, AnyObject?) -> ()) -> () {
@@ -636,7 +697,7 @@ class NetworkController: NSObject {
         
     }
     
-    func filterPOD(pattern: String?, userId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, completionHandler: ([POD], AnyObject?) -> ()) -> () {
+    func filterPOD(pattern: String?, userId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, sort_by: String?, completionHandler: ([POD], AnyObject?) -> ()) -> () {
         var pods: [POD] = []
         var filters = [String: AnyObject]()
         if pattern != nil {
@@ -663,6 +724,10 @@ class NetworkController: NSObject {
         if page != nil {
             filters["page"] = page
         }
+        if sort_by != nil {
+            filters["sort_by"] = sort_by
+        }
+        
         let parameters : [String : AnyObject]? = ["filter": filters]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {

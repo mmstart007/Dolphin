@@ -12,25 +12,26 @@ import UIKit
 class PopularPODsTableViewCell : CustomFontTableViewCell {
     
     var podsCollectionView: UICollectionView!
-    
-    func configureWithDataSource(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
         let collectionViewFlowControl = UICollectionViewFlowLayout()
-        podsCollectionView = UICollectionView(frame: CGRect(x: 0, y: 00, width: 0, height: 0), collectionViewLayout: collectionViewFlowControl)
+        podsCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: collectionViewFlowControl)
         podsCollectionView.registerNib(UINib(nibName: "PODCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "PODCollectionViewCell")
         podsCollectionView.tag = 1
         podsCollectionView.scrollEnabled = false
         podsCollectionView.backgroundColor = UIColor.clearColor()
+        
+        self.addSubview(podsCollectionView)
         self.backgroundColor = UIColor.clearColor()
+    }
+    
+    func configureWithDataSource(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate) {
         podsCollectionView.dataSource = dataSource
         podsCollectionView.delegate   = delegate
-   
-        self.addSubview(podsCollectionView)
-
     }
     
     override func layoutSubviews() {
         podsCollectionView.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
     }
-    
 }

@@ -277,7 +277,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         if !pullToRefresh {
             SVProgressHUD.showWithStatus("Loading")
         }
-        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: 0) { (pods, error) -> () in
+        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: 0, sort_by: nil) { (pods, error) -> () in
             
             if error == nil {
                 
@@ -314,7 +314,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     func loadNextPODs() {
         page = page + 1
-        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page) {  (pods, error) -> () in
+        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page, sort_by: nil) {  (pods, error) -> () in
             if error == nil {
                 self.allPods.appendContentsOf(pods)
                 self.allPODstableView.reloadData()
@@ -339,7 +339,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         if !pullToRefresh {
             SVProgressHUD.showWithStatus("Loading")
         }
-        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0) { (pods, error) -> () in
+        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0, sort_by: nil) { (pods, error) -> () in
             
             if error == nil {
                 self.isDataLoaded = true

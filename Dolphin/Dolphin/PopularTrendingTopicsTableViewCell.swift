@@ -11,44 +11,28 @@ import UIKit
 import KTCenterFlowLayout
 
 class PopularTrendingTopicsTableViewCell : CustomFontTableViewCell {
-    
     var collectionView: UICollectionView!
     
-    func configureWithDataSource(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate, centerAligned: Bool) {
-        if !centerAligned {
-            if collectionView == nil {
-                let collectionViewFlowControl = UICollectionViewFlowLayout()
-                collectionViewFlowControl.scrollDirection = UICollectionViewScrollDirection.Horizontal
-                collectionView = UICollectionView(frame: CGRect(x: 0, y: 00, width: 0, height: 0), collectionViewLayout: collectionViewFlowControl)
-                collectionView?.registerNib(UINib(nibName: "TopicCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "TopicCollectionViewCell")
-                collectionView.scrollEnabled = true
-                collectionView.showsHorizontalScrollIndicator = false
-                collectionView.backgroundColor = UIColor.clearColor()
-                collectionView?.dataSource = dataSource
-                collectionView?.delegate   = delegate
-                collectionView?.tag        = 0
-                self.addSubview(collectionView!)
-                self.backgroundColor = UIColor.clearColor()
-            }
-        } else {
-            if collectionView == nil {
-                let layout = KTCenterFlowLayout()
-                layout.minimumInteritemSpacing = 10.0
-                layout.minimumLineSpacing = 10.0
-                collectionView = UICollectionView(frame: CGRect(x: 0, y: 00, width: 0, height: 0), collectionViewLayout: layout)
-                collectionView.registerNib(UINib(nibName: "TopicCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "TopicCollectionViewCell")
-                self.backgroundColor = UIColor.clearColor()
-                collectionView.dataSource = dataSource
-                collectionView.delegate   = delegate
-                collectionView.tag        = 0
-                collectionView.collectionViewLayout = layout
-                collectionView.scrollEnabled = false
-                collectionView.backgroundColor = UIColor.clearColor()
-                self.addSubview(collectionView!)
-                self.backgroundColor = UIColor.clearColor()
-            }
-        }
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
+        let layout = KTCenterFlowLayout()
+        layout.minimumInteritemSpacing = 10.0
+        layout.minimumLineSpacing = 10.0
+        collectionView = UICollectionView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height), collectionViewLayout: layout)
+        collectionView.registerNib(UINib(nibName: "TopicCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "TopicCollectionViewCell")
+        self.backgroundColor = UIColor.clearColor()
+        collectionView.tag        = 0
+        collectionView.scrollEnabled = false
+        collectionView.backgroundColor = UIColor.clearColor()
+        self.addSubview(collectionView!)
+        self.backgroundColor = UIColor.clearColor()
+
+    }
+    
+    func configureWithDataSource(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate, centerAligned: Bool) {
+        collectionView.dataSource = dataSource
+        collectionView.delegate   = delegate
     }
     
     override func layoutSubviews() {

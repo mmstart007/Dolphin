@@ -272,7 +272,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         if !pullToRefresh {
             SVProgressHUD.showWithStatus("Loading")
         }
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: 0, completionHandler: { (posts, error) -> () in
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: 0, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.isDataLoaded = true
                 self.allPosts = posts
@@ -322,7 +322,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     func loadNextPosts() {
         page = page + 1
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, completionHandler: { (posts, error) -> () in
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.allPosts.appendContentsOf(posts)
                 self.postsTableView.reloadData()

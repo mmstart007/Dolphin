@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PODCollectionViewCell : CustomFontCollectionViewCell {
+class PODCollectionViewCell : UICollectionViewCell {
     
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var podNameLabel: UILabel!
@@ -27,6 +27,12 @@ class PODCollectionViewCell : CustomFontCollectionViewCell {
         podImageView.layer.masksToBounds     = true
         self.podImageView.layer.borderWidth  = 4
         self.podImageView.layer.borderColor  = UIColor.whiteColor().CGColor
+        
+        self.layer.shadowColor = UIColor.blackColor().CGColor
+        self.layer.shadowOpacity = 0.2
+        self.layer.shadowOffset = CGSizeMake(-2.0, 0)
+        self.layer.shadowRadius = 2
+        self.layer.cornerRadius = self.frame.size.width / 2.0
     }
     
 }

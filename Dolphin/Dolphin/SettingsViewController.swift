@@ -430,7 +430,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         page = 0
         
         SVProgressHUD.showWithStatus("Loading")
-        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page) { (pods, error) -> () in
+        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page, sort_by: nil) { (pods, error) -> () in
             
             if error == nil {
                 

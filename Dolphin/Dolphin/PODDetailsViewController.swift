@@ -245,7 +245,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         if !pullToRefresh {
             SVProgressHUD.showWithStatus("Loading")
         }
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId:  nil, quantity: kPageQuantity, page: 0, podId: pod?.id, filterByUserInterests: false,completionHandler: { (posts, error) -> () in
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId:  nil, quantity: kPageQuantity, page: 0, podId: pod?.id, filterByUserInterests: false, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.postOfPOD = posts
                 if self.postOfPOD.count > 0 {
@@ -283,7 +283,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     func loadNextPosts() {
         page = page + 1
-        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, podId: pod?.id, filterByUserInterests: false, completionHandler: { (posts, error) -> () in
+        networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, podId: pod?.id, filterByUserInterests: false, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 if posts.count > 0 {
                     self.postOfPOD.appendContentsOf(posts)

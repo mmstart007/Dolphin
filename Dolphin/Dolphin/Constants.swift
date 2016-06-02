@@ -38,6 +38,16 @@ class Constants {
         static let Invite_Instagram: Int            = 3
     }
     
+    struct Popular {
+        static let Topic_Limit: Int                 = 9
+        static let Pod_Limit: Int                   = 3
+        static let Post_Limit: Int                  = 25
+    }
+    
+    struct Fonts {
+        static let Raleway_Regular: String          = "Raleway-Regular"
+        static let Raleway_Bold: String             = "Raleway-Bold"
+    }
     
     //Settings's Dolphin
     static let iTunesURL: String        = "https://itunes.apple.com/us/app/dolphin-web-browser-for-ipad/id460812023?mt=8"
