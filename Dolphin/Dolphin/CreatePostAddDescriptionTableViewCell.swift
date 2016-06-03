@@ -8,22 +8,19 @@
 
 import UIKit
 import SDWebImage
+import KSTokenView
 
 class CreatePostAddDescriptionTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDelegate {
 
     @IBOutlet weak var imageViewPostImage: UIImageView!
     @IBOutlet weak var textFieldPostTitle: UITextField!
     @IBOutlet weak var textViewDescription: UITextView!
-    
-    internal static func getHeight() -> CGFloat {
-        return 600
-    }
+    @IBOutlet weak var postTagsTextView: KSTokenView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         textViewDescription.placeholder = "Write your moment..."
-        Utils.setFontFamilyForView(self, includeSubViews: true)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -33,6 +30,21 @@ class CreatePostAddDescriptionTableViewCell: UITableViewCell, UITextFieldDelegat
     }
     
     func configureWithImage(isLink: Bool, postImage: UIImage?, postURL: String?, postImageURL: String?) {
+        postTagsTextView.promptText       = ""
+        postTagsTextView.placeholder      = ""
+        postTagsTextView.maxTokenLimit    = 8//default is -1 for unlimited number of tokens
+        postTagsTextView.style            = .Rounded
+        postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 70)
+        postTagsTextView.font             = UIFont.systemFontOfSize(14)
+        postTagsTextView.backgroundColor = UIColor.clearColor()
+        for view in postTagsTextView.subviews {
+            if view.isKindOfClass(UITextField) {
+                
+                let textField = view as? UITextField
+                textField?.borderStyle = .None
+                
+            }
+        }
         
         if isLink {
             let manager = SDWebImageManager.sharedManager()

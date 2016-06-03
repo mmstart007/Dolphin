@@ -10,14 +10,13 @@ import Foundation
 import UIKit
 import SVProgressHUD
 
-class PostDetailsViewController : DolphinViewController, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class PostDetailsViewController : DolphinViewController, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     let networkController = NetworkController.sharedInstance
     let commentTextViewPlaceHolder: String! = "Write a comment..."
     let picker = UIImagePickerController()
     
     var post: Post?
-    var topics: [Topic]?
     var contentOffset: CGFloat = 0
     var actionMenu: UIView? = nil
     var chosenImage: UIImage? = nil
@@ -54,8 +53,6 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         tableView.estimatedRowHeight = 10
         
         addKeyboardObservers()
-        
-        topics = post?.postTopics
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -94,13 +91,13 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Normal)
         customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Highlighted)
         customViewCommentButton.addTarget(self, action: "commentButtonPressed", forControlEvents: .TouchUpInside)
-        let commentBarButton        = UIBarButtonItem(customView: customViewCommentButton)
+//        let commentBarButton        = UIBarButtonItem(customView: customViewCommentButton)
 
         let customViewLikeButton    = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Normal)
         customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Highlighted)
         customViewLikeButton.addTarget(self, action: "likeButtonPressed", forControlEvents: .TouchUpInside)
-        let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
+//        let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
 
         //navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
         navigationItem.rightBarButtonItems = [actionBarButton]
@@ -115,7 +112,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         if let postId = post?.postId {
             let urlString = "dolphin-app://?post_id=\(postId)&name=test_name"
             let myShare = NSURL(string: urlString)
-            let image: UIImage = UIImage(named: "DolphinDealHeader")!
+//            let image: UIImage = UIImage(named: "DolphinDealHeader")!
             
             let shareVC: UIActivityViewController = UIActivityViewController(activityItems: ["This is the text for an awesome website!", myShare!], applicationActivities: nil)
             self.presentViewController(shareVC, animated: true, completion: nil)
@@ -262,12 +259,11 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 1 {
-            return 40
-        } else {
+//        if indexPath.section == 1 {
+//            return 40
+//        } else {
             return UITableViewAutomaticDimension
-        }
-        
+//        }
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -283,7 +279,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                 (cell as? PostCommentOddTableViewCell)?.adjustCellViews()
             }
         } else if indexPath.section == 1 {
-            (cell as? PostDetailsTopicsAndViewsTableViewCell)!.collectionView.setContentOffset(CGPoint(x: self.contentOffset, y: 0), animated: false)
+//            (cell as? PostDetailsTopicsAndViewsTableViewCell)!.collectionView.setContentOffset(CGPoint(x: self.contentOffset, y: 0), animated: false)
         }
     }
     
@@ -318,53 +314,6 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         if indexPath.section == 2 {
             let postCommentsVC  = PostCommentsViewController(post: post!)
             navigationController?.pushViewController(postCommentsVC, animated: true)
-        }
-    }
-    
-    // MARK: CollectionView Datasource
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return topics!.count
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: TopicCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("TopicCollectionViewCell", forIndexPath: indexPath) as? TopicCollectionViewCell
-        if cell == nil {
-            cell = TopicCollectionViewCell()
-        }
-        cell?.configureWithName(topics![indexPath.row].name!.uppercaseString, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
-        collectionView.userInteractionEnabled = true
-        return cell!
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let text = topics![indexPath.row].name!.uppercaseString
-        let font = UIFont.systemFontOfSize(16)
-        let textString = text as NSString
-        
-        let textAttributes = [NSFontAttributeName: font]
-        var size = textString.boundingRectWithSize(CGSizeMake(self.view.frame.size.width - 20, 35), options: .UsesLineFragmentOrigin, attributes: textAttributes, context: nil).size
-        if size.width < self.view.frame.size.width / 4 {
-            size = CGSize(width: self.view.frame.size.width / 4, height: size.height)
-        }
-        return size
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    }
-    
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if !scrollView.isKindOfClass(UICollectionView.classForCoder()) {
-            return
-        } else {
-            self.contentOffset = scrollView.contentOffset.x
-            
         }
     }
     

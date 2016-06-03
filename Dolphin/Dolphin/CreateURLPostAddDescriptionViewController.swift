@@ -9,44 +9,32 @@
 import UIKit
 import SVProgressHUD
 
-class CreateURLPostAddDescriptionViewController: DolphinViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate {
+class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionViewController {
 
-    let networkController = NetworkController.sharedInstance
-    @IBOutlet weak var tableViewPostDetails: UITableView!
-    
     var postImageURL: String?
     var postURL: String?
-    // if this var is set, I'm creating a text post from a POD
-    var podId: Int?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        setBackButton()
-        setRightButtonItemWithText("Post", target: self, action: "postButtonTouchUpInside")
-        self.edgesForExtendedLayout     = .None
-        title                           = "Add description"
-        tableViewPostDetails.delegate   = self
-        tableViewPostDetails.dataSource = self
-        tableViewPostDetails.tableFooterView = UIView(frame: CGRectZero)
-        registerCells()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - Actions
     
-    func postButtonTouchUpInside() {
-        print("postButtonTouchUpInside")
-        
+    override func postButtonTouchUpInside() {
+
         let cellInfo = tableViewPostDetails.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? CreatePostAddDescriptionTableViewCell
+        
+        //Hide Keyboard
         cellInfo?.textViewDescription.resignFirstResponder()
         cellInfo?.textFieldPostTitle.resignFirstResponder()
+        cellInfo?.postTagsTextView.resignFirstResponder()
         
+        //Get Info.
         let description = cellInfo?.textViewDescription.text
+        
+        let topicsStringArray = cellInfo?.postTagsTextView.tokens()
+        var topics: [Topic] = []
+        if topicsStringArray != nil {
+            for t in topicsStringArray! {
+                topics.append(Topic(name: t.title))
+            }
+        }
         
         var imageWidth:Float = 0
         var imageHeight:Float = 0
@@ -59,7 +47,7 @@ class CreateURLPostAddDescriptionViewController: DolphinViewController, UITableV
         if description != "" {
             let link = Link(url: postURL!, imageURL: postImageURL!)
             // crate the pod
-            let post = Post(user: nil, image: nil, imageData: nil, imageWidth: imageWidth, imageHeight: imageHeight, type: PostType(name: "link"), topics: nil, link: link, imageUrl: nil, title: nil, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
+            let post = Post(user: nil, image: nil, imageData: nil, imageWidth: imageWidth, imageHeight: imageHeight, type: PostType(name: "link"), topics: topics, link: link, imageUrl: nil, title: nil, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
             SVProgressHUD.showWithStatus("Posting")
             networkController.createPost(post, completionHandler: { (post, error) -> () in
                 if error == nil {
@@ -95,16 +83,8 @@ class CreateURLPostAddDescriptionViewController: DolphinViewController, UITableV
         }
     }
     
-    // MARK: - TableView DataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: CreatePostAddDescriptionTableViewCell?
         if indexPath.section == 0 {
             cell = tableView.dequeueReusableCellWithIdentifier("CreatePostAddDescriptionTableViewCell") as? CreatePostAddDescriptionTableViewCell
@@ -113,38 +93,11 @@ class CreateURLPostAddDescriptionViewController: DolphinViewController, UITableV
             }
             cell?.textFieldPostTitle.delegate = self
             cell?.textViewDescription.delegate = self
+            cell?.postTagsTextView.delegate = self
             cell?.configureWithImage(true, postImage: nil, postURL: postURL, postImageURL: postImageURL)
         }
         cell?.contentView.userInteractionEnabled = false
         cell?.selectionStyle = .None
         return cell!
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CreatePostAddDescriptionTableViewCell.getHeight()
-    }
-    
-    // MARK: - Auxiliary methods
-    
-    func registerCells() {
-        tableViewPostDetails.registerNib(UINib(nibName: "CreatePostAddDescriptionTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "CreatePostAddDescriptionTableViewCell")
-    }
-    
-    // MARK: UITextField Delegate.
-    func textFieldDidBeginEditing(textField: UITextField) {
-        tableViewPostDetails.setContentOffset(CGPointMake(0.0, 200.0), animated: true)
-    }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
-        tableViewPostDetails.setContentOffset(CGPointZero, animated: true)
-    }
-    
-    // MARK: UITextView Delegate.
-    func textViewDidBeginEditing(textView: UITextView) {
-        tableViewPostDetails.setContentOffset(CGPointMake(0.0, 200.0), animated: true)
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        tableViewPostDetails.setContentOffset(CGPointZero, animated: true)        
     }
 }

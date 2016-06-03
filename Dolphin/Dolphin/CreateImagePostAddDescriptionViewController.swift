@@ -8,8 +8,9 @@
 
 import UIKit
 import SVProgressHUD
+import KSTokenView
 
-class CreateImagePostAddDescriptionViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate {
+class CreateImagePostAddDescriptionViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, KSTokenViewDelegate {
 
     let networkController = NetworkController.sharedInstance
     
@@ -18,6 +19,7 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     var postImage: UIImage?
     // if this var is set, I'm creating a text post from a POD
     var podId: Int?
+    let tags: Array<String> = List.names()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,33 +32,37 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
         tableViewPostDetails.dataSource = self
         tableViewPostDetails.tableFooterView = UIView(frame: CGRectZero)
         registerCells()
-
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+   
     // MARK: - Actions
-    
     func postButtonTouchUpInside() {
-        print("postButtonTouchUpInside")
-        
+
         let cellInfo = tableViewPostDetails.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? CreatePostAddDescriptionTableViewCell
-        cellInfo?.textFieldPostTitle.resignFirstResponder()
-        cellInfo?.textViewDescription.resignFirstResponder()
         
+        //Hide Keyboard
+        cellInfo?.textViewDescription.resignFirstResponder()
+        cellInfo?.textFieldPostTitle.resignFirstResponder()
+        cellInfo?.postTagsTextView.resignFirstResponder()
+
+        //Get Info.
         let title = cellInfo?.textFieldPostTitle.text
         let description = cellInfo?.textViewDescription.text
-        
-        if title != "" && description != "" {
+        let topicsStringArray = cellInfo?.postTagsTextView.tokens()
+        var topics: [Topic] = []
+        if topicsStringArray != nil {
+            for t in topicsStringArray! {
+                topics.append(Topic(name: t.title))
+            }
+        }
 
+        if title != "" && description != "" {
+            
             SVProgressHUD.showWithStatus("Posting")
             dispatch_async(dispatch_get_main_queue()) {
                 // do your stuff here
                 // crate the image pod
-                let post = Post(user: nil, image: nil, imageData: self.postImage, imageWidth: Float(self.postImage!.size.width), imageHeight: Float(self.postImage!.size.height), type: PostType(name: "image"), topics: nil, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: self.podId)
+                let post = Post(user: nil, image: nil, imageData: self.postImage, imageWidth: Float(self.postImage!.size.width), imageHeight: Float(self.postImage!.size.height), type: PostType(name: "image"), topics: topics, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: self.podId)
                 self.networkController.createPost(post, completionHandler: { (post, error) -> () in
                     if error == nil {
                         
@@ -85,18 +91,15 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
             }
         } else {
             var alert: UIAlertController
-            alert = UIAlertController(title: "Error", message: "Please, fill all the fields", preferredStyle: .Alert)            
+            alert = UIAlertController(title: "Error", message: "Please, fill all the fields", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        
-        
     }
     
     
     // MARK: - TableView DataSource
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -112,9 +115,10 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
             if cell == nil {
                 cell = CreatePostAddDescriptionTableViewCell()
             }
-            
             cell?.textFieldPostTitle.delegate = self
             cell?.textViewDescription.delegate = self
+            cell?.postTagsTextView.delegate    = self
+
             cell?.configureWithImage(false, postImage: postImage, postURL: nil, postImageURL: nil)
         }
         cell?.contentView.userInteractionEnabled = false
@@ -123,7 +127,7 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CreatePostAddDescriptionTableViewCell.getHeight()
+        return (self.view.frame.height - (self.navigationController?.navigationBar.frame.size.height)! + 50.0)
     }
     
     // MARK: - Auxiliary methods
@@ -148,6 +152,28 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     }
     
     func textViewDidEndEditing(textView: UITextView) {
+        tableViewPostDetails.setContentOffset(CGPointZero, animated: true)
+    }
+    
+    func tokenView(token: KSTokenView, performSearchWithString string: String, completion: ((results: Array<AnyObject>) -> Void)?) {
+        var data: Array<String> = []
+        for value: String in tags {
+            if value.lowercaseString.rangeOfString(string.lowercaseString) != nil {
+                data.append(value)
+            }
+        }
+        completion!(results: data)
+    }
+    
+    func tokenView(token: KSTokenView, displayTitleForObject object: AnyObject) -> String {
+        return object as! String
+    }
+    
+    func tokenViewDidBeginEditing(tokenView: KSTokenView) {
+        tableViewPostDetails.setContentOffset(CGPointMake(0.0, 400.0), animated: true)
+    }
+    
+    func tokenViewDidEndEditing(tokenView: KSTokenView) {
         tableViewPostDetails.setContentOffset(CGPointZero, animated: true)
     }
 }

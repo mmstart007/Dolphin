@@ -12,7 +12,7 @@ import UITextView_Placeholder
 import KSTokenView
 import SVProgressHUD
 
-class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettingsViewControllerDelegate {
+class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettingsViewControllerDelegate, KSTokenViewDelegate {
     
     let tags: Array<String> = List.names()
     let networkController = NetworkController.sharedInstance
@@ -154,9 +154,6 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         visibilityLabel.text = visibilityString
     }
     
-}
-
-extension CreateTextPostViewController: KSTokenViewDelegate {
     func tokenView(token: KSTokenView, performSearchWithString string: String, completion: ((results: Array<AnyObject>) -> Void)?) {
         var data: Array<String> = []
         for value: String in tags {
@@ -171,5 +168,8 @@ extension CreateTextPostViewController: KSTokenViewDelegate {
         return object as! String
     }
 }
+
+
+
 
 

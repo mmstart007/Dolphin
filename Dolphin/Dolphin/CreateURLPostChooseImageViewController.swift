@@ -61,7 +61,8 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(UIScreen.mainScreen().bounds.width / 3.0 - 30, view.frame.size.width / 3.0 - 30)
+        let width = (UIScreen.mainScreen().bounds.width - 10.0) / 3.0 - 10.0
+        return CGSizeMake(width, width)
     }
     
     // MARK: - CollectionView delegate

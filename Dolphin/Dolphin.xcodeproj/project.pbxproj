@@ -40,7 +40,6 @@
 		3616E49F1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3616E49E1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib */; };
 		3616E4A11C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3616E4A01C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib */; };
 		361ADC491CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361ADC471CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift */; };
-		361ADC4A1CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 361ADC481CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib */; };
 		361BFDAF1C9CA04C00F994F1 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BFDAE1C9CA04C00F994F1 /* Link.swift */; };
 		361F50841C652C3900153B6C /* UIView+DolphinExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361F50831C652C3900153B6C /* UIView+DolphinExtensions.swift */; };
 		361F50861C65337C00153B6C /* NewPostPrivacySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361F50851C65337C00153B6C /* NewPostPrivacySettingsViewController.swift */; };
@@ -165,6 +164,8 @@
 		36F4AC3C1C64EF9B00323672 /* CreateTextPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F4AC3B1C64EF9B00323672 /* CreateTextPostViewController.swift */; };
 		36F4AC3E1C64EFB900323672 /* CreateTextPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */; };
 		890B04FF265D7EA4ECA25CE0 /* Pods_Dolphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */; };
+		AA0592D91D01E522001D7823 /* LeftAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */; };
+		AA9552BA1D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */; };
 		F8483E6B1CFE6FB90060CC8C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6A1CFE6FB90060CC8C /* Globals.swift */; };
 		F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6C1CFE7BFA0060CC8C /* MyFeedViewController.swift */; };
 		F8483E711CFE7BFA0060CC8C /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */; };
@@ -224,7 +225,6 @@
 		3616E49E1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealDetailsHeaderTableViewCell.xib; sourceTree = "<group>"; };
 		3616E4A01C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealDetailsCodeSectionTableViewCell.xib; sourceTree = "<group>"; };
 		361ADC471CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostAddDescriptionViewController.swift; sourceTree = "<group>"; };
-		361ADC481CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostAddDescriptionViewController.xib; sourceTree = "<group>"; };
 		361BFDAE1C9CA04C00F994F1 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		361F50831C652C3900153B6C /* UIView+DolphinExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+DolphinExtensions.swift"; sourceTree = "<group>"; };
 		361F50851C65337C00153B6C /* NewPostPrivacySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPostPrivacySettingsViewController.swift; sourceTree = "<group>"; };
@@ -359,6 +359,8 @@
 		36F4AC3B1C64EF9B00323672 /* CreateTextPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTextPostViewController.swift; sourceTree = "<group>"; };
 		36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTextPostViewController.xib; sourceTree = "<group>"; };
 		6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dolphin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
+		AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostAddDescriptionViewController.xib; sourceTree = "<group>"; };
 		AD9E99804B93529D712BC626 /* Pods-Dolphin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.debug.xcconfig"; sourceTree = "<group>"; };
 		DCFBF776029220B30C3A087B /* Pods-Dolphin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.release.xcconfig"; sourceTree = "<group>"; };
 		F8483E6A1CFE6FB90060CC8C /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
@@ -481,7 +483,7 @@
 				36129FA51CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift */,
 				36129FA61CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib */,
 				361ADC471CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift */,
-				361ADC481CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib */,
+				AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */,
 			);
 			name = Posts;
 			sourceTree = "<group>";
@@ -671,6 +673,7 @@
 				361FFE2B1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib */,
 				36E998271C28C14A007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.swift */,
 				36E998291C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib */,
+				AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */,
 			);
 			name = "Post Details";
 			sourceTree = "<group>";
@@ -1054,6 +1057,7 @@
 				36BE4D0A1C06250B002E52D9 /* HomeViewController.xib in Resources */,
 				369A384D1CA9C1DE00B78C98 /* ProfileAvatarTableViewCell.xib in Resources */,
 				36E411711C8E3DE9002DC736 /* SettingsViewController.xib in Resources */,
+				AA9552BA1D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib in Resources */,
 				36D0C6981C07A0F50002AE35 /* NewPostMenu.xib in Resources */,
 				361F50901C693ABA00153B6C /* NewPostPrivacySettingsShareToPODCell.xib in Resources */,
 				36B1F4201C0FA97D0091A1B3 /* PODCollectionViewCell.xib in Resources */,
@@ -1061,7 +1065,6 @@
 				361FFE261C0D0BBE007EE366 /* PostCommentOddTableViewCell.xib in Resources */,
 				36B1F41C1C0FA7910091A1B3 /* PopularPODsTableViewCell.xib in Resources */,
 				361FFE2C1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib in Resources */,
-				361ADC4A1CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.xib in Resources */,
 				368798901C2B2BA70088AC24 /* Raleway-Regular.ttf in Resources */,
 				3607AADB1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib in Resources */,
 			);
@@ -1183,6 +1186,7 @@
 				365DBDDB1CACC0B600D20C02 /* SelectPODMembersViewController.swift in Sources */,
 				360993141C4049530082B995 /* UIAppearance_Swift.m in Sources */,
 				3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */,
+				AA0592D91D01E522001D7823 /* LeftAlignCollectionViewLayout.swift in Sources */,
 				F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */,
 				361FC07F1CA1F7A200388FD0 /* PickGradesOrSubjectsViewController.swift in Sources */,
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,

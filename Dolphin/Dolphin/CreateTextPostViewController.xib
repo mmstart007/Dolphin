@@ -10,7 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateTextPostViewController" customModule="Dolphin" customModuleProvider="target">
             <connections>
                 <outlet property="adjustVisitivilitySettingsIndicator" destination="gPJ-kd-cR6" id="k6v-oP-CKw"/>
-                <outlet property="postTagsTextView" destination="GSZ-yR-VeE" id="hHX-cN-v0W"/>
+                <outlet property="postTagsTextView" destination="GSZ-yR-VeE" id="liV-UN-iQ4"/>
                 <outlet property="postTextView" destination="Jgf-FV-nbl" id="p8e-L7-Osh"/>
                 <outlet property="postTitleTextField" destination="QRN-OE-vQN" id="JXu-Ap-AdF"/>
                 <outlet property="postToFieldView" destination="26j-xS-0uU" id="vM5-nr-mGf"/>

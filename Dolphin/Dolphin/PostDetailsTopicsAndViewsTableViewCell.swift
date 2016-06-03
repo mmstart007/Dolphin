@@ -11,28 +11,28 @@ import UIKit
 
 class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
     
-    var collectionView: UICollectionView! = nil
+    @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var likedImageView: UIImageView!
     @IBOutlet weak var topicsView: UIView!
     @IBOutlet weak var numberOfLikesLabel: UILabel!
-    @IBOutlet weak var viewLabelWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var verticalLayoutConstraint: NSLayoutConstraint!
     var post: Post!
+    
+    override func awakeFromNib() {
+         super.awakeFromNib()
+        collectionView?.registerNib(UINib(nibName: "TopicCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "TopicCollectionViewCell")
+        let layout = LeftAlignCollectionViewLayout()
+        layout.minimumInteritemSpacing = 5;
+        layout.minimumLineSpacing = 4;
+        collectionView.collectionViewLayout = layout
+
+        self.backgroundColor = UIColor.clearColor()
+    }
     
     func configureWithPost(post: Post, dataSource: AnyObject, delegate: AnyObject) {
         self.post = post
-        let collectionViewFlowControl = UICollectionViewFlowLayout()
-        collectionViewFlowControl.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: topicsView.frame.size.width, height: topicsView.frame.size.height), collectionViewLayout: collectionViewFlowControl)
-        collectionView?.registerNib(UINib(nibName: "TopicCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "TopicCollectionViewCell")
-        collectionView.scrollEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = UIColor.clearColor()
-        collectionView?.dataSource = dataSource as? UICollectionViewDataSource
-        collectionView?.delegate   = delegate as? UICollectionViewDelegate
-        collectionView?.tag        = 0
-        self.addSubview(collectionView!)
-        self.backgroundColor = UIColor.clearColor()
+        numberOfLikesLabel.text = String(post.postNumberOfLikes!)
         if post.isLikedByUser {
             likedImageView.image = UIImage(named: "ViewsGlassIcon")
         } else {
@@ -41,20 +41,47 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
         
         likedImageView.addGestureRecognizer(UITapGestureRecognizer(target: delegate as! PostDetailsViewController, action: "likeButtonPressed"))
         likedImageView.userInteractionEnabled = true
+        
+        collectionView.reloadData()
+        verticalLayoutConstraint.constant = collectionView.contentSize.height;
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let attributedString = NSAttributedString(string: String(post.postNumberOfLikes!), attributes: [NSFontAttributeName:numberOfLikesLabel.font])
-        let size = attributedString.boundingRectWithSize(CGSize(width: 1000, height: 40), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
-        viewLabelWidthConstraint.constant = size.width + 10
-        numberOfLikesLabel.text = String(post.postNumberOfLikes!)
-        collectionView.frame = CGRect(x: 0, y: 0, width: topicsView.frame.size.width, height: topicsView.frame.size.height)
-        self.setNeedsLayout()
-        self.setNeedsUpdateConstraints()
+    // MARK: CollectionView Datasource
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
     }
     
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return (post?.postTopics!.count)!
+    }
     
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        var cell: TopicCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("TopicCollectionViewCell", forIndexPath: indexPath) as? TopicCollectionViewCell
+        if cell == nil {
+            cell = TopicCollectionViewCell()
+        }
+        cell?.configureWithName((post?.postTopics![indexPath.row].name!.uppercaseString)!, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
+        collectionView.userInteractionEnabled = true
+        return cell!
+    }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let text = post?.postTopics![indexPath.row].name!.uppercaseString
+        let font = UIFont.systemFontOfSize(16)
+        let textString = text! as NSString
+        
+        let textAttributes = [NSFontAttributeName: font]
+        var size = textString.boundingRectWithSize(CGSizeMake(topicsView.frame.size.width - 20, 35), options: .UsesLineFragmentOrigin, attributes: textAttributes, context: nil).size
+        if size.width < topicsView.frame.size.width / 4 {
+            size = CGSize(width: topicsView.frame.size.width / 4, height: size.height)
+        }
+        return size
+    }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+    
+
 }

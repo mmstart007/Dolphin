@@ -13,7 +13,7 @@ class DolphinCustomFontViewController : UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        Utils.setFontFamilyForView(self.view, includeSubViews: true)
+//        Utils.setFontFamilyForView(self.view, includeSubViews: true)
     }
     
 }
