@@ -97,7 +97,13 @@ class NetworkController: NSObject {
     func registerUser(user: User, completionHandler: (User?, String?, Int?, AnyObject?) -> ()) -> () {
         var retToken: String?
         var retUserId: Int?
-        let parameters = ["user": user.toJson()]
+        var userInfo = user.toJson()
+        
+        if Globals.currentDeviceToken.characters.count > 0 {
+            userInfo["device_token"] = Globals.currentDeviceToken
+        }
+        
+        let parameters = ["user": userInfo]
         performRequest(MethodType.POST, authenticated: false, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 retToken = (result!["api_token"] as? String)!

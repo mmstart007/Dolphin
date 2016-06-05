@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DealCollectionViewCell : CustomFontCollectionViewCell {
+class DealCollectionViewCell : UICollectionViewCell {
     
     @IBOutlet weak var dealImageView: UIImageView!
     @IBOutlet weak var dealDescriptionLabel: UILabel!
@@ -53,7 +53,6 @@ class DealCollectionViewCell : CustomFontCollectionViewCell {
         dealImageView.image = UIImage(named: "DolphinDealHeader")
         dealDescriptionLabel.text = "List your Deal for other Dolphins to Explore!"
         dealDescriptionLabel.textAlignment = .Center
-        dealDescriptionLabel.font = UIFont(name: "Raleway-Bold", size: 18)
         dealDescriptionLabel.numberOfLines = 0
         dealDescriptionLabel.adjustsFontSizeToFitWidth = true
         

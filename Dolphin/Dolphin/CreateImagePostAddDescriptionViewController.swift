@@ -68,6 +68,7 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
                         
                         if post?.postId != nil {
                             // everything worked ok
+                            NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
                             self.navigationController?.popToRootViewControllerAnimated(true)
                         } else {
                             // there was an error saving the post

@@ -26,7 +26,6 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
         super.viewDidLoad()
         
         setBackButton()
-        dealsCollectionView.backgroundColor = UIColor.lightGrayBackground()
         title = "Dolphin Deals"
         dealsCollectionView.registerNib(UINib(nibName: "DealCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "DealCollectionViewCell")
         dealsCollectionView.registerNib(UINib(nibName: "DealCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "DealCollectionViewHeaderCell")
@@ -44,7 +43,8 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
         if section == 0 {
             return 1
         } else {
-            return networkController.deals.count
+//            return networkController.deals.count
+            return 10
         }
     }
     
@@ -62,7 +62,7 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
         if indexPath.section == 0 {
             cell?.configureAsDealsHeader()
         } else {
-            cell?.configureWithDeal(networkController.deals[indexPath.row])
+//            cell?.configureWithDeal(networkController.deals[indexPath.row])
         }
         return cell!
     }
@@ -83,11 +83,8 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let dealDetailsVC = DealDetailsViewController()
-        dealDetailsVC.deal = networkController.deals[indexPath.row];
-        navigationController?.pushViewController(dealDetailsVC, animated: true)
-        
+//        let dealDetailsVC = DealDetailsViewController()
+//        dealDetailsVC.deal = networkController.deals[indexPath.row];
+//        navigationController?.pushViewController(dealDetailsVC, animated: true)
     }
-    
-    
 }

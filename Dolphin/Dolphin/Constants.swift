@@ -21,14 +21,20 @@ class Constants {
     }
     
     struct Messages {
+        
         static let UnsupportedEmailTitle: String    = "Could Not Send Email"
         static let UnsupportedEmail: String         = "Your device could not send e-mail.  Please check e-mail configuration and try again."
-        
         static let UnsupportedSMSTitle: String      = "Could Not Send SMS"
         static let UnsupportedSMS: String           = "Your device could not send SMS.  Please check SMS configuration and try again."
-        
         static let Error_Report: String             = "Can't report this post."
-
+        
+        //Login & Sign up
+        static let EmailErrorTitle: String          = "Email error"
+        static let EmailErrorMsg: String            = "Wrong format"
+        static let PasswordErrorTitle: String       = "Password error"
+        static let PasswordErrorMsg: String         = "Password should be at least 5 characters long"
+        static let UsernameErrortitle: String       = "Username error"
+        static let UsernameErrorMsg: String         = "Username empty"
     }
     
     struct InviteType {

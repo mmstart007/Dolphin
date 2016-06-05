@@ -173,12 +173,12 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         
         if !checkValidMail(true) {
             fieldsValidated = false
-            errorTitle = "Email error"
-            errorMsg = "Wrong format"
+            errorTitle = Constants.Messages.EmailErrorTitle
+            errorMsg = Constants.Messages.EmailErrorMsg
         } else if !checkValidPassword(true) {
             fieldsValidated = false
-            errorTitle = "Password error"
-            errorMsg = "Password should be at least 5 characters long"
+            errorTitle = Constants.Messages.PasswordErrorTitle
+            errorMsg = Constants.Messages.PasswordErrorMsg
         }
         if fieldsValidated {
             SVProgressHUD.showWithStatus("Signing in")
@@ -217,16 +217,16 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         var errorMsg: String = ""
         if !checkValidUsername() {
             fieldsValidated = false
-            errorTitle = "Username error"
-            errorMsg = "Username empty"
+            errorTitle = Constants.Messages.UsernameErrortitle
+            errorMsg = Constants.Messages.UsernameErrorMsg
         } else if !checkValidMail(false) {
             fieldsValidated = false
-            errorTitle = "Email error"
-            errorMsg = "Wrong format"
+            errorTitle = Constants.Messages.EmailErrorTitle
+            errorMsg = Constants.Messages.EmailErrorMsg
         } else if !checkValidPassword(false) {
             fieldsValidated = false
-            errorTitle = "Password error"
-            errorMsg = "Password should be at least 5 characters long"
+            errorTitle = Constants.Messages.PasswordErrorTitle
+            errorMsg = Constants.Messages.PasswordErrorMsg
         }
         if fieldsValidated {
             

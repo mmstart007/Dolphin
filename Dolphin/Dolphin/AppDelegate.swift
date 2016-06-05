@@ -30,6 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics.self, Twitter.self])
         
+        //Enable Push notification.
+        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        application.registerUserNotificationSettings(pushNotificationSettings)
+        application.registerForRemoteNotifications()
         
         // Set appearance of Navigation and Status bars
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -132,7 +137,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        let characterSet: NSCharacterSet = NSCharacterSet(charactersInString: "<>")
+        let deviceTokenString: String = (deviceToken.description as NSString)
+            .stringByTrimmingCharactersInSet(characterSet)
+            .stringByReplacingOccurrencesOfString( " ", withString: "") as String
+        Globals.currentDeviceToken = deviceTokenString
+    }
     
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print(error)
+    }
     
     
 }

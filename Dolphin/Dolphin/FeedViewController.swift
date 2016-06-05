@@ -42,17 +42,40 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.postsTableView.reloadData()
+        
         if networkController.currentUserId == nil {
             let alert = UIAlertController(title: "Warning", message: "You need to logout and login again, sorry this is for this time because we are in development", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)
             self.presentViewController(alert, animated: true, completion: nil)
         } else {
+            
+            //Set notification handler to get posted feed.
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "newPostCreated:" , name: Constants.Notifications.CreatedPost, object: nil)
+            
             if !isDataLoaded {
-                loadData(false)
+                if myLikes {
+                    loadUserLikes(false)
+                } else {
+                    loadData(false)
+                }
             }
         }
     }
+    
+    func newPostCreated(notification: NSNotification) {
+        if myLikes {
+            return;
+        }
+        
+        if let userInfo = notification.userInfo as? Dictionary<String, Post> {
+            if let post = userInfo["post"] {
+                self.allPosts.append(post)
+                postsTableView.reloadData()
+            }
+        }
+    }
+
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -73,7 +96,12 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         postsTableView.estimatedRowHeight = 400
         
         postsTableView.addPullToRefreshWithActionHandler { () -> Void in
-            self.loadData(true)
+            
+            if self.myLikes {
+                self.loadUserLikes(true)
+            } else {
+                self.loadData(true)
+            }
         }
         
         postsTableView.addInfiniteScrollingWithActionHandler { () -> Void in
