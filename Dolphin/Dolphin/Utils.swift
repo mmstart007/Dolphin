@@ -78,10 +78,10 @@ class Utils {
     
     static func encodeBase64(srcImage: UIImage) -> String {
         //Now use image to create into NSData format
-        let imageData = UIImagePNGRepresentation(srcImage)
+//        let imageData = UIImagePNGRepresentation(srcImage)
+        let imageData = UIImageJPEGRepresentation(srcImage, Constants.Globals.ImageCompression)
         let base64String = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)        
         return base64String
-
     }
     
     static func decodeBase64(encodedBase64String: String) -> UIImage? {

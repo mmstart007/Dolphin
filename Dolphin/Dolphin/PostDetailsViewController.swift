@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SVProgressHUD
+import SDWebImage
 
 class PostDetailsViewController : DolphinViewController, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
@@ -107,17 +108,38 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     // MARK: NavBar Actions and Action Menu
     
     func actionButtonPressed() {
-        print("Action Button Pressed")
+        if post?.postType?.name == "link" {
+            let shareURL = NSURL(string: (post?.postLink?.url)!)
+            let imageURL = NSURL(string: (post?.postLink?.imageURL)!)
+            let manager = SDWebImageManager.sharedManager()
+            manager.downloadImageWithURL(imageURL, options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                if error == nil {
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(self.post?.postText)!, shareURL!, image], applicationActivities: nil)
+                    self.presentViewController(shareVC, animated: true, completion: nil)
+                } else {
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(self.post?.postText)!, shareURL!], applicationActivities: nil)
+                    self.presentViewController(shareVC, animated: true, completion: nil)
+                }
+            })
 
-        if let postId = post?.postId {
-            let urlString = "dolphin-app://?post_id=\(postId)&name=test_name"
-            let myShare = NSURL(string: urlString)
-//            let image: UIImage = UIImage(named: "DolphinDealHeader")!
-            
-            let shareVC: UIActivityViewController = UIActivityViewController(activityItems: ["This is the text for an awesome website!", myShare!], applicationActivities: nil)
+        } else if post?.postType?.name == "text" {
+            let shareText = (post?.postHeader)! + "\n" + (post?.postText)!
+            let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
             self.presentViewController(shareVC, animated: true, completion: nil)
+        } else {
+            
+            let imageURL = NSURL(string: (post?.postImage?.imageURL)!)
+            let manager = SDWebImageManager.sharedManager()
+            manager.downloadImageWithURL(imageURL, options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                if error == nil {
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(self.post?.postText)!, image], applicationActivities: nil)
+                    self.presentViewController(shareVC, animated: true, completion: nil)
+                } else {
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(self.post?.postText)!], applicationActivities: nil)
+                    self.presentViewController(shareVC, animated: true, completion: nil)
+                }
+            })
         }
-        
     }
     
     func setupActionMenuFields() {

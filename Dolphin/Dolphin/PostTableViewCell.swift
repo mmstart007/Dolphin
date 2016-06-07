@@ -22,50 +22,37 @@ class PostTableViewCell : UITableViewCell {
     var delegate:PostTableViewCellDelegate?
 
     @IBOutlet weak var postImageView: UIImageView!
-    @IBOutlet weak var postText: UITextView!
+    @IBOutlet weak var postTitle: UILabel!
+    @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var postuserImageView: UIImageView!
     @IBOutlet weak var postUserNameLabel: UILabel!
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var numberOfLikesLabel: UILabel!
     @IBOutlet weak var numberOfCommentsLabel: UILabel!
-    @IBOutlet weak var linkTypePostContainer: UIView!
-    @IBOutlet weak var linkPostTitleLabel: UILabel!
-    @IBOutlet weak var linkPostURLButton: UIButton!
     @IBOutlet weak var likedImageView: UIImageView!
-    @IBOutlet var textHeightConstraint: NSLayoutConstraint!
-    @IBOutlet var linkInfoContainerHeightConstraint: NSLayoutConstraint!
-    @IBOutlet var postNumberOfLikesWidthConstarint: NSLayoutConstraint!
-    @IBOutlet var postNumberOfCommentsWidthConstraint: NSLayoutConstraint!
     @IBOutlet var postImageViewHeightConstraint: NSLayoutConstraint!
     
     var cellPost: Post?
     var cellIndexPath: NSIndexPath?
     var triangleView: TriangleView?
     
-    override var frame: CGRect {
-        get {
-            return super.frame
-        }
-        set (newFrame) {
-            var frame               = newFrame
-            let separation: CGFloat = 6.0
-            frame.origin.x          += separation
-            frame.origin.y          += separation
-            frame.size.width        = frame.size.width - (separation * 2.0)
-            frame.size.height       = frame.size.height - (separation * 2.0)
-            super.frame             = frame
-        }
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.contentView.userInteractionEnabled = false
         
-        postuserImageView.layer.cornerRadius = postuserImageView.frame.size.width / 2.0
+        self.layer.cornerRadius               = 5
+        postImageView.layer.cornerRadius      = 5
+        postImageView.layer.masksToBounds     = true
+        postuserImageView.layer.cornerRadius  = postuserImageView.frame.size.width / 2.0
+        postuserImageView.layer.masksToBounds = true
+
+        let tapGestureLike = UITapGestureRecognizer(target: self, action: "actionLike")
+        tapGestureLike.numberOfTapsRequired = 1
+        likedImageView.addGestureRecognizer(tapGestureLike)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: "actionLike")
-        tapGesture.numberOfTapsRequired = 1
-        likedImageView.addGestureRecognizer(tapGesture)
+        let tapGestureURL = UITapGestureRecognizer(target: self, action: "actionURL")
+        tapGestureURL.numberOfTapsRequired = 1
+        postContent.addGestureRecognizer(tapGestureURL)
     }
     
     override func layoutSubviews() {
@@ -82,7 +69,6 @@ class PostTableViewCell : UITableViewCell {
             let real_height = real_width * image_height / image_width
             postImageViewHeightConstraint.constant = real_height
         }
-        layoutIfNeeded()
     }
     
     func configureWithPost(post: Post) {
@@ -98,20 +84,20 @@ class PostTableViewCell : UITableViewCell {
         } else {
             postuserImageView.image = UIImage(named: "PostImagePlaceholder")
         }
-        postText.text = post.postText
-        self.layer.cornerRadius               = 5
-        postImageView.layer.cornerRadius      = 5
-        postImageView.layer.masksToBounds     = true
-        postuserImageView.layer.cornerRadius  = postuserImageView.frame.size.width / 2.0
-        postuserImageView.layer.masksToBounds = true
         
         postUserNameLabel.text                = String(format: "Posted by %@", arguments: [(post.postUser?.userName)!])
         if let date = post.postDate {
             postDateLabel.text                = date.formattedAsTimeAgo()
         }
-        numberOfLikesLabel.text               = String(format: "%li", arguments: [post.postNumberOfLikes!])
-        numberOfCommentsLabel.text            = String(format: "%li", arguments: [post.postNumberOfComments!])
+        numberOfLikesLabel.text = String(post.postNumberOfLikes!)
+        numberOfCommentsLabel.text = String(post.postNumberOfComments!)
 
+        if post.isLikedByUser {
+            likedImageView.image = UIImage(named: "ViewsGlassIcon")
+        } else {
+            likedImageView.image = UIImage(named: "SunglassesIconNotLiked")
+        }
+        
         //Adjust image size.
         if let image = post.postImage {
             let image_width = image.imageWidth
@@ -131,62 +117,18 @@ class PostTableViewCell : UITableViewCell {
         }
         
         adjustImages()
-        
-        let fixedWidth = postText.frame.size.width
-        postText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        let newSize = postText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        self.textHeightConstraint.constant = newSize.height + 10
-
-        if post.isLikedByUser {
-            likedImageView.image = UIImage(named: "ViewsGlassIcon")
-        } else {
-            likedImageView.image = UIImage(named: "SunglassesIconNotLiked")
-        }
-        
-//        let attributedStringLikes = NSAttributedString(string: String(post.postNumberOfLikes!), attributes: [NSFontAttributeName:numberOfLikesLabel.font])
-//        let sizeLikes = attributedStringLikes.boundingRectWithSize(CGSize(width: 1000, height: 20), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
-//        postNumberOfLikesWidthConstarint.constant = sizeLikes.width + 5
-        numberOfLikesLabel.text = String(post.postNumberOfLikes!)
-        
-//        let attributedStringComments = NSAttributedString(string: String(post.postNumberOfComments!), attributes: [NSFontAttributeName:numberOfCommentsLabel.font])
-//        let sizeComments = attributedStringComments.boundingRectWithSize(CGSize(width: 1000, height: 20), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
-//        postNumberOfCommentsWidthConstraint.constant = sizeComments.width + 5
-        numberOfCommentsLabel.text = String(post.postNumberOfComments!)
-        layoutIfNeeded()
-        
         if post.postType?.name == "link" {
-            linkPostTitleLabel.text                    = post.postText
-            linkPostURLButton.setTitle(post.postLink?.url, forState: .Normal)
-            postText.hidden                            = true
-            linkInfoContainerHeightConstraint.active   = true
-            linkInfoContainerHeightConstraint.constant = 50
-            linkTypePostContainer.hidden               = false
-            postImageView.hidden                       = false
-//            postImageViewHeightConstraint.active       = false
-            self.textHeightConstraint.active           = false
+            postTitle.text = post.postText
+            postContent.text = post.postLink?.url
         } else if post.postType?.name == "text" {
-            postText.hidden                          = false
-            postImageView.hidden                     = true
-            self.textHeightConstraint.active         = true
-            linkInfoContainerHeightConstraint.active = false
-            linkTypePostContainer.hidden             = true
-//            postImageViewHeightConstraint.active     = true
-//            postImageViewHeightConstraint.constant   = 0
+            postTitle.text = post.postHeader
+            postContent.text = post.postText
         } else {
-            postText.hidden                          = false
-            self.textHeightConstraint.active         = true
-            linkInfoContainerHeightConstraint.active = false
-            linkTypePostContainer.hidden             = true
-            postImageView.hidden                     = false
-//            postImageViewHeightConstraint.active     = false
+            postTitle.text = post.postHeader
+            postContent.text = ""
         }
-    }
-    
-    @IBAction func tapURL() {
-        let url = self.cellPost?.postLink?.url
-        if(url != nil && url?.characters.count > 0)  {
-            self.delegate?.tapURL!(url!)
-        }
+        
+        layoutIfNeeded()
     }
     
     func adjustImages() {
@@ -195,9 +137,6 @@ class PostTableViewCell : UITableViewCell {
                 
                 self.postImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"), completed: { (image, error, SDImageCacheType, imageUrl) -> Void in
                     if error == nil {
-//                        let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
-//                        let croppedImage = Utils.cropToBounds(resizedImage, width: self.postImageView.frame.width, height: 130)
-//                        self.postImageView.image = croppedImage
                         self.postImageView.image = image
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
@@ -208,17 +147,7 @@ class PostTableViewCell : UITableViewCell {
                 
                 self.postImageView.sd_setImageWithURL(NSURL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"), completed: { (image, error, SDImageCacheType, imageUrl) -> Void in
                     if error == nil {
-
                         self.postImageView.image = image
-                        
-//                        let image_width = image.size.width
-//                        let image_height = image.size.height
-//                        self.adjustImageSize(image_width, image_height: image_height)
-//                        
-//                        if(self.cellIndexPath != nil) {
-//                            self.delegate?.downloadedPostImage!(self.cellIndexPath)
-//                        }
-                        
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
                     }
@@ -241,8 +170,16 @@ class PostTableViewCell : UITableViewCell {
         }
     }
     
-    func actionLike(){
+    func actionLike() {
         self.delegate?.tapLike!(self.cellPost, cell: self)
     }
     
+    func actionURL() {
+        if self.cellPost?.postType?.name == "link" {
+            let url = self.cellPost?.postLink?.url
+            if(url != nil && url?.characters.count > 0)  {
+                self.delegate?.tapURL!(url!)
+            }
+        }
+    }
 }

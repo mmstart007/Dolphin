@@ -35,6 +35,12 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         super.viewDidLoad()
         self.edgesForExtendedLayout = .None
         setBackButton()
+        
+//        let uiBusy = UIActivityIndicatorView(activityIndicatorStyle: .White)
+//        uiBusy.hidesWhenStopped = true
+//        uiBusy.startAnimating()
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: uiBusy)
+        
         title                           = "Dolphin"
         urlTextField.text               = "http://google.com"
         urlTextField.autocorrectionType = .No

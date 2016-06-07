@@ -62,11 +62,21 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
             dispatch_async(dispatch_get_main_queue()) {
                 // do your stuff here
                 // crate the image pod
-                let post = Post(user: nil, image: nil, imageData: self.postImage, imageWidth: Float(self.postImage!.size.width), imageHeight: Float(self.postImage!.size.height), type: PostType(name: "image"), topics: topics, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: self.podId)
+                
+                var newWidth: CGFloat
+                if self.postImage?.size.width < Constants.Globals.ImageMaxWidth {
+                    newWidth = self.postImage!.size.width
+                } else {
+                    newWidth = Constants.Globals.ImageMaxWidth
+                }
+                
+                let resizedImage = Utils.resizeImage(self.postImage!, newWidth: newWidth)
+                let post = Post(user: nil, image: nil, imageData: resizedImage, imageWidth: Float(resizedImage.size.width), imageHeight: Float(resizedImage.size.height), type: PostType(name: "image"), topics: topics, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: self.podId)
                 self.networkController.createPost(post, completionHandler: { (post, error) -> () in
                     if error == nil {
                         
                         if post?.postId != nil {
+                            
                             // everything worked ok
                             NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
                             self.navigationController?.popToRootViewControllerAnimated(true)

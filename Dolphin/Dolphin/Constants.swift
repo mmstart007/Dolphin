@@ -16,6 +16,11 @@ class Constants {
         }
     }
     
+    struct Globals {
+        static let ImageCompression: CGFloat        = 0.5
+        static let ImageMaxWidth: CGFloat           = 500
+    }
+    
     struct Notifications {
         static let CreatedPost: String              = "CreatedPostNotification"
     }
@@ -56,10 +61,10 @@ class Constants {
     }
     
     //Settings's Dolphin
-    static let iTunesURL: String        = "https://itunes.apple.com/us/app/dolphin-web-browser-for-ipad/id460812023?mt=8"
-    static let FacebookURL: String      = "https://www.facebook.com/lLoveDolphins/"
-    static let InstagramURL: String     = "https://www.instagram.com/miami_dolphinsnews_/"
-    static let TwitterURL: String       = "https://twitter.com/miamidolphins"
+    static let iTunesURL: String                    = "https://itunes.apple.com/us/app/dolphin-web-browser-for-ipad/id460812023?mt=8"
+    static let FacebookURL: String                  = "https://www.facebook.com/lLoveDolphins/"
+    static let InstagramURL: String                 = "https://www.instagram.com/miami_dolphinsnews_/"
+    static let TwitterURL: String                   = "https://twitter.com/miamidolphins"
     
     
     //Setting's Support.

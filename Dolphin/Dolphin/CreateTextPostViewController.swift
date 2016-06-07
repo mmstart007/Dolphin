@@ -118,11 +118,11 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
                     SVProgressHUD.dismiss()
                     if post?.postId != nil {
                         // everything worked ok
+                        NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
                         self.dismissViewControllerAnimated(true, completion: nil)
                     } else {
                         // there was an error saving the post
                     }
-                    
                     
                 } else {
                     SVProgressHUD.dismiss()

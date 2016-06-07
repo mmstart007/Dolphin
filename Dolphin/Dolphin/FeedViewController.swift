@@ -42,6 +42,8 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.postsTableView.reloadData()
+        self.postsTableView.estimatedRowHeight = 470
+        
         
         if networkController.currentUserId == nil {
             let alert = UIAlertController(title: "Warning", message: "You need to logout and login again, sorry this is for this time because we are in development", preferredStyle: .Alert)
@@ -70,8 +72,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         
         if let userInfo = notification.userInfo as? Dictionary<String, Post> {
             if let post = userInfo["post"] {
-                self.allPosts.append(post)
-                postsTableView.reloadData()
+                if (!self.allPosts.contains(post)) {
+                    self.allPosts.append(post)
+                    postsTableView.reloadData()
+                }
             }
         }
     }
@@ -248,8 +252,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     func filterResults(textToSearch: String) {
         print("Search text: \(textToSearch)")
+        print("allPosts: \(allPosts.count)")
+        
         filteredPosts = allPosts.filter({( post : Post) -> Bool in
-            return (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            return (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))! || (post.postHeader?.lowercaseString.containsString(textToSearch.lowercaseString))!
         })
         searchText = textToSearch
         postsTableView.reloadData()
