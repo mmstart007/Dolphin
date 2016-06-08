@@ -21,9 +21,11 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     var myLikes: Bool = false
     var allPosts: [Post] = []
     var filteredPosts: [Post] = []
+    var likedPosts: [Post] = []
+    
     var searchText: String? = nil
     var isDataLoaded: Bool = false
-    var postIdsOfLikesForTheUser: [Int] = []
+//    var postIdsOfLikesForTheUser: [Int] = []
     var page: Int = 0
     
     init(likes: Bool) {
@@ -135,7 +137,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if myLikes {
-            return networkController.likedPosts.count
+            return likedPosts.count
         } else {
             if searchText != nil && searchText != "" {
                 return filteredPosts.count
@@ -153,7 +155,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         }
         
         if myLikes {
-            cell?.configureWithPost(networkController.likedPosts[indexPath.row], indexPath: indexPath)
+            cell?.configureWithPost(likedPosts[indexPath.row], indexPath: indexPath)
         } else {
             if searchText != nil && searchText != "" {
                 cell?.configureWithPost(filteredPosts[indexPath.row], indexPath: indexPath)
@@ -176,7 +178,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let postDetailsVC = PostDetailsViewController()
         if myLikes {
-            postDetailsVC.post = networkController.likedPosts[indexPath.row]
+            postDetailsVC.post = likedPosts[indexPath.row]
         } else {
             if searchText != nil && searchText != "" {
                 postDetailsVC.post = filteredPosts[indexPath.row]
@@ -275,11 +277,11 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         networkController.getUserLikes(String(networkController.currentUserId!)) { (likes, error) -> () in
             if error == nil {
                 // build the list of post liked by the user
-                self.postIdsOfLikesForTheUser = likes.map({ (actual) -> Int in
-                    actual.likePost!.postId!
+                self.likedPosts = likes.map({ (actual) -> Post in
+                    actual.likePost!
                 })
-                // load the feeds
-                self.loadData(pullToRefresh)
+                
+                self.postsTableView.reloadData()
                 
             } else {
                 self.isDataLoaded = false

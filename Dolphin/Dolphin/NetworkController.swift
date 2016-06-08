@@ -23,7 +23,7 @@ class NetworkController: NSObject {
 
     var token: String?
     var posts: [Post]      = []
-    var likedPosts: [Post] = []
+//    var likedPosts: [Post] = []
     var pods: [POD]        = []
     var deals: [Deal]      = []
     var currentUserId: Int?
