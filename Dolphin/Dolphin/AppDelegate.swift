@@ -112,6 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     func applicationWillTerminate(application: UIApplication) {
@@ -149,6 +150,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(error)
     }
     
-    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("Recived: \(userInfo)")
+        //Parsing userinfo:
+        
+        if let post_id = userInfo["post_id"] as? Int {
+            networkController.getPostById("\(post_id)", completionHandler: { (post, error) in
+                if error == nil {
+                    let postDetailsVC = PostDetailsViewController()
+                    postDetailsVC.post = post
+                    let rootViewController = self.window!.rootViewController as! UINavigationController
+                    rootViewController.pushViewController(postDetailsVC, animated: true)
+                }
+                else {
+                    
+                }
+            })
+        }
+    }
 }
 

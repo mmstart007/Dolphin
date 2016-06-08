@@ -21,6 +21,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     var contentOffset: CGFloat = 0
     var actionMenu: UIView? = nil
     var chosenImage: UIImage? = nil
+    
     @IBOutlet weak var actionMenuBackground: UIView!
     @IBOutlet weak var writeCommentBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var commentTextView: UITextView!

@@ -76,7 +76,11 @@ class NetworkController: NSObject {
     func login(userName: String, password: String, completionHandler: (User?, String?, Int?, AnyObject?) -> ()) -> () {
         var retToken: String?
         var retUserId: Int?
-        let loginParams = ["username": userName, "password": password]
+        var loginParams = ["username": userName, "password": password]
+        if Globals.currentDeviceToken.characters.count > 0 {
+            loginParams["device_token"] = Globals.currentDeviceToken
+        }
+        
         let parameters : [String : AnyObject]? = ["login": loginParams]
         performRequest(MethodType.POST, authenticated: true, method: .Login, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {

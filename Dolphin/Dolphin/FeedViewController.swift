@@ -110,9 +110,12 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             }
         }
         
-        postsTableView.addInfiniteScrollingWithActionHandler { () -> Void in
-            self.loadNextPosts()
+        if !self.myLikes {
+            postsTableView.addInfiniteScrollingWithActionHandler { () -> Void in
+                self.loadNextPosts()
+            }
         }
+        
         
         //Notification.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "createdNewPost:", name: Constants.Notifications.CreatedPost, object: nil)
@@ -274,14 +277,28 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     // MARK: - Auxiliary methods
     // Not used for now, the post has if the user likes it or not
     func loadUserLikes(pullToRefresh: Bool) {
+        
+        if !pullToRefresh {
+            SVProgressHUD.showWithStatus("Loading")
+        }
         networkController.getUserLikes(String(networkController.currentUserId!)) { (likes, error) -> () in
+            SVProgressHUD.dismiss()
             if error == nil {
+                
+                self.isDataLoaded = true
                 // build the list of post liked by the user
                 self.likedPosts = likes.map({ (actual) -> Post in
                     actual.likePost!
                 })
                 
+                if self.likedPosts.count > 0 {
+                    self.removeTableEmtpyMessage()
+                } else {
+                    self.addTableEmptyMessage("No content has been posted\n\nwhy don't post someting?")
+                }
+
                 self.postsTableView.reloadData()
+                self.postsTableView.pullToRefreshView.stopAnimating()
                 
             } else {
                 self.isDataLoaded = false
