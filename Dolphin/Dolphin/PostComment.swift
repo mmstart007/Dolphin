@@ -31,10 +31,7 @@ class PostComment : NSObject {
         self.postCommentUser     = User(jsonObject: postJsonObject!["user"] as! [String: AnyObject])
         self.postCommentText     = postJsonObject!["body"] as? String
         let dateString           = postJsonObject!["created_at"] as? String
-        let dateFormatter        = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
-        self.postCommentDate     = dateFormatter.dateFromString(dateString!)
-        
+        self.postCommentDate     = NSDate(timeIntervalSince1970: Double(dateString!)!)
     }
     
     func toJson() -> [String: AnyObject] {

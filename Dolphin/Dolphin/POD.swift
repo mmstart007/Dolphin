@@ -65,16 +65,10 @@ class POD : NSObject {
             if lastPostsJson.count > 0 {
                 if let lastPostJson = lastPostsJson[0] as? [String: AnyObject] {
                     let dateString = lastPostJson["created_at"] as? String
-                    let dateFormatter         = NSDateFormatter()
-                    dateFormatter.dateFormat  = "yyyy-MM-dd HH:mm:ss"// date format "created_at": "2016-01-05 22:12:30"
-                    self.lastPostDate             = dateFormatter.dateFromString(dateString!)
-
+                    self.lastPostDate     = NSDate(timeIntervalSince1970: Double(dateString!)!)
                 }
             }
-            
         }
-        
-        
     }
     
     func toJson() -> [String: AnyObject] {
