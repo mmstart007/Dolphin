@@ -32,7 +32,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     var loginFacebookTapGesture: UITapGestureRecognizer!
     var loginTwitterTapGesture: UITapGestureRecognizer!
     var contactsTapGesture: UITapGestureRecognizer!
-    var loginInstagramTapGesture: UITapGestureRecognizer!
+//    var loginInstagramTapGesture: UITapGestureRecognizer!
     var addressBookRef: ABAddressBook?
     
     convenience init() {
@@ -66,7 +66,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     func initializeSegmentedControl() {
         
-        segmentedControl = HMSegmentedControl(sectionImages: [UIImage(named: "TopBarContactsNotSelectedIcon")!, UIImage(named: "TopBarFacebookNotSelectedIcon")!, UIImage(named: "TopBarTwitterNotSelectedIcon")!, UIImage(named: "TopBarMoreNotSelectedIcon")!], sectionSelectedImages: [UIImage(named: "TopBarContactsSelectedIcon")!, UIImage(named: "TopBarFacebookSelectedIcon")!, UIImage(named: "TopBarTwitterSelectedIcon")!, UIImage(named: "TopBarMoreSelectedIcon")!])
+        segmentedControl = HMSegmentedControl(sectionImages: [UIImage(named: "TopBarContactsNotSelectedIcon")!, UIImage(named: "TopBarFacebookNotSelectedIcon")!, UIImage(named: "TopBarTwitterNotSelectedIcon")!/*, UIImage(named: "TopBarMoreNotSelectedIcon")!*/], sectionSelectedImages: [UIImage(named: "TopBarContactsSelectedIcon")!, UIImage(named: "TopBarFacebookSelectedIcon")!, UIImage(named: "TopBarTwitterSelectedIcon")!/*, UIImage(named: "TopBarMoreSelectedIcon")!*/])
         
         segmentedControl.frame = CGRect(x: 0, y: 0, width: headerView.frame.size.width, height: headerView.frame.size.height)
         segmentedControl.selectionIndicatorHeight = 4.0
@@ -94,7 +94,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         loginFacebookTapGesture = UITapGestureRecognizer(target: self, action: "loginFacebookToGetFriends")
         loginTwitterTapGesture = UITapGestureRecognizer(target: self, action: "loginTwitterToGetFriends")
         contactsTapGesture = UITapGestureRecognizer(target: self, action: "openSettings")
-        loginInstagramTapGesture = UITapGestureRecognizer(target: self, action: "loginInstagramToGetFriends")
+//        loginInstagramTapGesture = UITapGestureRecognizer(target: self, action: "loginInstagramToGetFriends")
         
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled = false
@@ -102,7 +102,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         tableView.addGestureRecognizer(loginFacebookTapGesture)
         tableView.addGestureRecognizer(loginTwitterTapGesture)
         tableView.addGestureRecognizer(contactsTapGesture)
-        tableView.addGestureRecognizer(loginInstagramTapGesture)
+//        tableView.addGestureRecognizer(loginInstagramTapGesture)
     }
     
     // MARK: Segmented Control
@@ -113,7 +113,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled  = false
         contactsTapGesture.enabled      = false
-        loginInstagramTapGesture.enabled = false
+//        loginInstagramTapGesture.enabled = false
         
         if segmentedControl.selectedSegmentIndex == 0 {
             getContactsFromAddressBook()
@@ -136,17 +136,18 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             } else {
                 getTwitterFollowingList()
             }
-        } else {
-            let token = currentInstagramAccessToken()
-            if token == nil {
-                self.signInLabel.text = "You need to log in to Instagram to invite friends \n Tap to login"
-                self.signInLabel.numberOfLines = 2
-                self.signInLabel.hidden = false
-                loginInstagramTapGesture.enabled = true
-            } else {
-                getInstagramFriends(token!)
-            }
         }
+//       else {
+//            let token = currentInstagramAccessToken()
+//            if token == nil {
+//                self.signInLabel.text = "You need to log in to Instagram to invite friends \n Tap to login"
+//                self.signInLabel.numberOfLines = 2
+//                self.signInLabel.hidden = false
+//                loginInstagramTapGesture.enabled = true
+//            } else {
+//                getInstagramFriends(token!)
+//            }
+//        }
         tableView.reloadData()
     }
     
@@ -412,7 +413,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 defaults.synchronize()
                 
                 self.signInLabel.hidden = true
-                self.loginInstagramTapGesture.enabled = false
+//                self.loginInstagramTapGesture.enabled = false
                 self.getInstagramFriends(oauthswift.client.credential.oauth_token)
                 
             },
