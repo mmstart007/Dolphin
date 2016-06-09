@@ -57,9 +57,8 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         addKeyboardObservers()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         loadComments()
     }
     
@@ -282,11 +281,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        if indexPath.section == 1 {
-//            return 40
-//        } else {
-            return UITableViewAutomaticDimension
-//        }
+        return UITableViewAutomaticDimension
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {

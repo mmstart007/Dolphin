@@ -10,93 +10,112 @@ import Foundation
 import UIKit
 import SDWebImage
 
-class PostDetailHeaderTableViewCell : CustomFontTableViewCell {
+class PostDetailHeaderTableViewCell : UITableViewCell {
     
     @IBOutlet weak var postImageView: UIImageView!
-    @IBOutlet weak var postTextView: UITextView!
+    @IBOutlet weak var postContent: UILabel!
     @IBOutlet weak var postLabelTitle: UILabel!
-    @IBOutlet weak var constraintHeightContainer: NSLayoutConstraint!
     @IBOutlet weak var constraintHeightImageView: NSLayoutConstraint!
-    @IBOutlet weak var constraintHeightTextView: NSLayoutConstraint!
+    
     var actualPost: Post?
-    
-    
     override func layoutSubviews() {
         super.layoutSubviews()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        self.contentView.userInteractionEnabled = false
+        postContent.userInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: "openWebPage")
+        tapGesture.numberOfTapsRequired = 1
+        postContent.addGestureRecognizer(tapGesture)
+    }
+    
     func configureWithPost(post: Post) {
         actualPost = post
-        
-        contentView.userInteractionEnabled = false
         if post.postType?.name == "link" {
             postLabelTitle.text = post.postText
-            postTextView.text = post.postLink?.url
+            postContent.text = post.postLink?.url
+
         } else {
             postLabelTitle.text = post.postHeader
-            postTextView.text   = post.postText
+            postContent.text   = post.postText
         }
-        postTextView.textColor = UIColor.lightGrayColor()
+        
         if actualPost != nil {
+            
+            //Adjust image size.
+            if let image = post.postImage {
+                let image_width = image.imageWidth
+                let image_height = image.imageHeight
+                
+                adjustImageSize(image_width!, image_height: image_height!)
+            }
+                
+                //Link Image
+            else if let linkImage = post.postLink {
+                let image_width = linkImage.imageWidth
+                let image_height = linkImage.imageHeight
+                adjustImageSize(image_width!, image_height: image_height!)
+            }
+            else {
+                constraintHeightImageView.constant = 1
+            }
+            
             if let postImage = actualPost!.postImage {
                 let manager = SDWebImageManager.sharedManager()
                 manager.downloadImageWithURL(NSURL(string: (postImage.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
-                        let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
-                        self.postImageView.image = resizedImage
-                        let calculatedHeight = self.calculateHeight()
-                        self.constraintHeightContainer.constant = self.postImageView.image!.size.height + self.postLabelTitle.frame.size.height + calculatedHeight
+                        self.postImageView.image = image
                         
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
                     }
                 })
             } else if let postLink = actualPost!.postLink {
-                postTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("openWebPage")))
-                postTextView.textColor              = UIColor.blueColor()
-                postTextView.userInteractionEnabled = true
                 let manager = SDWebImageManager.sharedManager()
                 manager.downloadImageWithURL(NSURL(string: (postLink.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
-                        let resizedImage = Utils.resizeImage(image, newWidth: self.postImageView.frame.width)
-                        self.postImageView.image = resizedImage
-                        let calculatedHeight = self.calculateHeight()
-                        self.constraintHeightContainer.constant = self.postImageView.image!.size.height + self.postLabelTitle.frame.size.height + calculatedHeight
+                        self.postImageView.image = image
                     } else {
                         self.postImageView.image = UIImage(named: "PostImagePlaceholder")
                     }
                 })
             } else if actualPost?.postType?.name == "text" {
-                let calculatedHeight = self.calculateHeight()
-                // remove the image using this constraint
                 constraintHeightImageView.constant = 0
                 self.addConstraint(constraintHeightImageView)
-                constraintHeightContainer.constant = self.postLabelTitle.frame.size.height + calculatedHeight
             } else {
                 postImageView.image = UIImage(named: "PostImagePlaceholder")
             }
         }
         backgroundColor = UIColor.clearColor()
-        Utils.setFontFamilyForView(self, includeSubViews: true)
+    }
+    
+    func adjustImageSize(image_width: CGFloat, image_height: CGFloat) {
+        if image_width == 0 || image_height == 0 {
+            let real_width = postImageView.frame.size.width
+            constraintHeightImageView.constant = real_width
+        }
+        else {
+            let real_width = postImageView.frame.size.width
+            let real_height = real_width * image_height / image_width
+            constraintHeightImageView.constant = real_height
+        }
     }
     
     func adjustCellViews() {
 
     }
-    
-    func calculateHeight() -> CGFloat {
-        let fixedWidth = postTextView.frame.size.width
-        postTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        let newSize = postTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        return newSize.height
-    }
-    
-    // MARK: - Handle links
-    
+ 
     func openWebPage() {
-        if postTextView.text != "" {
-            if UIApplication.sharedApplication().canOpenURL(NSURL(string: postTextView.text!)!) {
-                UIApplication.sharedApplication().openURL(NSURL(string: postTextView.text!)!)
+        if actualPost!.postType?.name == "link" {
+            let urlString = actualPost?.postLink?.url
+            if(urlString != nil && urlString?.characters.count > 0)  {
+                let postURL = NSURL(string: urlString!)
+                if UIApplication.sharedApplication().canOpenURL(postURL!) {
+                    UIApplication.sharedApplication().openURL(postURL!)
+                }
             }
         }
     }

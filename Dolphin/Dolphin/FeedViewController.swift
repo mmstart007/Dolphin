@@ -194,12 +194,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         navigationController?.pushViewController(postDetailsVC, animated: true)
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        (cell as? PostTableViewCell)?.adjustViews()
-    }
-    
     // MARK: PostTableViewCell Delegate.
-    
     func downloadedPostImage(indexPath: NSIndexPath?) {
         postsTableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.None)
     }

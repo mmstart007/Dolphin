@@ -32,6 +32,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     var loginFacebookTapGesture: UITapGestureRecognizer!
     var loginTwitterTapGesture: UITapGestureRecognizer!
     var contactsTapGesture: UITapGestureRecognizer!
+    var loginInstagramTapGesture: UITapGestureRecognizer!
     var addressBookRef: ABAddressBook?
     
     convenience init() {
@@ -93,12 +94,15 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         loginFacebookTapGesture = UITapGestureRecognizer(target: self, action: "loginFacebookToGetFriends")
         loginTwitterTapGesture = UITapGestureRecognizer(target: self, action: "loginTwitterToGetFriends")
         contactsTapGesture = UITapGestureRecognizer(target: self, action: "openSettings")
+        loginInstagramTapGesture = UITapGestureRecognizer(target: self, action: "loginInstagramToGetFriends")
+        
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled = false
         contactsTapGesture.enabled = false
         tableView.addGestureRecognizer(loginFacebookTapGesture)
         tableView.addGestureRecognizer(loginTwitterTapGesture)
         tableView.addGestureRecognizer(contactsTapGesture)
+        tableView.addGestureRecognizer(loginInstagramTapGesture)
     }
     
     // MARK: Segmented Control
@@ -109,6 +113,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled  = false
         contactsTapGesture.enabled      = false
+        loginInstagramTapGesture.enabled = false
+        
         if segmentedControl.selectedSegmentIndex == 0 {
             getContactsFromAddressBook()
         } else if segmentedControl.selectedSegmentIndex == 1 {
@@ -131,7 +137,15 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 getTwitterFollowingList()
             }
         } else {
-            getInstagramFollowing()
+            let token = currentInstagramAccessToken()
+            if token == nil {
+                self.signInLabel.text = "You need to log in to Instagram to invite friends \n Tap to login"
+                self.signInLabel.numberOfLines = 2
+                self.signInLabel.hidden = false
+                loginInstagramTapGesture.enabled = true
+            } else {
+                getInstagramFriends(token!)
+            }
         }
         tableView.reloadData()
     }
@@ -275,6 +289,15 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         }
     }
     
+    func loginInstagramToGetFriends() {
+        let token = currentInstagramAccessToken()
+        if (token == nil) {
+            getInstagramFollowing()
+        } else {
+            getInstagramFriends(token!)
+        }
+    }
+    
     // MARK: Populate Lists
     
     func getFacebookFriendsList() {
@@ -356,6 +379,11 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     }
     
     
+    func currentInstagramAccessToken() -> String? {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let instagram_token = defaults.objectForKey("instagram_token") as! String?
+        return instagram_token
+    }
     
     func getInstagramFollowing() {
         let oauthswift = OAuth2Swift(
@@ -364,36 +392,73 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             authorizeUrl:   "https://api.instagram.com/oauth/authorize",
             responseType:   "token"
         )
+        
+//        let oauthswift = OAuth2Swift(
+//            consumerKey:    "fde55c84ca954b0298629f484bc954af",
+//            consumerSecret: "10ff4ce05dc74dd8875801fa2012ce1a",
+//            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
+//            responseType:   "token"
+//        )
+        
         oauthswift.authorizeWithCallbackURL(
             NSURL(string: "oauth-swift://oauth-callback/instagram")!,
             scope: "follower_list", state:"INSTAGRAM",
             success: { credential, response, parameters in
                 print(credential.oauth_token)
-                let url :String = "https://api.instagram.com/v1/users/self/follows?access_token=\(oauthswift.client.credential.oauth_token)"
-                let parameters :Dictionary = Dictionary<String, AnyObject>()
-                oauthswift.client.get(url, parameters: parameters,
-                    success: {
-                        data, response in
-                        if let jsonDict = try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary {
-                            let usersDict = jsonDict?.objectForKey("data") as! NSArray
-                            self.instagramFriends.removeAll()
-                            for (var i = 0; i < usersDict.count; i++) {
-                                if let userDict = usersDict[i] as? NSDictionary {
-                                    let user = InstagramFriend(name: userDict["full_name"] as! String, imageURL: userDict["profile_picture"] as! String, user_id: userDict["id"] as! String)
-                                    self.instagramFriends.append(user)
-                                }
-                            }
-                            self.tableView.reloadData()
-                        }
-                    }, failure: { error in
-                        print(error)
-                })
+                
+                //Save access token.
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setObject(credential.oauth_token, forKey: "instagram_token")
+                defaults.synchronize()
+                
+                self.signInLabel.hidden = true
+                self.loginInstagramTapGesture.enabled = false
+                self.getInstagramFriends(oauthswift.client.credential.oauth_token)
                 
             },
             failure: { error in
                 print(error.localizedDescription)
             }
         )
+    }
+    
+    func getInstagramFriends(token: String) {
+        
+        let oauthswift = OAuth2Swift(
+            consumerKey:    "cd8e8c8636da4dc58eeed535887e0de9",
+            consumerSecret: "f711d56cda5e4d9481541b1aa714139a",
+            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
+            responseType:   "token"
+        )
+        
+//        let oauthswift = OAuth2Swift(
+//            consumerKey:    "fde55c84ca954b0298629f484bc954af",
+//            consumerSecret: "10ff4ce05dc74dd8875801fa2012ce1a",
+//            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
+//            responseType:   "token"
+//        )
+        
+        let url :String = "https://api.instagram.com/v1/users/self/follows?access_token=\(token)"
+        let parameters :Dictionary = Dictionary<String, AnyObject>()
+        oauthswift.client.get(url, parameters: parameters,
+            success: {
+                data, response in
+                
+                //Parse
+                if let jsonDict = try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary {
+                    let usersDict = jsonDict?.objectForKey("data") as! NSArray
+                    self.instagramFriends.removeAll()
+                    for (var i = 0; i < usersDict.count; i++) {
+                        if let userDict = usersDict[i] as? NSDictionary {
+                            let user = InstagramFriend(name: userDict["full_name"] as! String, imageURL: userDict["profile_picture"] as! String, user_id: userDict["id"] as! String)
+                            self.instagramFriends.append(user)
+                        }
+                    }
+                    self.tableView.reloadData()
+                }
+            }, failure: { error in
+                print(error)
+        })
     }
     
     // MARK: TableView DataSource
@@ -535,5 +600,10 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 }
             }
         }
+    }
+    
+    //Instagram.
+    func inviteInstagramFriend(friend: InstagramFriend) {
+        
     }
 }

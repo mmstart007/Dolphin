@@ -21,6 +21,7 @@ class PostTableViewCell : UITableViewCell {
     
     var delegate:PostTableViewCellDelegate?
 
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var postTitle: UILabel!
     @IBOutlet weak var postContent: UILabel!
@@ -40,9 +41,8 @@ class PostTableViewCell : UITableViewCell {
         super.awakeFromNib()
         self.contentView.userInteractionEnabled = false
         
-        self.layer.cornerRadius               = 5
-        postImageView.layer.cornerRadius      = 5
-        postImageView.layer.masksToBounds     = true
+        containerView.layer.cornerRadius      = 5
+
         postuserImageView.layer.cornerRadius  = postuserImageView.frame.size.width / 2.0
         postuserImageView.layer.masksToBounds = true
 
@@ -53,10 +53,31 @@ class PostTableViewCell : UITableViewCell {
         let tapGestureURL = UITapGestureRecognizer(target: self, action: "actionURL")
         tapGestureURL.numberOfTapsRequired = 1
         postContent.addGestureRecognizer(tapGestureURL)
+        
+        containerView.layer.shadowColor = UIColor.blackColor().CGColor
+        containerView.layer.shadowOpacity = 0.1
+        containerView.layer.shadowOffset = CGSizeZero
+        containerView.layer.shadowRadius = 3
+        
+        if triangleView == nil {
+            triangleView        = TriangleView()
+            let xPosition       = containerView.frame.size.width - 30
+            triangleView!.frame = CGRect(x: xPosition, y: 0, width: 30, height: 30)
+            triangleView!.backgroundColor = UIColor.clearColor()
+            containerView.addSubview(triangleView!)
+        }
+        
+        self.backgroundColor = UIColor(red: 244.0/255.0, green: 244.0/255.0, blue: 244.0/255.0, alpha: 1.0)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        //Set round border only top.
+        let path = UIBezierPath(roundedRect:containerView.bounds, byRoundingCorners:[.TopRight, .TopLeft], cornerRadii: CGSizeMake(5, 5))
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.CGPath
+        containerView.layer.mask = maskLayer
     }
     
     func adjustImageSize(image_width: CGFloat, image_height: CGFloat) {
@@ -98,8 +119,13 @@ class PostTableViewCell : UITableViewCell {
             likedImageView.image = UIImage(named: "SunglassesIconNotLiked")
         }
         
+        triangleView!.color           = cellPost!.postColor()
+        
         //Adjust image size.
         if let image = post.postImage {
+            postTitle.text = post.postHeader
+            postContent.text = ""
+            self.postImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             let image_width = image.imageWidth
             let image_height = image.imageHeight
             
@@ -108,66 +134,21 @@ class PostTableViewCell : UITableViewCell {
             
         //Link Image
         else if let linkImage = post.postLink {
+            postTitle.text = post.postText
+            postContent.text = post.postLink?.url
+            self.postImageView.sd_setImageWithURL(NSURL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            
             let image_width = linkImage.imageWidth
             let image_height = linkImage.imageHeight
             adjustImageSize(image_width!, image_height: image_height!)
         }
         else {
-            postImageViewHeightConstraint.constant = 1
-        }
-        
-        adjustImages()
-        if post.postType?.name == "link" {
-            postTitle.text = post.postText
-            postContent.text = post.postLink?.url
-        } else if post.postType?.name == "text" {
             postTitle.text = post.postHeader
             postContent.text = post.postText
-        } else {
-            postTitle.text = post.postHeader
-            postContent.text = ""
+            postImageViewHeightConstraint.constant = 0
         }
-        
+
         layoutIfNeeded()
-    }
-    
-    func adjustImages() {
-        if let post = cellPost {
-            if let image = post.postImage {
-                
-                self.postImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"), completed: { (image, error, SDImageCacheType, imageUrl) -> Void in
-                    if error == nil {
-                        self.postImageView.image = image
-                    } else {
-                        self.postImageView.image = UIImage(named: "PostImagePlaceholder")
-                    }
-                })
-                
-            } else if let linkImage = post.postLink {
-                
-                self.postImageView.sd_setImageWithURL(NSURL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"), completed: { (image, error, SDImageCacheType, imageUrl) -> Void in
-                    if error == nil {
-                        self.postImageView.image = image
-                    } else {
-                        self.postImageView.image = UIImage(named: "PostImagePlaceholder")
-                    }
-                })
-            } else {
-                postImageView.image = UIImage(named: "PostImagePlaceholder")
-            }
-        }
-    }
-    
-    
-    func adjustViews() {
-        if triangleView == nil {
-            triangleView        = TriangleView()
-            let xPosition       = self.frame.size.width - 30
-            triangleView!.frame = CGRect(x: xPosition, y: 0, width: 30, height: 30)
-            triangleView!.color           = cellPost!.postColor()
-            triangleView!.backgroundColor = UIColor.clearColor()
-            self.addSubview(triangleView!)
-        }
     }
     
     func actionLike() {

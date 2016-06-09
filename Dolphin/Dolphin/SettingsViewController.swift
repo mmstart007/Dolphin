@@ -28,10 +28,8 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     var publicProfile: Bool = false
     var page: Int           = 0
     
-    var availableGrades: [Grade]     = []
-    var availableSubjects: [Subject] = []
-    var selectedGrades: [String]     = []
-    var selectedSubjects: [String]   = []
+    var selectedGrades: [Grade]     = []
+    var selectedSubjects: [Subject]   = []
     
     required init() {
         super.init(nibName: "SettingsViewController", bundle: NSBundle.mainBundle())
@@ -50,8 +48,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         tableViewSettings.delegate = self
         tableViewSettings.dataSource = self
         registerCells()
+        
         // reset image data from the user
         networkController.currentUser?.userAvatarImageData = nil
+        
+        selectedGrades = (networkController.currentUser?.grades)!
+        selectedSubjects = (networkController.currentUser?.subjects)!
         
         loadData()
     }
@@ -161,14 +163,14 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Grades", placeholder: "select your grades", value: networkController.currentUser?.getGradeNames(), isEdit: false, subItem: true)
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Grades", placeholder: "select your grades", value: getGradeNames(), isEdit: false, subItem: true)
                     
                 } else if indexPath.row == 6 {
                     cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Subjects", placeholder: "select your subjects", value: networkController.currentUser?.getSubjectNames(), isEdit: false, subItem: true)
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Subjects", placeholder: "select your subjects", value: getSubjectNames(), isEdit: false, subItem: true)
                     
                 }
             }
@@ -349,7 +351,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             
             // call the api function to update the user info
             SVProgressHUD.showWithStatus("Saving")
-            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: networkController.currentUser?.firstName, lastName: networkController.currentUser?.lastName, avatarImage: encodedImage, email: nil, password: nil, location: networkController.currentUser?.location, isPrivate: networkController.currentUser?.isPrivate, subjects: nil, grades: nil) { (user, error) -> () in
+            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: networkController.currentUser?.firstName, lastName: networkController.currentUser?.lastName, avatarImage: encodedImage, email: nil, password: nil, location: networkController.currentUser?.location, isPrivate: networkController.currentUser?.isPrivate, subjects: getSubjectIds(), grades: getGradeIds()) { (user, error) -> () in
                 if error == nil {
                     // update the user modified
                     self.networkController.currentUser = user
@@ -361,7 +363,6 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
                     defaults.synchronize()
-                    
                     SVProgressHUD.dismiss()
                     self.navigationController?.popViewControllerAnimated(true)
                     
@@ -562,50 +563,14 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     
     // MARK: - Handle grades and subjects
     
-    func loadGradesAndSubjects() {
-        SVProgressHUD.showWithStatus("Loading")
-        networkController.getGrades { (grades, error) -> () in
-            if error == nil {
-                self.availableGrades = grades!
-                
-                self.networkController.getSubjects { (subjects, error) -> () in
-                    if error == nil {
-                        
-                        self.availableSubjects = subjects!
-                        SVProgressHUD.dismiss()
-                        
-                    } else {
-                        let errors: [String]? = error!["errors"] as? [String]
-                        let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                        alert.addAction(cancelAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        SVProgressHUD.dismiss()
-                    }
-                }
-                
-                
-                
-            } else {
-                let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-                SVProgressHUD.dismiss()
-            }
-        }
-        
-    }
-    
     func selectGrades() {
         
         let pickGradesVC              = PickGradesOrSubjectsViewController()
         pickGradesVC.delegate = self
         pickGradesVC.areSubjects = false
         pickGradesVC.fromSettings = true
-        pickGradesVC.gradesSelected = (networkController.currentUser?.grades)!
-        pickGradesVC.subjectsSelected = (networkController.currentUser?.subjects)!
+        pickGradesVC.gradesSelected = selectedGrades
+        pickGradesVC.subjectsSelected = selectedSubjects
         navigationController?.pushViewController(pickGradesVC, animated: true)
     }
     
@@ -615,57 +580,63 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         pickSubjectsVC.delegate = self
         pickSubjectsVC.areSubjects = true
         pickSubjectsVC.fromSettings = true
-        pickSubjectsVC.gradesSelected = (networkController.currentUser?.grades)!
-        pickSubjectsVC.subjectsSelected = (networkController.currentUser?.subjects)!
+        pickSubjectsVC.gradesSelected = selectedGrades
+        pickSubjectsVC.subjectsSelected = selectedSubjects
         navigationController?.pushViewController(pickSubjectsVC, animated: true)
     }
     
     func gradesDidSelected(grades: [Grade]) {
-        networkController.currentUser?.grades?.removeAll()
+        selectedGrades.removeAll()
         for item in grades {
-            networkController.currentUser?.grades?.append(item)
+            selectedGrades.append(item)
         }
         tableViewSettings.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
     }
     
     func subjectsDidSelected(subjects: [Subject]) {
-        networkController.currentUser?.subjects?.removeAll()
+        selectedSubjects.removeAll()
         for item in subjects {
-            networkController.currentUser?.subjects?.append(item)
+            selectedSubjects.append(item)
         }
         tableViewSettings.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
     }
     
-//    func gradesDidSelected(grades: [String]) {
-//        initializeUsersGradesAndSubjects()
-//    }
-//    
-//    func subjectsDidSelected(subjects: [String]) {
-//        initializeUsersGradesAndSubjects()
-//    }
-//    
-//    func initializeUsersGradesAndSubjects() {
-//        
-//        if let user = networkController.currentUser {
-//            
-//            // Initialize user's grades
-//            selectedGrades.removeAll()
-//            if user.grades != nil {
-//                for grade in user.grades! {
-//                    let gradeName = String(grade.name!)
-//                    selectedGrades.append(gradeName)
-//                }
-//            }
-//            
-//            // Initialize user's subjects
-//            selectedSubjects.removeAll()
-//            if user.subjects != nil {
-//                for subject in user.subjects! {
-//                    let subjectName = String(subject.name!)
-//                    selectedSubjects.append(subjectName)
-//                }
-//            }
-//        }
-//        
-//    }
+    func getSubjectNames() -> String {
+        var subject_name: [String] = []
+        
+        for item in selectedSubjects {
+            subject_name.append(item.name!)
+        }
+
+        return subject_name.joinWithSeparator(",")
+    }
+    
+    func getGradeNames() -> String {
+        var grade_name: [String] = []
+        
+        for item in selectedGrades {
+            grade_name.append(item.name!)
+        }
+        return grade_name.joinWithSeparator(",")
+    }
+    
+    func getSubjectIds() -> [String] {
+        
+        var subject_ids: [String] = []
+        for item in selectedSubjects {
+            subject_ids.append(String(format: "%d", item.id!))
+        }
+        return subject_ids
+    }
+    
+    func getGradeIds() -> [String] {
+        
+        var grade_ids: [String] = []
+        
+        for item in selectedGrades {
+            grade_ids.append(String(format: "%d", item.id!))
+        }
+        
+        return grade_ids
+    }
 }
