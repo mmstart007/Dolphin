@@ -70,7 +70,6 @@ class NetworkController: NSObject {
     
     
     // MARK: - Public Methods
-    
     // MARK: - USERS
     
     func login(userName: String, password: String, completionHandler: (User?, String?, Int?, AnyObject?) -> ()) -> () {

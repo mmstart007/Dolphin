@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var homeViewController: UIViewController!
+    var navigationController: UINavigationController!
+    
     var apiToken: String = ""
     var currentUserId: Int?
     
@@ -83,16 +85,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         networkController.currentUserId = currentUserId
         networkController.token         = apiToken
         let rootViewController          = userLogged ? homeViewController : loginVC
-        let initialViewController       = UINavigationController(rootViewController: rootViewController)
+        navigationController       = UINavigationController(rootViewController: rootViewController)
         
         // Initialize root controller with sidebar
         let rearViewController = SidebarViewController(homeVC: homeViewController as! HomeViewController)
-        let revealController = SWRevealViewController(rearViewController: rearViewController, frontViewController: initialViewController)
+        let revealController = SWRevealViewController(rearViewController: rearViewController, frontViewController: navigationController)
         
         
         window!.rootViewController = revealController
         window!.makeKeyAndVisible()
-        
+
         return true
     }
     
@@ -159,8 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if error == nil {
                     let postDetailsVC = PostDetailsViewController()
                     postDetailsVC.post = post
-                    let rootViewController = self.window!.rootViewController as! UINavigationController
-                    rootViewController.pushViewController(postDetailsVC, animated: true)
+                    self.navigationController.pushViewController(postDetailsVC, animated: true)
                 }
                 else {
                     
