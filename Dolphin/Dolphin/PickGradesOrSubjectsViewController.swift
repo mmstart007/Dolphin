@@ -209,21 +209,43 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if areSubjects {
-            if subjectsSelected.contains(subjects[indexPath.row]) {
-                let indexToRemove = subjectsSelected.indexOf(subjects[indexPath.row])
-                subjectsSelected.removeAtIndex(indexToRemove!)
+            if isSelectedSubject(subjects[indexPath.row]) {
+                deselectSubject(subjects[indexPath.row])
             } else {
                 subjectsSelected.append(subjects[indexPath.row])
             }
         } else {
-            if gradesSelected.contains(grades[indexPath.row]) {
-                let indexToRemove = gradesSelected.indexOf(grades[indexPath.row])
-                gradesSelected.removeAtIndex(indexToRemove!)
+            if isSelectedGrade(grades[indexPath.row]) {
+                deselectGrade(grades[indexPath.row])
             } else {
                 gradesSelected.append(grades[indexPath.row])
             }
         }
+        
+        print(gradesSelected)
         tableViewGradesOrSubjects.reloadData()
+    }
+    
+    func deselectGrade(g: Grade) {
+        var index = 0
+        for item in gradesSelected {
+            if item.id == g.id {
+                gradesSelected.removeAtIndex(index)
+                return
+            }
+            index += 1
+        }
+    }
+    
+    func deselectSubject(s: Subject) {
+        var index = 0
+        for item in subjectsSelected {
+            if item.id == s.id {
+                subjectsSelected.removeAtIndex(index)
+                return
+            }
+            index += 1
+        }
     }
     
     // MARK: - Actions
