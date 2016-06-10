@@ -51,18 +51,22 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
         if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
             
             for (var i = 0; i < fetchResult.count; i++) {
-                let asset = fetchResult.objectAtIndex(i)
-                // Perform the image request
-                let options = PHImageRequestOptions()
-                options.resizeMode = .Fast
-                options.synchronous = false
                 
-                let width = (UIScreen.mainScreen().bounds.width - 10.0) / 3.0 - 10.0
-                imgManager.requestImageForAsset(asset as! PHAsset, targetSize: CGSizeMake(width, width), contentMode: PHImageContentMode.AspectFit, options: requestOptions, resultHandler: { (image, _) in
+                autoreleasepool {
                     
-                    // Add the returned image to your array
-                    self.images.append(image!)
-                })
+                    let asset = fetchResult.objectAtIndex(i)
+                    // Perform the image request
+                    let options = PHImageRequestOptions()
+                    options.resizeMode = .Fast
+                    options.synchronous = true
+                    
+                    let width = (UIScreen.mainScreen().bounds.width - 10.0) / 3.0 - 10.0
+                    imgManager.requestImageForAsset(asset as! PHAsset, targetSize: CGSizeMake(width, width), contentMode: PHImageContentMode.AspectFit, options: requestOptions, resultHandler: { (image, _) in
+                        
+                        // Add the returned image to your array
+                        self.images.append(image!)
+                    })
+                }
             }
         }
     }
