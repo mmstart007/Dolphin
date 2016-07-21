@@ -174,9 +174,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 let currentContactNameTemp = ABRecordCopyCompositeName(currentContact)
                 var contactName = ""
                 if currentContactNameTemp != nil {
-                    if let currentContactName = currentContactNameTemp.takeRetainedValue() as? String {
-                        contactName = currentContactName
-                    }
+                    let nameCFString : CFString = currentContactNameTemp.takeRetainedValue()
+                    contactName = nameCFString as String
                 }
                 
                 let currentContactid = ABRecordGetRecordID(currentContact)

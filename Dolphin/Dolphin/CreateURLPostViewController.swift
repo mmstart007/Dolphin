@@ -13,7 +13,6 @@ import hpple
 import SVProgressHUD
 
 class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, UIWebViewDelegate {
-
     
     @IBOutlet weak var topBarContainerView: UIView!
     @IBOutlet weak var urlTextField: UITextField!
@@ -33,13 +32,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = .None
         setBackButton()
-        
-//        let uiBusy = UIActivityIndicatorView(activityIndicatorStyle: .White)
-//        uiBusy.hidesWhenStopped = true
-//        uiBusy.startAnimating()
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: uiBusy)
         
         title                           = "Dolphin"
         urlTextField.text               = "http://google.com"
@@ -55,6 +48,11 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         loadRequest("http://google.com")
         self.webView.scalesPageToFit = true;
         self.webView.contentMode = .ScaleAspectFit;
+    }
+    
+    override func goBackButtonPressed(sender: UIBarButtonItem) {
+        super.goBackButtonPressed(sender)
+        SVProgressHUD.dismiss()
     }
     
     func loadRequest(urlString: String) {

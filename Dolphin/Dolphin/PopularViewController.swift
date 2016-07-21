@@ -257,7 +257,11 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if collectionView.tag == 0 {
-            print("Topic %@ pressed", topics[indexPath.row])
+            let topic = topics[indexPath.row]
+            let topicPost = TagPostsViewController(likes: false)
+            topicPost.selectedTopic = topic
+            navigationController?.pushViewController(topicPost, animated: true)
+
         } else if collectionView.tag == 1 {
             print("Pod %@ pressed", pods[indexPath.row].name)
             let podDetailsVC = PODDetailsViewController()
@@ -273,12 +277,25 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         print("Search text: \(textToSearch)")
         filteredPosts.removeAll()
         filteredPosts = posts.filter({( post : Post) -> Bool in
-            return (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            let containInText = (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            let containInTitle = (post.postHeader?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            var containInTag = false
+            
+            for t in post.postTopics!  {
+                if t.name?.lowercaseString.containsString(textToSearch.lowercaseString) == true {
+                    containInTag = true
+                    break
+                }
+            }
+            return containInText || containInTitle || containInTag
         })
         
         filteredPods.removeAll()
         filteredPods = pods.filter({( pod : POD) -> Bool in
-            return (pod.name?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            
+            let containInName = (pod.name?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            let containInDescription = (pod.descriptionText?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            return containInName || containInDescription
         })
         
         filteredTopics.removeAll()

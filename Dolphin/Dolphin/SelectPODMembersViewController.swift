@@ -19,7 +19,6 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     @IBOutlet weak var tableView: UITableView!
     
     var delegate: SelectPODMembersDelegate?
-    var searchTableView: UITableView?
     var selectedMembers: [User] = []
     var searchResults: [User] = []
     
@@ -38,11 +37,11 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         setRightButtonItemWithText("Done", target: self, action: Selector("doneSelectingMembersPressed:"))
         setBackButton()
         
+        searchResults = []
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         tableView.registerNib(UINib(nibName: "PODMemberToAddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
-            
         
         showSearchBar()
     }
@@ -54,11 +53,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == self.tableView {
-            return selectedMembers.count
-        } else {
-            return searchResults.count
-        }
+        return searchResults.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -66,11 +61,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         if cell == nil {
             cell = PODMemberToAddTableViewCell()
         }
-        if tableView == self.tableView {
-            cell!.configureWithUser(selectedMembers[indexPath.row], isAdded: true)
-        } else {
-            cell!.configureWithUser(searchResults[indexPath.row], isAdded: false)
-        }
+        cell!.configureWithUser(searchResults[indexPath.row], isAdded: false)
         cell?.selectionStyle = .None
         return cell!
     }
@@ -82,26 +73,15 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     // MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if tableView == self.tableView {
-            selectedMembers.removeAtIndex(indexPath.row)
-        } else {
-            selectedMembers.append(searchResults[indexPath.row])
-            searchResults.removeAtIndex(indexPath.row)
-        }
-        refreshTables()
+        selectedMembers.append(searchResults[indexPath.row])
+        searchResults.removeAtIndex(indexPath.row)
+        
+        self.tableView.reloadData()
     }
     
     // MARK: - Handle SearchBar
     
     func showSearchBar() {
-        if searchTableView == nil {
-            searchTableView = UITableView(frame: CGRect(x: 0, y: searchBar.frame.size.height, width: view.frame.size.width, height: 0))
-            view.addSubview(searchTableView!)
-            searchTableView!.backgroundColor = UIColor.lightGrayBackground()
-            searchTableView!.registerNib(UINib(nibName: "PODMemberToAddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
-            searchTableView!.dataSource = self
-            searchTableView!.delegate   = self
-        }
         searchBar?.tintColor = UIColor.whiteColor()
         searchBar?.barTintColor = UIColor.blueDolphin()
         UITextField.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
@@ -122,30 +102,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         resignResponder()
         searchResults = []
         searchBar.text = ""
-        refreshTables()
-    }
-    
-    func refreshTables() {
-        var newHeight = CGFloat(self.searchResults.count * 60)
-        
-        if newHeight > UIScreen.mainScreen().bounds.height / 3.0 {
-            newHeight = UIScreen.mainScreen().bounds.height / 3.0
-        }
-        let tableFrame = self.searchTableView!.frame
-        let newFrame = CGRect(x: tableFrame.origin.x, y: tableFrame.origin.y, width: tableFrame.size.width, height: newHeight)
-        searchTableView!.frame = newFrame
-        searchTableView!.reloadData()
-        tableView.reloadData()
-        
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100))
-        let labelFooter = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100))
-        labelFooter.textAlignment = .Center
-        labelFooter.textColor = UIColor.lightGrayColor()
-        labelFooter.text = String(format: "%i contacts selected", selectedMembers.count)
-        footerView.addSubview(labelFooter)
-        Utils.setFontFamilyForView(footerView, includeSubViews: true)
-        tableView.tableFooterView = footerView
-        
+        self.tableView.reloadData()
     }
     
     func filterContentForSearchText(searchText: String) {
@@ -153,10 +110,15 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         NetworkController.sharedInstance.filterUser(searchText, podId: nil, fromDate: nil, toDate: nil, quantity: 10, page: 0) { (users, error) in
             if error == nil {
                 self.searchResults = users.filter({ (user) -> Bool in
-                    return !self.selectedMembers.contains(user)
+                    for u in self.selectedMembers {
+                        if u.id == user.id {
+                            return false
+                        }
+                    }
+                    return true
+//                    return !self.selectedMembers.contains(user)
                 })
-                
-                self.refreshTables()
+                self.tableView.reloadData()
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
                 var alert: UIAlertController

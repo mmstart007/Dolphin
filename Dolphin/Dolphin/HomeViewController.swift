@@ -160,7 +160,6 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         
     }
     @IBAction func postPhotoButtonTouchUpInside(sender: AnyObject) {
-        
         let createImagePostVC = CreateImagePostViewController()
         navigationController?.pushViewController(createImagePostVC, animated: true)
         actionMenu?.removeFromSuperview()
@@ -168,12 +167,10 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         
     }
     @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
-        closeNewPostViewButtonTouchUpInside(self)
         let createTextPostVC = CreateTextPostViewController()
-        let textPostNavController = UINavigationController(rootViewController: createTextPostVC)
-        presentViewController(textPostNavController, animated: true, completion: nil)
+        navigationController?.pushViewController(createTextPostVC, animated: true)
+        actionMenu?.removeFromSuperview()
         print("Post text button pressed")
-        
     }
     
     func actionMenuBackgroundTapped() {

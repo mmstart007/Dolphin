@@ -154,14 +154,15 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     }
     
     // MARK: UICollectionViewDelegate
-    
-    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             let selectMembersVC = SelectPODMembersViewController()
             selectMembersVC.delegate = self
             selectMembersVC.selectedMembers = selectedMembers
             navigationController?.pushViewController(selectMembersVC, animated: true)
+        } else {
+            let user = selectedMembers[indexPath.row - 1]
+            self.deleteUser(user)
         }
     }
     
@@ -171,6 +172,20 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+    }
+    
+    func deleteUser(user: User) {
+        var index = 0
+        for u in selectedMembers {
+            if u.id == user.id {
+                selectedMembers.removeAtIndex(index)
+                break;
+            }
+            
+            index = index + 1
+        }
+        
+        membersCollectionView.reloadData()
     }
     
     // MARK UItextViewDelegate
@@ -212,6 +227,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
                         
                         if pod?.id != nil {
                             // everything worked ok
+                            NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPod, object: nil, userInfo: ["pod":pod!])
                             self.navigationController?.popToRootViewControllerAnimated(true)
                         } else {
                             // there was an error saving the post

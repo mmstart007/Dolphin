@@ -254,9 +254,21 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         print("Search text: \(textToSearch)")
         print("allPosts: \(allPosts.count)")
         
+        filteredPosts.removeAll()
         filteredPosts = allPosts.filter({( post : Post) -> Bool in
-            return (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))! || (post.postHeader?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            let containInText = (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            let containInTitle = (post.postHeader?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            var containInTag = false
+            
+            for t in post.postTopics!  {
+                if t.name?.lowercaseString.containsString(textToSearch.lowercaseString) == true {
+                    containInTag = true
+                    break
+                }
+            }
+            return containInText || containInTitle || containInTag
         })
+        
         searchText = textToSearch
         postsTableView.reloadData()
     }

@@ -4,9 +4,16 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Raleway-Bold.ttf">
+            <string>Raleway-Bold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PickGradesOrSubjectsViewController" customModule="Dolphin" customModuleProvider="target">
             <connections>
+                <outlet property="footerTitle" destination="Ufc-Vo-jGe" id="ftV-hu-C3h"/>
+                <outlet property="footerView" destination="tMu-vA-9ZC" id="2Qn-hh-jFr"/>
                 <outlet property="tableViewGradesOrSubjects" destination="ghf-tW-4t4" id="Z0p-oQ-mPP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -33,5 +40,55 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="553.5" y="282.5"/>
         </view>
+        <view contentMode="scaleToFill" id="tMu-vA-9ZC">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="qqj-9h-htW">
+                    <rect key="frame" x="116" y="10" width="20" height="20"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="5MA-hQ-6r1"/>
+                        <constraint firstAttribute="height" constant="20" id="zZC-BJ-acs"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ufc-Vo-jGe">
+                    <rect key="frame" x="148" y="9" width="115" height="21"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="VMi-Ng-UDw"/>
+                        <constraint firstAttribute="width" constant="115" id="WeT-HK-o1g"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Raleway-Bold" family="Raleway" pointSize="16"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cel-dr-58Z">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                    <animations/>
+                    <connections>
+                        <action selector="tapFooterView" destination="-1" eventType="touchUpInside" id="caG-hs-c4l"/>
+                    </connections>
+                </button>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="qqj-9h-htW" firstAttribute="centerY" secondItem="tMu-vA-9ZC" secondAttribute="centerY" id="1Hi-ju-4tN"/>
+                <constraint firstItem="cel-dr-58Z" firstAttribute="top" secondItem="tMu-vA-9ZC" secondAttribute="top" id="Cjk-Rb-oD1"/>
+                <constraint firstItem="Ufc-Vo-jGe" firstAttribute="centerY" secondItem="tMu-vA-9ZC" secondAttribute="centerY" id="ECi-nd-xO9"/>
+                <constraint firstItem="Ufc-Vo-jGe" firstAttribute="leading" secondItem="qqj-9h-htW" secondAttribute="trailing" constant="12" id="Ift-Sw-uSu"/>
+                <constraint firstAttribute="bottom" secondItem="cel-dr-58Z" secondAttribute="bottom" id="MTe-si-LVw"/>
+                <constraint firstItem="cel-dr-58Z" firstAttribute="leading" secondItem="tMu-vA-9ZC" secondAttribute="leading" id="NxO-zI-LQh"/>
+                <constraint firstAttribute="trailing" secondItem="cel-dr-58Z" secondAttribute="trailing" id="bfo-ww-iTT"/>
+                <constraint firstItem="Ufc-Vo-jGe" firstAttribute="centerX" secondItem="tMu-vA-9ZC" secondAttribute="centerX" constant="18" id="g7d-tq-6HI"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="105.5" y="273"/>
+        </view>
     </objects>
+    <resources>
+        <image name="PlusIcon" width="64" height="64"/>
+    </resources>
 </document>

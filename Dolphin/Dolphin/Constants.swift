@@ -23,6 +23,7 @@ class Constants {
     
     struct Notifications {
         static let CreatedPost: String              = "CreatedPostNotification"
+        static let CreatedPod: String               = "CreatedPodNotification"
     }
     
     struct Messages {

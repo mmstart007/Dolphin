@@ -83,8 +83,6 @@
 		365D76CE1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365D76CC1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift */; };
 		365DBDDB1CACC0B600D20C02 /* SelectPODMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DBDDA1CACC0B600D20C02 /* SelectPODMembersViewController.swift */; };
 		365DBDDD1CACC0F600D20C02 /* SelectPODMembersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 365DBDDC1CACC0F600D20C02 /* SelectPODMembersViewController.xib */; };
-		365DBDE01CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DBDDF1CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift */; };
-		365DBDE21CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 365DBDE11CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib */; };
 		3668B2F61C6A761400469FF9 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3668B2F51C6A761300469FF9 /* Deal.swift */; };
 		3668B2F81C6A77B100469FF9 /* DealsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */; };
 		3668B2FA1C6A77E700469FF9 /* DealsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */; };
@@ -165,7 +163,14 @@
 		36F4AC3E1C64EFB900323672 /* CreateTextPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */; };
 		890B04FF265D7EA4ECA25CE0 /* Pods_Dolphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */; };
 		AA0592D91D01E522001D7823 /* LeftAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */; };
+		AA7AEF7D1D0A5D4800AA36B5 /* TagPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */; };
 		AA9552BA1D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */; };
+		AAD155C41D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */; };
+		AAD155C51D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */; };
+		AAD155C61D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */; };
+		AAD155C71D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */; };
+		AAD155C81D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */; };
+		AAD155C91D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */; };
 		F8483E6B1CFE6FB90060CC8C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6A1CFE6FB90060CC8C /* Globals.swift */; };
 		F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6C1CFE7BFA0060CC8C /* MyFeedViewController.swift */; };
 		F8483E711CFE7BFA0060CC8C /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */; };
@@ -270,8 +275,6 @@
 		365D76CC1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailsHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		365DBDDA1CACC0B600D20C02 /* SelectPODMembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPODMembersViewController.swift; sourceTree = "<group>"; };
 		365DBDDC1CACC0F600D20C02 /* SelectPODMembersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectPODMembersViewController.xib; sourceTree = "<group>"; };
-		365DBDDF1CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODMemberToAddTableViewCell.swift; sourceTree = "<group>"; };
-		365DBDE11CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODMemberToAddTableViewCell.xib; sourceTree = "<group>"; };
 		3668B2F51C6A761300469FF9 /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		3668B2F71C6A77B100469FF9 /* DealsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealsListViewController.swift; sourceTree = "<group>"; };
 		3668B2F91C6A77E700469FF9 /* DealsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealsListViewController.xib; sourceTree = "<group>"; };
@@ -360,7 +363,10 @@
 		36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTextPostViewController.xib; sourceTree = "<group>"; };
 		6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dolphin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
+		AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPostsViewController.swift; sourceTree = "<group>"; };
 		AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostAddDescriptionViewController.xib; sourceTree = "<group>"; };
+		AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODMemberToAddTableViewCell.swift; sourceTree = "<group>"; };
+		AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODMemberToAddTableViewCell.xib; sourceTree = "<group>"; };
 		AD9E99804B93529D712BC626 /* Pods-Dolphin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.debug.xcconfig"; sourceTree = "<group>"; };
 		DCFBF776029220B30C3A087B /* Pods-Dolphin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.release.xcconfig"; sourceTree = "<group>"; };
 		F8483E6A1CFE6FB90060CC8C /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
@@ -447,6 +453,7 @@
 				360EA4B41C0F6F3A00692668 /* PopularViewController.xib */,
 				36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */,
 				36D0C6A71C08E3790002AE35 /* FeedViewController.xib */,
+				AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -567,8 +574,8 @@
 		365DBDDE1CACC49600D20C02 /* Create POD */ = {
 			isa = PBXGroup;
 			children = (
-				365DBDDF1CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift */,
-				365DBDE11CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib */,
+				AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */,
+				AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */,
 			);
 			name = "Create POD";
 			sourceTree = "<group>";
@@ -1041,7 +1048,7 @@
 				364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */,
 				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
 				368798851C2B2BA70088AC24 /* Raleway-Bold.ttf in Resources */,
-				365DBDE21CACC4C900D20C02 /* PODMemberToAddTableViewCell.xib in Resources */,
+				AAD155C71D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */,
 				361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */,
 				3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */,
 				36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */,
@@ -1074,6 +1081,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAD155C81D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,6 +1089,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAD155C91D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1163,13 +1172,13 @@
 				363F7ACD1C9348A3009866AE /* Constants.swift in Sources */,
 				361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */,
 				36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */,
+				AA7AEF7D1D0A5D4800AA36B5 /* TagPostsViewController.swift in Sources */,
 				368798631C29BA190088AC24 /* NetworkController.swift in Sources */,
 				368798981C2B34A60088AC24 /* DolphinCustomFontViewController.swift in Sources */,
 				36BE4D081C062404002E52D9 /* HomeViewController.swift in Sources */,
 				36DCCD771C73EB8800D4B171 /* UserImagePODMemberCollectionViewCell.swift in Sources */,
 				361F508E1C693AA500153B6C /* NewPostPrivacySettingsShareToPODCell.swift in Sources */,
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
-				365DBDE01CACC4AE00D20C02 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36129FA71CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift in Sources */,
 				F8483E6B1CFE6FB90060CC8C /* Globals.swift in Sources */,
 				3607AAD91C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift in Sources */,
@@ -1234,6 +1243,7 @@
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				36DCCD731C73AC3A00D4B171 /* PODMembersTableViewCell.swift in Sources */,
+				AAD155C41D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */,
 				365D76C91C7540AA00A0833F /* DealDetailsViewController.swift in Sources */,
 				3668B2F61C6A761400469FF9 /* Deal.swift in Sources */,
 				3650E0B61C6D1AFA00BB9301 /* CreatePodViewController.swift in Sources */,
@@ -1254,6 +1264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAD155C51D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36BE4CE11C061524002E52D9 /* DolphinTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1262,6 +1273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAD155C61D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36BE4CEC1C061524002E52D9 /* DolphinUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

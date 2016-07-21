@@ -37,7 +37,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setDismissButton()
+        setBackButton()
         title = "Write"
         setRightSystemButtonItem(.Done, target: self, action: Selector("donePressed:"))
         
@@ -81,8 +81,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     
     func goToPrivacySettings() {
         let privacySettingsVC = NewPostPrivacySettingsViewController(selectedPODs: podsToShare, delegate: self)
-        let privacySettingsNavController = UINavigationController(rootViewController: privacySettingsVC)
-        presentViewController(privacySettingsNavController, animated: true, completion: nil)
+        navigationController?.pushViewController(privacySettingsVC, animated: true)
     }
     
     // MARK: - Actions

@@ -39,6 +39,9 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         super.viewDidLoad()
         
         self.edgesForExtendedLayout = .None
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "newPodCreated:" , name: Constants.Notifications.CreatedPod, object: nil)
+        
         allPODstableView.registerNib(UINib(nibName: "PODPreviewTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODPreviewTableViewCell")
         myPODsCollectionView.registerNib(UINib(nibName: "MyPODPreviewCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "MyPODPreviewCollectionViewCell")
         myPODsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
@@ -60,14 +63,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             self.loadNextPODs()
         }
         
-        
+        loadData(false)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        loadData(false)
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -91,6 +91,23 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         super.viewWillDisappear(animated)
         searchText = ""
         self.parentViewController?.navigationItem.titleView = nil
+    }
+    
+    func newPodCreated(notification: NSNotification) {
+        if let userInfo = notification.userInfo as? Dictionary<String, POD> {
+            if let pod = userInfo["pod"] {
+                if (!self.allPods.contains(pod)) {
+                    self.allPods.insert(pod, atIndex: 0)
+                }
+                
+                if (!self.myPods.contains(pod)) {
+                    self.myPods.append(pod)
+                }
+                
+                self.allPODstableView.reloadData()
+                self.myPODsCollectionView.reloadData()
+            }
+        }
     }
     
     // MARK: Segmented Control

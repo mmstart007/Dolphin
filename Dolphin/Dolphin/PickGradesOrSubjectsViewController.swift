@@ -20,6 +20,9 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     let networkController = NetworkController.sharedInstance
     
     @IBOutlet weak var tableViewGradesOrSubjects: UITableView!
+    @IBOutlet weak var footerView: UIView!
+    @IBOutlet weak var footerTitle: UILabel!
+    
     var checkBoxAll: BEMCheckBox!
     
     var delegate: PickerGradesOrSubjectsDelegate?
@@ -44,9 +47,15 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         setBackButton()        
         tableViewGradesOrSubjects.delegate = self
         tableViewGradesOrSubjects.dataSource = self
-        tableViewGradesOrSubjects.tableFooterView = UIView(frame: CGRectZero)
+        tableViewGradesOrSubjects.tableFooterView = footerView
+        if areSubjects == true {
+            footerTitle.text = "Add Subject"
+        }
+        else {
+            footerTitle.text = "Add Grade"            
+        }
         registerCells()
-        
+
         self.loadData()
     }
 
@@ -181,6 +190,25 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         return cell!
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            
+            let alertController = UIAlertController(title: nil, message: "Are you sure to remove?", preferredStyle: .Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: { action -> Void in
+                
+            })
+            alertController.addAction(yesAction)
+            
+            let noAction = UIAlertAction(title: "No", style: .Default, handler: nil)
+            alertController.addAction(noAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
     func isSelectedSubject(s: Subject) ->Bool {
         for item in subjectsSelected {
             if item.id == s.id {
@@ -222,7 +250,6 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
             }
         }
         
-        print(gradesSelected)
         tableViewGradesOrSubjects.reloadData()
     }
     
@@ -267,9 +294,34 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     }
     
     // MARK: - Auxiliary methods
-    
     func registerCells() {
         tableViewGradesOrSubjects.registerNib(UINib(nibName: "SubjectOrGradeTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SubjectOrGradeTableViewCell")
+    }
+    
+    // MAKR: - Add Grade / Subject
+    
+    @IBAction func tapFooterView() {
+        var message = ""
+        if areSubjects {
+            message = "Please type new subject name."
+        } else {
+            message = "Please type new grade name."
+        }
         
+        var inputTextField: UITextField?
+        let newPrompt = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        newPrompt.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
+        newPrompt.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            // Now do whatever you want with inputTextField (remember to unwrap the optional)
+            let name = inputTextField?.text
+            print(name)
+
+        }))
+        newPrompt.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Name"
+            inputTextField = textField
+        })
+        
+        presentViewController(newPrompt, animated: true, completion: nil)
     }
 }

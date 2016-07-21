@@ -8,12 +8,16 @@
 
 import UIKit
 
-class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+@objc protocol PODMembersTableViewCellDelegate {
+    optional func tapAddMember()
+}
 
+class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     @IBOutlet weak var imageViewAdd: UIImageView!
     @IBOutlet weak var collectionViewMembers: UICollectionView!
     var members: [User] = []
+    var delegate: PODMembersTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,10 +40,19 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         collectionViewMembers.transform = scalingTransform
         imageViewAdd.backgroundColor = UIColor.whiteColor()
         imageViewAdd.layer.cornerRadius = imageViewAdd.frame.size.width / 2
+        imageViewAdd.userInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action:Selector("didTapAdd"))
+        imageViewAdd.addGestureRecognizer(tapGesture)
+        
         registerCells()
         members = pod.users!
         collectionViewMembers.reloadData()
         
+    }
+    
+    func didTapAdd() {
+        self.delegate?.tapAddMember!()
     }
     
     func registerCells() {

@@ -13,10 +13,14 @@ class UserImageCollectionViewCell : CustomFontCollectionViewCell  {
     
     @IBOutlet weak var userAvatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
+    var selectedUser: User!
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        deleteButton.layer.cornerRadius = deleteButton.frame.size.width/2
+        deleteButton.clipsToBounds = true
         userAvatarImageView.layer.cornerRadius = userAvatarImageView.frame.size.width / 2
         userAvatarImageView.clipsToBounds = true
     }
@@ -26,9 +30,11 @@ class UserImageCollectionViewCell : CustomFontCollectionViewCell  {
         userAvatarImageView.image = UIImage(named: "PlusIconSmall")
         userAvatarImageView.contentMode = .Center
         userNameLabel.text = "Add"
+        deleteButton.hidden = true
     }
     
     func configureWithUser(user: User) {
+        self.selectedUser = user
         userAvatarImageView.backgroundColor = UIColor.whiteColor()
         userAvatarImageView.contentMode = .ScaleAspectFill
         if let userAvatarURL = user.userAvatarImageURL {
@@ -37,6 +43,6 @@ class UserImageCollectionViewCell : CustomFontCollectionViewCell  {
             userAvatarImageView.image = UIImage(named: "UserPlaceholder")
         }
         userNameLabel.text = user.userName
+        deleteButton.hidden = false
     }
-    
 }

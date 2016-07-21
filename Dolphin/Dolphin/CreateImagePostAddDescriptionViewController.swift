@@ -33,8 +33,7 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
         tableViewPostDetails.tableFooterView = UIView(frame: CGRectZero)
         registerCells()
     }
-
-   
+    
     // MARK: - Actions
     func postButtonTouchUpInside() {
 

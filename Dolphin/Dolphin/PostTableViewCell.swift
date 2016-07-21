@@ -11,7 +11,7 @@ import UIKit
 import SDWebImage
 import NSDate_TimeAgo
 
-@objc protocol PostTableViewCellDelegate{
+@objc protocol PostTableViewCellDelegate {
     optional func tapURL(url: String?)
     optional func tapLike(post: Post?, cell: PostTableViewCell?)
     optional func downloadedPostImage(indexPath: NSIndexPath?)
@@ -46,11 +46,11 @@ class PostTableViewCell : UITableViewCell {
         postuserImageView.layer.cornerRadius  = postuserImageView.frame.size.width / 2.0
         postuserImageView.layer.masksToBounds = true
 
-        let tapGestureLike = UITapGestureRecognizer(target: self, action: "actionLike")
+        let tapGestureLike = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.actionLike))
         tapGestureLike.numberOfTapsRequired = 1
         likedImageView.addGestureRecognizer(tapGestureLike)
         
-        let tapGestureURL = UITapGestureRecognizer(target: self, action: "actionURL")
+        let tapGestureURL = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.actionURL))
         tapGestureURL.numberOfTapsRequired = 1
         postContent.addGestureRecognizer(tapGestureURL)
         
@@ -72,6 +72,9 @@ class PostTableViewCell : UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        let xPosition       = containerView.frame.size.width - 30
+        triangleView!.frame = CGRect(x: xPosition, y: 0, width: 30, height: 30)
         
         //Set round border only top.
         let path = UIBezierPath(roundedRect:containerView.bounds, byRoundingCorners:[.TopRight, .TopLeft], cornerRadii: CGSizeMake(5, 5))

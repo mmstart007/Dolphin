@@ -9,7 +9,14 @@
 import Foundation
 import UIKit
 
-class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
+@objc protocol PostDetailsTopicsAndViewsTableViewCellDelegate {
+    optional func tapTopic(topic: Topic?)
+    optional func likeButtonPressed()
+}
+
+class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    var delegate: PostDetailsTopicsAndViewsTableViewCellDelegate?
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -27,10 +34,17 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
         layout.minimumLineSpacing = 4;
         collectionView.collectionViewLayout = layout
 
+        likedImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "likeButtonPressed"))
+        likedImageView.userInteractionEnabled = true
+
         self.backgroundColor = UIColor.clearColor()
     }
     
-    func configureWithPost(post: Post, dataSource: AnyObject, delegate: AnyObject) {
+    func likeButtonPressed() {
+        self.delegate?.likeButtonPressed!()
+    }
+    
+    func configureWithPost(post: Post) {
         self.post = post
         numberOfLikesLabel.text = String(post.postNumberOfLikes!)
         if post.isLikedByUser {
@@ -38,9 +52,6 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
         } else {
             likedImageView.image = UIImage(named: "SunglassesIconNotLiked")
         }
-        
-        likedImageView.addGestureRecognizer(UITapGestureRecognizer(target: delegate as! PostDetailsViewController, action: "likeButtonPressed"))
-        likedImageView.userInteractionEnabled = true
         
         collectionView.reloadData()
         verticalLayoutConstraint.constant = collectionView.contentSize.height;
@@ -83,5 +94,9 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let topic = post?.postTopics![indexPath.row]
+        self.delegate?.tapTopic!(topic)
+    }
 
 }

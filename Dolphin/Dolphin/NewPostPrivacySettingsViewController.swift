@@ -60,6 +60,7 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setBackButton()
         setRightSystemButtonItem(.Done, target: self, action: "doneButtonPressed:")
         title = "Post Privacy Settings"
         
@@ -182,7 +183,7 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
         } else {
             selectedPrivacySettingIndex = -1
             podShareSettings[indexPath.row].selected = !podShareSettings[indexPath.row].selected
-            var oneSelected = podShareSettings[indexPath.row].selected
+            let oneSelected = podShareSettings[indexPath.row].selected
             for (var i = 0; i < podShareSettings.count; i++) {
                 if i != indexPath.row {
                     podShareSettings[i].selected = false
@@ -206,7 +207,7 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
             }
         }
         delegate?.didFinishSettingOptions(selectedPODs)
-        dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.popViewControllerAnimated(true)
     }
     
 }

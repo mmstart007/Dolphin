@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UITableViewDelegate {
+class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, PODMembersTableViewCellDelegate, SelectPODMembersDelegate {
 
     @IBOutlet weak var tableViewPosts: UITableView!
     @IBOutlet weak var actionMenuBackground: UIView!
@@ -62,7 +62,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         plusButton.layer.borderColor = UIColor.whiteColor().CGColor
         plusButton.layer.borderWidth = 3
         plusButton.setImage(UIImage(named: "TabbarPlusIcon"), forState: .Normal)
-        plusButton .addTarget(self , action: "plusButtonTouchUpInside", forControlEvents: .TouchUpInside)
+        plusButton .addTarget(self , action: #selector(PODDetailsViewController.plusButtonTouchUpInside), forControlEvents: .TouchUpInside)
         plusButton.backgroundColor = UIColor.blueDolphin()
         self.view.addSubview(fakeTabBar)
         self.view.addSubview(plusButton)
@@ -142,7 +142,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                 cell = PODMembersTableViewCell()
             }
             cell?.configureWithPOD(pod!)
-            
+            cell?.delegate = self
             cell?.selectionStyle = .None
             return cell!
             
@@ -152,7 +152,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                 cell = PostTableViewCell()
             }
             cell?.configureWithPost(postOfPOD[indexPath.row], indexPath: indexPath)
-            
+            cell?.delegate = self
             cell?.selectionStyle = .None
             return cell!
         }
@@ -172,6 +172,13 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             postDetailsVC.post = postOfPOD[indexPath.row]
             navigationController?.pushViewController(postDetailsVC, animated: true)
         }
+    }
+    
+    func tapAddMember() {
+        let selectMembersVC = SelectPODMembersViewController()
+        selectMembersVC.delegate = self
+        selectMembersVC.selectedMembers = pod!.users!
+        navigationController?.pushViewController(selectMembersVC, animated: true)
     }
     
     // MARK: - Plus button Actions
@@ -326,6 +333,67 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         tableViewPosts.backgroundView = nil
     }
     
+    // MARK: PostTableViewCell Delegate.
+    func downloadedPostImage(indexPath: NSIndexPath?) {
+        tableViewPosts.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.None)
+    }
     
+    func tapURL(url: String?) {
+        let webVC = WebViewController()
+        webVC.siteLink = url
+        navigationController?.pushViewController(webVC, animated: true)
+    }
     
+    func tapLike(post: Post?, cell: PostTableViewCell?) {
+        if !(post?.isLikedByUser)! {
+            SVProgressHUD.showWithStatus("Loading")
+            networkController.createLike("\(post!.postId!)", completionHandler: { (like, error) -> () in
+                if error == nil {
+                    if like?.id != nil {
+                        post?.isLikedByUser = true
+                        post?.postNumberOfLikes = (post?.postNumberOfLikes)! + 1
+                        cell?.configureWithPost(post!)
+                    }
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            })
+        } else {
+            
+            SVProgressHUD.showWithStatus("Loading")
+            networkController.deleteLike("\(post!.postId!)", completionHandler: { (error) -> () in
+                if error == nil {
+                    post?.postNumberOfLikes = (post?.postNumberOfLikes)! - 1
+                    post?.isLikedByUser = false
+                    cell?.configureWithPost(post!)
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            })
+        }
+    }
+    
+    // MARK: - SelectPODMembersDelegate
+    
+    func membersDidSelected(members: [User]) {
+        pod?.users = members
+        networkController.updatePod(pod!) { (updatedPod, error) in
+            
+        }
+        tableViewPosts.reloadData()
+    }
 }

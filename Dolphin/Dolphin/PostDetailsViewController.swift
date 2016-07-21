@@ -11,7 +11,7 @@ import UIKit
 import SVProgressHUD
 import SDWebImage
 
-class PostDetailsViewController : DolphinViewController, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class PostDetailsViewController : DolphinViewController, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PostDetailsTopicsAndViewsTableViewCellDelegate {
 
     let networkController = NetworkController.sharedInstance
     let commentTextViewPlaceHolder: String! = "Write a comment..."
@@ -55,10 +55,6 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         tableView.estimatedRowHeight = 10
         
         addKeyboardObservers()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         loadComments()
     }
     
@@ -75,8 +71,16 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         commentTextView.delegate            = self
         commentTextView.text                = commentTextViewPlaceHolder
         commentTextView.textColor           = UIColor.darkGrayColor()
-        let viewTapRecognizer = UITapGestureRecognizer(target: self, action: "viewTapped")
-        view.addGestureRecognizer(viewTapRecognizer)
+        let viewTapRecognizer = UITapGestureRecognizer(target: self, action: "viewTapped:")
+        viewTapRecognizer.cancelsTouchesInView = false
+        tableView.addGestureRecognizer(viewTapRecognizer)
+    }
+    
+    func viewTapped(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            view.endEditing(true)
+        }
+        sender.cancelsTouchesInView = false
     }
     
     func setNavBarButtons() {
@@ -252,13 +256,15 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                 cell = PostDetailHeaderTableViewCell()
             }
             (cell as? PostDetailHeaderTableViewCell)?.configureWithPost(post!)
+            
         } else if indexPath.section == 1 {
             cell = tableView.dequeueReusableCellWithIdentifier("PostDetailsTopicsAndViewsTableViewCell") as? PostDetailsTopicsAndViewsTableViewCell
             if cell == nil {
                 cell = PostDetailsTopicsAndViewsTableViewCell()
             }
             cell?.contentView.userInteractionEnabled = false
-            (cell as? PostDetailsTopicsAndViewsTableViewCell)!.configureWithPost(post!, dataSource: self, delegate: self)
+            (cell as? PostDetailsTopicsAndViewsTableViewCell)!.configureWithPost(post!)
+            (cell as? PostDetailsTopicsAndViewsTableViewCell)?.delegate = self
         } else {
             if indexPath.row % 2 == 1 {
                 cell = tableView.dequeueReusableCellWithIdentifier("PostCommentEvenTableViewCell") as? PostCommentEvenTableViewCell
@@ -279,6 +285,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         cell?.selectionStyle = .None
         return cell!
     }
+    
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
@@ -360,12 +367,8 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
-        
     }
-    
-    func viewTapped() {
-        commentTextView.resignFirstResponder()
-    }
+
     
     // MARK UItextViewDelegate
     
@@ -505,5 +508,10 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         }
     }
     
-    
+    //Topic
+    func tapTopic(topic: Topic?) {
+        let topicPost = TagPostsViewController(likes: false)
+        topicPost.selectedTopic = topic
+        navigationController?.pushViewController(topicPost, animated: true)
+    }
 }

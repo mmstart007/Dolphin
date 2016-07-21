@@ -48,7 +48,11 @@ class SidebarViewController : UIViewController {
         super.viewDidLoad()
 
         setAppearance()
-        myFeedButtonTouchUpInside(self)
+        
+        let tapAvatarGesture = UITapGestureRecognizer(target: self, action: "tapAvatar")
+        tapAvatarGesture.numberOfTapsRequired = 1
+        avatarView.addGestureRecognizer(tapAvatarGesture)
+        
         Utils.setFontFamilyForView(self.view, includeSubViews: true)
     }
     
@@ -216,4 +220,7 @@ class SidebarViewController : UIViewController {
             dolphinDealsMenuItemLabel.textColor = UIColor.whiteColor()
     }
     
+    func tapAvatar() {
+        settingsButtonTouchUpInside(self)
+    }
 }

@@ -704,7 +704,22 @@ class NetworkController: NSObject {
                 completionHandler(savedPOD, error)
             }
         }
-        
+    }
+    
+    func updatePod(pod: POD, completionHandler: (POD?, AnyObject?) -> ()) -> () {
+        var savedPOD: POD?
+        let parameters : [String : AnyObject]? = ["pod": pod.toJson()]
+        performRequest(MethodType.PATCH, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let podJson = result!["pod"] as? [String: AnyObject] {
+                    savedPOD = POD(jsonObject: podJson)
+                }
+                completionHandler(savedPOD, nil)
+            } else {
+                
+                completionHandler(savedPOD, error)
+            }
+        }
     }
     
     func filterPOD(pattern: String?, userId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, sort_by: String?, completionHandler: ([POD], AnyObject?) -> ()) -> () {
