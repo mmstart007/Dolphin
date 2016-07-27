@@ -176,6 +176,12 @@
 		F8483E711CFE7BFA0060CC8C /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */; };
 		F8483E721CFE7BFA0060CC8C /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6E1CFE7BFA0060CC8C /* WebViewController.swift */; };
 		F8483E731CFE7BFA0060CC8C /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8483E6F1CFE7BFA0060CC8C /* WebViewController.xib */; };
+		F89DF7BA1D4908610052FCBF /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89DF7B81D4908610052FCBF /* OtherProfileViewController.swift */; };
+		F89DF7BB1D4908610052FCBF /* OtherProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89DF7B91D4908610052FCBF /* OtherProfileViewController.xib */; };
+		F89DF7C21D491B8D0052FCBF /* GridPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89DF7C01D491B8D0052FCBF /* GridPostCell.swift */; };
+		F89DF7C31D491B8D0052FCBF /* GridPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89DF7C11D491B8D0052FCBF /* GridPostCell.xib */; };
+		F89DF7C61D49225E0052FCBF /* UserInfoReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89DF7C41D49225E0052FCBF /* UserInfoReusableView.swift */; };
+		F89DF7C71D49225E0052FCBF /* UserInfoReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89DF7C51D49225E0052FCBF /* UserInfoReusableView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -374,6 +380,12 @@
 		F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentsViewController.swift; sourceTree = "<group>"; };
 		F8483E6E1CFE7BFA0060CC8C /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		F8483E6F1CFE7BFA0060CC8C /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		F89DF7B81D4908610052FCBF /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
+		F89DF7B91D4908610052FCBF /* OtherProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherProfileViewController.xib; sourceTree = "<group>"; };
+		F89DF7C01D491B8D0052FCBF /* GridPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridPostCell.swift; sourceTree = "<group>"; };
+		F89DF7C11D491B8D0052FCBF /* GridPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GridPostCell.xib; sourceTree = "<group>"; };
+		F89DF7C41D49225E0052FCBF /* UserInfoReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoReusableView.swift; sourceTree = "<group>"; };
+		F89DF7C51D49225E0052FCBF /* UserInfoReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoReusableView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,6 +466,8 @@
 				36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */,
 				36D0C6A71C08E3790002AE35 /* FeedViewController.xib */,
 				AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */,
+				F89DF7B81D4908610052FCBF /* OtherProfileViewController.swift */,
+				F89DF7B91D4908610052FCBF /* OtherProfileViewController.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -665,6 +679,10 @@
 				36B1F41F1C0FA97D0091A1B3 /* PODCollectionViewCell.xib */,
 				3636F9631C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift */,
 				3636F9651C1EF79C00999200 /* MyPODPreviewCollectionViewCell.xib */,
+				F89DF7C01D491B8D0052FCBF /* GridPostCell.swift */,
+				F89DF7C11D491B8D0052FCBF /* GridPostCell.xib */,
+				F89DF7C41D49225E0052FCBF /* UserInfoReusableView.swift */,
+				F89DF7C51D49225E0052FCBF /* UserInfoReusableView.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -1014,6 +1032,7 @@
 				3689ECDE1C0E45B00087F828 /* PODPreviewTableViewCell.xib in Resources */,
 				36DCCD781C73EB8800D4B171 /* UserImagePODMemberCollectionViewCell.xib in Resources */,
 				369697461C725ECB00774055 /* PODDetailsViewController.xib in Resources */,
+				F89DF7C31D491B8D0052FCBF /* GridPostCell.xib in Resources */,
 				F8483E731CFE7BFA0060CC8C /* WebViewController.xib in Resources */,
 				361FC0851CA1FD0000388FD0 /* SubjectOrGradeTableViewCell.xib in Resources */,
 				364140611C110F900022D1BE /* PostCommentsViewController.xib in Resources */,
@@ -1024,6 +1043,7 @@
 				361F508C1C65389D00153B6C /* NewPostPrivacySettingsVisibilityCell.xib in Resources */,
 				36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */,
 				36DCCD741C73AC3A00D4B171 /* PODMembersTableViewCell.xib in Resources */,
+				F89DF7C71D49225E0052FCBF /* UserInfoReusableView.xib in Resources */,
 				365DBDDD1CACC0F600D20C02 /* SelectPODMembersViewController.xib in Resources */,
 				36B9BBE71CB46C9E00EDBA3D /* NewPostMenuFromPOD.xib in Resources */,
 				360EA4B11C0F6DC400692668 /* TopicCollectionViewCell.xib in Resources */,
@@ -1044,6 +1064,7 @@
 				360EA4BA1C0F710100692668 /* PopularTrendingTopicsTableViewCell.xib in Resources */,
 				3615B7031C19CAF6006BB8B4 /* CreatePostChooseImageCollectionViewCell.xib in Resources */,
 				3607AADF1C8F7E6200B9DD8F /* PODSettingsViewController.xib in Resources */,
+				F89DF7BB1D4908610052FCBF /* OtherProfileViewController.xib in Resources */,
 				36F4AC3E1C64EFB900323672 /* CreateTextPostViewController.xib in Resources */,
 				364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */,
 				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
@@ -1167,10 +1188,12 @@
 				36129FAA1CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift in Sources */,
 				3687989D1C2B482C0088AC24 /* CustomFontTableViewCell.swift in Sources */,
 				3650E0C21C6D4D6700BB9301 /* UserImageCollectionViewCell.swift in Sources */,
+				F89DF7BA1D4908610052FCBF /* OtherProfileViewController.swift in Sources */,
 				36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */,
 				36D0C6A11C08D0990002AE35 /* Post.swift in Sources */,
 				363F7ACD1C9348A3009866AE /* Constants.swift in Sources */,
 				361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */,
+				F89DF7C21D491B8D0052FCBF /* GridPostCell.swift in Sources */,
 				36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */,
 				AA7AEF7D1D0A5D4800AA36B5 /* TagPostsViewController.swift in Sources */,
 				368798631C29BA190088AC24 /* NetworkController.swift in Sources */,
@@ -1197,6 +1220,7 @@
 				3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */,
 				AA0592D91D01E522001D7823 /* LeftAlignCollectionViewLayout.swift in Sources */,
 				F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */,
+				F89DF7C61D49225E0052FCBF /* UserInfoReusableView.swift in Sources */,
 				361FC07F1CA1F7A200388FD0 /* PickGradesOrSubjectsViewController.swift in Sources */,
 				360EA4B31C0F6F1400692668 /* PopularViewController.swift in Sources */,
 				36E4116C1C8DF1A3002DC736 /* CreateProfileViewController.swift in Sources */,
@@ -1425,7 +1449,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "269239a1-475c-4c68-bb81-a32f11f3b77e";
+				PROVISIONING_PROFILE = "ed5d48c3-ec03-471c-86ea-f7ec9b69eb20";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1462,7 +1486,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "269239a1-475c-4c68-bb81-a32f11f3b77e";
+				PROVISIONING_PROFILE = "ed5d48c3-ec03-471c-86ea-f7ec9b69eb20";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
 			};
 			name = Release;

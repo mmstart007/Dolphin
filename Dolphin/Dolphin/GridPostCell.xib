@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Raleway-Bold.ttf">
+            <string>Raleway-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="GridPostCell" customModule="Dolphin" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I8V-gz-sPc">
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLW-34-n7n">
+                        <rect key="frame" x="8" y="8" width="84" height="84"/>
+                        <fontDescription key="fontDescription" name="Raleway-Bold" family="Raleway" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.82352941176470584" green="0.82352941176470584" blue="0.82352941176470584" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="lLW-34-n7n" secondAttribute="trailing" constant="8" id="14r-YC-C3f"/>
+                <constraint firstItem="lLW-34-n7n" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="Dw2-2e-i92"/>
+                <constraint firstItem="lLW-34-n7n" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="MCe-AS-tyx"/>
+                <constraint firstItem="I8V-gz-sPc" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Mfr-6I-KR4"/>
+                <constraint firstAttribute="bottom" secondItem="lLW-34-n7n" secondAttribute="bottom" constant="8" id="OSp-7A-ExP"/>
+                <constraint firstItem="I8V-gz-sPc" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ax9-OP-oG8"/>
+                <constraint firstAttribute="trailing" secondItem="I8V-gz-sPc" secondAttribute="trailing" id="dT6-LV-RBi"/>
+                <constraint firstAttribute="bottom" secondItem="I8V-gz-sPc" secondAttribute="bottom" id="fhZ-Yr-pBP"/>
+            </constraints>
+            <connections>
+                <outlet property="photoImageView" destination="I8V-gz-sPc" id="lj7-mS-1YQ"/>
+                <outlet property="titleLabel" destination="lLW-34-n7n" id="bR3-qX-T6A"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>

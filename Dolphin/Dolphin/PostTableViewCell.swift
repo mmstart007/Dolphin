@@ -15,6 +15,7 @@ import NSDate_TimeAgo
     optional func tapURL(url: String?)
     optional func tapLike(post: Post?, cell: PostTableViewCell?)
     optional func downloadedPostImage(indexPath: NSIndexPath?)
+    optional func tapUserInfo(userInfo: User?)
 }
 
 class PostTableViewCell : UITableViewCell {
@@ -45,7 +46,8 @@ class PostTableViewCell : UITableViewCell {
 
         postuserImageView.layer.cornerRadius  = postuserImageView.frame.size.width / 2.0
         postuserImageView.layer.masksToBounds = true
-
+        postuserImageView.userInteractionEnabled = true
+        
         let tapGestureLike = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.actionLike))
         tapGestureLike.numberOfTapsRequired = 1
         likedImageView.addGestureRecognizer(tapGestureLike)
@@ -68,6 +70,17 @@ class PostTableViewCell : UITableViewCell {
         }
         
         self.backgroundColor = UIColor(red: 244.0/255.0, green: 244.0/255.0, blue: 244.0/255.0, alpha: 1.0)
+        
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.didTapUser))
+        postuserImageView.addGestureRecognizer(tapGesture)
+        
+        let tapGestureUsername = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.didTapUser))
+        postUserNameLabel.addGestureRecognizer(tapGestureUsername)
+    }
+    
+    func didTapUser() {
+        self.delegate?.tapUserInfo!(cellPost?.postUser)
     }
     
     override func layoutSubviews() {

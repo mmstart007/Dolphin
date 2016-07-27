@@ -364,8 +364,14 @@ class NetworkController: NSObject {
         var filters = [String: AnyObject]()
         if topics != nil {
             let topicsNameArray = topics?.map({ $0.name })
-            filters["topics"]   = topicsNameArray as? [String]
-            print(topicsNameArray)
+            
+            var topics: [String] = []
+            for item in topicsNameArray! {
+                topics.append(item!)
+            }
+            
+            filters["topics"]   = topics
+            print(topics)
         }
         if types != nil {
             let typesNameArray = types?.map({ $0.name })

@@ -12,11 +12,15 @@ import SVProgressHUD
 class TagPostsViewController: FeedViewController {
     
     var selectedTopic: Topic?
+    var topics: [Topic] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setBackButton()
         title = selectedTopic?.name
+        
+        topics.append(self.selectedTopic!)
     }
     
     override func didReceiveMemoryWarning() {
@@ -31,7 +35,7 @@ class TagPostsViewController: FeedViewController {
             SVProgressHUD.showWithStatus("Loading")
         }
         
-        networkController.filterMyFeedsPost(kPageQuantity, page: 0, completionHandler: { (posts, error) -> () in
+        networkController.filterPost(topics, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: 0, podId: nil, filterByUserInterests: false, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.isDataLoaded = true
                 self.allPosts = posts
@@ -69,7 +73,7 @@ class TagPostsViewController: FeedViewController {
     
     override func loadNextPosts() {
         page = page + 1
-        networkController.filterMyFeedsPost(kPageQuantity, page: page, completionHandler: { (posts, error) -> () in
+        networkController.filterPost(topics, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, podId: nil, filterByUserInterests: false, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 self.allPosts.appendContentsOf(posts)
                 self.postsTableView.reloadData()

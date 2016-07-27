@@ -46,7 +46,6 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         self.postsTableView.reloadData()
         self.postsTableView.estimatedRowHeight = 470
         
-        
         if networkController.currentUserId == nil {
             let alert = UIAlertController(title: "Warning", message: "You need to logout and login again, sorry this is for this time because we are in development", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
@@ -197,6 +196,11 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     // MARK: PostTableViewCell Delegate.
     func downloadedPostImage(indexPath: NSIndexPath?) {
         postsTableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.None)
+    }
+    
+    func tapUserInfo(userInfo: User?) {
+        let userView = OtherProfileViewController(userInfo: userInfo)
+        navigationController?.pushViewController(userView, animated: true)
     }
     
     func tapURL(url: String?) {

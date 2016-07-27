@@ -420,7 +420,6 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     @IBAction func removeImageFromCommentButtonTouchUpInside(sender: AnyObject) {
-        
         chosenImage = nil
         chosenImageView.image = nil
         chosenImageContainer.hidden = true
