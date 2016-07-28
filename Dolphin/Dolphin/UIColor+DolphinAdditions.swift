@@ -21,6 +21,11 @@ extension UIColor {
     class func yellowHighlightedMenuItem() -> UIColor {
         return UIColor(red: 252.0/255.0, green: 226.0/255.0, blue: 52.0/255.0, alpha: 1.0)
     }
+
+    class func redDolphin() -> UIColor {
+        return UIColor(red: 200.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+    }
+
     
     class func greenDolphinDealHeader() -> UIColor {
         return UIColor(red: 36.0/255.0, green: 180.0/255.0, blue: 21.0/255.0, alpha: 1.0)

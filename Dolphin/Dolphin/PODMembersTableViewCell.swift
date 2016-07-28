@@ -14,10 +14,10 @@ import UIKit
 
 class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    @IBOutlet weak var imageViewAdd: UIImageView!
     @IBOutlet weak var collectionViewMembers: UICollectionView!
     var members: [User] = []
     var delegate: PODMembersTableViewCellDelegate?
+    let cols = 5
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,20 +35,10 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         collectionViewMembers.delegate = self
         collectionViewMembers.dataSource = self
         collectionViewMembers.backgroundColor = UIColor.lightGrayBackground()
-        var scalingTransform : CGAffineTransform!
-        scalingTransform = CGAffineTransformMakeScale(-1, 1);
-        collectionViewMembers.transform = scalingTransform
-        imageViewAdd.backgroundColor = UIColor.whiteColor()
-        imageViewAdd.layer.cornerRadius = imageViewAdd.frame.size.width / 2
-        imageViewAdd.userInteractionEnabled = true
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action:Selector("didTapAdd"))
-        imageViewAdd.addGestureRecognizer(tapGesture)
         
         registerCells()
         members = pod.users!
         collectionViewMembers.reloadData()
-        
     }
     
     func didTapAdd() {
@@ -67,8 +57,8 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if (members.count > 4) {
-            return 4;
+        if (members.count > cols) {
+            return cols;
         }
         else {
             return members.count;
@@ -80,15 +70,12 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         if cell == nil {
             cell = UserImagePODMemberCollectionViewCell()
         }
-        if (members.count > 4 && indexPath.row == 0) {
-            cell?.configureAsMoreUsers(members.count - 3)
+        if (members.count > cols && indexPath.row == cols - 1) {
+            cell?.configureAsMoreUsers(members.count - cols + 1)
         }
         else {
             cell?.configureAsUser(members[members.count - 1 - indexPath.row].userAvatarImageURL!)
         }
-        var scalingTransform : CGAffineTransform!
-        scalingTransform = CGAffineTransformMakeScale(-1, 1);
-        cell?.transform = scalingTransform
         
         return cell!
     }
@@ -101,8 +88,11 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: 54, height: 54)
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    {
+        let offset = 2;
+        let width = (collectionView.frame.width - CGFloat(offset * (cols - 1))) / CGFloat(cols)
+        return CGSize(width: width, height: width)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {

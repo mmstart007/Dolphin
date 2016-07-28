@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="c7A-fl-GXj">
-                        <rect key="frame" x="98" y="8" width="191" height="93"/>
+                        <rect key="frame" x="31" y="8" width="258" height="93"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="93" id="hDM-hM-j2w"/>
                         </constraints>
@@ -27,51 +27,19 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                     </collectionView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQw-7L-fuO">
-                        <rect key="frame" x="21" y="78" width="64" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="Lcv-rN-EjZ"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlusIconSmall" translatesAutoresizingMaskIntoConstraints="NO" id="A9v-Bn-zmu">
-                        <rect key="frame" x="26" y="21" width="54" height="54"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="54" id="8cm-tZ-DYB"/>
-                            <constraint firstAttribute="width" constant="54" id="yGB-ll-hfn"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="WQw-7L-fuO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="13" id="0tm-yL-08M"/>
                     <constraint firstItem="c7A-fl-GXj" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="2F5-EY-Njf"/>
-                    <constraint firstItem="WQw-7L-fuO" firstAttribute="top" secondItem="A9v-Bn-zmu" secondAttribute="bottom" constant="3" id="8w7-ZU-mSa"/>
                     <constraint firstItem="c7A-fl-GXj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="OJa-au-sbm"/>
-                    <constraint firstItem="A9v-Bn-zmu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="13" id="UKP-Ce-mag"/>
-                    <constraint firstItem="c7A-fl-GXj" firstAttribute="leading" secondItem="WQw-7L-fuO" secondAttribute="trailing" constant="13" id="XKs-Uc-Skv"/>
                     <constraint firstItem="c7A-fl-GXj" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-23" id="gQw-X3-Obr"/>
-                    <constraint firstItem="A9v-Bn-zmu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="18" id="iaR-5l-cUE"/>
-                    <constraint firstItem="A9v-Bn-zmu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="mu5-rf-1st"/>
-                    <constraint firstItem="WQw-7L-fuO" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" constant="-2" id="pAc-e2-TTW"/>
-                    <constraint firstItem="c7A-fl-GXj" firstAttribute="leading" secondItem="A9v-Bn-zmu" secondAttribute="trailing" constant="18" id="s75-L9-CaE"/>
+                    <constraint firstItem="c7A-fl-GXj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="23" id="ty9-y9-x9X"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="mu5-rf-1st"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="collectionViewMembers" destination="c7A-fl-GXj" id="7cX-8O-xQL"/>
-                <outlet property="imageViewAdd" destination="A9v-Bn-zmu" id="Hcd-cF-GHj"/>
             </connections>
             <point key="canvasLocation" x="562" y="295"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="PlusIconSmall" width="20" height="20"/>
-    </resources>
 </document>

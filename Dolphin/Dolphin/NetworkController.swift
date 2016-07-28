@@ -712,9 +712,10 @@ class NetworkController: NSObject {
         }
     }
     
-    func updatePod(pod: POD, completionHandler: (POD?, AnyObject?) -> ()) -> () {
+    func updatePod(jsonParamter: NSDictionary, completionHandler: (POD?, AnyObject?) -> ()) -> () {
         var savedPOD: POD?
-        let parameters : [String : AnyObject]? = ["pod": pod.toJson()]
+        let parameters : [String : AnyObject]? = ["pod": jsonParamter]
+        print(parameters)
         performRequest(MethodType.PATCH, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 if let podJson = result!["pod"] as? [String: AnyObject] {

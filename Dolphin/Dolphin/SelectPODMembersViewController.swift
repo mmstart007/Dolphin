@@ -13,7 +13,7 @@ protocol SelectPODMembersDelegate {
     func membersDidSelected(members: [User])
 }
 
-class SelectPODMembersViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class SelectPODMembersViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, PODMemberToAddTableViewCellDelegate {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -61,7 +61,8 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         if cell == nil {
             cell = PODMemberToAddTableViewCell()
         }
-        cell!.configureWithUser(searchResults[indexPath.row], isAdded: false)
+        cell!.configureWithUser(searchResults[indexPath.row], isAdded: false, index: indexPath.row)
+        cell!.delegate = self
         cell?.selectionStyle = .None
         return cell!
     }
@@ -72,9 +73,9 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     
     // MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        selectedMembers.append(searchResults[indexPath.row])
-        searchResults.removeAtIndex(indexPath.row)
+    func addMember(user: User?, index: Int) {
+        selectedMembers.append(searchResults[index])
+        searchResults.removeAtIndex(index)
         
         self.tableView.reloadData()
     }

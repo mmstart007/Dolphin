@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, PODMembersTableViewCellDelegate, SelectPODMembersDelegate {
+class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, PODMembersTableViewCellDelegate {
 
     @IBOutlet weak var tableViewPosts: UITableView!
     @IBOutlet weak var actionMenuBackground: UIView!
@@ -111,11 +111,21 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         if section == 0 {
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 25))
             headerView.backgroundColor = UIColor.skyBlueDolphinMembersHeader()
-            let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width: self.view.frame.size.width, height: 25))
+            let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width: 50, height: 25))
             headerLabel.text = "Members"
             headerLabel.textColor = UIColor.grayColor()
             headerLabel.font = headerLabel.font.fontWithSize(11)
             headerView.addSubview(headerLabel)
+            
+            print("pod?.owner?.id = " + "\(pod?.owner?.id)")
+            print("networkController.currentUser?.id = " + "\(networkController.currentUserId)")
+            
+            if pod?.owner?.id == networkController.currentUserId {
+                let editButton = UIButton(frame: CGRect(x: headerView.frame.width - 35, y: 0, width: 25, height: 25))
+                editButton.setImage(UIImage(named: "edit_icon"), forState: .Normal)
+                editButton.addTarget(self, action: "didTapEditMember", forControlEvents: .TouchUpInside)
+                headerView.addSubview(editButton)
+            }
             return headerView
         } else {
             return UIView()
@@ -174,12 +184,6 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
     
-    func tapAddMember() {
-        let selectMembersVC = SelectPODMembersViewController()
-        selectMembersVC.delegate = self
-        selectMembersVC.selectedMembers = pod!.users!
-        navigationController?.pushViewController(selectMembersVC, animated: true)
-    }
     
     // MARK: - Plus button Actions
     
@@ -386,14 +390,12 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             })
         }
     }
+
     
-    // MARK: - SelectPODMembersDelegate
-    
-    func membersDidSelected(members: [User]) {
-        pod?.users = members
-        networkController.updatePod(pod!) { (updatedPod, error) in
-            
-        }
-        tableViewPosts.reloadData()
+    //Edit Members.
+    func didTapEditMember() {
+        let nextView = EditPodMemberViewController()
+        nextView.pod = self.pod
+        navigationController?.pushViewController(nextView, animated: true)
     }
 }

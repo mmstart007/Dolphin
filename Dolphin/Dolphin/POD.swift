@@ -73,6 +73,10 @@ class POD : NSObject {
     
     func toJson() -> [String: AnyObject] {
         var retDic = [String: AnyObject]()
+        if let podId = self.id {
+            retDic["id"] = podId
+        }
+        
         if let nm = self.name {
             retDic["name"] = nm
         }

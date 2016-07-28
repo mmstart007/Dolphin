@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -15,52 +14,50 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3P-6R-qGN">
-                        <rect key="frame" x="56" y="19" width="283" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EO9-U4-aRz">
+                        <rect key="frame" x="8" y="10" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="9zc-hk-iSN"/>
+                            <constraint firstAttribute="width" constant="40" id="4dC-7O-1d9"/>
+                            <constraint firstAttribute="height" constant="40" id="9cT-7C-Wit"/>
                         </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3P-6R-qGN">
+                        <rect key="frame" x="56" y="0.0" width="243" height="59"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EO9-U4-aRz">
-                        <rect key="frame" x="8" y="10" width="40" height="40"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QkQ-PX-AYa">
+                        <rect key="frame" x="307" y="15" width="60" height="30"/>
+                        <color key="backgroundColor" red="0.84814116379310334" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="EO9-U4-aRz" secondAttribute="height" multiplier="1:1" id="JxU-QR-sCQ"/>
-                            <constraint firstAttribute="width" constant="40" id="tNf-9p-Lgy"/>
+                            <constraint firstAttribute="width" constant="60" id="Vua-zf-bL0"/>
+                            <constraint firstAttribute="height" constant="30" id="mUC-Jw-DNd"/>
                         </constraints>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CloseOverlayIcon" translatesAutoresizingMaskIntoConstraints="NO" id="qv1-Pw-y6Y">
-                        <rect key="frame" x="347" y="20" width="20" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="20" id="M2A-X4-6ZA"/>
-                            <constraint firstAttribute="width" secondItem="qv1-Pw-y6Y" secondAttribute="height" multiplier="1:1" id="d4J-qh-Zi0"/>
-                        </constraints>
-                    </imageView>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <state key="normal" title="Delete"/>
+                        <connections>
+                            <action selector="didTapAction" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bcw-l3-Pip"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="EO9-U4-aRz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="2Fy-46-3X2"/>
-                    <constraint firstItem="EO9-U4-aRz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="7Bz-9c-DJH"/>
-                    <constraint firstItem="qv1-Pw-y6Y" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="D0R-QC-aUd"/>
-                    <constraint firstItem="qv1-Pw-y6Y" firstAttribute="leading" secondItem="Q3P-6R-qGN" secondAttribute="trailing" constant="8" id="F0h-yR-Ivw"/>
-                    <constraint firstItem="Q3P-6R-qGN" firstAttribute="leading" secondItem="EO9-U4-aRz" secondAttribute="trailing" constant="8" id="Jdu-lR-JJS"/>
-                    <constraint firstItem="Q3P-6R-qGN" firstAttribute="leading" secondItem="EO9-U4-aRz" secondAttribute="trailing" constant="8" id="SCx-hV-kVI"/>
-                    <constraint firstItem="Q3P-6R-qGN" firstAttribute="centerY" secondItem="EO9-U4-aRz" secondAttribute="centerY" id="Z13-oa-HHw"/>
-                    <constraint firstItem="qv1-Pw-y6Y" firstAttribute="leading" secondItem="Q3P-6R-qGN" secondAttribute="trailing" constant="8" id="dVo-SZ-RVY"/>
-                    <constraint firstItem="qv1-Pw-y6Y" firstAttribute="centerY" secondItem="Q3P-6R-qGN" secondAttribute="centerY" id="la1-PW-pSc"/>
-                    <constraint firstItem="qv1-Pw-y6Y" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="vGM-bt-96v"/>
+                    <constraint firstItem="EO9-U4-aRz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="0RZ-SV-dip"/>
+                    <constraint firstAttribute="bottom" secondItem="Q3P-6R-qGN" secondAttribute="bottom" id="6ev-T9-qi2"/>
+                    <constraint firstItem="QkQ-PX-AYa" firstAttribute="leading" secondItem="Q3P-6R-qGN" secondAttribute="trailing" constant="8" id="8eA-Fs-faE"/>
+                    <constraint firstItem="QkQ-PX-AYa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="FC3-r8-4sT"/>
+                    <constraint firstItem="Q3P-6R-qGN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="cLz-FC-ELt"/>
+                    <constraint firstAttribute="trailing" secondItem="QkQ-PX-AYa" secondAttribute="trailing" constant="8" id="f8G-X1-Uvf"/>
+                    <constraint firstItem="EO9-U4-aRz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hlM-iD-IF2"/>
+                    <constraint firstItem="Q3P-6R-qGN" firstAttribute="leading" secondItem="EO9-U4-aRz" secondAttribute="trailing" constant="8" id="pwp-4n-gJz"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="actionImageView" destination="qv1-Pw-y6Y" id="LJy-XV-UhV"/>
+                <outlet property="actionButton" destination="QkQ-PX-AYa" id="fJP-HN-svs"/>
                 <outlet property="userImageView" destination="EO9-U4-aRz" id="xfI-QV-wLd"/>
                 <outlet property="userNameLabel" destination="Q3P-6R-qGN" id="hSm-jX-ghs"/>
             </connections>
             <point key="canvasLocation" x="504.5" y="280"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="CloseOverlayIcon" width="24" height="24"/>
-    </resources>
 </document>

@@ -139,7 +139,6 @@
 		36D0C69C1C08AC5F0002AE35 /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36D0C69B1C08AC5F0002AE35 /* PostTableViewCell.xib */; };
 		36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0C69D1C08CFDE0002AE35 /* PostTableViewCell.swift */; };
 		36D0C6A11C08D0990002AE35 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0C6A01C08D0990002AE35 /* Post.swift */; };
-		36D0C6A41C08D0E40002AE35 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0C6A31C08D0E40002AE35 /* User.swift */; };
 		36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */; };
 		36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36D0C6A71C08E3790002AE35 /* FeedViewController.xib */; };
 		36D129081C2C39E6002E3F47 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D129071C2C39E6002E3F47 /* InviteFriendsViewController.swift */; };
@@ -165,12 +164,17 @@
 		AA0592D91D01E522001D7823 /* LeftAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */; };
 		AA7AEF7D1D0A5D4800AA36B5 /* TagPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */; };
 		AA9552BA1D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */; };
-		AAD155C41D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */; };
-		AAD155C51D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */; };
-		AAD155C61D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */; };
-		AAD155C71D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */; };
-		AAD155C81D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */; };
-		AAD155C91D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */; };
+		AAB7E8F31D4A7ED000B19397 /* EditPodMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F11D4A7ED000B19397 /* EditPodMemberViewController.swift */; };
+		AAB7E8F41D4A7ED000B19397 /* EditPodMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F21D4A7ED000B19397 /* EditPodMemberViewController.xib */; };
+		AAB7E8F71D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */; };
+		AAB7E8F81D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */; };
+		AAB7E8F91D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */; };
+		AAB7E8FA1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */; };
+		AAB7E8FB1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */; };
+		AAB7E8FC1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */; };
+		AAB7E8FE1D4A891600B19397 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8FD1D4A891600B19397 /* User.swift */; };
+		AAB7E8FF1D4A891600B19397 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8FD1D4A891600B19397 /* User.swift */; };
+		AAB7E9001D4A891600B19397 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8FD1D4A891600B19397 /* User.swift */; };
 		F8483E6B1CFE6FB90060CC8C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6A1CFE6FB90060CC8C /* Globals.swift */; };
 		F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6C1CFE7BFA0060CC8C /* MyFeedViewController.swift */; };
 		F8483E711CFE7BFA0060CC8C /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */; };
@@ -345,7 +349,6 @@
 		36D0C69B1C08AC5F0002AE35 /* PostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
 		36D0C69D1C08CFDE0002AE35 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		36D0C6A01C08D0990002AE35 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
-		36D0C6A31C08D0E40002AE35 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		36D0C6A51C08E35F0002AE35 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		36D0C6A71C08E3790002AE35 /* FeedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 		36D129071C2C39E6002E3F47 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
@@ -371,8 +374,11 @@
 		AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
 		AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPostsViewController.swift; sourceTree = "<group>"; };
 		AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostAddDescriptionViewController.xib; sourceTree = "<group>"; };
-		AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODMemberToAddTableViewCell.swift; sourceTree = "<group>"; };
-		AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODMemberToAddTableViewCell.xib; sourceTree = "<group>"; };
+		AAB7E8F11D4A7ED000B19397 /* EditPodMemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPodMemberViewController.swift; sourceTree = "<group>"; };
+		AAB7E8F21D4A7ED000B19397 /* EditPodMemberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditPodMemberViewController.xib; sourceTree = "<group>"; };
+		AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODMemberToAddTableViewCell.swift; sourceTree = "<group>"; };
+		AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODMemberToAddTableViewCell.xib; sourceTree = "<group>"; };
+		AAB7E8FD1D4A891600B19397 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AD9E99804B93529D712BC626 /* Pods-Dolphin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.debug.xcconfig"; sourceTree = "<group>"; };
 		DCFBF776029220B30C3A087B /* Pods-Dolphin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.release.xcconfig"; sourceTree = "<group>"; };
 		F8483E6A1CFE6FB90060CC8C /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
@@ -520,6 +526,8 @@
 				3689ECE31C0E58EF0087F828 /* PODsListViewController.xib */,
 				365DBDDA1CACC0B600D20C02 /* SelectPODMembersViewController.swift */,
 				365DBDDC1CACC0F600D20C02 /* SelectPODMembersViewController.xib */,
+				AAB7E8F11D4A7ED000B19397 /* EditPodMemberViewController.swift */,
+				AAB7E8F21D4A7ED000B19397 /* EditPodMemberViewController.xib */,
 			);
 			name = PODs;
 			sourceTree = "<group>";
@@ -588,8 +596,8 @@
 		365DBDDE1CACC49600D20C02 /* Create POD */ = {
 			isa = PBXGroup;
 			children = (
-				AAD155C21D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift */,
-				AAD155C31D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib */,
+				AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */,
+				AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */,
 			);
 			name = "Create POD";
 			sourceTree = "<group>";
@@ -878,10 +886,10 @@
 			children = (
 				369382B21C31B1EC0005FCB0 /* Invite Friends */,
 				36D0C6A01C08D0990002AE35 /* Post.swift */,
-				36D0C6A31C08D0E40002AE35 /* User.swift */,
 				361FFE271C0D0C46007EE366 /* PostComment.swift */,
 				3689ECE51C0E62E40087F828 /* POD.swift */,
 				3668B2F51C6A761300469FF9 /* Deal.swift */,
+				AAB7E8FD1D4A891600B19397 /* User.swift */,
 				360920791C9780D4003F5CB8 /* Image.swift */,
 				3609207B1C9784B0003F5CB8 /* PostType.swift */,
 				3609207D1C978575003F5CB8 /* Topic.swift */,
@@ -1069,8 +1077,8 @@
 				364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */,
 				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
 				368798851C2B2BA70088AC24 /* Raleway-Bold.ttf in Resources */,
-				AAD155C71D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */,
 				361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */,
+				AAB7E8FA1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */,
 				3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */,
 				36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */,
 				36BE4D0E1C062688002E52D9 /* SidebarViewController.xib in Resources */,
@@ -1087,6 +1095,7 @@
 				36E411711C8E3DE9002DC736 /* SettingsViewController.xib in Resources */,
 				AA9552BA1D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib in Resources */,
 				36D0C6981C07A0F50002AE35 /* NewPostMenu.xib in Resources */,
+				AAB7E8F41D4A7ED000B19397 /* EditPodMemberViewController.xib in Resources */,
 				361F50901C693ABA00153B6C /* NewPostPrivacySettingsShareToPODCell.xib in Resources */,
 				36B1F4201C0FA97D0091A1B3 /* PODCollectionViewCell.xib in Resources */,
 				3636F9661C1EF79C00999200 /* MyPODPreviewCollectionViewCell.xib in Resources */,
@@ -1102,7 +1111,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAD155C81D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */,
+				AAB7E8FB1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,7 +1119,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAD155C91D3FC9BD00381134 /* PODMemberToAddTableViewCell.xib in Resources */,
+				AAB7E8FC1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1210,6 +1219,7 @@
 				3615B7011C19CADF006BB8B4 /* CreatePostChooseImageCollectionViewCell.swift in Sources */,
 				362D4BDC1C1F334800F065E5 /* CreateImagePostViewController.swift in Sources */,
 				3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */,
+				AAB7E8FE1D4A891600B19397 /* User.swift in Sources */,
 				36BE4D0C1C062668002E52D9 /* SidebarViewController.swift in Sources */,
 				36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
@@ -1241,7 +1251,6 @@
 				36B1F41A1C0FA7780091A1B3 /* PopularPODsTableViewCell.swift in Sources */,
 				3609207E1C978575003F5CB8 /* Topic.swift in Sources */,
 				36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */,
-				36D0C6A41C08D0E40002AE35 /* User.swift in Sources */,
 				369382B71C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift in Sources */,
 				3689ECE61C0E62E40087F828 /* POD.swift in Sources */,
 				361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */,
@@ -1267,15 +1276,16 @@
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				36DCCD731C73AC3A00D4B171 /* PODMembersTableViewCell.swift in Sources */,
-				AAD155C41D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */,
 				365D76C91C7540AA00A0833F /* DealDetailsViewController.swift in Sources */,
 				3668B2F61C6A761400469FF9 /* Deal.swift in Sources */,
+				AAB7E8F31D4A7ED000B19397 /* EditPodMemberViewController.swift in Sources */,
 				3650E0B61C6D1AFA00BB9301 /* CreatePodViewController.swift in Sources */,
 				36C5DAA01C35A05300DFF60F /* InstagramFriend.swift in Sources */,
 				36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */,
 				36D841171C32C62500C3065C /* AddressBookContact.swift in Sources */,
 				361FC0831CA1FCED00388FD0 /* SubjectOrGradeTableViewCell.swift in Sources */,
 				3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */,
+				AAB7E8F71D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36E411701C8E3DE9002DC736 /* SettingsViewController.swift in Sources */,
 				364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */,
 				369382B41C31B1FF0005FCB0 /* FacebookFriend.swift in Sources */,
@@ -1288,8 +1298,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAD155C51D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */,
+				AAB7E8F81D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36BE4CE11C061524002E52D9 /* DolphinTests.swift in Sources */,
+				AAB7E8FF1D4A891600B19397 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1297,8 +1308,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAD155C61D3FC9BD00381134 /* PODMemberToAddTableViewCell.swift in Sources */,
+				AAB7E8F91D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36BE4CEC1C061524002E52D9 /* DolphinUITests.swift in Sources */,
+				AAB7E9001D4A891600B19397 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
