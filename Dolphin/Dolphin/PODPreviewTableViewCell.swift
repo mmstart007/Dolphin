@@ -100,7 +100,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
             userView.removeFromSuperview()
         }
         if pod.isPrivate != nil && pod.isPrivate! == 0 {
-            for (var i = 0; (i < pod.users?.count && i < 5); i=i+1) {
+            for var i = 0; (i < pod.users?.count && i < 5); i=i+1 {
                 if i == 0 && pod.users?.count > 5 {
                     // Add Label that shows number of remaining users in POD
                     let x: CGFloat = podUsersContainerView.frame.size.width - podUsersContainerView.frame.size.width / 6 - (CGFloat(i) * (podUsersContainerView.frame.size.width / 6 + podUsersContainerView.frame.size.width / 24))

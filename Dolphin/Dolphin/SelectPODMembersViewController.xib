@@ -44,7 +44,7 @@
                 <constraint firstAttribute="bottom" secondItem="8o4-Xh-VrX" secondAttribute="bottom" id="o5H-Xx-LG2"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="588.5" y="328.5"/>
+            <point key="canvasLocation" x="353.5" y="329.5"/>
         </view>
     </objects>
 </document>

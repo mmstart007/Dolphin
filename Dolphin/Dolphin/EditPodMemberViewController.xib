@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PlR-bK-YIr">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PlR-bK-YIr">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -26,6 +26,12 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="PlR-bK-YIr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Hb7-e6-xTU"/>
+                <constraint firstAttribute="trailing" secondItem="PlR-bK-YIr" secondAttribute="trailing" id="Kpq-xs-0WA"/>
+                <constraint firstAttribute="bottom" secondItem="PlR-bK-YIr" secondAttribute="bottom" id="T76-Bj-wig"/>
+                <constraint firstItem="PlR-bK-YIr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="oEt-RY-uLT"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="445.5" y="325.5"/>
         </view>

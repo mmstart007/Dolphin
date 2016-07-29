@@ -117,9 +117,6 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             headerLabel.font = headerLabel.font.fontWithSize(11)
             headerView.addSubview(headerLabel)
             
-            print("pod?.owner?.id = " + "\(pod?.owner?.id)")
-            print("networkController.currentUser?.id = " + "\(networkController.currentUserId)")
-            
             if pod?.owner?.id == networkController.currentUserId {
                 let editButton = UIButton(frame: CGRect(x: headerView.frame.width - 35, y: 0, width: 25, height: 25))
                 editButton.setImage(UIImage(named: "edit_icon"), forState: .Normal)

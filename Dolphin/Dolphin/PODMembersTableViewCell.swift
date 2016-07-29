@@ -15,6 +15,8 @@ import UIKit
 class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionViewMembers: UICollectionView!
+    @IBOutlet weak var emptyLable: UILabel!
+    
     var members: [User] = []
     var delegate: PODMembersTableViewCellDelegate?
     let cols = 5
@@ -38,6 +40,11 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         
         registerCells()
         members = pod.users!
+        
+        emptyLable.hidden = true
+        if members.count == 0 {
+            emptyLable.hidden = false
+        }
         collectionViewMembers.reloadData()
     }
     

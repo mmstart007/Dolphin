@@ -55,7 +55,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
-        allPODstableView.estimatedRowHeight = 230
+        allPODstableView.estimatedRowHeight = 206
         allPODstableView.addPullToRefreshWithActionHandler { () -> Void in
             self.loadData(true)
         }
