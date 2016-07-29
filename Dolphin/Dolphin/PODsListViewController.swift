@@ -55,6 +55,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
         
+        allPODstableView.estimatedRowHeight = 230
         allPODstableView.addPullToRefreshWithActionHandler { () -> Void in
             self.loadData(true)
         }
@@ -101,7 +102,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 }
                 
                 if (!self.myPods.contains(pod)) {
-                    self.myPods.append(pod)
+                    self.myPods.insert(pod, atIndex: 0)
                 }
                 
                 self.allPODstableView.reloadData()
@@ -152,7 +153,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 230
+        return UITableViewAutomaticDimension
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -233,8 +234,35 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: (self.view.frame.size.width / 2) - 15, height: self.view.frame.size.width / 2.5)
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    {
+        let cellSize = CGSize(width: (self.view.frame.size.width / 2) - 15, height: self.view.frame.size.width / 2.5)
+        return cellSize
+//        if (searchText == nil || searchText == "") && indexPath.row == 0 {
+//            return cellSize
+//        } else if (searchText == nil || searchText == ""){
+//            let selectedPOD = allPods[indexPath.row - 1]
+//            return self.getCellSize(selectedPOD)
+//        } else {
+//            let selectedPOD = filteredPODs[indexPath.row]
+//            return self.getCellSize(selectedPOD)
+//        }
+    }
+    
+    func getCellSize(pod: POD) -> CGSize {
+        let cellSize = CGSize(width: (self.view.frame.size.width / 2) - 15, height: self.view.frame.size.width / 2.5)
+        
+        let image_width = CGFloat(pod.image_width!)
+        let image_height = CGFloat(pod.image_height!)
+        
+        if image_width == 0 || image_height == 0 {
+            return cellSize
+        } else {
+            let real_width = cellSize.width
+            let real_height = real_width * image_height / image_width
+            
+            return CGSizeMake(real_width, real_height)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -274,18 +302,38 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     // MARK: - Auxiliary methods
     
     func checkPrivatePODs(goToViewController: UIViewController, pod: POD?) {
-        if pod != nil && pod!.isPrivate == 1 && pod?.owner != networkController.currentUser && (pod!.users != nil && !pod!.users!.contains(networkController.currentUser!)) {
-            let alert = UIAlertController(title: "Access", message: "This is a PRIVATE POD, do you want to request access to it?", preferredStyle: UIAlertControllerStyle.Alert)
+        if pod != nil {
+            var isMember = false
+            for user in (pod?.users)! {
+                if user.id == networkController.currentUserId {
+                    isMember = true
+                    break
+                }
+            }
             
-            alert.addAction(UIAlertAction(title: "Request", style: UIAlertActionStyle.Default, handler: { action in
-                self.navigationController?.pushViewController(goToViewController, animated: true)
-            }))
-            alert.addAction(UIAlertAction(title: "Not now", style: UIAlertActionStyle.Cancel, handler: nil))
+            if pod!.isPrivate == 1 && pod?.owner?.id != networkController.currentUserId && !isMember {
+                let alert = UIAlertController(title: "Access", message: "This is a PRIVATE POD, do you want to request access to it?", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                alert.addAction(UIAlertAction(title: "Request", style: UIAlertActionStyle.Default, handler: { action in
+                    SVProgressHUD.show()
+                    self.networkController.joinPodMember(String(pod!.id!), completionHandler: { (error) in
+                        SVProgressHUD.dismiss()
+                        if error == nil {
+                            Utils.presentAlertMessage("Success", message: "Request Sent", cancelActionText: "Ok", presentingViewContoller: self)
+                        } else {
+                            Utils.presentAlertMessage("Error", message: "Error sending request", cancelActionText: "Ok", presentingViewContoller: self)
+                        }
+                    })
+                    
+                }))
+                alert.addAction(UIAlertAction(title: "Not now", style: UIAlertActionStyle.Cancel, handler: nil))
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                navigationController?.pushViewController(goToViewController, animated: true)
+            }
             
-            // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
-        } else {
-            navigationController?.pushViewController(goToViewController, animated: true)
         }
     }
     

@@ -49,6 +49,7 @@ class NetworkController: NSObject {
         case GetUserLikes       = "users/%@/likes"
         case GetUserLikePost    = "users/%@/likes/%@"
         case GetUserComments    = "users/%@/comments"
+
         case GetSubjects        = "subjects"
         case GetGrades          = "grades"
         case CreatePost         = "posts"
@@ -66,6 +67,7 @@ class NetworkController: NSObject {
         case FilterPOD          = "pods/filter"
         case PODById            = "pods/%@"
         case PodMember          = "pods/%@/users/%@"
+        case JoinInPod          = "pods/%@/users/join"
     }
     
     
@@ -796,7 +798,17 @@ class NetworkController: NSObject {
                 completionHandler(error)
             }
         }
-        
+    }
+    
+    func joinPodMember(podId: String, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [podId]
+        performRequest(MethodType.POST, authenticated: true, method: .JoinInPod, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
     }
 
     // MARK: - COMMENTS

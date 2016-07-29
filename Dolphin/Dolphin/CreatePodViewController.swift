@@ -121,8 +121,10 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     func ImageCropViewControllerSuccess(controller: UIViewController!, didFinishCroppingImage croppedImage: UIImage!) {
         imageSelected = croppedImage
         podImageView.image = croppedImage
-        podImageView.contentMode = .ScaleAspectFill
+//        podImageView.contentMode = .ScaleAspectFill
 
+        print("width = " + "\(imageSelected?.size.width)")
+        print("height = " + "\(imageSelected?.size.height)")
         navigationController?.popViewControllerAnimated(true)
     }
     
@@ -213,14 +215,16 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         var newWidth: CGFloat
         if podNameTextField.text != "" && podDescriptionTextView.text != "" {
             if imageSelected != nil {
-                if imageSelected!.size.width < 414 {
-                    newWidth = imageSelected!.size.width
-                } else {
-                    newWidth = 414
-                }
-                let resizedImage = Utils.resizeImage(imageSelected!, newWidth: newWidth)
+//                if imageSelected!.size.width < 414 {
+//                    newWidth = imageSelected!.size.width
+//                } else {
+//                    newWidth = 414
+//                }
+//                let resizedImage = Utils.resizeImage(imageSelected!, newWidth: newWidth)
+                
                 // crate the pod
-                let podToSave = POD(name: podNameTextField.text, description: podDescriptionTextView.text, imageURL: nil, isPrivate: (switchIsPrivate.on ? 1 : 0), owner: nil, users: selectedMembers, postsCount: nil, usersCount: nil, imageData: resizedImage)
+                let podToSave = POD(name: podNameTextField.text, description: podDescriptionTextView.text, imageURL: nil, isPrivate: (switchIsPrivate.on ? 1 : 0), owner: nil, users: selectedMembers, postsCount: nil, usersCount: nil, imageData: imageSelected, image_width: Int(imageSelected!.size.width), image_height: Int(imageSelected!.size.height))
+                
                 SVProgressHUD.showWithStatus("Creating POD")
                 networkController.createPOD(podToSave, completionHandler: { (pod, error) -> () in
                     if error == nil {

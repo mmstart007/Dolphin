@@ -21,9 +21,10 @@ class POD : NSObject {
     var postsCount: Int?
     var usersCount: Int?
     var lastPostDate: NSDate?
+    var image_width: Int?
+    var image_height: Int?
     
-    
-    convenience init(name: String?, description: String?, imageURL: String?, isPrivate: Int?, owner: User?, users: [User]?, postsCount: Int?, usersCount: Int?, imageData: UIImage?) {
+    convenience init(name: String?, description: String?, imageURL: String?, isPrivate: Int?, owner: User?, users: [User]?, postsCount: Int?, usersCount: Int?, imageData: UIImage?, image_width: Int?, image_height: Int?) {
         self.init()
         
         self.name            = name
@@ -35,6 +36,8 @@ class POD : NSObject {
         self.postsCount      = postsCount
         self.usersCount      = usersCount
         self.imageData       = imageData
+        self.image_width     = image_width
+        self.image_height    = image_height
     }
     
     func podColor() -> UIColor {
@@ -60,6 +63,8 @@ class POD : NSObject {
         self.descriptionText = podJsonObject!["description"] as? String
         self.imageURL        = podJsonObject!["image_url"] as? String
         self.isPrivate       = podJsonObject!["is_private"] as? Int
+        self.image_width     = podJsonObject!["image_width"] as? Int
+        self.image_height    = podJsonObject!["image_height"] as? Int
         
         if let lastPostsJson = podJsonObject!["last_post"] as? [AnyObject] {
             if lastPostsJson.count > 0 {
@@ -89,6 +94,13 @@ class POD : NSObject {
         if let priv = self.isPrivate {
             retDic["is_private"] = priv
         }
+        if let width = self.image_width {
+            retDic["image_width"] = width
+        }
+        if let height = self.image_height {
+            retDic["image_height"] = height
+        }
+        
         if let usrs = self.users {
             let usersIds: [Int]? = usrs.map({ (actual) -> Int in
                 actual.id!
