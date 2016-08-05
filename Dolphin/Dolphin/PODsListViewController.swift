@@ -217,7 +217,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     // MARK: UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        (self.parentViewController as? HomeViewController)?.hideSearchField()
         if (searchText == nil || searchText == "") && indexPath.row == 0 {
             let createPODVC = CreatePodViewController()
             navigationController?.pushViewController(createPODVC, animated: true)

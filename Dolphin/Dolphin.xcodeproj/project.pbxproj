@@ -700,10 +700,10 @@
 			children = (
 				361FFE1F1C0CFAB1007EE366 /* PostDetailHeaderTableViewCell.swift */,
 				361FFE211C0CFAD1007EE366 /* PostDetailHeaderTableViewCell.xib */,
-				361FFE231C0D0BA8007EE366 /* PostCommentOddTableViewCell.swift */,
 				361FFE251C0D0BBE007EE366 /* PostCommentOddTableViewCell.xib */,
 				361FFE291C0D1792007EE366 /* PostCommentEvenTableViewCell.swift */,
 				361FFE2B1C0D1803007EE366 /* PostCommentEvenTableViewCell.xib */,
+				361FFE231C0D0BA8007EE366 /* PostCommentOddTableViewCell.swift */,
 				36E998271C28C14A007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.swift */,
 				36E998291C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib */,
 				AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */,
@@ -1437,8 +1437,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Roque (UUV65RY822)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Roque (UUV65RY822)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1461,7 +1461,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ed5d48c3-ec03-471c-86ea-f7ec9b69eb20";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1474,8 +1474,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Roque (UUV65RY822)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Roque (UUV65RY822)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1498,7 +1498,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ed5d48c3-ec03-471c-86ea-f7ec9b69eb20";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
 			};
 			name = Release;

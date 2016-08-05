@@ -17,16 +17,21 @@ import FBSDKShareKit
 import MessageUI
 import SVProgressHUD
 
-class InviteFriendsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate, FriendToInviteTableViewCellDelegate, MFMessageComposeViewControllerDelegate {
+class InviteFriendsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate, FriendToInviteTableViewCellDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerView: UIView!
-    
+    var searchBar: UISearchBar?
+
     var segmentedControl: HMSegmentedControl!
-    var facebookFriends: [FacebookFriend]         = []
-    var twitterFriends: [TwitterFriend]           = []
-    var addressBookContacts: [AddressBookContact] = []
-    var instagramFriends: [InstagramFriend]       = []
+    var facebookFriends: [FacebookFriend]               = []
+    var searchFacebookFriends: [FacebookFriend]         = []
+    
+    var twitterFriends: [TwitterFriend]                 = []
+    var searchTwitterFriends: [TwitterFriend]           = []
+    
+    var addressBookContacts: [AddressBookContact]       = []
+    var searchAddressBookFriends: [AddressBookContact]  = []
     
     var signInLabel: UILabel!
     var loginFacebookTapGesture: UITapGestureRecognizer!
@@ -34,6 +39,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     var contactsTapGesture: UITapGestureRecognizer!
 //    var loginInstagramTapGesture: UITapGestureRecognizer!
     var addressBookRef: ABAddressBook?
+    
+    var isSearch: Bool = false
     
     convenience init() {
         self.init(nibName: "InviteFriendsViewController", bundle: nil)
@@ -54,6 +61,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         self.edgesForExtendedLayout = .None
         title = "Invite Friends"
         setBackButton()
+        setSearchRightButton()
         
         initializeSegmentedControl()
         initializeTableViewAndGestures()
@@ -289,6 +297,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         }
     }
     
+    /*
     func loginInstagramToGetFriends() {
         let token = currentInstagramAccessToken()
         if (token == nil) {
@@ -297,6 +306,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             getInstagramFriends(token!)
         }
     }
+    */
     
     // MARK: Populate Lists
     
@@ -378,7 +388,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         }
     }
     
-    
+    /*
     func currentInstagramAccessToken() -> String? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let instagram_token = defaults.objectForKey("instagram_token") as! String?
@@ -460,6 +470,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 print(error)
         })
     }
+    */
     
     // MARK: TableView DataSource
     
@@ -469,14 +480,29 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segmentedControl.selectedSegmentIndex == 0 {
-            return addressBookContacts.count
+            if isSearch {
+                return searchAddressBookFriends.count
+            } else {
+                return addressBookContacts.count
+            }
         } else if segmentedControl.selectedSegmentIndex == 1 {
-            return facebookFriends.count
+            if isSearch {
+                return searchFacebookFriends.count
+            } else {
+                return facebookFriends.count
+            }
+            
         } else if segmentedControl.selectedSegmentIndex == 2 {
-            return twitterFriends.count
+            if isSearch {
+                return searchTwitterFriends.count
+            } else {
+                return twitterFriends.count
+            }
         } else {
-            return instagramFriends.count
+//            return instagramFriends.count
         }
+        
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -485,13 +511,28 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             cell = FriendToInviteTableViewCell()
         }
         if segmentedControl.selectedSegmentIndex == 0 {
-            cell?.configureWithAddressBookContact(addressBookContacts[indexPath.row])
+            if self.isSearch {
+                cell?.configureWithAddressBookContact(searchAddressBookFriends[indexPath.row])
+            }
+            else {
+                cell?.configureWithAddressBookContact(addressBookContacts[indexPath.row])
+            }
         } else if segmentedControl.selectedSegmentIndex == 1 {
-            cell?.configureWithFacebookFriend(facebookFriends[indexPath.row])
+            if self.isSearch {
+                cell?.configureWithFacebookFriend(searchFacebookFriends[indexPath.row])
+            }
+            else {
+                cell?.configureWithFacebookFriend(facebookFriends[indexPath.row])
+            }
         } else if segmentedControl.selectedSegmentIndex == 2 {
-            cell?.configureWithTwitterFriend(twitterFriends[indexPath.row])
+            if self.isSearch {
+                cell?.configureWithTwitterFriend(searchTwitterFriends[indexPath.row])
+            }
+            else {
+                cell?.configureWithTwitterFriend(twitterFriends[indexPath.row])
+            }
         } else {
-            cell?.configureWithInstagramFriend(instagramFriends[indexPath.row])
+//            cell?.configureWithInstagramFriend(instagramFriends[indexPath.row])
         }
         
         cell?.delegate = self
@@ -605,5 +646,105 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     //Instagram.
     func inviteInstagramFriend(friend: InstagramFriend) {
         
+    }
+    
+    // MARK: Search
+    
+    func searchButtonPressed() {
+        isSearch = true
+        
+        if searchBar == nil {
+            searchBar                    = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 40))
+        }
+        removeAllItemsFromNavBar()
+        
+        navigationItem.titleView     = searchBar
+        searchBar?.tintColor = UIColor.whiteColor()
+        UITextField.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
+        searchBar?.becomeFirstResponder()
+        searchBar?.showsCancelButton = true
+        searchBar?.delegate          = self
+    }
+    
+    func removeAllItemsFromNavBar() {
+        navigationItem.rightBarButtonItems = []
+        navigationItem.titleView           = nil
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        filterContentForSearchText(searchText)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        isSearch = false
+        filterContentForSearchText("")
+        removeSearchBar()
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        isSearch = false
+        searchBar.resignFirstResponder()
+    }
+    
+    func removeSearchBar() {
+        removeAllItemsFromNavBar()
+        searchBar?.text = ""
+        title = "Invite "
+        searchBar?.resignFirstResponder()
+        setSearchRightButton()
+    }
+    
+    func filterContentForSearchText(searchText: String) {
+        
+        //Address book.
+        searchAddressBookFriends.removeAll()
+        
+        if searchText.characters.count == 0 {
+            searchAddressBookFriends.appendContentsOf(addressBookContacts)
+        } else {
+            searchAddressBookFriends = addressBookContacts.filter({( user : AddressBookContact) -> Bool in
+                let containInName = (user.userName?.lowercaseString.containsString(searchText.lowercaseString))!
+                return containInName
+            })
+        }
+        
+        //Facebook.
+        searchFacebookFriends.removeAll()
+        if searchText.characters.count == 0 {
+            searchFacebookFriends.appendContentsOf(facebookFriends)
+        }
+        else {
+            searchFacebookFriends = facebookFriends.filter({( user : FacebookFriend) -> Bool in
+                let containInName = (user.userName?.lowercaseString.containsString(searchText.lowercaseString))!
+                return containInName
+            })
+        }
+        
+        
+        //Twitter.
+        searchTwitterFriends.removeAll()
+        if searchText.characters.count == 0 {
+            searchTwitterFriends.appendContentsOf(twitterFriends)
+        }
+        else {
+            searchTwitterFriends = twitterFriends.filter({( user : TwitterFriend) -> Bool in
+                let containInName = (user.userName?.lowercaseString.containsString(searchText.lowercaseString))!
+                return containInName
+            })
+        }
+
+        self.tableView.reloadData()
+    }
+    
+    func hideSearchField() {
+        isSearch = false
+        self.searchBar?.resignFirstResponder()
+    }
+
+    func setSearchRightButton()  {
+        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "searchButtonPressed")
+        rightButton.tintColor             = UIColor.whiteColor()
+        navigationItem.rightBarButtonItem = rightButton;
     }
 }

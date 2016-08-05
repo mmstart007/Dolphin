@@ -178,6 +178,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     // MARK: Tableview delegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        (self.parentViewController as? HomeViewController)?.hideSearchField()
         let postDetailsVC = PostDetailsViewController()
         if myLikes {
             postDetailsVC.post = likedPosts[indexPath.row]

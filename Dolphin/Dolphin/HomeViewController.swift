@@ -202,6 +202,11 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         filterContentForSearchText("")
         removeSearchBar()
         selectedViewController?.performSelector("userDidCancelSearch", withObject: nil)
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     
     func removeSearchBar() {
@@ -214,6 +219,10 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     
     func filterContentForSearchText(searchText: String) {
         selectedViewController?.performSelector("filterResults:", withObject: searchText)
+    }
+    
+    func hideSearchField() {
+        self.searchBar?.resignFirstResponder()
     }
     
     // MARK: TabbarControllerDelegate

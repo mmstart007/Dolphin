@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SVProgressHUD
 
-class PopularViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class PopularViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PostTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     let networkController = NetworkController.sharedInstance
@@ -124,8 +124,8 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             } else {
                 (cell as? PostTableViewCell)!.configureWithPost(posts[indexPath.row], indexPath: indexPath)
             }
+            (cell as? PostTableViewCell)!.delegate = self
         }
-        
         cell?.selectionStyle = .None
         return cell!
     }
@@ -171,6 +171,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 2 {
+            (self.parentViewController as? HomeViewController)?.hideSearchField()
             let postDetailsVC = PostDetailsViewController()
             postDetailsVC.post = posts[indexPath.row]
             navigationController?.pushViewController(postDetailsVC, animated: true)
@@ -271,6 +272,66 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         }
     }
 
+    // MARK: PostTableViewCell Delegate.
+    func downloadedPostImage(indexPath: NSIndexPath?) {
+        tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.None)
+    }
+    
+    func tapUserInfo(userInfo: User?) {
+        let userView = OtherProfileViewController(userInfo: userInfo)
+        navigationController?.pushViewController(userView, animated: true)
+    }
+    
+    func tapURL(url: String?) {
+        let webVC = WebViewController()
+        webVC.siteLink = url
+        navigationController?.pushViewController(webVC, animated: true)
+    }
+    
+    func tapLike(post: Post?, cell: PostTableViewCell?) {
+        if !(post?.isLikedByUser)! {
+            SVProgressHUD.showWithStatus("Loading")
+            networkController.createLike("\(post!.postId!)", completionHandler: { (like, error) -> () in
+                if error == nil {
+                    if like?.id != nil {
+                        post?.isLikedByUser = true
+                        post?.postNumberOfLikes = (post?.postNumberOfLikes)! + 1
+                        cell?.configureWithPost(post!)
+                    }
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            })
+        } else {
+            
+            SVProgressHUD.showWithStatus("Loading")
+            networkController.deleteLike("\(post!.postId!)", completionHandler: { (error) -> () in
+                if error == nil {
+                    post?.postNumberOfLikes = (post?.postNumberOfLikes)! - 1
+                    post?.isLikedByUser = false
+                    cell?.configureWithPost(post!)
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            })
+        }
+    }
+
+    
     // MARK: Search Posts
     
     func filterResults(textToSearch: String) {
