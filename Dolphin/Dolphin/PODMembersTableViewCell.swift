@@ -81,7 +81,7 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
             cell?.configureAsMoreUsers(members.count - cols + 1)
         }
         else {
-            cell?.configureAsUser(members[members.count - 1 - indexPath.row].userAvatarImageURL!)
+            cell?.configureAsUser(members[indexPath.row].userAvatarImageURL!)
         }
         
         return cell!

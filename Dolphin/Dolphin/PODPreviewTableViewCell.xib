@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -44,7 +45,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plW-oq-N1n">
                             <rect key="frame" x="155" y="158" width="210" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="4sH-qU-bUB"/>
+                                <constraint firstAttribute="width" secondItem="plW-oq-N1n" secondAttribute="height" multiplier="6:1" id="z8q-gF-TZf"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -55,13 +56,13 @@
                         <constraint firstItem="QPS-oy-4BV" firstAttribute="leading" secondItem="5TA-ya-ZMf" secondAttribute="leading" constant="8" id="2rT-Jb-hAU"/>
                         <constraint firstAttribute="bottom" secondItem="plW-oq-N1n" secondAttribute="bottom" constant="4" id="UfM-wU-7Ne"/>
                         <constraint firstAttribute="trailing" secondItem="uJf-hC-DQj" secondAttribute="trailing" id="V10-VN-mB1"/>
-                        <constraint firstAttribute="bottom" secondItem="FwN-DZ-ZhN" secondAttribute="bottom" constant="12" id="Xn2-q2-XrD"/>
                         <constraint firstItem="plW-oq-N1n" firstAttribute="leading" secondItem="FwN-DZ-ZhN" secondAttribute="trailing" constant="6" id="Zvh-VR-thy"/>
                         <constraint firstItem="uJf-hC-DQj" firstAttribute="top" secondItem="5TA-ya-ZMf" secondAttribute="top" id="b3A-8r-Nj1"/>
                         <constraint firstItem="uJf-hC-DQj" firstAttribute="leading" secondItem="5TA-ya-ZMf" secondAttribute="leading" id="dBX-h0-FDe"/>
                         <constraint firstItem="QPS-oy-4BV" firstAttribute="top" secondItem="uJf-hC-DQj" secondAttribute="bottom" constant="8" id="dt5-UU-xFz"/>
                         <constraint firstAttribute="trailing" secondItem="QPS-oy-4BV" secondAttribute="trailing" constant="8" id="gOe-av-h6Z"/>
                         <constraint firstAttribute="trailing" secondItem="plW-oq-N1n" secondAttribute="trailing" id="l9J-2J-LNM"/>
+                        <constraint firstItem="plW-oq-N1n" firstAttribute="top" secondItem="QPS-oy-4BV" secondAttribute="bottom" constant="1" id="rwa-sV-HRN"/>
                     </constraints>
                 </view>
             </subviews>

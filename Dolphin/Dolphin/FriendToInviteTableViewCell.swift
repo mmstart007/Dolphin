@@ -63,12 +63,17 @@ class FriendToInviteTableViewCell : CustomFontTableViewCell {
         friendNameLabel.text = contact.userName
     }
     
-    func configureWithInstagramFriend(friend: InstagramFriend) {
+    func configureWithPinterestFriend(friend: PDKUser) {
         friendMember = friend
         type = Constants.InviteType.Invite_Instagram
-        
-        friendImageView.sd_setImageWithURL(NSURL(string: friend.userImageURL), placeholderImage: UIImage(named: "UserPlaceholder"))
-        friendNameLabel.text = friend.userName
+        friendNameLabel.text = friend.firstName + friend.lastName
+        if friend.images != nil {
+            let url = Array(friend.images.values)[0]["url"] as! String
+            friendImageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "UserPlaceholder"))
+        }
+        else {
+            friendImageView.image = UIImage(named: "UserPlaceholder")
+        }
     }
     
     func configureWithPODMember(member: User) {
