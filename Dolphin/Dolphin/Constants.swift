@@ -33,6 +33,7 @@ class Constants {
         static let UnsupportedSMSTitle: String      = "Could Not Send SMS"
         static let UnsupportedSMS: String           = "Your device could not send SMS.  Please check SMS configuration and try again."
         static let Error_Report: String             = "Can't report this post."
+        static let ShareSuffix: String              = "sent from Dolphin, a new App for Educators"
         
         //Login & Sign up
         static let EmailErrorTitle: String          = "Email error"

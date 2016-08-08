@@ -12,6 +12,7 @@ import Crashlytics
 import TwitterKit
 import OAuthSwift
 import SVProgressHUD
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,9 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
         Fabric.with([Crashlytics.self, Twitter.self])
         
+        PDKClient.configureSharedInstanceWithAppId("4849615424301575636")
+
         //Enable Push notification.
         let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
         let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
@@ -121,9 +123,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        return PDKClient.sharedInstance().handleCallbackURL(url)
+    }
+    
     // MARK: FacebookSDK
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        PDKClient.sharedInstance().handleCallbackURL(url)
+        
         if (url.host == "oauth-callback") {
             OAuthSwift.handleOpenURL(url)
         } else if (url.scheme == "dolphin-app") {
