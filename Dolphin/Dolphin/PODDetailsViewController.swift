@@ -21,6 +21,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     var postOfPOD: [Post] = []
     var actionMenu: UIView? = nil
     var page: Int = 0
+    var prevViewController: AnyObject!
     
     required init() {
         super.init(nibName: "PODDetailsViewController", bundle: NSBundle.mainBundle())
@@ -86,6 +87,18 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     func setupNavigationBar() {
         setBackButton()
         title = pod?.name
+        
+        if networkController.currentUserId == self.pod?.owner?.id {
+            setRightButtonItemWithText("Delete", target: self, action: "deletePod")
+        }
+        else {
+            for u in (self.pod?.users)! {
+                if u.id == networkController.currentUserId {
+                    setRightButtonItemWithText("Withdraw", target: self, action: "withdrawMember")
+                    break;
+                }
+            }
+        }
     }
     
     // MARK: - Auxiliary methods
@@ -394,5 +407,94 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         let nextView = EditPodMemberViewController()
         nextView.pod = self.pod
         navigationController?.pushViewController(nextView, animated: true)
+    }
+    
+    // MARK: Delete Pod
+    func deletePod() {
+        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.Alert)
+        alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+            // delete the pod
+            let podIdString = String(self.pod!.id!)
+            
+            SVProgressHUD.showWithStatus("Deleting...")
+            self.networkController.deletePOD(podIdString) { (error) -> () in
+                SVProgressHUD.dismiss()
+                if error == nil {
+                    print("pod deleted")
+                    
+                    if self.prevViewController != nil {
+                        if self.prevViewController.isKindOfClass(PODsListViewController) {
+                            let listViewController = self.prevViewController as! PODsListViewController
+                            listViewController.refreshView()
+                        } else if self.prevViewController.isKindOfClass(SettingsViewController) {
+                            let settingsViewController = self.prevViewController as! SettingsViewController
+                            settingsViewController.refreshView()
+                        }
+                    }
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert: UIAlertController
+                    if errors != nil && errors![0] != "" {
+                        alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    } else {
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    }
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        }))
+        alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        // show the alert
+        self.presentViewController(alertWarning, animated: true, completion: nil)
+    }
+    
+    // MARK: Withdraw Member.
+    func withdrawMember() {
+        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure to withdraw member with this POD?", preferredStyle: UIAlertControllerStyle.Alert)
+        alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+            // withdraw member from pod
+            let podIdString = String(self.pod!.id!)
+            let userIdString = String(self.networkController.currentUserId)
+            
+            SVProgressHUD.show()
+            self.networkController.deletePodMember(podIdString, userId: userIdString) { (error) -> () in
+                SVProgressHUD.dismiss()
+                if error == nil {
+                    print("pod member withdraw")
+                    
+                    if self.prevViewController != nil {
+                        if self.prevViewController.isKindOfClass(PODsListViewController) {
+                            let listViewController = self.prevViewController as! PODsListViewController
+                            listViewController.refreshView()
+                        } else if self.prevViewController.isKindOfClass(SettingsViewController) {
+                            let settingsViewController = self.prevViewController as! SettingsViewController
+                            settingsViewController.refreshView()
+                        }
+                    }
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert: UIAlertController
+                    if errors != nil && errors![0] != "" {
+                        alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    } else {
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    }
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        }))
+        alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        // show the alert
+        self.presentViewController(alertWarning, animated: true, completion: nil)
     }
 }

@@ -63,7 +63,10 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         allPODstableView.addInfiniteScrollingWithActionHandler { () -> Void in
             self.loadNextPODs()
         }
-        
+        loadData(false)
+    }
+    
+    func refreshView() {
         loadData(false)
     }
     
@@ -162,6 +165,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         } else {
             (cell as? PODPreviewTableViewCell)!.addUserImages(allPods[indexPath.row])
         }
+        cell.updateConstraintsIfNeeded()
     }
     
     // MARK: Tableview delegate
@@ -173,11 +177,14 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = allPods[indexPath.row]
             podDetailsVC.pod = selectedPOD
+            podDetailsVC.prevViewController = self
             checkPrivatePODs(podDetailsVC, pod: selectedPOD)
         } else {
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = filteredPODs[indexPath.row]
             podDetailsVC.pod = selectedPOD
+            podDetailsVC.prevViewController = self
+            podDetailsVC.prevViewController = self
             checkPrivatePODs(podDetailsVC, pod: selectedPOD)
         }
     }

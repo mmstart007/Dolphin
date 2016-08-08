@@ -113,33 +113,37 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func actionButtonPressed() {
         if post?.postType?.name == "link" {
-            let shareURL = NSURL(string: (post?.postLink?.url)!)
             let imageURL = NSURL(string: (post?.postLink?.imageURL)!)
+            
+            let shareText = (post?.postText)! + "\n" + Constants.Messages.ShareSuffix + "\n" + Constants.iTunesURL
             let manager = SDWebImageManager.sharedManager()
+            
             manager.downloadImageWithURL(imageURL, options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                 if error == nil {
-                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(self.post?.postText)!, shareURL!, image], applicationActivities: nil)
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText, image], applicationActivities: nil)
                     self.presentViewController(shareVC, animated: true, completion: nil)
                 } else {
-                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(self.post?.postText)!, shareURL!], applicationActivities: nil)
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
                     self.presentViewController(shareVC, animated: true, completion: nil)
                 }
             })
 
         } else if post?.postType?.name == "text" {
-            let shareText = (post?.postHeader)! + "\n" + (post?.postText)!
+            let shareText = (post?.postHeader)! + "\n" + (post?.postText)! + "\n" + Constants.Messages.ShareSuffix + "\n" + Constants.iTunesURL
             let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
             self.presentViewController(shareVC, animated: true, completion: nil)
         } else {
             
             let imageURL = NSURL(string: (post?.postImage?.imageURL)!)
             let manager = SDWebImageManager.sharedManager()
+            let shareText = (post?.postHeader)! + "\n" + (post?.postText)! + "\n" + Constants.Messages.ShareSuffix + "\n" + Constants.iTunesURL
+            
             manager.downloadImageWithURL(imageURL, options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                 if error == nil {
-                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(self.post?.postText)!, image], applicationActivities: nil)
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText, image], applicationActivities: nil)
                     self.presentViewController(shareVC, animated: true, completion: nil)
                 } else {
-                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(self.post?.postText)!], applicationActivities: nil)
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
                     self.presentViewController(shareVC, animated: true, completion: nil)
                 }
             })

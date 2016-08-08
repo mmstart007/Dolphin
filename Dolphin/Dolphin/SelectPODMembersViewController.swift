@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 protocol SelectPODMembersDelegate {
     func membersDidSelected(members: [User])
@@ -18,6 +19,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    let networkController = NetworkController.sharedInstance
     var delegate: SelectPODMembersDelegate?
     var selectedMembers: [User] = []
     var searchResults: [User] = []
@@ -44,6 +46,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         tableView.registerNib(UINib(nibName: "PODMemberToAddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
         
         showSearchBar()
+        filterContentForSearchText("", isFirstLoading: true)
     }
     
     // MARK: - TableView DataSource
@@ -96,7 +99,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        filterContentForSearchText(searchText)
+        filterContentForSearchText(searchText, isFirstLoading: false)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -106,18 +109,24 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         self.tableView.reloadData()
     }
     
-    func filterContentForSearchText(searchText: String) {
-        
-        NetworkController.sharedInstance.filterUser(searchText, podId: nil, fromDate: nil, toDate: nil, quantity: 10, page: 0) { (users, error) in
+    func filterContentForSearchText(searchText: String, isFirstLoading: Bool) {
+        if isFirstLoading == true {
+            SVProgressHUD.show()
+        }
+        networkController.filterUser(searchText, podId: nil, fromDate: nil, toDate: nil, quantity: 10, page: 0) { (users, error) in
+            SVProgressHUD.dismiss()
             if error == nil {
                 self.searchResults = users.filter({ (user) -> Bool in
+                    if user.id == self.networkController.currentUserId {
+                        return false
+                    }
+                    
                     for u in self.selectedMembers {
                         if u.id == user.id {
                             return false
                         }
                     }
                     return true
-//                    return !self.selectedMembers.contains(user)
                 })
                 self.tableView.reloadData()
             } else {
@@ -137,7 +146,6 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     }
     
     // MARK: - Auxiliary methods
-    
     func doneSelectingMembersPressed(sender: AnyObject) {
         delegate?.membersDidSelected(selectedMembers)
         navigationController?.popViewControllerAnimated(true)

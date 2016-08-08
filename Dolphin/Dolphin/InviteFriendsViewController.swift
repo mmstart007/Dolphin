@@ -33,11 +33,15 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     var addressBookContacts: [AddressBookContact]       = []
     var searchAddressBookFriends: [AddressBookContact]  = []
     
+    var pinterestFriends: [PDKUser]                     = []
+    var searchPinterestFriends: [PDKUser]               = []
+    var isLogginedPinterest: Bool                       = false
+    
     var signInLabel: UILabel!
     var loginFacebookTapGesture: UITapGestureRecognizer!
     var loginTwitterTapGesture: UITapGestureRecognizer!
     var contactsTapGesture: UITapGestureRecognizer!
-//    var loginInstagramTapGesture: UITapGestureRecognizer!
+    var loginPinterestTapGesture: UITapGestureRecognizer!
     var addressBookRef: ABAddressBook?
     
     var isSearch: Bool = false
@@ -66,6 +70,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         initializeSegmentedControl()
         initializeTableViewAndGestures()
         getContactsFromAddressBook()
+        checkPinterestToken()
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,7 +79,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     func initializeSegmentedControl() {
         
-        segmentedControl = HMSegmentedControl(sectionImages: [UIImage(named: "TopBarContactsNotSelectedIcon")!, UIImage(named: "TopBarFacebookNotSelectedIcon")!, UIImage(named: "TopBarTwitterNotSelectedIcon")!/*, UIImage(named: "TopBarMoreNotSelectedIcon")!*/], sectionSelectedImages: [UIImage(named: "TopBarContactsSelectedIcon")!, UIImage(named: "TopBarFacebookSelectedIcon")!, UIImage(named: "TopBarTwitterSelectedIcon")!/*, UIImage(named: "TopBarMoreSelectedIcon")!*/])
+        segmentedControl = HMSegmentedControl(sectionImages: [UIImage(named: "TopBarContactsNotSelectedIcon")!, UIImage(named: "TopBarFacebookNotSelectedIcon")!, UIImage(named: "TopBarTwitterNotSelectedIcon")!, UIImage(named: "pinterestIconNotSelected")!], sectionSelectedImages: [UIImage(named: "TopBarContactsSelectedIcon")!, UIImage(named: "TopBarFacebookSelectedIcon")!, UIImage(named: "TopBarTwitterSelectedIcon")!, UIImage(named: "pinterestIcon")!])
         
         segmentedControl.frame = CGRect(x: 0, y: 0, width: headerView.frame.size.width, height: headerView.frame.size.height)
         segmentedControl.selectionIndicatorHeight = 4.0
@@ -102,7 +107,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         loginFacebookTapGesture = UITapGestureRecognizer(target: self, action: "loginFacebookToGetFriends")
         loginTwitterTapGesture = UITapGestureRecognizer(target: self, action: "loginTwitterToGetFriends")
         contactsTapGesture = UITapGestureRecognizer(target: self, action: "openSettings")
-//        loginInstagramTapGesture = UITapGestureRecognizer(target: self, action: "loginInstagramToGetFriends")
+        loginPinterestTapGesture = UITapGestureRecognizer(target: self, action: "loginWithPinterest")
         
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled = false
@@ -110,7 +115,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         tableView.addGestureRecognizer(loginFacebookTapGesture)
         tableView.addGestureRecognizer(loginTwitterTapGesture)
         tableView.addGestureRecognizer(contactsTapGesture)
-//        tableView.addGestureRecognizer(loginInstagramTapGesture)
+        tableView.addGestureRecognizer(loginPinterestTapGesture)
     }
     
     // MARK: Segmented Control
@@ -121,7 +126,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled  = false
         contactsTapGesture.enabled      = false
-//        loginInstagramTapGesture.enabled = false
+        loginPinterestTapGesture.enabled = false
         
         if segmentedControl.selectedSegmentIndex == 0 {
             getContactsFromAddressBook()
@@ -136,7 +141,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 getFacebookFriendsList()
             }
         } else if segmentedControl.selectedSegmentIndex == 2 {
-            if Twitter.sharedInstance().session() == nil {
+            if let session = Twitter.sharedInstance().sessionStore.session() {
                 self.signInLabel.text = "You need to log in to Twitter to invite friends \n Tap to login"
                 self.signInLabel.numberOfLines = 2
                 self.signInLabel.hidden = false
@@ -145,17 +150,16 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 getTwitterFollowingList()
             }
         }
-//       else {
-//            let token = currentInstagramAccessToken()
-//            if token == nil {
-//                self.signInLabel.text = "You need to log in to Instagram to invite friends \n Tap to login"
-//                self.signInLabel.numberOfLines = 2
-//                self.signInLabel.hidden = false
-//                loginInstagramTapGesture.enabled = true
-//            } else {
-//                getInstagramFriends(token!)
-//            }
-//        }
+       else {
+            if isLogginedPinterest == false {
+                self.signInLabel.text = "You need to log in to Pinterest to invite friends \n Tap to login"
+                self.signInLabel.numberOfLines = 2
+                self.signInLabel.hidden = false
+                loginPinterestTapGesture.enabled = true
+            } else {
+                self.getPinterestFriends()
+            }
+        }
         tableView.reloadData()
     }
     
@@ -263,7 +267,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     // MARK: Social Networks login
     
     func loginTwitterToGetFriends() {
-        if Twitter.sharedInstance().session() == nil {
+        if let session = Twitter.sharedInstance().sessionStore.session() {
             Twitter.sharedInstance().logInWithCompletion { session, error in
                 if (session != nil) {
                     print("signed in as \(session!.userName)");
@@ -297,19 +301,15 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         }
     }
     
-    /*
-    func loginInstagramToGetFriends() {
-        let token = currentInstagramAccessToken()
-        if (token == nil) {
-            getInstagramFollowing()
+    func loginPinterestToGetFriends() {
+        if (self.isLogginedPinterest == false) {
+            loginWithPinterest()
         } else {
-            getInstagramFriends(token!)
+            getPinterestFriends()
         }
     }
-    */
     
     // MARK: Populate Lists
-    
     func getFacebookFriendsList() {
         if (FBSDKAccessToken.currentAccessToken() != nil) {
             
@@ -346,9 +346,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     }
     
     func getTwitterFollowingList() {
-        if let userID = Twitter.sharedInstance().sessionStore.session()!.userID {
-            let client = TWTRAPIClient(userID: userID)
-            
+        if let session = Twitter.sharedInstance().sessionStore.session() {
+            let client = TWTRAPIClient(userID: session.userID)
             let statusesShowEndpoint = "https://api.twitter.com/1.1/followers/list.json"
             let params = ["include_user_entities": "true", "count" : "200"]
             var clientError : NSError?
@@ -388,89 +387,43 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         }
     }
     
-    /*
-    func currentInstagramAccessToken() -> String? {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let instagram_token = defaults.objectForKey("instagram_token") as! String?
-        return instagram_token
+    // MARK: Pinterest.
+    
+    func checkPinterestToken() {
+        PDKClient.sharedInstance().silentlyAuthenticateWithSuccess({ (response) in
+            self.isLogginedPinterest = true
+        }) { (error) in
+            self.isLogginedPinterest = false
+        }
     }
     
-    func getInstagramFollowing() {
-        let oauthswift = OAuth2Swift(
-            consumerKey:    "cd8e8c8636da4dc58eeed535887e0de9",
-            consumerSecret: "f711d56cda5e4d9481541b1aa714139a",
-            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
-            responseType:   "token"
-        )
+    func loginWithPinterest() {
         
-//        let oauthswift = OAuth2Swift(
-//            consumerKey:    "fde55c84ca954b0298629f484bc954af",
-//            consumerSecret: "10ff4ce05dc74dd8875801fa2012ce1a",
-//            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
-//            responseType:   "token"
-//        )
-        
-        oauthswift.authorizeWithCallbackURL(
-            NSURL(string: "oauth-swift://oauth-callback/instagram")!,
-            scope: "follower_list", state:"INSTAGRAM",
-            success: { credential, response, parameters in
-                print(credential.oauth_token)
-                
-                //Save access token.
-                let defaults = NSUserDefaults.standardUserDefaults()
-                defaults.setObject(credential.oauth_token, forKey: "instagram_token")
-                defaults.synchronize()
-                
-                self.signInLabel.hidden = true
-//                self.loginInstagramTapGesture.enabled = false
-                self.getInstagramFriends(oauthswift.client.credential.oauth_token)
-                
-            },
-            failure: { error in
+        PDKClient.sharedInstance().authenticateWithPermissions(
+            [PDKClientReadPublicPermissions, PDKClientWritePublicPermissions, PDKClientReadRelationshipsPermissions, PDKClientWriteRelationshipsPermissions],
+                                                               withSuccess: { (response) in
+                                                                
+                                                                self.isLogginedPinterest = true
+                                                                self.signInLabel.hidden = true
+                                                                self.getPinterestFriends()
+            }) { (error) in
                 print(error.localizedDescription)
-            }
-        )
+        }
     }
     
-    func getInstagramFriends(token: String) {
-        
-        let oauthswift = OAuth2Swift(
-            consumerKey:    "cd8e8c8636da4dc58eeed535887e0de9",
-            consumerSecret: "f711d56cda5e4d9481541b1aa714139a",
-            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
-            responseType:   "token"
-        )
-        
-//        let oauthswift = OAuth2Swift(
-//            consumerKey:    "fde55c84ca954b0298629f484bc954af",
-//            consumerSecret: "10ff4ce05dc74dd8875801fa2012ce1a",
-//            authorizeUrl:   "https://api.instagram.com/oauth/authorize",
-//            responseType:   "token"
-//        )
-        
-        let url :String = "https://api.instagram.com/v1/users/self/follows?access_token=\(token)"
-        let parameters :Dictionary = Dictionary<String, AnyObject>()
-        oauthswift.client.get(url, parameters: parameters,
-            success: {
-                data, response in
-                
-                //Parse
-                if let jsonDict = try? NSJSONSerialization.JSONObjectWithData(data, options: []) as? NSDictionary {
-                    let usersDict = jsonDict?.objectForKey("data") as! NSArray
-                    self.instagramFriends.removeAll()
-                    for (var i = 0; i < usersDict.count; i++) {
-                        if let userDict = usersDict[i] as? NSDictionary {
-                            let user = InstagramFriend(name: userDict["full_name"] as! String, imageURL: userDict["profile_picture"] as! String, user_id: userDict["id"] as! String)
-                            self.instagramFriends.append(user)
-                        }
-                    }
-                    self.tableView.reloadData()
-                }
-            }, failure: { error in
+    func getPinterestFriends() {
+        PDKClient.sharedInstance().getAuthorizedUserFollowersWithFields(["id", "username", "first_name", "last_name", "bio", "image"], success: { (response) in
+            self.pinterestFriends.removeAll()
+            let users = response.users()
+            for u in users {
+                self.pinterestFriends.append(u as! PDKUser)
+            }
+            self.tableView.reloadData()
+
+            }) { (error) in
                 print(error)
-        })
+        }
     }
-    */
     
     // MARK: TableView DataSource
     
@@ -499,10 +452,13 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 return twitterFriends.count
             }
         } else {
-//            return instagramFriends.count
+            if isSearch {
+                return searchPinterestFriends.count
+            } else {
+                return pinterestFriends.count
+            }
+            
         }
-        
-        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -532,7 +488,12 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 cell?.configureWithTwitterFriend(twitterFriends[indexPath.row])
             }
         } else {
-//            cell?.configureWithInstagramFriend(instagramFriends[indexPath.row])
+            if self.isSearch {
+                cell?.configureWithPinterestFriend(searchPinterestFriends[indexPath.row])
+            }
+            else {
+                cell?.configureWithPinterestFriend(pinterestFriends[indexPath.row])
+            }
         }
         
         cell?.delegate = self
@@ -616,9 +577,9 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     //Twitter.
     func inviteTwitterFriend(friend: TwitterFriend) {
-        if let userID = Twitter.sharedInstance().sessionStore.session()!.userID {
-            let client = TWTRAPIClient(userID: userID)
-            
+        if let session = Twitter.sharedInstance().sessionStore.session() {
+            let client = TWTRAPIClient(userID: session.userID)
+           
             let friend_user_id = friend.userId
             let text = self.getInviteMessage()
             
@@ -644,7 +605,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     }
     
     //Instagram.
-    func inviteInstagramFriend(friend: InstagramFriend) {
+    func invitePinterestFriend(friend: PDKUser) {
         
     }
     

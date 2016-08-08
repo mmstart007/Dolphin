@@ -124,8 +124,6 @@
 		36BE4CD11C061524002E52D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CCF1C061524002E52D9 /* Main.storyboard */; };
 		36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CD21C061524002E52D9 /* Assets.xcassets */; };
 		36BE4CD61C061524002E52D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36BE4CD41C061524002E52D9 /* LaunchScreen.storyboard */; };
-		36BE4CE11C061524002E52D9 /* DolphinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BE4CE01C061524002E52D9 /* DolphinTests.swift */; };
-		36BE4CEC1C061524002E52D9 /* DolphinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BE4CEB1C061524002E52D9 /* DolphinUITests.swift */; };
 		36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BE4CFD1C061AFD002E52D9 /* SWRevealViewController.m */; };
 		36BE4D031C0620AD002E52D9 /* DolphinTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BE4D021C0620AD002E52D9 /* DolphinTabBarViewController.swift */; };
 		36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36BE4D051C06217D002E52D9 /* UIColor+DolphinAdditions.swift */; };
@@ -162,19 +160,22 @@
 		36F4AC3E1C64EFB900323672 /* CreateTextPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */; };
 		890B04FF265D7EA4ECA25CE0 /* Pods_Dolphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */; };
 		AA0592D91D01E522001D7823 /* LeftAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */; };
+		AA72BE181D5810C0001543BE /* PDKBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE061D5810BF001543BE /* PDKBoard.m */; };
+		AA72BE191D5810C0001543BE /* PDKCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE081D5810BF001543BE /* PDKCategories.m */; };
+		AA72BE1A1D5810C0001543BE /* PDKClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE0A1D5810BF001543BE /* PDKClient.m */; };
+		AA72BE1B1D5810C0001543BE /* PDKImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE0C1D5810BF001543BE /* PDKImageInfo.m */; };
+		AA72BE1C1D5810C0001543BE /* PDKInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE0E1D5810BF001543BE /* PDKInterest.m */; };
+		AA72BE1D1D5810C0001543BE /* PDKModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE101D5810C0001543BE /* PDKModelObject.m */; };
+		AA72BE1E1D5810C0001543BE /* PDKPin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE121D5810C0001543BE /* PDKPin.m */; };
+		AA72BE1F1D5810C0001543BE /* PDKResponseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE141D5810C0001543BE /* PDKResponseObject.m */; };
+		AA72BE201D5810C0001543BE /* PDKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE161D5810C0001543BE /* PDKUser.m */; };
 		AA7AEF7D1D0A5D4800AA36B5 /* TagPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */; };
 		AA9552BA1D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */; };
 		AAB7E8F31D4A7ED000B19397 /* EditPodMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F11D4A7ED000B19397 /* EditPodMemberViewController.swift */; };
 		AAB7E8F41D4A7ED000B19397 /* EditPodMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F21D4A7ED000B19397 /* EditPodMemberViewController.xib */; };
 		AAB7E8F71D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */; };
-		AAB7E8F81D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */; };
-		AAB7E8F91D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */; };
 		AAB7E8FA1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */; };
-		AAB7E8FB1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */; };
-		AAB7E8FC1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */; };
 		AAB7E8FE1D4A891600B19397 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8FD1D4A891600B19397 /* User.swift */; };
-		AAB7E8FF1D4A891600B19397 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8FD1D4A891600B19397 /* User.swift */; };
-		AAB7E9001D4A891600B19397 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8FD1D4A891600B19397 /* User.swift */; };
 		F8483E6B1CFE6FB90060CC8C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6A1CFE6FB90060CC8C /* Globals.swift */; };
 		F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6C1CFE7BFA0060CC8C /* MyFeedViewController.swift */; };
 		F8483E711CFE7BFA0060CC8C /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */; };
@@ -187,23 +188,6 @@
 		F89DF7C61D49225E0052FCBF /* UserInfoReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89DF7C41D49225E0052FCBF /* UserInfoReusableView.swift */; };
 		F89DF7C71D49225E0052FCBF /* UserInfoReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89DF7C51D49225E0052FCBF /* UserInfoReusableView.xib */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		36BE4CDD1C061524002E52D9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 36BE4CC01C061524002E52D9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 36BE4CC71C061524002E52D9;
-			remoteInfo = Dolphin;
-		};
-		36BE4CE81C061524002E52D9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 36BE4CC01C061524002E52D9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 36BE4CC71C061524002E52D9;
-			remoteInfo = Dolphin;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3607AAD41C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -292,7 +276,6 @@
 		3668B2FE1C6A7A7900469FF9 /* DealCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DealCollectionViewCell.xib; sourceTree = "<group>"; };
 		36736F651C5FEE170040A263 /* PostDetailsActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDetailsActionView.xib; sourceTree = "<group>"; };
 		36736F671C6130780040A263 /* DolphinButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DolphinButton.swift; sourceTree = "<group>"; };
-		367F613D1C3B2E40005E6076 /* Dolphin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dolphin-Bridging-Header.h"; sourceTree = "<group>"; };
 		368798621C29BA190088AC24 /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		368798651C29E1260088AC24 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		368798671C29E13C0088AC24 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -329,10 +312,8 @@
 		36BE4CD21C061524002E52D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		36BE4CD51C061524002E52D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		36BE4CD71C061524002E52D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		36BE4CDC1C061524002E52D9 /* DolphinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DolphinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36BE4CE01C061524002E52D9 /* DolphinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DolphinTests.swift; sourceTree = "<group>"; };
 		36BE4CE21C061524002E52D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		36BE4CE71C061524002E52D9 /* DolphinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DolphinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36BE4CEB1C061524002E52D9 /* DolphinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DolphinUITests.swift; sourceTree = "<group>"; };
 		36BE4CED1C061524002E52D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36BE4CFC1C061AFD002E52D9 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -372,6 +353,27 @@
 		36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTextPostViewController.xib; sourceTree = "<group>"; };
 		6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dolphin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
+		AA1CC60A1D5791EF00D93005 /* PinterestSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PinterestSDK.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Dolphin-akwfxwckpfcxlmglobgslogpnkwb/Build/Products/Debug-iphonesimulator/PinterestSDK/PinterestSDK.framework"; sourceTree = "<group>"; };
+		AA4493901D5785E1008488A6 /* Dolphin-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Dolphin-Bridging-Header.h"; sourceTree = "<group>"; };
+		AA72BE051D5810BF001543BE /* PDKBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKBoard.h; path = Extensions/Pinterest/PDKBoard.h; sourceTree = "<group>"; };
+		AA72BE061D5810BF001543BE /* PDKBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKBoard.m; path = Extensions/Pinterest/PDKBoard.m; sourceTree = "<group>"; };
+		AA72BE071D5810BF001543BE /* PDKCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKCategories.h; path = Extensions/Pinterest/PDKCategories.h; sourceTree = "<group>"; };
+		AA72BE081D5810BF001543BE /* PDKCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKCategories.m; path = Extensions/Pinterest/PDKCategories.m; sourceTree = "<group>"; };
+		AA72BE091D5810BF001543BE /* PDKClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKClient.h; path = Extensions/Pinterest/PDKClient.h; sourceTree = "<group>"; };
+		AA72BE0A1D5810BF001543BE /* PDKClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKClient.m; path = Extensions/Pinterest/PDKClient.m; sourceTree = "<group>"; };
+		AA72BE0B1D5810BF001543BE /* PDKImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKImageInfo.h; path = Extensions/Pinterest/PDKImageInfo.h; sourceTree = "<group>"; };
+		AA72BE0C1D5810BF001543BE /* PDKImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKImageInfo.m; path = Extensions/Pinterest/PDKImageInfo.m; sourceTree = "<group>"; };
+		AA72BE0D1D5810BF001543BE /* PDKInterest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKInterest.h; path = Extensions/Pinterest/PDKInterest.h; sourceTree = "<group>"; };
+		AA72BE0E1D5810BF001543BE /* PDKInterest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKInterest.m; path = Extensions/Pinterest/PDKInterest.m; sourceTree = "<group>"; };
+		AA72BE0F1D5810BF001543BE /* PDKModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKModelObject.h; path = Extensions/Pinterest/PDKModelObject.h; sourceTree = "<group>"; };
+		AA72BE101D5810C0001543BE /* PDKModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKModelObject.m; path = Extensions/Pinterest/PDKModelObject.m; sourceTree = "<group>"; };
+		AA72BE111D5810C0001543BE /* PDKPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKPin.h; path = Extensions/Pinterest/PDKPin.h; sourceTree = "<group>"; };
+		AA72BE121D5810C0001543BE /* PDKPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKPin.m; path = Extensions/Pinterest/PDKPin.m; sourceTree = "<group>"; };
+		AA72BE131D5810C0001543BE /* PDKResponseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKResponseObject.h; path = Extensions/Pinterest/PDKResponseObject.h; sourceTree = "<group>"; };
+		AA72BE141D5810C0001543BE /* PDKResponseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKResponseObject.m; path = Extensions/Pinterest/PDKResponseObject.m; sourceTree = "<group>"; };
+		AA72BE151D5810C0001543BE /* PDKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKUser.h; path = Extensions/Pinterest/PDKUser.h; sourceTree = "<group>"; };
+		AA72BE161D5810C0001543BE /* PDKUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKUser.m; path = Extensions/Pinterest/PDKUser.m; sourceTree = "<group>"; };
+		AA72BE171D5810C0001543BE /* PinterestSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinterestSDK.h; path = Extensions/Pinterest/PinterestSDK.h; sourceTree = "<group>"; };
 		AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPostsViewController.swift; sourceTree = "<group>"; };
 		AA9552B91D01D81100663DE2 /* CreateURLPostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateURLPostAddDescriptionViewController.xib; sourceTree = "<group>"; };
 		AAB7E8F11D4A7ED000B19397 /* EditPodMemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPodMemberViewController.swift; sourceTree = "<group>"; };
@@ -403,20 +405,6 @@
 				369382AF1C3191470005FCB0 /* FBSDKCoreKit.framework in Frameworks */,
 				369382B11C3195D50005FCB0 /* FBSDKLoginKit.framework in Frameworks */,
 				890B04FF265D7EA4ECA25CE0 /* Pods_Dolphin.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		36BE4CD91C061524002E52D9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		36BE4CE41C061524002E52D9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,7 +731,7 @@
 		36BE4CBF1C061524002E52D9 = {
 			isa = PBXGroup;
 			children = (
-				367F613D1C3B2E40005E6076 /* Dolphin-Bridging-Header.h */,
+				AA4493901D5785E1008488A6 /* Dolphin-Bridging-Header.h */,
 				36BE4CCA1C061524002E52D9 /* Dolphin */,
 				3687986E1C2B2B840088AC24 /* Supporting Files */,
 				36BE4CDF1C061524002E52D9 /* DolphinTests */,
@@ -758,8 +746,6 @@
 			isa = PBXGroup;
 			children = (
 				36BE4CC81C061524002E52D9 /* Dolphin.app */,
-				36BE4CDC1C061524002E52D9 /* DolphinTests.xctest */,
-				36BE4CE71C061524002E52D9 /* DolphinUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -838,6 +824,7 @@
 		36BE4D041C062162002E52D9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				AA72BE041D5810A6001543BE /* Pinterest */,
 				36129FA31CA5999C00446503 /* AFDateExtension.swift */,
 				360993121C4049530082B995 /* UIAppearance_Swift.h */,
 				360993131C4049530082B995 /* UIAppearance_Swift.m */,
@@ -922,10 +909,37 @@
 		975C8B82324EFCFC021B172B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA1CC60A1D5791EF00D93005 /* PinterestSDK.framework */,
 				360993101C3F1B8F0082B995 /* hpple.framework */,
 				6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA72BE041D5810A6001543BE /* Pinterest */ = {
+			isa = PBXGroup;
+			children = (
+				AA72BE051D5810BF001543BE /* PDKBoard.h */,
+				AA72BE061D5810BF001543BE /* PDKBoard.m */,
+				AA72BE071D5810BF001543BE /* PDKCategories.h */,
+				AA72BE081D5810BF001543BE /* PDKCategories.m */,
+				AA72BE091D5810BF001543BE /* PDKClient.h */,
+				AA72BE0A1D5810BF001543BE /* PDKClient.m */,
+				AA72BE0B1D5810BF001543BE /* PDKImageInfo.h */,
+				AA72BE0C1D5810BF001543BE /* PDKImageInfo.m */,
+				AA72BE0D1D5810BF001543BE /* PDKInterest.h */,
+				AA72BE0E1D5810BF001543BE /* PDKInterest.m */,
+				AA72BE0F1D5810BF001543BE /* PDKModelObject.h */,
+				AA72BE101D5810C0001543BE /* PDKModelObject.m */,
+				AA72BE111D5810C0001543BE /* PDKPin.h */,
+				AA72BE121D5810C0001543BE /* PDKPin.m */,
+				AA72BE131D5810C0001543BE /* PDKResponseObject.h */,
+				AA72BE141D5810C0001543BE /* PDKResponseObject.m */,
+				AA72BE151D5810C0001543BE /* PDKUser.h */,
+				AA72BE161D5810C0001543BE /* PDKUser.m */,
+				AA72BE171D5810C0001543BE /* PinterestSDK.h */,
+			);
+			name = Pinterest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -935,12 +949,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36BE4CF01C061524002E52D9 /* Build configuration list for PBXNativeTarget "Dolphin" */;
 			buildPhases = (
-				D3B12836245161532F883E61 /* Check Pods Manifest.lock */,
+				D3B12836245161532F883E61 /* [CP] Check Pods Manifest.lock */,
 				36BE4CC41C061524002E52D9 /* Sources */,
 				36BE4CC51C061524002E52D9 /* Frameworks */,
 				36BE4CC61C061524002E52D9 /* Resources */,
-				8429ED26D7E650E9622DBD26 /* Embed Pods Frameworks */,
-				408C28626474BB053E682E5E /* Copy Pods Resources */,
+				8429ED26D7E650E9622DBD26 /* [CP] Embed Pods Frameworks */,
+				408C28626474BB053E682E5E /* [CP] Copy Pods Resources */,
 				3689ECD61C0E32CD0087F828 /* ShellScript */,
 			);
 			buildRules = (
@@ -951,42 +965,6 @@
 			productName = Dolphin;
 			productReference = 36BE4CC81C061524002E52D9 /* Dolphin.app */;
 			productType = "com.apple.product-type.application";
-		};
-		36BE4CDB1C061524002E52D9 /* DolphinTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 36BE4CF31C061524002E52D9 /* Build configuration list for PBXNativeTarget "DolphinTests" */;
-			buildPhases = (
-				36BE4CD81C061524002E52D9 /* Sources */,
-				36BE4CD91C061524002E52D9 /* Frameworks */,
-				36BE4CDA1C061524002E52D9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				36BE4CDE1C061524002E52D9 /* PBXTargetDependency */,
-			);
-			name = DolphinTests;
-			productName = DolphinTests;
-			productReference = 36BE4CDC1C061524002E52D9 /* DolphinTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		36BE4CE61C061524002E52D9 /* DolphinUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 36BE4CF61C061524002E52D9 /* Build configuration list for PBXNativeTarget "DolphinUITests" */;
-			buildPhases = (
-				36BE4CE31C061524002E52D9 /* Sources */,
-				36BE4CE41C061524002E52D9 /* Frameworks */,
-				36BE4CE51C061524002E52D9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				36BE4CE91C061524002E52D9 /* PBXTargetDependency */,
-			);
-			name = DolphinUITests;
-			productName = DolphinUITests;
-			productReference = 36BE4CE71C061524002E52D9 /* DolphinUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -1001,14 +979,6 @@
 					36BE4CC71C061524002E52D9 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 3R2S97YZLA;
-					};
-					36BE4CDB1C061524002E52D9 = {
-						CreatedOnToolsVersion = 7.1.1;
-						TestTargetID = 36BE4CC71C061524002E52D9;
-					};
-					36BE4CE61C061524002E52D9 = {
-						CreatedOnToolsVersion = 7.1.1;
-						TestTargetID = 36BE4CC71C061524002E52D9;
 					};
 				};
 			};
@@ -1026,8 +996,6 @@
 			projectRoot = "";
 			targets = (
 				36BE4CC71C061524002E52D9 /* Dolphin */,
-				36BE4CDB1C061524002E52D9 /* DolphinTests */,
-				36BE4CE61C061524002E52D9 /* DolphinUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1107,22 +1075,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		36BE4CDA1C061524002E52D9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AAB7E8FB1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		36BE4CE51C061524002E52D9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AAB7E8FC1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1139,14 +1091,14 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 5f20290b6861556928d9ddd6e15c2abcab9d499e 1a525dd7ab268521feebfd1b2108c39dee79246f016b6a31d0c1e49bc9e6543d";
 		};
-		408C28626474BB053E682E5E /* Copy Pods Resources */ = {
+		408C28626474BB053E682E5E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1154,14 +1106,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8429ED26D7E650E9622DBD26 /* Embed Pods Frameworks */ = {
+		8429ED26D7E650E9622DBD26 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1169,14 +1121,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D3B12836245161532F883E61 /* Check Pods Manifest.lock */ = {
+		D3B12836245161532F883E61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1201,6 +1153,7 @@
 				36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */,
 				36D0C6A11C08D0990002AE35 /* Post.swift in Sources */,
 				363F7ACD1C9348A3009866AE /* Constants.swift in Sources */,
+				AA72BE1D1D5810C0001543BE /* PDKModelObject.m in Sources */,
 				361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */,
 				F89DF7C21D491B8D0052FCBF /* GridPostCell.swift in Sources */,
 				36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */,
@@ -1222,6 +1175,7 @@
 				AAB7E8FE1D4A891600B19397 /* User.swift in Sources */,
 				36BE4D0C1C062668002E52D9 /* SidebarViewController.swift in Sources */,
 				36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */,
+				AA72BE201D5810C0001543BE /* PDKUser.m in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
 				36C2CF6C1C98CD5400E7B4E3 /* Like.swift in Sources */,
 				36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */,
@@ -1243,7 +1197,9 @@
 				3609207C1C9784B0003F5CB8 /* PostType.swift in Sources */,
 				3616E49C1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift in Sources */,
 				3607AAD51C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift in Sources */,
+				AA72BE181D5810C0001543BE /* PDKBoard.m in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,
+				AA72BE1F1D5810C0001543BE /* PDKResponseObject.m in Sources */,
 				36129FA41CA5999C00446503 /* AFDateExtension.swift in Sources */,
 				36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */,
 				3607AADE1C8F7E6200B9DD8F /* PODSettingsViewController.swift in Sources */,
@@ -1253,6 +1209,7 @@
 				36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */,
 				369382B71C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift in Sources */,
 				3689ECE61C0E62E40087F828 /* POD.swift in Sources */,
+				AA72BE1B1D5810C0001543BE /* PDKImageInfo.m in Sources */,
 				361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */,
 				3650E0BC1C6D428400BB9301 /* ImageCropView.m in Sources */,
 				36D841151C31EDC500C3065C /* TwitterFriend.swift in Sources */,
@@ -1274,11 +1231,14 @@
 				369697451C725ECB00774055 /* PODDetailsViewController.swift in Sources */,
 				361ADC491CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift in Sources */,
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,
+				AA72BE1A1D5810C0001543BE /* PDKClient.m in Sources */,
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				36DCCD731C73AC3A00D4B171 /* PODMembersTableViewCell.swift in Sources */,
 				365D76C91C7540AA00A0833F /* DealDetailsViewController.swift in Sources */,
 				3668B2F61C6A761400469FF9 /* Deal.swift in Sources */,
 				AAB7E8F31D4A7ED000B19397 /* EditPodMemberViewController.swift in Sources */,
+				AA72BE191D5810C0001543BE /* PDKCategories.m in Sources */,
+				AA72BE1E1D5810C0001543BE /* PDKPin.m in Sources */,
 				3650E0B61C6D1AFA00BB9301 /* CreatePodViewController.swift in Sources */,
 				36C5DAA01C35A05300DFF60F /* InstagramFriend.swift in Sources */,
 				36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */,
@@ -1287,6 +1247,7 @@
 				3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */,
 				AAB7E8F71D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36E411701C8E3DE9002DC736 /* SettingsViewController.swift in Sources */,
+				AA72BE1C1D5810C0001543BE /* PDKInterest.m in Sources */,
 				364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */,
 				369382B41C31B1FF0005FCB0 /* FacebookFriend.swift in Sources */,
 				3641405F1C110F770022D1BE /* PostCommentsViewController.swift in Sources */,
@@ -1294,40 +1255,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		36BE4CD81C061524002E52D9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AAB7E8F81D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */,
-				36BE4CE11C061524002E52D9 /* DolphinTests.swift in Sources */,
-				AAB7E8FF1D4A891600B19397 /* User.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		36BE4CE31C061524002E52D9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AAB7E8F91D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */,
-				36BE4CEC1C061524002E52D9 /* DolphinUITests.swift in Sources */,
-				AAB7E9001D4A891600B19397 /* User.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		36BE4CDE1C061524002E52D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 36BE4CC71C061524002E52D9 /* Dolphin */;
-			targetProxy = 36BE4CDD1C061524002E52D9 /* PBXContainerItemProxy */;
-		};
-		36BE4CE91C061524002E52D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 36BE4CC71C061524002E52D9 /* Dolphin */;
-			targetProxy = 36BE4CE81C061524002E52D9 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		36BE4CCF1C061524002E52D9 /* Main.storyboard */ = {
@@ -1503,54 +1431,6 @@
 			};
 			name = Release;
 		};
-		36BE4CF41C061524002E52D9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = DolphinTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ninthcoast.DolphinTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dolphin.app/Dolphin";
-			};
-			name = Debug;
-		};
-		36BE4CF51C061524002E52D9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = DolphinTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ninthcoast.DolphinTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dolphin.app/Dolphin";
-			};
-			name = Release;
-		};
-		36BE4CF71C061524002E52D9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = DolphinUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ninthcoast.DolphinUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = Dolphin;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		36BE4CF81C061524002E52D9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = DolphinUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ninthcoast.DolphinUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = Dolphin;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1568,24 +1448,6 @@
 			buildConfigurations = (
 				36BE4CF11C061524002E52D9 /* Debug */,
 				36BE4CF21C061524002E52D9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		36BE4CF31C061524002E52D9 /* Build configuration list for PBXNativeTarget "DolphinTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				36BE4CF41C061524002E52D9 /* Debug */,
-				36BE4CF51C061524002E52D9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		36BE4CF61C061524002E52D9 /* Build configuration list for PBXNativeTarget "DolphinUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				36BE4CF71C061524002E52D9 /* Debug */,
-				36BE4CF81C061524002E52D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

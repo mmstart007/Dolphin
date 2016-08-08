@@ -54,7 +54,7 @@ public class KSToken : UIControl {
    public var tokenTextColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
    
    /// Token background color
-   public var tokenBackgroundColor = UIColor(red: 27.0/255.0, green: 61.0/255.0, blue: 104.0/255.0, alpha: 1.0)
+   public var tokenBackgroundColor = UIColor(red: 50/255, green: 50/255, blue: 255/255, alpha: 1)
    
    /// Token title color in selected state
    public var tokenTextHighlightedColor: UIColor?

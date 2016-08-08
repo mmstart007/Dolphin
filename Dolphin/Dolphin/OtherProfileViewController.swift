@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import SVPullToRefresh
 
 class OtherProfileViewController: DolphinViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var postCollectionView: UICollectionView!

@@ -58,6 +58,10 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         loadData()
     }
     
+    func refreshView() {
+        loadData()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.tableViewSettings.reloadData()
@@ -244,8 +248,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 3 {
-            let PODSettingsVC = PODSettingsViewController(pod: myPODS[indexPath.row])
-            navigationController?.pushViewController(PODSettingsVC, animated: true)
+            let podDetailsVC = PODDetailsViewController()
+            let selectedPOD = myPODS[indexPath.row]
+            podDetailsVC.pod = selectedPOD
+            podDetailsVC.prevViewController = self
+            navigationController?.pushViewController(podDetailsVC, animated: true)
+            
         } else if indexPath.section == 1 {
             if let user = networkController.currentUser {
                 if user.isPrivate == 0 && indexPath.row == 5 {
@@ -431,8 +439,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         page = 0
         
         SVProgressHUD.showWithStatus("Loading")
-        networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page, sort_by: nil) { (pods, error) -> () in
-            
+        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0, sort_by: nil) { (pods, error) -> () in
             if error == nil {
                 
                 self.myPODS = pods
