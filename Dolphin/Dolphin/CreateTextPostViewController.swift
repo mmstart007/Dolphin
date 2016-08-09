@@ -49,14 +49,15 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         postTextView.placeholder = "Write your moment..."
         
         postTagsTextView.delegate         = self
+        
         postTagsTextView.promptText       = ""
         postTagsTextView.placeholder      = ""
-        postTagsTextView.descriptionText  = "Tags"
-        postTagsTextView.maxTokenLimit    = 15//default is -1 for unlimited number of tokens
-        postTagsTextView.style            = .Rounded
-        postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 150)
+        postTagsTextView.maxTokenLimit    = 15
+        postTagsTextView.style            = .Squared
+        postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 70)
         postTagsTextView.font             = UIFont.systemFontOfSize(14)
-        
+        postTagsTextView.backgroundColor = UIColor.clearColor()
+
         parentScrollView = scrollViewContainer
         
         var visibilityString = ""

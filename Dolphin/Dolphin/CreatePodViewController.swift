@@ -26,6 +26,9 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     let maxNameCharacters = 20
     
     var imageSelected: UIImage?
+    var selectedCropRect: CGRect! = CGRectZero
+    var imageOriginalSelected: UIImage?
+    
     var selectedMembers: [User] = []
     
     required init() {
@@ -50,6 +53,9 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         podNameTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         leftCharactersLabel.text = String(format: "%li / %li", arguments: [(podNameTextField!.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))!, maxNameCharacters])
         
+        podImageView.userInteractionEnabled = true
+        let tapPodImageView = UITapGestureRecognizer(target: self, action: "didTapPodImageView")
+        podImageView.addGestureRecognizer(tapPodImageView)
     }
     
     override func viewDidLoad() {
@@ -105,24 +111,34 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         print("didFinishPickingMediaWithInfo")
-        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        let cropController = ImageCropViewController(image: chosenImage)
+        imageOriginalSelected = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let cropController = ImageCropViewController(image: imageOriginalSelected, cropRect: CGRectZero)
         cropController.delegate = self
         navigationController?.pushViewController(cropController, animated: true)
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     
+    func didTapPodImageView() {
+        if self.imageOriginalSelected != nil {
+            let cropController = ImageCropViewController(image: imageOriginalSelected, cropRect: selectedCropRect)
+            cropController.delegate = self
+            navigationController?.pushViewController(cropController, animated: true)
+            dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+    
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         print("imagePickerControllerDidCancel")
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func ImageCropViewControllerSuccess(controller: UIViewController!, didFinishCroppingImage croppedImage: UIImage!) {
+    func ImageCropViewControllerSuccess(controller: UIViewController!, didFinishCroppingImage croppedImage: UIImage!, cropRect: CGRect) {
+        selectedCropRect = cropRect
         imageSelected = croppedImage
         podImageView.image = croppedImage
-//        podImageView.contentMode = .ScaleAspectFill
-
+        //        podImageView.contentMode = .ScaleAspectFill
+        
         print("width = " + "\(imageSelected?.size.width)")
         print("height = " + "\(imageSelected?.size.height)")
         navigationController?.popViewControllerAnimated(true)
@@ -186,7 +202,6 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
             
             index = index + 1
         }
-        
         membersCollectionView.reloadData()
     }
     

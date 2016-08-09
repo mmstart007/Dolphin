@@ -20,10 +20,11 @@ float IMAGE_MIN_WIDTH = 400;
 @synthesize delegate;
 @synthesize cropView;
 
--(id)initWithImage:(UIImage*) image{
+- (id)initWithImage:(UIImage*)image cropRect: (CGRect)cropRect {
    self =  [super init];
     if (self){
         self.image = [image fixOrientation];
+        self.cropRect = cropRect;
     }
     
     return self;
@@ -58,6 +59,12 @@ float IMAGE_MIN_WIDTH = 400;
         self.view = contentView;
         [contentView addSubview:cropView];
         [cropView setImage:self.image];
+        if(self.cropRect.size.width == 0 || self.cropRect.size.height == 0) {
+            
+        }
+        else {
+            [cropView setCropAreaInView: self.cropRect];
+        }
     }
 }
 
@@ -73,17 +80,19 @@ float IMAGE_MIN_WIDTH = 400;
 
 - (IBAction)done:(id)sender
 {
-    
-    if ([self.delegate respondsToSelector:@selector(ImageCropViewControllerSuccess:didFinishCroppingImage:)])
+    if ([self.delegate respondsToSelector:@selector(ImageCropViewControllerSuccess:didFinishCroppingImage:cropRect:)])
     {
         UIImage *cropped;
+
+        CGRect rectInView = CGRectZero;
         if (self.image != nil){
+            rectInView = self.cropView.cropAreaInView;
             CGRect CropRect = self.cropView.cropAreaInImage;
             CGImageRef imageRef = CGImageCreateWithImageInRect([self.image CGImage], CropRect) ;
             cropped = [UIImage imageWithCGImage:imageRef];
             CGImageRelease(imageRef);
         }
-        [self.delegate ImageCropViewControllerSuccess:self didFinishCroppingImage:cropped];
+        [self.delegate ImageCropViewControllerSuccess:self didFinishCroppingImage:cropped cropRect: rectInView];
     }
     
 }
@@ -710,6 +719,8 @@ CGRect SquareCGRectAtCenter(CGFloat centerX, CGFloat centerY, CGFloat size) {
     topRightPoint.center = topRight;
     self.shadeView.cropArea = area;
     [self setNeedsDisplay];
+    
+    [self setBlurEffect: imageView.image];
 }
 
 - (void)setImage:(UIImage *)image {
@@ -737,7 +748,10 @@ CGRect SquareCGRectAtCenter(CGFloat centerX, CGFloat centerY, CGFloat size) {
     imageFrameInView = CGRectMake(x, y, scaledImageWidth, scaledImageHeight);
     imageView.frame = imageFrameInView;
     imageView.image = image;
-    
+    [self setBlurEffect: image];
+}
+
+- (void) setBlurEffect: (UIImage*)image {
     /* prepare imageviews and their frame */
     self.shadeView.blurredImageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -755,7 +769,7 @@ CGRect SquareCGRectAtCenter(CGFloat centerX, CGFloat centerY, CGFloat size) {
     // blurredimageview is on top of shadeview so shadeview needs the same frame as imageView.
     self.shadeView.frame = imageFrameInView;
     self.shadeView.blurredImageView.frame = blurFrame;
-
+    
     // perform image blur
     UIImage *blur;
     if (self.blurred) {
@@ -772,7 +786,6 @@ CGRect SquareCGRectAtCenter(CGFloat centerX, CGFloat centerY, CGFloat size) {
     clearArea.origin.y = clearArea.origin.y - imageFrameInView.origin.y;
     clearArea.origin.x = clearArea.origin.x - imageFrameInView.origin.x;
     [self.shadeView setCropArea:clearArea];
-    
 }
 
 - (UIColor*)controlColor {

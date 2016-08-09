@@ -89,7 +89,7 @@ typedef struct {
 #pragma mark ImageCropViewController interface
 @protocol ImageCropViewControllerDelegate <NSObject>
 
-- (void)ImageCropViewControllerSuccess:(UIViewController* )controller didFinishCroppingImage:(UIImage *)croppedImage;
+- (void)ImageCropViewControllerSuccess:(UIViewController* )controller didFinishCroppingImage:(UIImage *)croppedImage cropRect:(CGRect)cropRect;
 - (void)ImageCropViewControllerDidCancel:(UIViewController *)controller;
 
 @end
@@ -101,9 +101,10 @@ typedef struct {
 @property (nonatomic, weak) id<ImageCropViewControllerDelegate> delegate;
 @property (nonatomic) BOOL blurredBackground;
 @property (nonatomic, retain) UIImage* image;
+@property (nonatomic, assign) CGRect   cropRect;
 @property (nonatomic, retain) ImageCropView* cropView;
 
-- (id)initWithImage:(UIImage*)image;
+- (id)initWithImage:(UIImage*)image cropRect: (CGRect)cropRect;
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
 
