@@ -35,14 +35,14 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
     
     func setBackButton() {
         
-        let leftButton = UIBarButtonItem(image: UIImage(named: "NavBarGoBackButton"), style: UIBarButtonItemStyle.Plain, target: self, action:"goBackButtonPressed:")
+        let leftButton = UIBarButtonItem(image: UIImage(named: "NavBarGoBackButton"), style: UIBarButtonItemStyle.Plain, target: self, action:#selector(goBackButtonPressed(_:)))
         self.navigationItem.leftBarButtonItem = leftButton;
         
     }
     
     func setDismissButton() {
         
-        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: "dismissButtonPressed:")
+        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: #selector(dismissButtonPressed(_:)))
         self.navigationItem.leftBarButtonItem = leftButton;
         
     }
@@ -64,6 +64,7 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
     func setRightButtonItemWithText(text: String, target: AnyObject?, action: Selector) {
         let rightButton = UIBarButtonItem(title: text, style: .Plain, target: target, action: action)
         rightButton.tintColor = UIColor.whiteColor()
+        rightButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: Constants.Fonts.Raleway_Regular, size: 14)!], forState: UIControlState.Normal)
         navigationItem.rightBarButtonItem = rightButton;
     }
     
@@ -97,7 +98,7 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
                 var aRect = self.view.frame
                 aRect.size.height -= keyboardSize.height;
                 let activeViewAbsoluteFrame = activeView.convertRect(activeView.frame, toView: nil)
-                let distance = (UIScreen.mainScreen().bounds.height - keyboardSize.height) - (activeViewAbsoluteFrame.origin.y + activeViewAbsoluteFrame.size.height)
+//                let distance = (UIScreen.mainScreen().bounds.height - keyboardSize.height) - (activeViewAbsoluteFrame.origin.y + activeViewAbsoluteFrame.size.height)
                 if !CGRectContainsPoint(aRect, activeViewAbsoluteFrame.origin) {
                     parentScrollView?.scrollRectToVisible(activeViewAbsoluteFrame, animated: true)
                 }
@@ -117,7 +118,7 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
     
     func keyboardControls(keyboardControls: BSKeyboardControls!, selectedField field: UIView!, inDirection direction: BSKeyboardControlsDirection) {
         print("Changed seletion")
-        if let scrollView = parentScrollView as! UIScrollView? {
+        if let scrollView = parentScrollView {
             scrollView.scrollRectToVisible((keyboardControls.activeField.superview?.superview?.frame)!, animated: true)
         }
     }

@@ -40,7 +40,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         
         self.edgesForExtendedLayout = .None
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "newPodCreated:" , name: Constants.Notifications.CreatedPod, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPodCreated(_:)) , name: Constants.Notifications.CreatedPod, object: nil)
         
         allPODstableView.registerNib(UINib(nibName: "PODPreviewTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODPreviewTableViewCell")
         myPODsCollectionView.registerNib(UINib(nibName: "MyPODPreviewCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "MyPODPreviewCollectionViewCell")
@@ -53,7 +53,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         segmentedControl.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
         segmentedControl.sizeToFit()
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        segmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
         allPODstableView.estimatedRowHeight = 206
         allPODstableView.addPullToRefreshWithActionHandler { () -> Void in
@@ -65,6 +65,55 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
         loadData(false)
     }
+    
+    func deletedPod(pod: POD) {
+        var index = 0;
+        for item in allPods {
+            if item.id == pod.id {
+                allPods.removeAtIndex(index)
+                break
+            }
+            
+            index += 1
+        }
+
+        index = 0;
+        for item in myPods {
+            if item.id == pod.id {
+                myPods.removeAtIndex(index)
+                break
+            }
+            index += 1
+        }
+        
+        allPODstableView.reloadData()
+        myPODsCollectionView.reloadData()
+    }
+    
+    func updatedPod(pod: POD) {
+        var index = 0;
+        for item in allPods {
+            if item.id == pod.id {
+                allPods[index] = pod
+                break
+            }
+            
+            index += 1
+        }
+        
+        index = 0;
+        for item in myPods {
+            if item.id == pod.id {
+                myPods[index] = pod
+                break
+            }
+            index += 1
+        }
+        
+        allPODstableView.reloadData()
+        myPODsCollectionView.reloadData()
+    }
+    
     
     func refreshView() {
         loadData(false)

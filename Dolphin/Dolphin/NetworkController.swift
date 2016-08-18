@@ -778,6 +778,20 @@ class NetworkController: NSObject {
         }
     }
     
+    func getPodById(podId: String, completionHandler: (POD?, AnyObject?) -> ()) -> () {
+       let urlParameters : [CVarArgType] = [podId]
+        performRequest(MethodType.GET, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                print(result!["pod"])
+                let podJson = result!["pod"] as? [String: AnyObject]
+                let pod = POD(jsonObject: podJson!)
+                completionHandler(pod, nil)
+            } else {
+                completionHandler(nil, error)
+            }
+        }
+    }
+    
     func deletePOD(podId: String, completionHandler: (AnyObject?) -> ()) -> () {
         let urlParameters : [CVarArgType] = [podId]
         performRequest(MethodType.DELETE, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
@@ -891,11 +905,10 @@ class NetworkController: NSObject {
                 
                 print(response.request)  // original URL request
                 print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
+//                print(response.data)     // server data
+//                print(response.result)   // result of response serialization
                 
                 var errorJson: AnyObject? = nil
-                
                 do {
                     errorJson = try NSJSONSerialization.JSONObjectWithData(response.data!, options: .AllowFragments)
                 } catch {

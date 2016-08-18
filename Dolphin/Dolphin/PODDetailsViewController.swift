@@ -63,7 +63,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         plusButton.layer.borderColor = UIColor.whiteColor().CGColor
         plusButton.layer.borderWidth = 3
         plusButton.setImage(UIImage(named: "TabbarPlusIcon"), forState: .Normal)
-        plusButton .addTarget(self , action: #selector(PODDetailsViewController.plusButtonTouchUpInside), forControlEvents: .TouchUpInside)
+        plusButton.addTarget(self , action: #selector(PODDetailsViewController.plusButtonTouchUpInside), forControlEvents: .TouchUpInside)
         plusButton.backgroundColor = UIColor.blueDolphin()
         self.view.addSubview(fakeTabBar)
         self.view.addSubview(plusButton)
@@ -87,16 +87,26 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     func setupNavigationBar() {
         setBackButton()
         title = pod?.name
-        
+        self.checkRightActionButton()
+    }
+    
+    func checkRightActionButton() {
         if networkController.currentUserId == self.pod?.owner?.id {
-            setRightButtonItemWithText("Delete", target: self, action: "deletePod")
+            setRightButtonItemWithText("Delete", target: self, action: #selector(deletePod))
         }
         else {
+            var isMember = false
             for u in (self.pod?.users)! {
                 if u.id == networkController.currentUserId {
-                    setRightButtonItemWithText("Withdraw", target: self, action: "withdrawMember")
+                    isMember = true
                     break;
                 }
+            }
+            
+            if isMember == true {
+                setRightButtonItemWithText("Withdraw", target: self, action: #selector(withdrawMember))
+            } else {
+                setRightButtonItemWithText("Join", target: self, action: #selector(joinMember))
             }
         }
     }
@@ -133,7 +143,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             if pod?.owner?.id == networkController.currentUserId {
                 let editButton = UIButton(frame: CGRect(x: headerView.frame.width - 35, y: 0, width: 25, height: 25))
                 editButton.setImage(UIImage(named: "edit_icon"), forState: .Normal)
-                editButton.addTarget(self, action: "didTapEditMember", forControlEvents: .TouchUpInside)
+                editButton.addTarget(self, action: #selector(didTapEditMember), forControlEvents: .TouchUpInside)
                 headerView.addSubview(editButton)
             }
             return headerView
@@ -202,7 +212,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         print("Plus button pressed")
         let subViewsArray = NSBundle.mainBundle().loadNibNamed("NewPostMenu", owner: self, options: nil)
         self.actionMenu = subViewsArray[0] as? UIView
-        actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "actionMenuBackgroundTapped"))
+        actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(actionMenuBackgroundTapped)))
         self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
         UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
         UIView.animateWithDuration(0.2, animations: { () -> Void in
@@ -425,7 +435,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                     if self.prevViewController != nil {
                         if self.prevViewController.isKindOfClass(PODsListViewController) {
                             let listViewController = self.prevViewController as! PODsListViewController
-                            listViewController.refreshView()
+                            listViewController.deletedPod(self.pod!)
                         } else if self.prevViewController.isKindOfClass(SettingsViewController) {
                             let settingsViewController = self.prevViewController as! SettingsViewController
                             settingsViewController.refreshView()
@@ -459,26 +469,16 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
             // withdraw member from pod
             let podIdString = String(self.pod!.id!)
-            let userIdString = String(self.networkController.currentUserId)
+            let userIdString = String(self.networkController.currentUserId!)
             
             SVProgressHUD.show()
             self.networkController.deletePodMember(podIdString, userId: userIdString) { (error) -> () in
-                SVProgressHUD.dismiss()
                 if error == nil {
-                    print("pod member withdraw")
-                    
-                    if self.prevViewController != nil {
-                        if self.prevViewController.isKindOfClass(PODsListViewController) {
-                            let listViewController = self.prevViewController as! PODsListViewController
-                            listViewController.refreshView()
-                        } else if self.prevViewController.isKindOfClass(SettingsViewController) {
-                            let settingsViewController = self.prevViewController as! SettingsViewController
-                            settingsViewController.refreshView()
-                        }
-                    }
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.refreshCurrentPod()
                     
                 } else {
+                    SVProgressHUD.dismiss()
+                    
                     let errors: [String]? = error!["errors"] as? [String]
                     let alert: UIAlertController
                     if errors != nil && errors![0] != "" {
@@ -496,5 +496,39 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         
         // show the alert
         self.presentViewController(alertWarning, animated: true, completion: nil)
+    }
+    
+    // MARK: Join Member.
+    func joinMember() {
+        SVProgressHUD.show()
+        self.networkController.joinPodMember(String(pod!.id!), completionHandler: { (error) in
+            if error != nil {
+                SVProgressHUD.dismiss()
+                Utils.presentAlertMessage("Error", message: "Error to join", cancelActionText: "Ok", presentingViewContoller: self)
+            } else {
+                self.refreshCurrentPod()
+            }
+        })
+    }
+    
+    func refreshCurrentPod() {
+        self.networkController.getPodById(String(self.pod!.id!), completionHandler: { (pod, error) in
+            SVProgressHUD.dismiss()
+            if(error == nil) {
+                self.pod = pod
+                self.tableViewPosts.reloadData()
+                self.checkRightActionButton()
+                
+                if self.prevViewController != nil {
+                    if self.prevViewController.isKindOfClass(PODsListViewController) {
+                        let listViewController = self.prevViewController as! PODsListViewController
+                        listViewController.updatedPod(self.pod!)
+                    } else if self.prevViewController.isKindOfClass(SettingsViewController) {
+                        let settingsViewController = self.prevViewController as! SettingsViewController
+                        settingsViewController.refreshView()
+                    }
+                }
+            }
+        })
     }
 }
