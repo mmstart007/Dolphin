@@ -411,6 +411,10 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
 
+    func tapUserInfo(userInfo: User?) {
+        let userView = OtherProfileViewController(userInfo: userInfo)
+        navigationController?.pushViewController(userView, animated: true)
+    }
     
     //Edit Members.
     func didTapEditMember() {

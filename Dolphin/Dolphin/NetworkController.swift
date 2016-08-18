@@ -319,6 +319,8 @@ class NetworkController: NSObject {
         user["subjects"] = subjects
 
         let parameters : [String : AnyObject]? = ["user": user]
+        
+        print(parameters)
         performRequest(MethodType.PATCH, authenticated: true, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 let retUser = result!["user"] as? [String: AnyObject]

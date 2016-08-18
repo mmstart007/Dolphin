@@ -47,13 +47,13 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         setBackButton()        
         tableViewGradesOrSubjects.delegate = self
         tableViewGradesOrSubjects.dataSource = self
-        tableViewGradesOrSubjects.tableFooterView = footerView
-        if areSubjects == true {
-            footerTitle.text = "Add Subject"
-        }
-        else {
-            footerTitle.text = "Add Grade"            
-        }
+//        tableViewGradesOrSubjects.tableFooterView = footerView
+//        if areSubjects == true {
+//            footerTitle.text = "Add Subject"
+//        }
+//        else {
+//            footerTitle.text = "Add Grade"            
+//        }
         registerCells()
 
         self.loadData()

@@ -78,9 +78,12 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
             SVProgressHUD.dismiss()
             
             if((error) != nil) {
-                let defaults = NSUserDefaults.standardUserDefaults()
-                defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
-                defaults.synchronize()
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                SVProgressHUD.dismiss()
             }
             else {
                 self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)

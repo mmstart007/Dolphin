@@ -1389,7 +1389,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2c09a9a1-0db8-4a90-8a5c-8f02a4675830";
+				PROVISIONING_PROFILE = "37a00414-d52e-4b95-9c35-8b83d962eb13";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1426,7 +1426,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2c09a9a1-0db8-4a90-8a5c-8f02a4675830";
+				PROVISIONING_PROFILE = "37a00414-d52e-4b95-9c35-8b83d962eb13";
 				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
 			};
 			name = Release;
