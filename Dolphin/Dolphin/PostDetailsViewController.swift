@@ -71,7 +71,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         commentTextView.delegate            = self
         commentTextView.text                = commentTextViewPlaceHolder
         commentTextView.textColor           = UIColor.darkGrayColor()
-        let viewTapRecognizer = UITapGestureRecognizer(target: self, action: "viewTapped:")
+        let viewTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
         viewTapRecognizer.cancelsTouchesInView = false
         tableView.addGestureRecognizer(viewTapRecognizer)
     }
@@ -88,20 +88,20 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         let customViewActionButton  = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Normal)
         customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Highlighted)
-        customViewActionButton.addTarget(self, action: "actionButtonPressed", forControlEvents: .TouchUpInside)
+        customViewActionButton.addTarget(self, action: #selector(actionButtonPressed), forControlEvents: .TouchUpInside)
         let actionBarButton         = UIBarButtonItem(customView: customViewActionButton)
 
         // comments new windows
         let customViewCommentButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Normal)
         customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Highlighted)
-        customViewCommentButton.addTarget(self, action: "commentButtonPressed", forControlEvents: .TouchUpInside)
+        customViewCommentButton.addTarget(self, action: #selector(commentButtonPressed), forControlEvents: .TouchUpInside)
 //        let commentBarButton        = UIBarButtonItem(customView: customViewCommentButton)
 
         let customViewLikeButton    = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Normal)
         customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Highlighted)
-        customViewLikeButton.addTarget(self, action: "likeButtonPressed", forControlEvents: .TouchUpInside)
+        customViewLikeButton.addTarget(self, action: #selector(likeButtonPressed), forControlEvents: .TouchUpInside)
 //        let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
 
         //navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
@@ -121,17 +121,17 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             manager.downloadImageWithURL(imageURL, options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                 if error == nil {
                     let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText, image], applicationActivities: nil)
-                    self.presentViewController(shareVC, animated: true, completion: nil)
+                    self.showActivityController(shareVC)
                 } else {
                     let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
-                    self.presentViewController(shareVC, animated: true, completion: nil)
+                    self.showActivityController(shareVC)
                 }
             })
 
         } else if post?.postType?.name == "text" {
             let shareText = (post?.postHeader)! + "\n" + (post?.postText)! + "\n" + Constants.Messages.ShareSuffix + "\n" + Constants.iTunesURL
             let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
-            self.presentViewController(shareVC, animated: true, completion: nil)
+            self.showActivityController(shareVC)
         } else {
             
             let imageURL = NSURL(string: (post?.postImage?.imageURL)!)
@@ -141,13 +141,45 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             manager.downloadImageWithURL(imageURL, options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                 if error == nil {
                     let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText, image], applicationActivities: nil)
-                    self.presentViewController(shareVC, animated: true, completion: nil)
+                    self.showActivityController(shareVC)
                 } else {
                     let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
-                    self.presentViewController(shareVC, animated: true, completion: nil)
+                    self.showActivityController(shareVC)
                 }
             })
         }
+    }
+    
+    func showActivityController(shareVC: UIActivityViewController) {
+        shareVC.completionWithItemsHandler = {(activityType, success:Bool, items:[AnyObject]?, error:NSError?) in
+            if !success {
+                print("cancelled")
+            }
+            else {
+                var shareType = Constants.ShareType.Share_Other
+                if activityType == UIActivityTypeMail {
+                    shareType = Constants.ShareType.Share_Mail
+                }
+                else if activityType == UIActivityTypeMessage {
+                    shareType = Constants.ShareType.Share_SMS
+                }
+                else if activityType == UIActivityTypePostToFacebook {
+                    shareType = Constants.ShareType.Share_Facebook
+                }
+                else if activityType == UIActivityTypePostToTwitter {
+                    shareType = Constants.ShareType.Share_Twitter
+                }
+                
+                self.networkController.createPostShare("\(self.post!.postId!)", type:shareType, completionHandler: { (error) -> () in
+                    if error == nil {
+                        
+                    } else {
+                    }
+                })
+                
+            }
+        }
+        self.presentViewController(shareVC, animated: true, completion: nil)
     }
     
     func setupActionMenuFields() {
@@ -349,8 +381,8 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     // MARK: Keyboard management
     
     func addKeyboardObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillAppear:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillAppear(sender: NSNotification) {
@@ -452,6 +484,11 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             if error == nil {
                 self.post?.postComments = postComments
                 self.tableView.reloadData()
+                
+                //Add Open History.
+                self.networkController.createPostOpen(String(self.post!.postId!), completionHandler: { (error) in
+                    print(error);
+                })
                 
             } else {
                 let errors: [String]? = error!["errors"] as? [String]

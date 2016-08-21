@@ -58,6 +58,8 @@ class NetworkController: NSObject {
         case PostComments       = "posts/%@/comments"
         case PostLikes          = "posts/%@/likes"
         case PostReport         = "posts/%@/reports"
+        case PostShare          = "posts/%@/shares"
+        case PostOpen           = "posts/%@/opens"
         case CreateTopic        = "topics"
         case TopicById          = "topics/%@"
         case TopicByUser        = "topics/user/%@"
@@ -662,6 +664,32 @@ class NetworkController: NSObject {
                 completionHandler(topics, nil)
             } else {
                 completionHandler(topics, error)
+            }
+        }
+    }
+
+    // MARK: - Shares
+    func createPostShare(postId: String, type: Int, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [postId]
+        let parameters : [String : AnyObject]? = ["type": type]
+        performRequest(MethodType.POST, authenticated: true, method: .PostShare, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
+            }
+        }
+    }
+    
+    //MARK: - Opens
+    func createPostOpen(postId: String, completionHandler: (AnyObject?) -> ()) -> () {
+        let urlParameters : [CVarArgType] = [postId]
+        let parameters : [String : AnyObject]? = ["like": ""]
+        performRequest(MethodType.POST, authenticated: true, method: .PostOpen, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                completionHandler(nil)
+            } else {
+                completionHandler(error)
             }
         }
     }

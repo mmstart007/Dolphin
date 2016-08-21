@@ -57,6 +57,14 @@ class Constants {
         static let Post_Limit: Int                  = 25
     }
     
+    struct ShareType {
+        static let Share_Other: Int                 = 0
+        static let Share_Mail: Int                  = 1
+        static let Share_SMS: Int                   = 2
+        static let Share_Facebook: Int              = 3
+        static let Share_Twitter: Int               = 4
+    }
+    
     struct Fonts {
         static let Raleway_Regular: String          = "Raleway-Regular"
         static let Raleway_Bold: String             = "Raleway-Bold"
