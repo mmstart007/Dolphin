@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, PODMembersTableViewCellDelegate {
+class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, PODMembersTableViewCellDelegate, ChooseSourceTypeViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var tableViewPosts: UITableView!
     @IBOutlet weak var actionMenuBackground: UIView!
@@ -23,6 +23,10 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     var page: Int = 0
     var prevViewController: AnyObject!
     
+    var chooseSoureTypeView: ChooseSourceTypeView!
+    var overlayView: UIView!
+    var picker: UIImagePickerController = UIImagePickerController()
+
     required init() {
         super.init(nibName: "PODDetailsViewController", bundle: NSBundle.mainBundle())
     }
@@ -245,14 +249,80 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         
     }
     @IBAction func postPhotoButtonTouchUpInside(sender: AnyObject) {
-        
-        let createImagePostVC = CreateImagePostViewController()
-        createImagePostVC.podId = pod?.id
-        navigationController?.pushViewController(createImagePostVC, animated: true)
         actionMenu?.removeFromSuperview()
-        print("Post photo button pressed")
         
+        self.overlayView = UIView()
+        self.overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        self.overlayView.frame = (UIApplication.sharedApplication().keyWindow?.frame)!
+        UIApplication.sharedApplication().keyWindow?.addSubview(self.overlayView)
+        
+        self.chooseSoureTypeView = ChooseSourceTypeView.instanceFromNib()
+        self.chooseSoureTypeView.frame = CGRectMake(0, 0, 300, 200)
+        self.chooseSoureTypeView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height/2.0)
+        self.chooseSoureTypeView.delegate = self
+        UIApplication.sharedApplication().keyWindow?.addSubview(self.chooseSoureTypeView!)
+        
+        self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        UIView.animateWithDuration(0.1, animations: {
+            self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+            UIView.animateWithDuration(0.05, animations: {
+                self.chooseSoureTypeView.transform = CGAffineTransformIdentity
+            }) { (finished) in
+            }
+        }) { (finished) in
+            
+        }
     }
+    
+    // MARK: ChooseSourceTypeViewDelegate
+    func closedDialog() {
+        self.overlayView.removeFromSuperview()
+        self.chooseSoureTypeView.removeFromSuperview()
+    }
+    
+    func selectedCamera() {
+        self.closedDialog()
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker.delegate   = self
+            self.picker.allowsEditing = true
+            self.presentViewController(picker, animated: true, completion: nil)
+        }
+        else {
+            Utils.presentAlertMessage("Error", message: "Device has no camera", cancelActionText: "Ok", presentingViewContoller: self)
+        }
+    }
+    
+    func selectedPhotoGallery() {
+        self.closedDialog()
+        
+        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.delegate   = self
+        self.picker.allowsEditing = true
+        self.picker.navigationBar.tintColor = UIColor.whiteColor()
+        self.picker.navigationBar.barStyle = UIBarStyle.Black
+        self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        print("didFinishPickingMediaWithInfo")
+        dismissViewControllerAnimated(true) {
+            let image = info[UIImagePickerControllerEditedImage] as? UIImage
+            let finishImagePostVC = CreateImagePostFinishPostingViewController(image: image)
+            finishImagePostVC.podId = self.pod?.id
+            self.navigationController?.pushViewController(finishImagePostVC, animated: true)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
         closeNewPostViewButtonTouchUpInside(self)
         let createTextPostVC = CreateTextPostViewController()

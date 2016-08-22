@@ -31,7 +31,7 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
         super.viewDidLoad()
         
         setBackButton()
-        setRightButtonItemWithText("Next", target: self, action: "nextButtonTouchUpInside")
+        setRightButtonItemWithText("Next", target: self, action: #selector(nextButtonTouchUpInside))
         self.edgesForExtendedLayout = .None
         title = "New Post"
         

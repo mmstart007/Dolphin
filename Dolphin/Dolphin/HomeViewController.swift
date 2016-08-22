@@ -10,12 +10,15 @@ import Foundation
 import UIKit
 import CoreLocation
 
-class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UITabBarControllerDelegate, CLLocationManagerDelegate {
+class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UITabBarControllerDelegate, CLLocationManagerDelegate, ChooseSourceTypeViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var actionMenu: UIView? = nil
     var searchBar: UISearchBar?
     var locationManager: CLLocationManager!
-    
+    var chooseSoureTypeView: ChooseSourceTypeView!
+    var overlayView: UIView!
+    var picker: UIImagePickerController = UIImagePickerController()
+
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
     }
@@ -114,7 +117,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         plusButton.layer.borderColor = UIColor.whiteColor().CGColor
         plusButton.layer.borderWidth = 3
         plusButton.setImage(UIImage(named: "TabbarPlusIcon"), forState: .Normal)
-        plusButton .addTarget(self , action: "plusButtonTouchUpInside", forControlEvents: .TouchUpInside)
+        plusButton .addTarget(self , action: #selector(plusButtonTouchUpInside), forControlEvents: .TouchUpInside)
         plusButton.backgroundColor = UIColor.blueDolphin()
         self.view.addSubview(plusButton)
         
@@ -128,7 +131,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         print("Plus button pressed")
         let subViewsArray = NSBundle.mainBundle().loadNibNamed("NewPostMenu", owner: self, options: nil)
         self.actionMenu = subViewsArray[0] as? UIView
-        actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "actionMenuBackgroundTapped"))
+        actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(actionMenuBackgroundTapped)))
         self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
         UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
         UIView.animateWithDuration(0.2, animations: { () -> Void in
@@ -160,12 +163,80 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         
     }
     @IBAction func postPhotoButtonTouchUpInside(sender: AnyObject) {
-        let createImagePostVC = CreateImagePostViewController()
-        navigationController?.pushViewController(createImagePostVC, animated: true)
         actionMenu?.removeFromSuperview()
-        print("Post photo button pressed")
         
+        self.overlayView = UIView()
+        self.overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        self.overlayView.frame = (UIApplication.sharedApplication().keyWindow?.frame)!
+        UIApplication.sharedApplication().keyWindow?.addSubview(self.overlayView)
+        
+        self.chooseSoureTypeView = ChooseSourceTypeView.instanceFromNib()
+        self.chooseSoureTypeView.frame = CGRectMake(0, 0, 300, 200)
+        self.chooseSoureTypeView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height/2.0)
+        self.chooseSoureTypeView.delegate = self
+        UIApplication.sharedApplication().keyWindow?.addSubview(self.chooseSoureTypeView!)
+        
+        self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        UIView.animateWithDuration(0.1, animations: { 
+            self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+            UIView.animateWithDuration(0.05, animations: {
+                self.chooseSoureTypeView.transform = CGAffineTransformIdentity
+            }) { (finished) in
+            }
+        }) { (finished) in
+            
+        }
     }
+    
+    // MARK: ChooseSourceTypeViewDelegate
+    func closedDialog() {
+        self.overlayView.removeFromSuperview()
+        self.chooseSoureTypeView.removeFromSuperview()
+    }
+    
+    func selectedCamera() {
+        self.closedDialog()
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker.delegate   = self
+            self.picker.allowsEditing = true
+            self.presentViewController(picker, animated: true, completion: nil)
+        }
+        else {
+            Utils.presentAlertMessage("Error", message: "Device has no camera", cancelActionText: "Ok", presentingViewContoller: self)
+        }
+    }
+    
+    func selectedPhotoGallery() {
+        self.closedDialog()
+        
+        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.delegate   = self
+        self.picker.allowsEditing = true
+        self.picker.navigationBar.tintColor = UIColor.whiteColor()
+        self.picker.navigationBar.barStyle = UIBarStyle.Black
+        self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        print("didFinishPickingMediaWithInfo")
+        dismissViewControllerAnimated(true) { 
+            let image = info[UIImagePickerControllerEditedImage] as? UIImage
+            let finishImagePostVC = CreateImagePostFinishPostingViewController(image: image)
+            self.navigationController?.pushViewController(finishImagePostVC, animated: true)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    
     @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
         let createTextPostVC = CreateTextPostViewController()
         navigationController?.pushViewController(createTextPostVC, animated: true)

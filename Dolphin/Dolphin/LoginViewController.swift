@@ -77,15 +77,15 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate {
         self.logoTopSpaceToViewConstraint.constant = UIScreen.mainScreen().bounds.height / 6.0
         self.view.setNeedsUpdateConstraints()
         
-        let tapSignUpLabelGesture = UITapGestureRecognizer(target: self, action: "signUpLabelTapped")
+        let tapSignUpLabelGesture = UITapGestureRecognizer(target: self, action: #selector(signUpLabelTapped))
         signUpForDolphinLabel.addGestureRecognizer(tapSignUpLabelGesture)
         signUpForDolphinLabel.userInteractionEnabled = true
         
-        let tapLoginLabelGesture = UITapGestureRecognizer(target: self, action: "loginLabelTapped")
+        let tapLoginLabelGesture = UITapGestureRecognizer(target: self, action: #selector(loginLabelTapped))
         loginLabel.addGestureRecognizer(tapLoginLabelGesture)
         loginLabel.userInteractionEnabled = true
         
-        let tapViewGesture = UITapGestureRecognizer(target: self, action: "viewTapped")
+        let tapViewGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         self.view.addGestureRecognizer(tapViewGesture)
         
         UIView.animateWithDuration(0.5) { () -> Void in

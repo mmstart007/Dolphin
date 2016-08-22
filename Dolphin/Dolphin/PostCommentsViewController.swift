@@ -58,7 +58,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         commentTextView.delegate            = self
         commentTextView.text                = commentTextViewPlaceHolder
         commentTextView.textColor           = UIColor.darkGrayColor()
-        let viewTapRecognizer = UITapGestureRecognizer(target: self, action: "viewTapped")
+        let viewTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(viewTapRecognizer)
     }
     
