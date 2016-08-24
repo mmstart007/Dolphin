@@ -71,7 +71,6 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         plusButton.backgroundColor = UIColor.blueDolphin()
         self.view.addSubview(fakeTabBar)
         self.view.addSubview(plusButton)
-        
     }
     
     override func viewWillAppear(animated: Bool) {

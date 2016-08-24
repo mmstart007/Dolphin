@@ -86,8 +86,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         networkController.currentUserId = currentUserId
         networkController.token         = apiToken
-        let rootViewController          = userLogged ? homeViewController : loginVC
-        navigationController       = UINavigationController(rootViewController: rootViewController)
+        
+        if userLogged == true {
+            navigationController       = UINavigationController(rootViewController: homeViewController)
+            navigationController.navigationBarHidden = false
+        }
+        else {
+            navigationController       = UINavigationController(rootViewController: loginVC)
+            navigationController.navigationBarHidden = true
+        }
+        
         
         // Initialize root controller with sidebar
         let rearViewController = SidebarViewController(homeVC: homeViewController as! HomeViewController)

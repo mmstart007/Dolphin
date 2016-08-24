@@ -330,21 +330,24 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
                     var locality: String = ""
                     if pm.locality != nil {
                         locality = pm.locality!
+                        Globals.currentCity = pm.locality!
                     }
                     
                     var postalCode: String = ""
                     if pm.postalCode != nil {
                         postalCode = "," + pm.postalCode!
+                        Globals.currentZip = pm.postalCode!
                     }
                     
                     var administrativeArea: String = ""
                     if pm.administrativeArea != nil {
                         administrativeArea = "," + pm.administrativeArea!
                     }
-                    
+                   
                     var country: String = ""
                     if pm.country != nil {
                         country = "," + pm.country!
+                        Globals.currentCountry = pm.country!
                     }
                     
                     Globals.currentAddress = locality + postalCode + administrativeArea + country

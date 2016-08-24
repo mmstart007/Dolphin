@@ -14,8 +14,10 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
     
     let networkController = NetworkController.sharedInstance
     
-    @IBOutlet weak var gradeButton: UIButton!
-    @IBOutlet weak var subjectButton: UIButton!
+    @IBOutlet weak var gradeView: UIView!
+    @IBOutlet weak var gradeLabel: UILabel!
+    @IBOutlet weak var subjectsView: UIView!
+    @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var finishProfileButton: UIButton!
     
     var selectedGrades: [Grade] = []
@@ -86,6 +88,11 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
                 SVProgressHUD.dismiss()
             }
             else {
+                
+                self.navigationController?.navigationBar.translucent = false
+                self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+
+                self.navigationController?.navigationBarHidden = false
                 self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
             }
         }
@@ -131,8 +138,7 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
         }
         
         let title = selectedGrades.count == 0 ? "grades" : gradesString
-        gradeButton.setTitle(title, forState: .Normal)
-        gradeButton.setTitle(title, forState: .Selected)
+        gradeLabel.text = title
     }
     
     func subjectsDidSelected(subjects: [Subject]) {
@@ -148,30 +154,22 @@ class CreateProfileViewController: DolphinViewController, PickerGradesOrSubjects
         }
         
         let title = selectedGrades.count == 0 ? "subjects" : subjectsString
-        subjectButton.setTitle(title, forState: .Normal)
-        subjectButton.setTitle(title, forState: .Selected)
+        subjectLabel.text = title
     }
     
     // MARK: - Auxilary methods
     
     func setAppearance() {
         
-        gradeButton.layer.cornerRadius         = 20
-        gradeButton.layer.borderWidth          = 1
-        gradeButton.layer.borderColor          = UIColor.whiteColor().CGColor
-        let downImage = UIImage(named: "DownImage")
-        gradeButton.setImage(downImage, forState: .Normal)
-        gradeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: gradeButton.frame.size.width - (downImage!.size.width + 15), bottom: 0, right: 10)
-        
+        gradeView.layer.cornerRadius         = gradeView.frame.height/2.0
+        gradeView.layer.borderWidth          = 1
+        gradeView.layer.borderColor          = UIColor.whiteColor().CGColor
     
-        subjectButton.layer.cornerRadius       = 20
-        subjectButton.layer.borderWidth        = 1
-        subjectButton.layer.borderColor        = UIColor.whiteColor().CGColor
-        subjectButton.setImage(downImage, forState: .Normal)
-        subjectButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: subjectButton.frame.size.width - (downImage!.size.width + 15), bottom: 0, right: 10)
-        finishProfileButton.layer.cornerRadius = 20
-        
-    
+        subjectsView.layer.cornerRadius       = subjectsView.frame.height/2.0
+        subjectsView.layer.borderWidth        = 1
+        subjectsView.layer.borderColor        = UIColor.whiteColor().CGColor
+
+        finishProfileButton.layer.cornerRadius = finishProfileButton.frame.height/2.0
     }
     
     func setNavBarStyle() {

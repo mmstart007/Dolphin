@@ -13,7 +13,7 @@ import SDWebImage
 import MessageUI
 
 class SettingsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, SettingsSwitchTableViewCellDelegate,
-    RSKImageCropViewControllerDelegate, ProfileAvatarTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PickerGradesOrSubjectsDelegate, MFMailComposeViewControllerDelegate{
+    RSKImageCropViewControllerDelegate, ProfileAvatarTableViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, PickerGradesOrSubjectsDelegate, MFMailComposeViewControllerDelegate, SettingsGenderTableViewCellDelegate{
     
     let networkController = NetworkController.sharedInstance
     let kPageQuantity: Int = 10
@@ -44,7 +44,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         
         title = "Settings"
         setBackButton()
-        setRightButtonItemWithText("Save", target: self, action: Selector("saveSettingsPressed:"))
+        setRightButtonItemWithText("Save", target: self, action: #selector(saveSettingsPressed(_:)))
         tableViewSettings.delegate = self
         tableViewSettings.dataSource = self
         registerCells()
@@ -86,7 +86,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             // profile
             if let user = networkController.currentUser {
                 if user.isPrivate == 0 {
-                    return 7
+                    return 8
                 } else {
                     return 2
                 }
@@ -116,7 +116,6 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         let defaultCellIdentifier = "Cell"
         let value1CellIdentifier = "Cell1"
 
-        
         if indexPath.section == 0 {
             // profile avatar cell
             cell = tableView.dequeueReusableCellWithIdentifier("ProfileAvatarTableViewCell") as? ProfileAvatarTableViewCell
@@ -154,22 +153,31 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                         cell = SettingsTextFieldTableViewCell()
                     }
                     (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Last Name", placeholder: "enter your last name", value: networkController.currentUser?.lastName, isEdit: true, subItem: false)
-                    
-                } else if indexPath.row == 4 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                }
+                
+                //Gender
+                else if indexPath.row == 4 {
+                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsGenderTableViewCell") as? SettingsGenderTableViewCell
                     if cell == nil {
-                        cell = SettingsTextFieldTableViewCell()
+                        cell = SettingsGenderTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location", value: Globals.currentAddress, isEdit: false, subItem: false)
+                    (cell as? SettingsGenderTableViewCell)?.configureWithSetting(self, gender: networkController.currentUser?.gender)
                     
                 } else if indexPath.row == 5 {
                     cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
-                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Grades", placeholder: "select your grades", value: getGradeNames(), isEdit: false, subItem: true)
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location", value: Globals.currentAddress, isEdit: false, subItem: false)
                     
                 } else if indexPath.row == 6 {
+                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                    if cell == nil {
+                        cell = SettingsTextFieldTableViewCell()
+                    }
+                    (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Grades", placeholder: "select your grades", value: getGradeNames(), isEdit: false, subItem: true)
+                    
+                } else if indexPath.row == 7 {
                     cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
@@ -189,26 +197,31 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             if (cell == nil) {
                 cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
             }
+            Utils.setFontFamilyForView(cell!, includeSubViews: true)
             cell?.detailTextLabel?.text = (myPODS[indexPath.row].isPrivate == 1) ? "Private" : "Public"
             cell?.accessoryType = .DisclosureIndicator
             cell?.textLabel?.text = myPODS[indexPath.row].name
+            cell?.textLabel?.font = UIFont(name: "Raleway-Regular", size: 15)
+            Utils.setFontFamilyForView(cell!, includeSubViews: true)
         } else if indexPath.section == 4 {
             cell = tableView.dequeueReusableCellWithIdentifier(defaultCellIdentifier)
             if (cell == nil) {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: defaultCellIdentifier)
             }
             cell?.textLabel?.text = dolphinItems[indexPath.row]
+            cell?.textLabel?.font = UIFont(name: "Raleway-Regular", size: 15)
         } else if indexPath.section == 5 {
             cell = tableView.dequeueReusableCellWithIdentifier(defaultCellIdentifier)
             if (cell == nil) {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: defaultCellIdentifier)
             }
             cell?.textLabel?.text = supportItems[indexPath.row]
+            cell?.textLabel?.font = UIFont(name: "Raleway-Regular", size: 15)
         }
-        if cell != nil {
-            Utils.setFontFamilyForView(cell!, includeSubViews: true)
-        }
-        cell?.contentView.userInteractionEnabled = false
+//        if cell != nil {
+        
+//        }
+//        cell?.contentView.userInteractionEnabled = false
         cell?.backgroundColor = UIColor.whiteColor()
         cell?.selectionStyle = .None
         return cell!
@@ -256,9 +269,9 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             
         } else if indexPath.section == 1 {
             if let user = networkController.currentUser {
-                if user.isPrivate == 0 && indexPath.row == 5 {
+                if user.isPrivate == 0 && indexPath.row == 6 {
                     selectGrades()
-                } else if user.isPrivate == 0  && indexPath.row == 6 {
+                } else if user.isPrivate == 0  && indexPath.row == 7 {
                     selectSubjects()
                 }
             }
@@ -348,7 +361,11 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             networkController.currentUser?.firstName = cellFirstName?.textFieldValue.text
             let cellLastName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 1)) as? SettingsTextFieldTableViewCell
             networkController.currentUser?.lastName = cellLastName?.textFieldValue.text
-            let cellLocation = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 1)) as? SettingsTextFieldTableViewCell
+            
+            let cellGender = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 1)) as? SettingsGenderTableViewCell
+            networkController.currentUser?.gender = cellGender?.genderSegement.selectedSegmentIndex
+
+            let cellLocation = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 5, inSection: 1)) as? SettingsTextFieldTableViewCell
             networkController.currentUser?.location = cellLocation?.textFieldValue.text
             
             var encodedImage: String?
@@ -359,7 +376,19 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             
             // call the api function to update the user info
             SVProgressHUD.showWithStatus("Saving")
-            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: networkController.currentUser?.firstName, lastName: networkController.currentUser?.lastName, avatarImage: encodedImage, email: nil, password: nil, location: networkController.currentUser?.location, isPrivate: networkController.currentUser?.isPrivate, subjects: getSubjectIds(), grades: getGradeIds()) { (user, error) -> () in
+            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil,
+                                         deviceId: nil,
+                                         firstName: networkController.currentUser?.firstName,
+                                         lastName: networkController.currentUser?.lastName,
+                                         avatarImage: encodedImage,
+                                         email: nil,
+                                         password: nil,
+                                         gender: networkController.currentUser?.gender,
+                                         city: Globals.currentCity,
+                                         country: Globals.currentCountry,
+                                         zip: Globals.currentZip,
+                                         location: networkController.currentUser?.location,
+                                         isPrivate: networkController.currentUser?.isPrivate, subjects: getSubjectIds(), grades: getGradeIds()) { (user, error) -> () in
                 if error == nil {
                     // update the user modified
                     self.networkController.currentUser = user
@@ -401,7 +430,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             
             // call the api function to update the user info
             SVProgressHUD.showWithStatus("Saving")
-            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: encodedImage, email: nil, password: nil, location: nil, isPrivate: networkController.currentUser?.isPrivate, subjects: nil, grades: nil) { (user, error) -> () in
+            networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: encodedImage, email: nil, password: nil, gender: nil, city: nil, country: nil, zip: nil, location: nil, isPrivate: networkController.currentUser?.isPrivate, subjects: nil, grades: nil) { (user, error) -> () in
                 if error == nil {
                     // update the user modified
                     self.networkController.currentUser = user
@@ -428,6 +457,8 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         tableViewSettings.registerNib(UINib(nibName: "ProfileAvatarTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "ProfileAvatarTableViewCell")
         tableViewSettings.registerNib(UINib(nibName: "SettingsTextFieldTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsTextFieldTableViewCell")
         tableViewSettings.registerNib(UINib(nibName: "SettingsSwitchTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsSwitchTableViewCell")
+        tableViewSettings.registerNib(UINib(nibName: "SettingsGenderTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsGenderTableViewCell")
+
     
     }
     
@@ -517,6 +548,11 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         } else if tag == 1 {
             // Push Notifications
         }
+    }
+    
+    // MARK: - SettingsGenderTableViewCellDelegate
+    func changedGender(gender: Int) {
+        
     }
     
     // MARK: - Actions

@@ -180,6 +180,7 @@ class SidebarViewController : UIViewController {
         
         let loginVC = LoginViewController()
         let rootViewController = (UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController
+        rootViewController.navigationController?.navigationBarHidden = true
         rootViewController.navigationController?.pushViewController(loginVC, animated: true)
     }
     
