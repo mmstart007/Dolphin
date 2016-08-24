@@ -23,14 +23,23 @@ class User : NSObject {
     var isPrivate: Int?
     var grades: [Grade]?  = []
     var subjects: [Subject]? = []
+    var gender: Int?
+    var city: String?
+    var country: String?
+    var zip: String?
     
-    convenience init(deviceId: String?, userName: String?, imageURL: String?, email: String?, password: String?) {
+    convenience init(deviceId: String?, userName: String?, imageURL: String?, email: String?, password: String?, gender: Int?, city: String?, country: String?, zip: String?, location: String?) {
         self.init()
         self.deviceId           = deviceId
         self.userName           = userName
         self.userAvatarImageURL = imageURL
         self.userEmail          = email
         self.userPassword       = password
+        self.gender             = gender
+        self.city               = city
+        self.country            = country
+        self.zip                = zip
+        self.location           = location
     }
     
     convenience init(jsonObject: AnyObject) {
@@ -44,7 +53,11 @@ class User : NSObject {
         self.isPrivate          = jsonObject["is_private"] as? Int
         self.id                 = jsonObject["id"] as? Int
         self.userAvatarImageURL = jsonObject["avatar_image_url"] as? String
-        
+        self.gender             = jsonObject["gender"] as? Int
+        self.city               = jsonObject["city"] as? String
+        self.country            = jsonObject["country"] as? String
+        self.zip                = jsonObject["zip"] as? String
+
         let arrayGrades         = jsonObject["grades"] as? [NSDictionary]
         if(arrayGrades != nil)
         {
@@ -97,6 +110,18 @@ class User : NSObject {
         }
         if let image_url = self.userAvatarImageURL {
             retDic["avatar_image_url"] = image_url
+        }
+        if let gender = self.gender {
+            retDic["gender"] = gender
+        }
+        if let city = self.city {
+            retDic["city"] = city
+        }
+        if let country = self.country {
+            retDic["country"] = country
+        }
+        if let zip = self.zip {
+            retDic["zip"] = zip
         }
         
         if self.subjects != nil {

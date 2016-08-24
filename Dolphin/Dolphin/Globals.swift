@@ -12,8 +12,11 @@ public class Globals: NSObject {
     
     static var currentLat: Double = 0.0
     static var currentLng: Double = 0.0
-    static var currentAddress: String = ""
-    static var currentDeviceToken: String = ""
+    static var currentDeviceToken: String   = ""
+    static var currentCity: String          = ""
+    static var currentCountry: String       = ""
+    static var currentZip: String           = ""
+    static var currentAddress: String       = ""
     
     // Convert from NSData to json object
     public static func nsdataToJSON(data: NSData) -> AnyObject? {

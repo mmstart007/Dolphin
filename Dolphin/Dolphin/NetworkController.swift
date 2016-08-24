@@ -126,7 +126,22 @@ class NetworkController: NSObject {
         }
     }
     
-    func updateUser(userName: String?, deviceId: String?, firstName: String?, lastName: String?, avatarImage: String?, email: String?, password: String?, location: String?, isPrivate: Int?, subjects: [String]?, grades: [String]?, completionHandler: (User?, AnyObject?) -> ()) -> () {
+    func updateUser(userName: String?,
+                    deviceId: String?,
+                    firstName: String?,
+                    lastName: String?,
+                    avatarImage: String?,
+                    email: String?,
+                    password: String?,
+                    gender: Int?,
+                    city: String?,
+                    country: String?,
+                    zip: String?,
+                    location: String?,
+                    isPrivate: Int?,
+                    subjects: [String]?,
+                    grades: [String]?,
+                    completionHandler: (User?, AnyObject?) -> ()) -> () {
         
         var userUpdated: User?
         var updateValues = [String: AnyObject]()
@@ -141,6 +156,18 @@ class NetworkController: NSObject {
         }
         if lastName != nil {
             updateValues["last_name"] = lastName
+        }
+        if gender != nil {
+            updateValues["gender"] = gender
+        }
+        if city != nil {
+            updateValues["city"] = city
+        }
+        if country != nil {
+            updateValues["country"] = country
+        }
+        if zip != nil {
+            updateValues["zip"] = zip
         }
         if avatarImage != nil {
             updateValues["avatar_image"] = avatarImage
