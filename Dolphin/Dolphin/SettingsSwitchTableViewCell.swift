@@ -39,6 +39,5 @@ class SettingsSwitchTableViewCell: UITableViewCell {
             delegate?.toggleSwitch(switchSetting.on, tag: self.tag)
         }
     }
-    
 
 }

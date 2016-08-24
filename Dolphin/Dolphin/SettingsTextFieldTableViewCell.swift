@@ -31,7 +31,7 @@ class SettingsTextFieldTableViewCell: UITableViewCell {
         
         if subItem {
             self.accessoryType = .DisclosureIndicator
-            self.layoutTextRight.constant = 25
+            self.layoutTextRight.constant = 0
         } else
         {
             self.accessoryType = .None

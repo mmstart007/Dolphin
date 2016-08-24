@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Raleway-Regular.ttf">
@@ -13,46 +12,45 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SettingsSwitchTableViewCell" customModule="Dolphin" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QOA-bV-BUl" customClass="SettingsSwitchTableViewCell" customModule="Dolphin" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEs-jj-sD1">
-                    <rect key="frame" x="15" y="9" width="288" height="21"/>
-                    <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="D9v-uW-mAK">
-                    <rect key="frame" x="311" y="4" width="51" height="31"/>
-                    <connections>
-                        <action selector="switchSettingValueChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="HNt-9N-uLh"/>
-                    </connections>
-                </switch>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="D9v-uW-mAK" firstAttribute="leading" secondItem="eEs-jj-sD1" secondAttribute="trailing" constant="8" id="2je-dJ-zIf"/>
-                <constraint firstItem="D9v-uW-mAK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="3dj-7P-14p"/>
-                <constraint firstAttribute="trailing" secondItem="D9v-uW-mAK" secondAttribute="trailing" constant="15" id="6OA-qo-hwu"/>
-                <constraint firstItem="eEs-jj-sD1" firstAttribute="width" secondItem="eEs-jj-sD1" secondAttribute="height" multiplier="218:21" id="Rt7-Vq-aNd"/>
-                <constraint firstItem="D9v-uW-mAK" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Ynm-JM-3zj"/>
-                <constraint firstItem="eEs-jj-sD1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="9" id="Zwm-6I-Np6"/>
-                <constraint firstAttribute="bottom" secondItem="D9v-uW-mAK" secondAttribute="bottom" constant="5" id="axp-fb-5ZS"/>
-                <constraint firstItem="eEs-jj-sD1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="nii-hK-sC4"/>
-                <constraint firstAttribute="bottom" secondItem="eEs-jj-sD1" secondAttribute="bottom" constant="10" id="shl-n6-1sJ"/>
-            </constraints>
-            <nil key="simulatedStatusBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="Rt7-Vq-aNd"/>
-                </mask>
-            </variation>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QOA-bV-BUl" id="ofJ-Gv-Hxe">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="39"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Blg-L6-0pv">
+                        <rect key="frame" x="311" y="4" width="51" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="31" id="OWc-sM-pRU"/>
+                            <constraint firstAttribute="width" constant="49" id="Vrb-ZF-DPQ"/>
+                        </constraints>
+                        <connections>
+                            <action selector="switchSettingValueChanged:" destination="QOA-bV-BUl" eventType="valueChanged" id="yCx-So-yDq"/>
+                        </connections>
+                    </switch>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7V8-Pv-FVm">
+                        <rect key="frame" x="15" y="9" width="288" height="21"/>
+                        <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Blg-L6-0pv" firstAttribute="leading" secondItem="7V8-Pv-FVm" secondAttribute="trailing" constant="8" id="CRY-Br-kIG"/>
+                    <constraint firstItem="7V8-Pv-FVm" firstAttribute="centerY" secondItem="ofJ-Gv-Hxe" secondAttribute="centerY" id="LTq-gK-d79"/>
+                    <constraint firstItem="7V8-Pv-FVm" firstAttribute="leading" secondItem="ofJ-Gv-Hxe" secondAttribute="leading" constant="15" id="Mih-St-3Rk"/>
+                    <constraint firstAttribute="trailing" secondItem="Blg-L6-0pv" secondAttribute="trailing" constant="15" id="Rrn-e0-ZI5"/>
+                    <constraint firstItem="7V8-Pv-FVm" firstAttribute="top" secondItem="ofJ-Gv-Hxe" secondAttribute="top" constant="9" id="bAt-w2-KgX"/>
+                    <constraint firstItem="Blg-L6-0pv" firstAttribute="centerY" secondItem="ofJ-Gv-Hxe" secondAttribute="centerY" id="hV9-uK-YWp"/>
+                    <constraint firstAttribute="bottom" secondItem="7V8-Pv-FVm" secondAttribute="bottom" constant="9" id="vT5-6C-ZsP"/>
+                </constraints>
+            </tableViewCellContentView>
             <connections>
-                <outlet property="labelSettingName" destination="eEs-jj-sD1" id="JuV-7R-hJy"/>
-                <outlet property="switchSetting" destination="D9v-uW-mAK" id="B5F-zp-xWo"/>
+                <outlet property="labelSettingName" destination="7V8-Pv-FVm" id="w4T-36-SRl"/>
+                <outlet property="switchSetting" destination="Blg-L6-0pv" id="LBf-B3-jh4"/>
             </connections>
-        </view>
+            <point key="canvasLocation" x="510" y="512"/>
+        </tableViewCell>
     </objects>
 </document>
