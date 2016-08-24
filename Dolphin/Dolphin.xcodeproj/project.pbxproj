@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3607AAD51C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3607AAD41C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift */; };
-		3607AAD71C8F556500B9DD8F /* SettingsTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3607AAD61C8F556500B9DD8F /* SettingsTextFieldTableViewCell.xib */; };
 		3607AAD91C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3607AAD81C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift */; };
 		3607AADB1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3607AADA1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib */; };
 		3607AADE1C8F7E6200B9DD8F /* PODSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3607AADC1C8F7E6200B9DD8F /* PODSettingsViewController.swift */; };
@@ -160,6 +159,8 @@
 		36F4AC3E1C64EFB900323672 /* CreateTextPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */; };
 		890B04FF265D7EA4ECA25CE0 /* Pods_Dolphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */; };
 		AA0592D91D01E522001D7823 /* LeftAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */; };
+		AA72535D1D6D90620050DF7D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72535C1D6D90620050DF7D /* BaseViewController.swift */; };
+		AA7253631D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7253621D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib */; };
 		AA72BE181D5810C0001543BE /* PDKBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE061D5810BF001543BE /* PDKBoard.m */; };
 		AA72BE191D5810C0001543BE /* PDKCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE081D5810BF001543BE /* PDKCategories.m */; };
 		AA72BE1A1D5810C0001543BE /* PDKClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE0A1D5810BF001543BE /* PDKClient.m */; };
@@ -169,6 +170,8 @@
 		AA72BE1E1D5810C0001543BE /* PDKPin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE121D5810C0001543BE /* PDKPin.m */; };
 		AA72BE1F1D5810C0001543BE /* PDKResponseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE141D5810C0001543BE /* PDKResponseObject.m */; };
 		AA72BE201D5810C0001543BE /* PDKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE161D5810C0001543BE /* PDKUser.m */; };
+		AA7452B91D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7452B71D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift */; };
+		AA7452BA1D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7452B81D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib */; };
 		AA7AEF7D1D0A5D4800AA36B5 /* TagPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */; };
 		AA7DE0311D6A939500CA736C /* ChooseSourceTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7DE0301D6A939500CA736C /* ChooseSourceTypeView.swift */; };
 		AA7DE0331D6A93AF00CA736C /* ChooseSourceTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7DE0321D6A93AF00CA736C /* ChooseSourceTypeView.xib */; };
@@ -178,6 +181,8 @@
 		AAB7E8F71D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */; };
 		AAB7E8FA1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */; };
 		AAB7E8FE1D4A891600B19397 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8FD1D4A891600B19397 /* User.swift */; };
+		AAE6A8C41D6CA9C800A997B0 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE6A8C21D6CA9C800A997B0 /* SignUpViewController.swift */; };
+		AAE6A8C51D6CA9C800A997B0 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAE6A8C31D6CA9C800A997B0 /* SignUpViewController.xib */; };
 		F8483E6B1CFE6FB90060CC8C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6A1CFE6FB90060CC8C /* Globals.swift */; };
 		F8483E701CFE7BFA0060CC8C /* MyFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6C1CFE7BFA0060CC8C /* MyFeedViewController.swift */; };
 		F8483E711CFE7BFA0060CC8C /* RecentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6D1CFE7BFA0060CC8C /* RecentsViewController.swift */; };
@@ -193,7 +198,6 @@
 
 /* Begin PBXFileReference section */
 		3607AAD41C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTextFieldTableViewCell.swift; sourceTree = "<group>"; };
-		3607AAD61C8F556500B9DD8F /* SettingsTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		3607AAD81C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		3607AADA1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		3607AADC1C8F7E6200B9DD8F /* PODSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODSettingsViewController.swift; sourceTree = "<group>"; };
@@ -357,6 +361,8 @@
 		AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
 		AA1CC60A1D5791EF00D93005 /* PinterestSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PinterestSDK.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Dolphin-akwfxwckpfcxlmglobgslogpnkwb/Build/Products/Debug-iphonesimulator/PinterestSDK/PinterestSDK.framework"; sourceTree = "<group>"; };
 		AA4493901D5785E1008488A6 /* Dolphin-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Dolphin-Bridging-Header.h"; sourceTree = "<group>"; };
+		AA72535C1D6D90620050DF7D /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		AA7253621D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		AA72BE051D5810BF001543BE /* PDKBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKBoard.h; path = Extensions/Pinterest/PDKBoard.h; sourceTree = "<group>"; };
 		AA72BE061D5810BF001543BE /* PDKBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKBoard.m; path = Extensions/Pinterest/PDKBoard.m; sourceTree = "<group>"; };
 		AA72BE071D5810BF001543BE /* PDKCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKCategories.h; path = Extensions/Pinterest/PDKCategories.h; sourceTree = "<group>"; };
@@ -376,6 +382,8 @@
 		AA72BE151D5810C0001543BE /* PDKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKUser.h; path = Extensions/Pinterest/PDKUser.h; sourceTree = "<group>"; };
 		AA72BE161D5810C0001543BE /* PDKUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKUser.m; path = Extensions/Pinterest/PDKUser.m; sourceTree = "<group>"; };
 		AA72BE171D5810C0001543BE /* PinterestSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinterestSDK.h; path = Extensions/Pinterest/PinterestSDK.h; sourceTree = "<group>"; };
+		AA7452B71D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGenderTableViewCell.swift; sourceTree = "<group>"; };
+		AA7452B81D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsGenderTableViewCell.xib; sourceTree = "<group>"; };
 		AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPostsViewController.swift; sourceTree = "<group>"; };
 		AA7DE0301D6A939500CA736C /* ChooseSourceTypeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSourceTypeView.swift; sourceTree = "<group>"; };
 		AA7DE0321D6A93AF00CA736C /* ChooseSourceTypeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseSourceTypeView.xib; sourceTree = "<group>"; };
@@ -385,6 +393,8 @@
 		AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODMemberToAddTableViewCell.swift; sourceTree = "<group>"; };
 		AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODMemberToAddTableViewCell.xib; sourceTree = "<group>"; };
 		AAB7E8FD1D4A891600B19397 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AAE6A8C21D6CA9C800A997B0 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		AAE6A8C31D6CA9C800A997B0 /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
 		AD9E99804B93529D712BC626 /* Pods-Dolphin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.debug.xcconfig"; sourceTree = "<group>"; };
 		DCFBF776029220B30C3A087B /* Pods-Dolphin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.release.xcconfig"; sourceTree = "<group>"; };
 		F8483E6A1CFE6FB90060CC8C /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
@@ -419,9 +429,11 @@
 			isa = PBXGroup;
 			children = (
 				3607AAD41C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift */,
-				3607AAD61C8F556500B9DD8F /* SettingsTextFieldTableViewCell.xib */,
+				AA7253621D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib */,
 				3607AAD81C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift */,
 				3607AADA1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib */,
+				AA7452B71D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift */,
+				AA7452B81D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib */,
 				3607AAE01C8F9F7500B9DD8F /* PODSettingsFooter.xib */,
 				369A384A1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift */,
 				369A384C1CA9C1DE00B78C98 /* ProfileAvatarTableViewCell.xib */,
@@ -619,6 +631,8 @@
 			children = (
 				368798651C29E1260088AC24 /* LoginViewController.swift */,
 				368798671C29E13C0088AC24 /* LoginViewController.xib */,
+				AAE6A8C21D6CA9C800A997B0 /* SignUpViewController.swift */,
+				AAE6A8C31D6CA9C800A997B0 /* SignUpViewController.xib */,
 				36E4116A1C8DF1A3002DC736 /* CreateProfileViewController.swift */,
 				36E4116B1C8DF1A3002DC736 /* CreateProfileViewController.xib */,
 				361FC07D1CA1F7A200388FD0 /* PickGradesOrSubjectsViewController.swift */,
@@ -821,6 +835,7 @@
 				361FC0791CA1F59100388FD0 /* Sidebar and Tabbar */,
 				361FC0781CA1F57400388FD0 /* Home */,
 				368798641C29D7BF0088AC24 /* Login and Signup */,
+				AA72535C1D6D90620050DF7D /* BaseViewController.swift */,
 				3689ECD71C0E3F330087F828 /* DolphinViewController.swift */,
 				368798971C2B34A60088AC24 /* DolphinCustomFontViewController.swift */,
 			);
@@ -1035,10 +1050,13 @@
 				36129FAC1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib in Resources */,
 				3650E0B81C6D206700BB9301 /* CreatePodViewController.xib in Resources */,
 				362D4BDE1C1F336100F065E5 /* CreateImagePostViewController.xib in Resources */,
+				AA7253631D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib in Resources */,
 				369382B91C31B8370005FCB0 /* FriendToInviteTableViewCell.xib in Resources */,
 				3615B6FE1C19C5BE006BB8B4 /* CreateURLPostChooseImageViewController.xib in Resources */,
 				3668B2FA1C6A77E700469FF9 /* DealsListViewController.xib in Resources */,
+				AA7452BA1D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib in Resources */,
 				36D1290A1C2C39FE002E3F47 /* InviteFriendsViewController.xib in Resources */,
+				AAE6A8C51D6CA9C800A997B0 /* SignUpViewController.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
 				3616E49F1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib in Resources */,
 				3616E4A11C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib in Resources */,
@@ -1057,7 +1075,6 @@
 				36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */,
 				36BE4D0E1C062688002E52D9 /* SidebarViewController.xib in Resources */,
 				36BE4CD11C061524002E52D9 /* Main.storyboard in Resources */,
-				3607AAD71C8F556500B9DD8F /* SettingsTextFieldTableViewCell.xib in Resources */,
 				361FC0801CA1F7A200388FD0 /* PickGradesOrSubjectsViewController.xib in Resources */,
 				36736F661C5FEE170040A263 /* PostDetailsActionView.xib in Resources */,
 				36D0C69C1C08AC5F0002AE35 /* PostTableViewCell.xib in Resources */,
@@ -1181,11 +1198,13 @@
 				3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */,
 				AAB7E8FE1D4A891600B19397 /* User.swift in Sources */,
 				36BE4D0C1C062668002E52D9 /* SidebarViewController.swift in Sources */,
+				AA7452B91D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift in Sources */,
 				36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */,
 				AA72BE201D5810C0001543BE /* PDKUser.m in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
 				36C2CF6C1C98CD5400E7B4E3 /* Like.swift in Sources */,
 				36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */,
+				AAE6A8C41D6CA9C800A997B0 /* SignUpViewController.swift in Sources */,
 				365DBDDB1CACC0B600D20C02 /* SelectPODMembersViewController.swift in Sources */,
 				360993141C4049530082B995 /* UIAppearance_Swift.m in Sources */,
 				3687989B1C2B3E0D0088AC24 /* Utils.swift in Sources */,
@@ -1200,6 +1219,7 @@
 				361F50841C652C3900153B6C /* UIView+DolphinExtensions.swift in Sources */,
 				369A384B1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift in Sources */,
 				36B818B51C8504D5003563FE /* List.swift in Sources */,
+				AA72535D1D6D90620050DF7D /* BaseViewController.swift in Sources */,
 				3609207A1C9780D4003F5CB8 /* Image.swift in Sources */,
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
 				3609207C1C9784B0003F5CB8 /* PostType.swift in Sources */,
