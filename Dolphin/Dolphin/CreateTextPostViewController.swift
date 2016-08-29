@@ -29,6 +29,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     // if this var is set, I'm creating a text post from a POD
     var pod: POD?
     var podsToShare: [POD] = []
+    var isPresentMode = false
     
     convenience init() {
         self.init(nibName: "CreateTextPostViewController", bundle: nil)
@@ -39,7 +40,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         
         setBackButton()
         title = "Write"
-        setRightSystemButtonItem(.Done, target: self, action: Selector("donePressed:"))
+        setRightSystemButtonItem(.Done, target: self, action: #selector(donePressed(_:)))
         
         setupFields()
     }
@@ -72,10 +73,18 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         if pod != nil {
             adjustVisitivilitySettingsIndicator.hidden = true
         } else {
-            let tapVisibilityViewGesture = UITapGestureRecognizer(target: self, action: "goToPrivacySettings")
+            let tapVisibilityViewGesture = UITapGestureRecognizer(target: self, action: #selector(goToPrivacySettings))
             postToFieldView.addGestureRecognizer(tapVisibilityViewGesture)
         }
-        
+    }
+    
+    override func goBackButtonPressed(sender: UIBarButtonItem) {
+        if(self.isPresentMode) {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        else {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
     
     // MARK: Privacy Settings
@@ -119,7 +128,13 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
                     if post?.postId != nil {
                         // everything worked ok
                         NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        if(self.isPresentMode) {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                        else {
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                        
                     } else {
                         // there was an error saving the post
                     }

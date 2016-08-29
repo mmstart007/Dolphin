@@ -42,7 +42,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBackButton()
+
         setAppearance()
         setNavBarButtons()
         
@@ -84,32 +84,63 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func setNavBarButtons() {
-        
-        let customViewActionButton  = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Normal)
-        customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Highlighted)
-        customViewActionButton.addTarget(self, action: #selector(actionButtonPressed), forControlEvents: .TouchUpInside)
-        let actionBarButton         = UIBarButtonItem(customView: customViewActionButton)
 
         // comments new windows
-        let customViewCommentButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Normal)
-        customViewCommentButton.setImage(UIImage(named: "CommentsNavBarIcon"), forState: .Highlighted)
-        customViewCommentButton.addTarget(self, action: #selector(commentButtonPressed), forControlEvents: .TouchUpInside)
-//        let commentBarButton        = UIBarButtonItem(customView: customViewCommentButton)
+        if(self.post?.postUser?.id == networkController.currentUserId) {
+            let customViewRemoveButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            customViewRemoveButton.setImage(UIImage(named: "garbage"), forState: .Normal)
+            customViewRemoveButton.setImage(UIImage(named: "garbage"), forState: .Highlighted)
+            customViewRemoveButton.addTarget(self, action: #selector(removeButtonPressed), forControlEvents: .TouchUpInside)
+            let removeBarButton        = UIBarButtonItem(customView: customViewRemoveButton)
+            
+            let customViewActionButton  = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Normal)
+            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Highlighted)
+            customViewActionButton.addTarget(self, action: #selector(actionButtonPressed), forControlEvents: .TouchUpInside)
+            let actionBarButton         = UIBarButtonItem(customView: customViewActionButton)
+            
+            navigationItem.rightBarButtonItems = [actionBarButton, removeBarButton]
+        }
 
-        let customViewLikeButton    = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Normal)
-        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Highlighted)
-        customViewLikeButton.addTarget(self, action: #selector(likeButtonPressed), forControlEvents: .TouchUpInside)
+        else {
+            let customViewActionButton  = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Normal)
+            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Highlighted)
+            customViewActionButton.addTarget(self, action: #selector(actionButtonPressed), forControlEvents: .TouchUpInside)
+            let actionBarButton         = UIBarButtonItem(customView: customViewActionButton)
+            
+            navigationItem.rightBarButtonItems = [actionBarButton]
+        }
+//        let customViewLikeButton    = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+//        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Normal)
+//        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Highlighted)
+//        customViewLikeButton.addTarget(self, action: #selector(likeButtonPressed), forControlEvents: .TouchUpInside)
 //        let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
 
         //navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
-        navigationItem.rightBarButtonItems = [actionBarButton]
         
     }
     
     // MARK: NavBar Actions and Action Menu
+    func removeButtonPressed() {
+        let alertController = UIAlertController(title: nil, message: Constants.Messages.RemovePostMsg, preferredStyle: .Alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: { action -> Void in
+            SVProgressHUD.show()
+            let postIdString = String(self.post!.postId!)
+            self.networkController.deletePost(postIdString) { (error) -> () in
+                SVProgressHUD.dismiss()
+                if error == nil {
+                    print("post deleted")
+                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.DeletedPost, object: nil, userInfo: ["post":self.post!])
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+            }
+        })
+        let noAction = UIAlertAction(title: "No", style: .Default, handler: nil)
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
     
     func actionButtonPressed() {
         if post?.postType?.name == "link" {

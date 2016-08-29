@@ -54,7 +54,8 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         } else {
             
             //Set notification handler to get posted feed.
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "newPostCreated:" , name: Constants.Notifications.CreatedPost, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPostCreated(_:)) , name: Constants.Notifications.CreatedPost, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(postRemoved(_:)) , name: Constants.Notifications.DeletedPost, object: nil)
             
             if !isDataLoaded {
                 if myLikes {
@@ -62,6 +63,45 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                 } else {
                     loadData(false)
                 }
+            }
+        }
+    }
+    
+    func postRemoved(notification: NSNotification) {
+        if let userInfo = notification.userInfo as? Dictionary<String, Post> {
+            if let post = userInfo["post"] {
+                var index = 0;
+                
+                for item in self.allPosts {
+                    if item.postId == post.postId {
+                        self.allPosts.removeAtIndex(index)
+                        break
+                    }
+                    
+                    index += 1
+                }
+                
+                index = 0;
+                for item in self.filteredPosts {
+                    if item.postId == post.postId {
+                        self.filteredPosts.removeAtIndex(index)
+                        break
+                    }
+                    
+                    index += 1
+                }
+                
+                index = 0;
+                for item in self.likedPosts {
+                    if item.postId == post.postId {
+                        self.likedPosts.removeAtIndex(index)
+                        break
+                    }
+                    
+                    index += 1
+                }
+                
+                self.postsTableView.reloadData()
             }
         }
     }

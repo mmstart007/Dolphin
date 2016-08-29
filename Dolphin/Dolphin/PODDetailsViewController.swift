@@ -326,6 +326,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         closeNewPostViewButtonTouchUpInside(self)
         let createTextPostVC = CreateTextPostViewController()
         createTextPostVC.pod = pod
+        createTextPostVC.isPresentMode = true
         let textPostNavController = UINavigationController(rootViewController: createTextPostVC)
         presentViewController(textPostNavController, animated: true, completion: nil)
         print("Post text button pressed")

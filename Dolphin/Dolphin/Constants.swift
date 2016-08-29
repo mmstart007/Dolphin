@@ -23,7 +23,9 @@ class Constants {
     
     struct Notifications {
         static let CreatedPost: String              = "CreatedPostNotification"
+        static let DeletedPost: String              = "DeletedPostNotification"
         static let CreatedPod: String               = "CreatedPodNotification"
+        
     }
     
     struct Messages {
@@ -42,6 +44,10 @@ class Constants {
         static let PasswordErrorMsg: String         = "Password should be at least 5 characters long"
         static let UsernameErrortitle: String       = "Username error"
         static let UsernameErrorMsg: String         = "Username empty"
+        static let PostTitleErrorMsg: String        = "Please input valid title."
+        
+        //
+        static let RemovePostMsg: String            = "Are you sure to remove post?"
     }
     
     struct InviteType {

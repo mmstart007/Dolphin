@@ -39,9 +39,39 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         tableView.separatorStyle = .None
         tableView.estimatedRowHeight = 400
 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(postRemoved(_:)) , name: Constants.Notifications.DeletedPost, object: nil)
         loadData()
     }
     
+    func postRemoved(notification: NSNotification) {
+        if let userInfo = notification.userInfo as? Dictionary<String, Post> {
+            if let post = userInfo["post"] {
+                var index = 0;
+                
+                for item in self.posts {
+                    if item.postId == post.postId {
+                        self.posts.removeAtIndex(index)
+                        break
+                    }
+                    
+                    index += 1
+                }
+                
+                index = 0;
+                for item in self.filteredPosts {
+                    if item.postId == post.postId {
+                        self.filteredPosts.removeAtIndex(index)
+                        break
+                    }
+                    
+                    index += 1
+                }
+                
+                self.tableView.reloadData()
+            }
+        }
+    }
+
     func loadData() {
         
         SVProgressHUD.showWithStatus("Loading")

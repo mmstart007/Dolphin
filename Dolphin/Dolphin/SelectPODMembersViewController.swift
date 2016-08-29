@@ -18,6 +18,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     let networkController = NetworkController.sharedInstance
     var delegate: SelectPODMembersDelegate?
@@ -36,7 +37,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         super.viewDidLoad()
         
         title = "POD Members"
-        setRightButtonItemWithText("Done", target: self, action: Selector("doneSelectingMembersPressed:"))
+        setRightButtonItemWithText("Done", target: self, action: #selector(doneSelectingMembersPressed(_:)))
         setBackButton()
         
         searchResults = []
@@ -47,6 +48,29 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         
         showSearchBar()
         filterContentForSearchText("", isFirstLoading: true)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func keyboardWillShow(sender: NSNotification) {
+        if let userInfo = sender.userInfo {
+            if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+                self.bottomConstraint.constant = keyboardHeight
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        self.bottomConstraint.constant = 0
+        self.view.layoutIfNeeded()
     }
     
     // MARK: - TableView DataSource
@@ -95,7 +119,6 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         searchBar?.becomeFirstResponder()
         searchBar?.showsCancelButton = true
         searchBar?.delegate          = self
-        
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -104,9 +127,9 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         resignResponder()
-        searchResults = []
         searchBar.text = ""
-        self.tableView.reloadData()
+//        searchResults = []        
+//        self.tableView.reloadData()
     }
     
     func filterContentForSearchText(searchText: String, isFirstLoading: Bool) {
@@ -150,6 +173,4 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         delegate?.membersDidSelected(selectedMembers)
         navigationController?.popViewControllerAnimated(true)
     }
-
-    
 }

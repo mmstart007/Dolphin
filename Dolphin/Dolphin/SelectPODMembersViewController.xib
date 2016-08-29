@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectPODMembersViewController" customModule="Dolphin" customModuleProvider="target">
             <connections>
+                <outlet property="bottomConstraint" destination="o5H-Xx-LG2" id="k0Z-HW-7XB"/>
                 <outlet property="searchBar" destination="X7f-Rm-N0N" id="x4c-mO-ASS"/>
                 <outlet property="tableView" destination="8o4-Xh-VrX" id="Js0-He-eMa"/>
                 <outlet property="view" destination="iN0-l3-epB" id="iKE-xZ-MEK"/>
