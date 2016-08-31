@@ -505,7 +505,8 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                 SVProgressHUD.dismiss()
                 if error == nil {
                     print("pod deleted")
-                    
+                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.DeletedPod, object: nil, userInfo: ["pod":self.pod!])
+
                     if self.prevViewController != nil {
                         if self.prevViewController.isKindOfClass(PODsListViewController) {
                             let listViewController = self.prevViewController as! PODsListViewController

@@ -25,7 +25,7 @@ class Constants {
         static let CreatedPost: String              = "CreatedPostNotification"
         static let DeletedPost: String              = "DeletedPostNotification"
         static let CreatedPod: String               = "CreatedPodNotification"
-        
+        static let DeletedPod: String               = "DeletedPodNotification"
     }
     
     struct Messages {

@@ -874,6 +874,7 @@ class NetworkController: NSObject {
     func joinPodMember(podId: String, completionHandler: (AnyObject?) -> ()) -> () {
         let urlParameters : [CVarArgType] = [podId]
         performRequest(MethodType.POST, authenticated: true, method: .JoinInPod, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            print(result)
             if error == nil {
                 completionHandler(nil)
             } else {

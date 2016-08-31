@@ -9,24 +9,25 @@
 import Foundation
 import UIKit
     
-class SidebarViewController : UIViewController {
+class SidebarViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let networkController = NetworkController.sharedInstance
     
     // MARK: IBOutlets
+    @IBOutlet weak var contentTableView: UITableView!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var avatarView: UIView!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var labelUserName: UILabel!
-    @IBOutlet weak var myFeedIconImageView: UIImageView!
-    @IBOutlet weak var historyIconImageView: UIImageView!
-    @IBOutlet weak var myPODsIconImageView: UIImageView!
-    @IBOutlet weak var inviteFriendsIconImageView: UIImageView!
-    @IBOutlet weak var dolphinDealsIconImageView: UIImageView!
-    @IBOutlet weak var myFeedMenuItemLabel: UILabel!
-    @IBOutlet weak var historyMenuItemLabel: UILabel!
-    @IBOutlet weak var myPODsMenuItemLabel: UILabel!
-    @IBOutlet weak var inviteFriendsMenuItemLabel: UILabel!
-    @IBOutlet weak var dolphinDealsMenuItemLabel: UILabel!
+
+    var items = [["title": "My Feed", "icon": "SidebarDolphinIcon"],
+                 ["title": "My Likes", "icon": "SidebarGlassesIcon"],
+                 ["title": "My PODS", "icon": "SidebarMyPODsIcon"],
+                 ["title": "Invite Friends", "icon": "SidebarInviteFriendsIcon"],
+                 ["title": "Notifications", "icon": "notifications-button"],
+                 ["title": "Dolphin Deals", "icon": "SidebarDolphinDealsIcon"],
+                 ["title": "Logout", "icon": "SidebarLogoutIcon"],
+                 ]
     
     var homeViewController: HomeViewController!
     
@@ -43,16 +44,18 @@ class SidebarViewController : UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setAppearance()
         
-        let tapAvatarGesture = UITapGestureRecognizer(target: self, action: "tapAvatar")
+        self.headerView.userInteractionEnabled = true
+        contentTableView.registerNib(UINib(nibName: "SideTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SideTableViewCell")
+        contentTableView.tableHeaderView = self.headerView
+        
+        let tapAvatarGesture = UITapGestureRecognizer(target: self, action: #selector(tapAvatar))
         tapAvatarGesture.numberOfTapsRequired = 1
         avatarView.addGestureRecognizer(tapAvatarGesture)
-        
         Utils.setFontFamilyForView(self.view, includeSubViews: true)
     }
     
@@ -85,10 +88,8 @@ class SidebarViewController : UIViewController {
     // MARK: Customize Appearance
     
     func setAppearance() {
-        
         avatarView.layer.masksToBounds = true
         avatarView.layer.cornerRadius = avatarView.frame.size.width / 2.0
-        
         userImageView.layer.borderColor = UIColor.whiteColor().CGColor
         userImageView.layer.borderWidth = 3
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2.0
@@ -99,79 +100,42 @@ class SidebarViewController : UIViewController {
     
     // MARK: Menu Options
     
-    @IBAction func myFeedButtonTouchUpInside(sender: AnyObject) {
+    func myFeedButtonTouchUpInside() {
         print("My feed menu item selected")
-        setMyFeedSelected()
+//        setMyFeedSelected()
         revealViewController().revealToggleAnimated(true)
         homeViewController.selectedIndex = 1
 
     }
     
-    func setMyFeedSelected() {
-        setAllItemsNotSelected()
-        myFeedIconImageView.image = myFeedIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-        myFeedIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
-        myFeedMenuItemLabel.textColor = UIColor.yellowHighlightedMenuItem()
-    }
-    
-    @IBAction func historyButtonTouchUpInside(sender: AnyObject) {
+    func likeButtonTouchUpInside() {
         print("History menu item selected")
         revealViewController().revealToggleAnimated(true)
         homeViewController.navigationController?.pushViewController(FeedViewController(likes: true), animated: true)
     }
     
-    func setHistorySelected() {
-        setAllItemsNotSelected()
-        historyIconImageView.image = historyIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-        historyIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
-        historyMenuItemLabel.textColor = UIColor.yellowHighlightedMenuItem()
-
-    }
-    
-    @IBAction func myPODsButtonTouchUpInside(sender: AnyObject) {
+    func myPODsButtonTouchUpInside() {
         print("My PODs menu item selected")
-        setMyPODsSelected()
         revealViewController().revealToggleAnimated(true)
         homeViewController.selectedIndex = 4
         (homeViewController.viewControllers![4] as? PODsListViewController)?.segmentedControl.selectedSegmentIndex = 1
         (homeViewController.viewControllers![4] as? PODsListViewController)?.segmentedControlChanged(UIEvent())
     }
     
-    func setMyPODsSelected() {
-        setAllItemsNotSelected()
-        myPODsIconImageView.image = myPODsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-        myPODsIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
-        myPODsMenuItemLabel.textColor = UIColor.yellowHighlightedMenuItem()
-    }
-    
-    @IBAction func inviteFriendsButtonTouchUpInside(sender: AnyObject) {
+    func inviteFriendsButtonTouchUpInside() {
         print("Invite Friends menu item selected")
         revealViewController().revealToggleAnimated(true)
         homeViewController.navigationController?.pushViewController(InviteFriendsViewController(), animated: true)
     }
     
-    func setInviteFriendsSelected() {
-        setAllItemsNotSelected()
-        inviteFriendsIconImageView.image = inviteFriendsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-        inviteFriendsIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
-        inviteFriendsMenuItemLabel.textColor = UIColor.yellowHighlightedMenuItem()
-    }
-    
-    @IBAction func dolphinDealsButtonTouchUpInside(sender: AnyObject) {
+    func dolphinDealsButtonTouchUpInside() {
         print("Dolphin Deals menu item selected")
         revealViewController().revealToggleAnimated(true)
         homeViewController.navigationController?.pushViewController(DealsListViewController(), animated: true)
-        setDealsSelected()
+//        setDealsSelected()
     }
     
-    func setDealsSelected() {
-        setAllItemsNotSelected()
-        dolphinDealsIconImageView.image = dolphinDealsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-        dolphinDealsIconImageView.tintColor = UIColor.yellowHighlightedMenuItem()
-        dolphinDealsMenuItemLabel.textColor = UIColor.yellowHighlightedMenuItem()
-    }
-    
-    @IBAction func logoutButtonTouchUpInside(sender: AnyObject) {
+    func logoutButtonTouchUpInside() {
         print("Logout button pressed")
         revealViewController().revealToggleAnimated(true)
         // remove user token
@@ -198,30 +162,59 @@ class SidebarViewController : UIViewController {
         }
     }
     
-    // Set all items non selected before setting the chosen one
-    func setAllItemsNotSelected() {
-            myFeedIconImageView.image = myFeedIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-            myFeedIconImageView.tintColor = UIColor.whiteColor()
-            myFeedMenuItemLabel.textColor = UIColor.whiteColor()
-
-            historyIconImageView.image = historyIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-            historyIconImageView.tintColor = UIColor.whiteColor()
-            historyMenuItemLabel.textColor = UIColor.whiteColor()
-
-            myPODsIconImageView.image = myPODsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-            myPODsIconImageView.tintColor = UIColor.whiteColor()
-            myPODsMenuItemLabel.textColor = UIColor.whiteColor()
-
-            inviteFriendsIconImageView.image = inviteFriendsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-            inviteFriendsIconImageView.tintColor = UIColor.whiteColor()
-            inviteFriendsMenuItemLabel.textColor = UIColor.whiteColor()
-
-            dolphinDealsIconImageView.image = dolphinDealsIconImageView.image?.imageWithRenderingMode(.AlwaysTemplate)
-            dolphinDealsIconImageView.tintColor = UIColor.whiteColor()
-            dolphinDealsMenuItemLabel.textColor = UIColor.whiteColor()
-    }
-    
     func tapAvatar() {
         settingsButtonTouchUpInside(self)
     }
+    
+    func notificationButtonTouchUpInside() {
+        print("Dolphin Deals menu item selected")
+        revealViewController().revealToggleAnimated(true)
+        homeViewController.navigationController?.pushViewController(NotificationViewController(), animated: true)
+    }
+    
+    // MARK - UITableview Delegate.
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("SideTableViewCell") as? SideTableViewCell
+        if cell == nil {
+            cell = SideTableViewCell()
+        }
+        
+        let item = items[indexPath.row]
+        cell?.configureCell(item["title"], icon: item["icon"])
+        cell?.selectionStyle = .None
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row == 0 {
+            self.myFeedButtonTouchUpInside()
+        }
+        else if indexPath.row == 1 {
+            self.likeButtonTouchUpInside()
+        }
+        else if indexPath.row == 2 {
+            self.myPODsButtonTouchUpInside()
+        }
+        else if indexPath.row == 3 {
+            self.inviteFriendsButtonTouchUpInside()
+        }
+        else if indexPath.row == 4 {
+            self.notificationButtonTouchUpInside()
+        }
+        else if indexPath.row == 5 {
+            self.dolphinDealsButtonTouchUpInside()
+        }
+        else if indexPath.row == 6 {
+            self.logoutButtonTouchUpInside()
+        }
+    }
+
 }

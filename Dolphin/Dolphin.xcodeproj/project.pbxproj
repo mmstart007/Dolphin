@@ -181,6 +181,10 @@
 		AAB7E8F71D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */; };
 		AAB7E8FA1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */; };
 		AAB7E8FE1D4A891600B19397 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB7E8FD1D4A891600B19397 /* User.swift */; };
+		AAE472F61D751DD500DB1C4F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE472F41D751DD500DB1C4F /* NotificationViewController.swift */; };
+		AAE472F71D751DD500DB1C4F /* NotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAE472F51D751DD500DB1C4F /* NotificationViewController.xib */; };
+		AAE472FB1D75306100DB1C4F /* SideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE472F91D75306100DB1C4F /* SideTableViewCell.swift */; };
+		AAE472FC1D75306100DB1C4F /* SideTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAE472FA1D75306100DB1C4F /* SideTableViewCell.xib */; };
 		AAE6A8C41D6CA9C800A997B0 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE6A8C21D6CA9C800A997B0 /* SignUpViewController.swift */; };
 		AAE6A8C51D6CA9C800A997B0 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAE6A8C31D6CA9C800A997B0 /* SignUpViewController.xib */; };
 		F8483E6B1CFE6FB90060CC8C /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8483E6A1CFE6FB90060CC8C /* Globals.swift */; };
@@ -393,6 +397,10 @@
 		AAB7E8F51D4A88F800B19397 /* PODMemberToAddTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PODMemberToAddTableViewCell.swift; sourceTree = "<group>"; };
 		AAB7E8F61D4A88F800B19397 /* PODMemberToAddTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PODMemberToAddTableViewCell.xib; sourceTree = "<group>"; };
 		AAB7E8FD1D4A891600B19397 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AAE472F41D751DD500DB1C4F /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		AAE472F51D751DD500DB1C4F /* NotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewController.xib; sourceTree = "<group>"; };
+		AAE472F91D75306100DB1C4F /* SideTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideTableViewCell.swift; sourceTree = "<group>"; };
+		AAE472FA1D75306100DB1C4F /* SideTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideTableViewCell.xib; sourceTree = "<group>"; };
 		AAE6A8C21D6CA9C800A997B0 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		AAE6A8C31D6CA9C800A997B0 /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
 		AD9E99804B93529D712BC626 /* Pods-Dolphin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dolphin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dolphin/Pods-Dolphin.debug.xcconfig"; sourceTree = "<group>"; };
@@ -480,6 +488,8 @@
 				AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */,
 				F89DF7B81D4908610052FCBF /* OtherProfileViewController.swift */,
 				F89DF7B91D4908610052FCBF /* OtherProfileViewController.xib */,
+				AAE472F41D751DD500DB1C4F /* NotificationViewController.swift */,
+				AAE472F51D751DD500DB1C4F /* NotificationViewController.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -871,6 +881,7 @@
 		36D0C69A1C08AC420002AE35 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				AAE472F81D75304D00DB1C4F /* Side */,
 				365DBDDE1CACC49600D20C02 /* Create POD */,
 				361FC0811CA1FBF400388FD0 /* Signup */,
 				3607AAD31C8F547800B9DD8F /* Settings */,
@@ -961,6 +972,15 @@
 				AA72BE171D5810C0001543BE /* PinterestSDK.h */,
 			);
 			name = Pinterest;
+			sourceTree = "<group>";
+		};
+		AAE472F81D75304D00DB1C4F /* Side */ = {
+			isa = PBXGroup;
+			children = (
+				AAE472F91D75306100DB1C4F /* SideTableViewCell.swift */,
+				AAE472FA1D75306100DB1C4F /* SideTableViewCell.xib */,
+			);
+			name = Side;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1069,8 +1089,10 @@
 				364140671C173B8D0022D1BE /* CreateURLPostViewController.xib in Resources */,
 				360EA4B51C0F6F3A00692668 /* PopularViewController.xib in Resources */,
 				368798851C2B2BA70088AC24 /* Raleway-Bold.ttf in Resources */,
+				AAE472F71D751DD500DB1C4F /* NotificationViewController.xib in Resources */,
 				361FFE1E1C0CF381007EE366 /* PostDetailsViewController.xib in Resources */,
 				AAB7E8FA1D4A88F800B19397 /* PODMemberToAddTableViewCell.xib in Resources */,
+				AAE472FC1D75306100DB1C4F /* SideTableViewCell.xib in Resources */,
 				3689ECE41C0E58EF0087F828 /* PODsListViewController.xib in Resources */,
 				36D0C6A81C08E3790002AE35 /* FeedViewController.xib in Resources */,
 				36BE4D0E1C062688002E52D9 /* SidebarViewController.xib in Resources */,
@@ -1217,6 +1239,7 @@
 				36E4116C1C8DF1A3002DC736 /* CreateProfileViewController.swift in Sources */,
 				365D76CE1C754E7400A0833F /* DealDetailsHeaderTableViewCell.swift in Sources */,
 				361F50841C652C3900153B6C /* UIView+DolphinExtensions.swift in Sources */,
+				AAE472F61D751DD500DB1C4F /* NotificationViewController.swift in Sources */,
 				369A384B1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift in Sources */,
 				36B818B51C8504D5003563FE /* List.swift in Sources */,
 				AA72535D1D6D90620050DF7D /* BaseViewController.swift in Sources */,
@@ -1226,6 +1249,7 @@
 				3616E49C1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift in Sources */,
 				3607AAD51C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift in Sources */,
 				AA72BE181D5810C0001543BE /* PDKBoard.m in Sources */,
+				AAE472FB1D75306100DB1C4F /* SideTableViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,
 				AA72BE1F1D5810C0001543BE /* PDKResponseObject.m in Sources */,
 				36129FA41CA5999C00446503 /* AFDateExtension.swift in Sources */,

@@ -41,6 +41,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         self.edgesForExtendedLayout = .None
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPodCreated(_:)) , name: Constants.Notifications.CreatedPod, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(podRemoved(_:)) , name: Constants.Notifications.DeletedPod, object: nil)
         
         allPODstableView.registerNib(UINib(nibName: "PODPreviewTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODPreviewTableViewCell")
         myPODsCollectionView.registerNib(UINib(nibName: "MyPODPreviewCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "MyPODPreviewCollectionViewCell")
@@ -73,7 +74,6 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 allPods.removeAtIndex(index)
                 break
             }
-            
             index += 1
         }
 
@@ -155,6 +155,36 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 
                 if (!self.myPods.contains(pod)) {
                     self.myPods.insert(pod, atIndex: 0)
+                }
+                
+                self.allPODstableView.reloadData()
+                self.myPODsCollectionView.reloadData()
+            }
+        }
+    }
+    
+    func podRemoved(notification: NSNotification) {
+        if let userInfo = notification.userInfo as? Dictionary<String, POD> {
+            if let pod = userInfo["pod"] {
+                var index = 0;
+                
+                for item in self.allPods {
+                    if item.id == pod.id {
+                        self.allPods.removeAtIndex(index)
+                        break
+                    }
+                    
+                    index += 1
+                }
+                
+                
+                for item in self.myPods {
+                    if item.id == pod.id {
+                        self.myPods.removeAtIndex(index)
+                        break
+                    }
+                    
+                    index += 1
                 }
                 
                 self.allPODstableView.reloadData()

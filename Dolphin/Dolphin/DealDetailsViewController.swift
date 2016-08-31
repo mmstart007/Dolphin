@@ -27,7 +27,6 @@ class DealDetailsViewController: DolphinViewController, UITableViewDelegate, UIT
         tableViewDealDetails.estimatedRowHeight = 700
         tableViewDealDetails.rowHeight = UITableViewAutomaticDimension;
         tableViewDealDetails.backgroundColor = UIColor.lightGrayBackground()
-        
     }
     
     override func viewDidAppear(animated: Bool) {
