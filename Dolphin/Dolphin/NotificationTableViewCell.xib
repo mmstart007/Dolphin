@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Raleway-Regular.ttf">
+            <string>Raleway-Regular</string>
+            <string>Raleway-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="NotificationTableViewCell" customModule="Dolphin" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6gw-5W-5J4">
+                        <rect key="frame" x="16" y="10" width="40" height="40"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="DF3-lH-LeV"/>
+                            <constraint firstAttribute="width" constant="40" id="fz9-bp-rQm"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 hours ago" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ez3-hp-ywe">
+                        <rect key="frame" x="82" y="31" width="285" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="sGW-fS-kdv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="time" translatesAutoresizingMaskIntoConstraints="NO" id="YRh-lR-k2L">
+                        <rect key="frame" x="64" y="37" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="B86-At-74h"/>
+                            <constraint firstAttribute="height" constant="10" id="d7Y-UF-loQ"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KX shared a link: &quot;Test..&quot;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnb-AA-Oac">
+                        <rect key="frame" x="64" y="10" width="303" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="Mgn-q5-h9A"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Raleway-Regular" family="Raleway" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eub-rv-qIp">
+                        <rect key="frame" x="0.0" y="57" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.83529411764705885" green="0.83529411764705885" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="lzd-Pz-o6d"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="YRh-lR-k2L" secondAttribute="bottom" constant="12" id="7ug-Xt-awW"/>
+                    <constraint firstAttribute="bottom" secondItem="eub-rv-qIp" secondAttribute="bottom" constant="1" id="9zb-iH-aAY"/>
+                    <constraint firstItem="6gw-5W-5J4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="BPZ-E5-cnT"/>
+                    <constraint firstItem="gnb-AA-Oac" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="DRe-Qc-km4"/>
+                    <constraint firstItem="YRh-lR-k2L" firstAttribute="leading" secondItem="6gw-5W-5J4" secondAttribute="trailing" constant="8" id="Eks-4S-92x"/>
+                    <constraint firstAttribute="trailing" secondItem="gnb-AA-Oac" secondAttribute="trailing" constant="8" id="Ihr-PU-KoR"/>
+                    <constraint firstItem="Ez3-hp-ywe" firstAttribute="centerY" secondItem="YRh-lR-k2L" secondAttribute="centerY" id="JVx-C9-Fmd"/>
+                    <constraint firstItem="eub-rv-qIp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="MhN-j7-AKo"/>
+                    <constraint firstItem="6gw-5W-5J4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="QJO-Y5-FW9"/>
+                    <constraint firstItem="Ez3-hp-ywe" firstAttribute="leading" secondItem="YRh-lR-k2L" secondAttribute="trailing" constant="8" id="a8x-hb-CMO"/>
+                    <constraint firstAttribute="trailing" secondItem="eub-rv-qIp" secondAttribute="trailing" id="cEg-h8-HQI"/>
+                    <constraint firstItem="Ez3-hp-ywe" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="laS-nn-5fh"/>
+                    <constraint firstItem="gnb-AA-Oac" firstAttribute="leading" secondItem="6gw-5W-5J4" secondAttribute="trailing" constant="8" id="lt9-SW-67g"/>
+                    <constraint firstItem="YRh-lR-k2L" firstAttribute="top" secondItem="gnb-AA-Oac" secondAttribute="bottom" constant="6" id="tkH-ob-pVz"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarImageView" destination="6gw-5W-5J4" id="cjK-8w-jnw"/>
+                <outlet property="timeLabel" destination="Ez3-hp-ywe" id="oga-bM-A7S"/>
+                <outlet property="titleLabel" destination="gnb-AA-Oac" id="AKM-hQ-G1G"/>
+            </connections>
+            <point key="canvasLocation" x="328.5" y="226"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="time" width="32" height="32"/>
+    </resources>
+</document>

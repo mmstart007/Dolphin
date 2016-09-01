@@ -184,6 +184,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             })
         }
+        else if let pod_id = userInfo["pod_id"] as? Int {
+            networkController.getPodById("\(pod_id)", completionHandler: { (pod, error) in
+                if error == nil {
+                    let podDetailsVC = PODDetailsViewController()
+                    podDetailsVC.pod = pod
+                    self.navigationController.pushViewController(podDetailsVC, animated: true)
+                }
+                else {
+                    
+                }
+            })
+        }
     }
 }
 

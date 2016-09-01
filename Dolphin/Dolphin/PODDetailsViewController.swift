@@ -18,6 +18,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     let kPageQuantity: Int = 10
     
     var pod: POD?
+    var needToReloadPod = false
     var postOfPOD: [Post] = []
     var actionMenu: UIView? = nil
     var page: Int = 0
@@ -71,6 +72,10 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         plusButton.backgroundColor = UIColor.blueDolphin()
         self.view.addSubview(fakeTabBar)
         self.view.addSubview(plusButton)
+        
+        if needToReloadPod {
+            self.refreshCurrentPod()
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -98,18 +103,21 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             setRightButtonItemWithText("Delete", target: self, action: #selector(deletePod))
         }
         else {
-            var isMember = false
-            for u in (self.pod?.users)! {
-                if u.id == networkController.currentUserId {
-                    isMember = true
-                    break;
-                }
-            }
             
-            if isMember == true {
-                setRightButtonItemWithText("Withdraw", target: self, action: #selector(withdrawMember))
-            } else {
-                setRightButtonItemWithText("Join", target: self, action: #selector(joinMember))
+            if self.pod?.users != nil {
+                var isMember = false
+                for u in (self.pod?.users)! {
+                    if u.id == networkController.currentUserId {
+                        isMember = true
+                        break;
+                    }
+                }
+                
+                if isMember == true {
+                    setRightButtonItemWithText("Withdraw", target: self, action: #selector(withdrawMember))
+                } else {
+                    setRightButtonItemWithText("Join", target: self, action: #selector(joinMember))
+                }
             }
         }
     }

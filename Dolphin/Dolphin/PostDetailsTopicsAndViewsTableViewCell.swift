@@ -46,7 +46,11 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell, UICollec
     
     func configureWithPost(post: Post) {
         self.post = post
-        numberOfLikesLabel.text = String(post.postNumberOfLikes!)
+        numberOfLikesLabel.text = "0"
+        if (post.postNumberOfLikes != nil) {
+            numberOfLikesLabel.text = String(post.postNumberOfLikes!)
+        }
+        
         if post.isLikedByUser {
             likedImageView.image = UIImage(named: "ViewsGlassIcon")
         } else {

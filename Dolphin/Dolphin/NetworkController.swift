@@ -70,6 +70,8 @@ class NetworkController: NSObject {
         case PODById            = "pods/%@"
         case PodMember          = "pods/%@/users/%@"
         case JoinInPod          = "pods/%@/users/join"
+        
+        case FilterNotification    = "notifications/filter"
     }
     
     
@@ -691,6 +693,41 @@ class NetworkController: NSObject {
                 completionHandler(topics, nil)
             } else {
                 completionHandler(topics, error)
+            }
+        }
+    }
+    
+    // MARK: - Notifications.
+    func filterNotification(pattern: String?, quantity: Int?, page: Int?, sort_by: String?, completionHandler: ([Notification], AnyObject?) -> ()) -> () {
+        var notifications: [Notification] = []
+        var filters = [String: AnyObject]()
+        if pattern != nil {
+            filters["pattern"] = pattern
+        }
+        if quantity != nil {
+            filters["quantity"] = quantity
+        }
+        if page != nil {
+            filters["page"] = page
+        }
+        if sort_by != nil {
+            filters["sort_by"] = sort_by
+        }
+        
+        filters["user_id"] = self.currentUserId
+//        filters["user_id"] = 261
+        let parameters : [String : AnyObject]? = ["filter": filters]
+        performRequest(MethodType.POST, authenticated: true, method: .FilterNotification, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                let notificationJsonArray = result!["notifications"] as? [AnyObject]
+                if notificationJsonArray?.count > 0 {
+                    for elem in notificationJsonArray! {
+                        notifications.append(Notification(jsonObject: elem[0]))
+                    }
+                }
+                completionHandler(notifications, nil)
+            } else {
+                completionHandler(notifications, error)
             }
         }
     }

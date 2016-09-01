@@ -39,7 +39,9 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         collectionViewMembers.backgroundColor = UIColor.lightGrayBackground()
         
         registerCells()
-        members = pod.users!
+        if pod.users != nil {
+            members = pod.users!
+        }
         
         emptyLable.hidden = true
         if members.count == 0 {

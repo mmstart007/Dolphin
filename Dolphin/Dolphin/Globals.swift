@@ -37,4 +37,4 @@ public class Globals: NSObject {
         }
         return nil;
     }
-}
+ }

@@ -18,6 +18,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     let picker = UIImagePickerController()
     
     var post: Post?
+    var needToReloadPost = false
     var contentOffset: CGFloat = 0
     var actionMenu: UIView? = nil
     var chosenImage: UIImage? = nil
@@ -55,7 +56,12 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         tableView.estimatedRowHeight = 10
         
         addKeyboardObservers()
-        loadComments()
+        if needToReloadPost {
+            loadPost()
+        }
+        else {
+            loadComments(true)
+        }
     }
     
     func setAppearance() {
@@ -509,8 +515,29 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // MARK: - Auxiliary methods
     
-    func loadComments() {
+    func loadPost() {
         SVProgressHUD.showWithStatus("Loading")
+        networkController.getPostById(String(post!.postId!), completionHandler: { (post, error) in
+            if error == nil {
+                self.post = post
+                self.loadComments(false)
+            }
+            else {
+                SVProgressHUD.dismiss()
+                let errors: [String]? = error!["errors"] as? [String]
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        })
+    }
+    
+    func loadComments(showIndicator:Bool) {
+        if showIndicator {
+            SVProgressHUD.showWithStatus("Loading")
+        }
+        
         networkController.getPostComments(String(post!.postId!)) { (postComments, error) -> () in
             if error == nil {
                 self.post?.postComments = postComments

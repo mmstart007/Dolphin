@@ -159,6 +159,9 @@
 		36F4AC3E1C64EFB900323672 /* CreateTextPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F4AC3D1C64EFB900323672 /* CreateTextPostViewController.xib */; };
 		890B04FF265D7EA4ECA25CE0 /* Pods_Dolphin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */; };
 		AA0592D91D01E522001D7823 /* LeftAlignCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */; };
+		AA6E4F0A1D77C07500EE4C75 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E4F091D77C07500EE4C75 /* Notification.swift */; };
+		AA6E4F0E1D77CAA600EE4C75 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E4F0C1D77CAA600EE4C75 /* NotificationTableViewCell.swift */; };
+		AA6E4F0F1D77CAA600EE4C75 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA6E4F0D1D77CAA600EE4C75 /* NotificationTableViewCell.xib */; };
 		AA72535D1D6D90620050DF7D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72535C1D6D90620050DF7D /* BaseViewController.swift */; };
 		AA7253631D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7253621D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib */; };
 		AA72BE181D5810C0001543BE /* PDKBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE061D5810BF001543BE /* PDKBoard.m */; };
@@ -365,6 +368,9 @@
 		AA0592D81D01E522001D7823 /* LeftAlignCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftAlignCollectionViewLayout.swift; sourceTree = "<group>"; };
 		AA1CC60A1D5791EF00D93005 /* PinterestSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PinterestSDK.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Dolphin-akwfxwckpfcxlmglobgslogpnkwb/Build/Products/Debug-iphonesimulator/PinterestSDK/PinterestSDK.framework"; sourceTree = "<group>"; };
 		AA4493901D5785E1008488A6 /* Dolphin-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Dolphin-Bridging-Header.h"; sourceTree = "<group>"; };
+		AA6E4F091D77C07500EE4C75 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		AA6E4F0C1D77CAA600EE4C75 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		AA6E4F0D1D77CAA600EE4C75 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		AA72535C1D6D90620050DF7D /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		AA7253621D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		AA72BE051D5810BF001543BE /* PDKBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKBoard.h; path = Extensions/Pinterest/PDKBoard.h; sourceTree = "<group>"; };
@@ -894,6 +900,7 @@
 				3689ECDB1C0E45760087F828 /* Home */,
 				3689ECDC1C0E45800087F828 /* Post Details */,
 				361FFE181C0CE8AA007EE366 /* Aux Views */,
+				AA6E4F0B1D77CA8E00EE4C75 /* Notification */,
 				3687989C1C2B482C0088AC24 /* CustomFontTableViewCell.swift */,
 				3687989E1C2B49990088AC24 /* CustomFontCollectionViewCell.swift */,
 			);
@@ -916,6 +923,7 @@
 				361BFDAE1C9CA04C00F994F1 /* Link.swift */,
 				36154C221CAAF69F00BE457B /* Subject.swift */,
 				36154C241CAAF6A800BE457B /* Grade.swift */,
+				AA6E4F091D77C07500EE4C75 /* Notification.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -946,6 +954,15 @@
 				6AF46791E7E21EA397B769D9 /* Pods_Dolphin.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AA6E4F0B1D77CA8E00EE4C75 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				AA6E4F0C1D77CAA600EE4C75 /* NotificationTableViewCell.swift */,
+				AA6E4F0D1D77CAA600EE4C75 /* NotificationTableViewCell.xib */,
+			);
+			name = Notification;
 			sourceTree = "<group>";
 		};
 		AA72BE041D5810A6001543BE /* Pinterest */ = {
@@ -1077,6 +1094,7 @@
 				AA7452BA1D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib in Resources */,
 				36D1290A1C2C39FE002E3F47 /* InviteFriendsViewController.xib in Resources */,
 				AAE6A8C51D6CA9C800A997B0 /* SignUpViewController.xib in Resources */,
+				AA6E4F0F1D77CAA600EE4C75 /* NotificationTableViewCell.xib in Resources */,
 				36BE4CD31C061524002E52D9 /* Assets.xcassets in Resources */,
 				3616E49F1C762D08004ED92E /* DealDetailsHeaderTableViewCell.xib in Resources */,
 				3616E4A11C762E28004ED92E /* DealDetailsCodeSectionTableViewCell.xib in Resources */,
@@ -1243,6 +1261,7 @@
 				369A384B1CA9C1CB00B78C98 /* ProfileAvatarTableViewCell.swift in Sources */,
 				36B818B51C8504D5003563FE /* List.swift in Sources */,
 				AA72535D1D6D90620050DF7D /* BaseViewController.swift in Sources */,
+				AA6E4F0E1D77CAA600EE4C75 /* NotificationTableViewCell.swift in Sources */,
 				3609207A1C9780D4003F5CB8 /* Image.swift in Sources */,
 				360EA4AF1C0F6D7300692668 /* TopicCollectionViewCell.swift in Sources */,
 				3609207C1C9784B0003F5CB8 /* PostType.swift in Sources */,
@@ -1297,6 +1316,7 @@
 				36D841171C32C62500C3065C /* AddressBookContact.swift in Sources */,
 				361FC0831CA1FCED00388FD0 /* SubjectOrGradeTableViewCell.swift in Sources */,
 				3689ECD81C0E3F330087F828 /* DolphinViewController.swift in Sources */,
+				AA6E4F0A1D77C07500EE4C75 /* Notification.swift in Sources */,
 				AAB7E8F71D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36E411701C8E3DE9002DC736 /* SettingsViewController.swift in Sources */,
 				AA72BE1C1D5810C0001543BE /* PDKInterest.m in Sources */,
