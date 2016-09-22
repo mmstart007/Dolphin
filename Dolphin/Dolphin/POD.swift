@@ -23,8 +23,12 @@ class POD : NSObject {
     var lastPostDate: NSDate?
     var image_width: Int?
     var image_height: Int?
+    var total_unread: Int?
+    var isMyFeed : Bool?
+
     
-    convenience init(name: String?, description: String?, imageURL: String?, isPrivate: Int?, owner: User?, users: [User]?, postsCount: Int?, usersCount: Int?, imageData: UIImage?, image_width: Int?, image_height: Int?) {
+    convenience init(name: String?, description: String?, imageURL: String?, isPrivate: Int?, owner: User?, users: [User]?, postsCount: Int?, usersCount: Int?, imageData: UIImage?, image_width: Int?, image_height: Int?,total_unread: Int?) {
+
         self.init()
         
         self.name            = name
@@ -38,6 +42,8 @@ class POD : NSObject {
         self.imageData       = imageData
         self.image_width     = image_width
         self.image_height    = image_height
+        self.total_unread    = total_unread
+
     }
     
     func podColor() -> UIColor {
@@ -65,6 +71,7 @@ class POD : NSObject {
         self.isPrivate       = podJsonObject!["is_private"] as? Int
         self.image_width     = podJsonObject!["image_width"] as? Int
         self.image_height    = podJsonObject!["image_height"] as? Int
+        self.total_unread    = podJsonObject!["total_unread"] as? Int
         
         if let lastPostsJson = podJsonObject!["last_post"] as? [AnyObject] {
             if lastPostsJson.count > 0 {

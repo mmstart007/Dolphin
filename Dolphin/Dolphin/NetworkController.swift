@@ -825,6 +825,23 @@ class NetworkController: NSObject {
         }
     }
     
+    func getPOD(podId: Int, completionHandler: (POD?, AnyObject?) -> ()) -> () {
+        var savedPOD: POD?
+        let urlParameters : [CVarArgType] = [String(podId)]
+        performRequest(MethodType.GET, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
+            if error == nil {
+                if let podJson = result!["pod"] as? [String: AnyObject] {
+                    savedPOD = POD(jsonObject: podJson)
+                }
+                completionHandler(savedPOD, nil)
+            } else {
+                
+                completionHandler(savedPOD, error)
+            }
+        }
+        
+    }
+    
     func filterPOD(pattern: String?, userId: Int?, fromDate: NSDate?, toDate: NSDate?, quantity: Int?, page: Int?, sort_by: String?, completionHandler: ([POD], AnyObject?) -> ()) -> () {
         var pods: [POD] = []
         var filters = [String: AnyObject]()

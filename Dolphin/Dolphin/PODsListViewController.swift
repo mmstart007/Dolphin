@@ -10,7 +10,12 @@ import Foundation
 import UIKit
 import SVProgressHUD
 
-class PODsListViewController : UIViewController, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate {
+protocol UpdateProtocol {
+    func updatePodUI()
+}
+
+
+class PODsListViewController : UIViewController, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate,UpdateProtocol {
     
     let networkController = NetworkController.sharedInstance
     let kPageQuantity: Int = 10
@@ -26,6 +31,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     var searchText: String? = nil
     var isDataLoaded: Bool  = false
     var page: Int           = 0
+    var podSelected : POD?
+    var isFillter: Bool  = false
     
     required init() {
         super.init(nibName: "PODsListViewController", bundle: NSBundle.mainBundle())
@@ -66,6 +73,49 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
         loadData(false)
     }
+    
+    func updatePodUI() {
+        //
+        networkController.getPOD(podSelected!.id!, completionHandler: { (pod, error) -> () in
+            if error == nil {
+                if pod?.id != nil {
+                    //pod?.total_unread = 2;
+                    // everything worked ok
+                    var resultPod = self.allPods.filter{ $0.id == pod!.id}
+                    if(resultPod.count > 0)
+                    {
+                        self.allPods.filter{ $0.id == pod!.id}[0].total_unread = pod?.total_unread;
+                    }
+                    
+                    resultPod = self.myPods.filter{ $0.id == pod!.id}
+                    if(resultPod.count > 0)
+                    {
+                        self.myPods.filter{ $0.id == pod!.id}[0].total_unread = pod?.total_unread;
+                    }
+                    
+                    self.allPODstableView.reloadData();
+                    self.myPODsCollectionView.reloadData();
+                } else {
+                    // there was an error saving the post
+                }
+                SVProgressHUD.dismiss()
+                
+            } else {
+                SVProgressHUD.dismiss()
+                let errors: [String]? = error!["errors"] as? [String]
+                var alert: UIAlertController
+                if errors != nil && errors![0] != "" {
+                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                } else {
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                }
+                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        })
+    }
+
     
     func deletedPod(pod: POD) {
         var index = 0;
@@ -257,6 +307,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             let selectedPOD = allPods[indexPath.row]
             podDetailsVC.pod = selectedPOD
             podDetailsVC.prevViewController = self
+            podDetailsVC.pListener = self
+            self.podSelected = selectedPOD;
             checkPrivatePODs(podDetailsVC, pod: selectedPOD)
         } else {
             let podDetailsVC = PODDetailsViewController()
@@ -264,6 +316,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             podDetailsVC.pod = selectedPOD
             podDetailsVC.prevViewController = self
             podDetailsVC.prevViewController = self
+            podDetailsVC.pListener = self
+            self.podSelected = selectedPOD;
             checkPrivatePODs(podDetailsVC, pod: selectedPOD)
         }
     }
@@ -309,13 +363,18 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             navigationController?.pushViewController(createPODVC, animated: true)
         } else if (searchText == nil || searchText == ""){
             let podDetailsVC = PODDetailsViewController()
-            let selectedPOD = allPods[indexPath.row - 1]
+            let selectedPOD = myPods[indexPath.row - 1]
             podDetailsVC.pod = selectedPOD
+            podDetailsVC.pListener = self
+            self.podSelected = selectedPOD;
             navigationController?.pushViewController(podDetailsVC, animated: true)
         } else {
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = filteredPODs[indexPath.row]
             podDetailsVC.pod = selectedPOD
+            podDetailsVC.pListener = self
+            self.podSelected = selectedPOD;
+
             navigationController?.pushViewController(podDetailsVC, animated: true)
         }
     }
@@ -438,6 +497,14 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 } else {
                     self.addTableEmptyMessage("No PODs has been created\n\nwhy don't create a POD?")
                 }
+                for pod in self.allPods {
+                    var result = self.myPods.filter{ $0.id == pod.id}
+                    if(result.count != 0)
+                    {
+                        pod.isMyFeed = true;
+                    }
+                }
+
                 self.allPODstableView.reloadData()
                 
                 // load mypods info
@@ -468,6 +535,14 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page, sort_by: nil) {  (pods, error) -> () in
             if error == nil {
                 self.allPods.appendContentsOf(pods)
+                for pod in self.allPods {
+                    var result = self.myPods.filter{ $0.id == pod.id}
+                    if(result.count != 0)
+                    {
+                        pod.isMyFeed = true;
+                    }
+                }
+
                 self.allPODstableView.reloadData()
                 
             } else {
@@ -495,7 +570,15 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             if error == nil {
                 self.isDataLoaded = true
                 self.myPods = pods
-                
+                for pod in self.allPods {
+                    var result = self.myPods.filter{ $0.id == pod.id}
+                    if(result.count != 0)
+                    {
+                        pod.isMyFeed = true;
+                    }
+                }
+                self.allPODstableView.reloadData()
+
                 self.myPODsCollectionView.reloadData()
                 
                 if !pullToRefresh {

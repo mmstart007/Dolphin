@@ -57,7 +57,7 @@ class NotificationViewController: DolphinViewController, UITableViewDataSource, 
                 if self.notifications.count > 0 {
                     self.removeTableEmtpyMessage()
                 } else {
-                    self.addTableEmptyMessage("No notifications has been received.")
+                    self.addTableEmptyMessage("No Notifications.")
                 }
                 self.contentTableView.reloadData()
                 
