@@ -11,6 +11,7 @@ import UIKit
 
 class PODPreviewTableViewCell : CustomFontTableViewCell {
     
+    @IBOutlet weak var userLastPost: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var podNameLabel: UILabel!
@@ -136,6 +137,28 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
                 x = x - w - offset
             }
         }
+        
+        userLastPost.hidden = true;
+        if(pod.isMyFeed != nil && pod.isMyFeed! && pod.total_unread != 0)
+        {
+            userLastPost.hidden = false
+        }
+        
+        if self.pod != nil {
+            
+            var otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userLastPost.frame.size.width, height: userLastPost.frame.size.height))
+            otherUsersLabel.backgroundColor = Utils.hexStringToUIColor("#CC0000")//UIColor.redColor()
+            otherUsersLabel.textColor = UIColor.whiteColor()
+            otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
+            otherUsersLabel.layer.masksToBounds = true
+            otherUsersLabel.text = String(format: "+%li", arguments: [(pod.total_unread)!])
+            otherUsersLabel.textAlignment = .Center
+            otherUsersLabel.font = UIFont.systemFontOfSize(12)
+            userLastPost.addSubview(otherUsersLabel)
+            
+        }
+
     }
     
+
 }

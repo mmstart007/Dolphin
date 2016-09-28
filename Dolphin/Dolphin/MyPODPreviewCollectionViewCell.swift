@@ -11,6 +11,7 @@ import UIKit
 
 class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
     
+    @IBOutlet weak var userContainerLastPost: UIView!
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var podTitleLabel: UILabel!
     @IBOutlet weak var userImagesContainerView: UIView!
@@ -79,7 +80,7 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
     
     func addUserImages(pod: POD) {
         if self.pod != nil {
-            let otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userImagesContainerView.frame.size.width, height: userImagesContainerView.frame.size.height))
+            var otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userImagesContainerView.frame.size.width, height: userImagesContainerView.frame.size.height))
             otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
             otherUsersLabel.textColor = UIColor.lightTextColor()
             otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
@@ -88,6 +89,23 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
             otherUsersLabel.textAlignment = .Center
             otherUsersLabel.font = UIFont.systemFontOfSize(12)
             userImagesContainerView.addSubview(otherUsersLabel)
+            
+            userContainerLastPost.hidden = true;
+            if(pod.total_unread != 0)
+            {
+                userContainerLastPost.hidden = false
+            }
+            otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userContainerLastPost.frame.size.width, height: userContainerLastPost.frame.size.height))
+            otherUsersLabel.backgroundColor = Utils.hexStringToUIColor("#CC0000")//UIColor.redColor()
+            otherUsersLabel.textColor = UIColor.lightTextColor()
+            otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
+            otherUsersLabel.layer.masksToBounds = true
+            otherUsersLabel.text = String(format: "+%li", arguments: [(pod.total_unread)!])
+            otherUsersLabel.textAlignment = .Center
+            otherUsersLabel.font = UIFont.systemFontOfSize(12)
+            userContainerLastPost.addSubview(otherUsersLabel)
+
         }
     }
+    
 }

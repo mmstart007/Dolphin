@@ -17,6 +17,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     let networkController = NetworkController.sharedInstance
     let kPageQuantity: Int = 10
     
+    var pListener : UpdateProtocol?
     var pod: POD?
     var needToReloadPod = false
     var postOfPOD: [Post] = []
@@ -83,6 +84,14 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         self.tableViewPosts.reloadData()
         loadData(false)
         
+    }
+    
+    override func goBackButtonPressed(sender: UIBarButtonItem) {
+        super.goBackButtonPressed(sender)
+        if(self.pListener != nil)
+        {
+            self.pListener?.updatePodUI()
+        }
     }
 
     override func didReceiveMemoryWarning() {
