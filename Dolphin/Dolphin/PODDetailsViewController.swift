@@ -109,7 +109,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     func checkRightActionButton() {
         if networkController.currentUserId == self.pod?.owner?.id {
-            setRightButtonItemWithText("Delete", target: self, action: #selector(deletePod))
+            setRightButtonItemWithText("Edit", target: self, action: #selector(deletePod))
         }
         else {
             
@@ -161,7 +161,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             headerView.addSubview(headerLabel)
             
             if pod?.owner?.id == networkController.currentUserId {
-                let editButton = UIButton(frame: CGRect(x: headerView.frame.width - 35, y: 0, width: 25, height: 25))
+                let editButton = UIButton(frame: CGRect(x: 70, y: 0, width: 25, height: 25))
                 editButton.setImage(UIImage(named: "edit_icon"), forState: .Normal)
                 editButton.addTarget(self, action: #selector(didTapEditMember), forControlEvents: .TouchUpInside)
                 headerView.addSubview(editButton)
@@ -512,7 +512,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     // MARK: Delete Pod
     func deletePod() {
-        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.Alert)
+      /*  let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.Alert)
         alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
             // delete the pod
             let podIdString = String(self.pod!.id!)
@@ -552,7 +552,10 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
         
         // show the alert
-        self.presentViewController(alertWarning, animated: true, completion: nil)
+        self.presentViewController(alertWarning, animated: true, completion: nil)*/
+        
+        let createPODVC = CreatePodViewController()
+        navigationController?.pushViewController(createPODVC, animated: true)
     }
     
     // MARK: Withdraw Member.

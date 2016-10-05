@@ -17,6 +17,8 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
     @IBOutlet weak var userImagesContainerView: UIView!
     @IBOutlet weak var lastPostDateLabel: UILabel!
     @IBOutlet weak var createPODView: UIView!
+   
+  
     
     var pod: POD?
     var triangleView: TriangleView?
@@ -35,6 +37,8 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
             super.frame             = frame
         }
     }
+    
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         if pod != nil {
@@ -63,7 +67,7 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         self.layer.cornerRadius          = 5
         if pod != nil {
             podImageView.layer.cornerRadius  = 5
-            podImageView.layer.masksToBounds = true
+            //podImageView.layer.masksToBounds = true
             podImageView.sd_setImageWithURL(NSURL(string: pod!.imageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             podTitleLabel.text = pod!.name
             if let lastPostDate = pod?.lastPostDate {
@@ -76,6 +80,7 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         } else {
             createPODView.hidden = false
         }
+       
     }
     
     func addUserImages(pod: POD) {
