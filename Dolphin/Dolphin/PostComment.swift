@@ -15,6 +15,10 @@ class PostComment : NSObject {
     var postCommentText: String?
     var postCommentDate: NSDate?
     var postCommentImage: UIImage?
+    var postCommentIsLike: Int?
+    var postCommentLikeCount: Int?
+    var postImage: Image?
+    var postLink: Link?
     
     convenience init(text: String, image: UIImage?) {
         self.init()
@@ -26,12 +30,23 @@ class PostComment : NSObject {
         self.init()
         
         let postJsonObject       = jsonObject as? [String: AnyObject]
-
+        
+        if let imageJson = postJsonObject!["image"] as? [String: AnyObject] {
+            self.postImage = Image(jsonObject: imageJson)
+        }
+        
+        if let linkJson = postJsonObject!["link"] as? [String: AnyObject] {
+            self.postLink = Link(jsonObject: linkJson)
+        }
+        
+        self.postCommentLikeCount       = postJsonObject!["likes_count"] as? Int
+        self.postCommentIsLike       = postJsonObject!["is_liked"] as? Int
         self.postCommentId       = postJsonObject!["id"] as? Int
         self.postCommentUser     = User(jsonObject: postJsonObject!["user"] as! [String: AnyObject])
         self.postCommentText     = postJsonObject!["body"] as? String
         let dateString           = postJsonObject!["created_at"] as? String
         self.postCommentDate     = NSDate(timeIntervalSince1970: Double(dateString!)!)
+        
     }
     
     func toJson() -> [String: AnyObject] {

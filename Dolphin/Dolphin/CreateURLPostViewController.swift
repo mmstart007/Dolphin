@@ -25,6 +25,8 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
 
     var urlToLoad: String = ""
     var podId: Int?
+    var mPost : Post?
+    var comment : PostCommentRequest?
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -45,7 +47,14 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         pinButton.layer.masksToBounds = true
         pinButton.layer.cornerRadius = 5.0
         
-        loadRequest("http://google.com")
+        //loadRequest("http://google.com")
+        var linkRequest : String = "http://google.com"
+        if(mPost != nil)
+        {
+            linkRequest = (self.mPost?.postLink?.url)!
+        }
+        loadRequest(linkRequest)
+        urlTextField.text               = linkRequest
         self.webView.scalesPageToFit = true;
         self.webView.contentMode = .ScaleAspectFit;
     }
@@ -102,7 +111,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         
         var siteURLString = ""
         if let siteToPinURL = webView.request?.URL {
-            siteURLString = siteToPinURL.absoluteString
+            siteURLString = siteToPinURL.absoluteString!
         }
         
         SVProgressHUD.showWithMaskType(.None)
@@ -122,14 +131,14 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
                         
                         if !url.hasPrefix("/") {
                             if let baseURL = NSURL(string: "/", relativeToURL: siteURL) {
-                                imageURL = baseURL.absoluteString.stringByAppendingString(url)
+                                imageURL = baseURL.absoluteString!.stringByAppendingString(url)
                             }
                         }
                         else
                         {
                             if let baseURL = NSURL(string: "/", relativeToURL: siteURL) {
                                 let newURL = String(url.characters.dropFirst())
-                                imageURL = baseURL.absoluteString.stringByAppendingString(newURL)
+                                imageURL = baseURL.absoluteString!.stringByAppendingString(newURL)
                             }
                         }
                     }
@@ -143,6 +152,9 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
                 let chooseImageVC = CreateURLPostChooseImageViewController(images: imageURLs)
                 chooseImageVC.urlLoaded = siteURLString
                 chooseImageVC.podId     = self.podId
+                self.comment?.url = siteURLString
+                chooseImageVC.comment = self.comment
+                chooseImageVC.mPost = self.mPost
                 self.navigationController?.pushViewController(chooseImageVC, animated: true)
             } else {
                 let alert = UIAlertController(title: "Error", message: "No images obtained from the website", preferredStyle: .Alert)

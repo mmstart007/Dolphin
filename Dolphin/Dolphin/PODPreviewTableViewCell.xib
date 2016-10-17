@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,54 +14,56 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5TA-ya-ZMf">
-                    <rect key="frame" x="5" y="5" width="365" height="197"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uJf-hC-DQj" userLabel="POD Image View">
-                            <rect key="frame" x="0.0" y="0.0" width="365" height="130"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="130" id="GsB-5o-Zq6"/>
                             </constraints>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tjl-gT-txv" userLabel="Button Delete">
+                            <frame key="frameInset" minX="327" minY="5" width="30" height="30"/>
+                            <state key="normal" backgroundImage="ic_delete"/>
+                            <connections>
+                                <action selector="deleteTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="5SU-GI-V3K"/>
+                            </connections>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5sV-Ob-Dme" userLabel="User LastPostView">
-                            <rect key="frame" x="10" y="10" width="33" height="33"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="5sV-Ob-Dme" secondAttribute="height" multiplier="1:1" id="hC6-cT-3EK"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPS-oy-4BV" userLabel="POD Name Label">
-                            <rect key="frame" x="8" y="138" width="349" height="19"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="19" id="C8d-8B-col"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FwN-DZ-ZhN">
-                            <rect key="frame" x="8" y="172" width="141" height="13"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="13" id="qyG-95-sAc"/>
                                 <constraint firstAttribute="width" constant="141" id="uVn-xE-f1J"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plW-oq-N1n">
-                            <rect key="frame" x="155" y="158" width="210" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="plW-oq-N1n" secondAttribute="height" multiplier="6:1" id="z8q-gF-TZf"/>
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="FwN-DZ-ZhN" firstAttribute="top" secondItem="QPS-oy-4BV" secondAttribute="bottom" constant="15" id="14F-EJ-Knj"/>
                         <constraint firstItem="FwN-DZ-ZhN" firstAttribute="leading" secondItem="5TA-ya-ZMf" secondAttribute="leading" constant="8" id="1zL-PA-sr9"/>
                         <constraint firstItem="QPS-oy-4BV" firstAttribute="leading" secondItem="5TA-ya-ZMf" secondAttribute="leading" constant="8" id="2rT-Jb-hAU"/>
                         <constraint firstItem="5sV-Ob-Dme" firstAttribute="top" secondItem="5TA-ya-ZMf" secondAttribute="top" constant="10" id="6wS-GB-knq"/>
+                        <constraint firstItem="Tjl-gT-txv" firstAttribute="top" secondItem="5TA-ya-ZMf" secondAttribute="top" constant="5" id="Ikw-kb-kgn"/>
                         <constraint firstItem="5sV-Ob-Dme" firstAttribute="width" secondItem="5sV-Ob-Dme" secondAttribute="height" multiplier="1:1" id="Oge-eA-nH7"/>
                         <constraint firstItem="5sV-Ob-Dme" firstAttribute="width" secondItem="5TA-ya-ZMf" secondAttribute="height" multiplier="33:197" id="PcE-z5-5gg"/>
                         <constraint firstAttribute="bottom" secondItem="plW-oq-N1n" secondAttribute="bottom" constant="4" id="UfM-wU-7Ne"/>
@@ -72,11 +75,12 @@
                         <constraint firstItem="QPS-oy-4BV" firstAttribute="top" secondItem="uJf-hC-DQj" secondAttribute="bottom" constant="8" id="dt5-UU-xFz"/>
                         <constraint firstAttribute="trailing" secondItem="QPS-oy-4BV" secondAttribute="trailing" constant="8" id="gOe-av-h6Z"/>
                         <constraint firstAttribute="trailing" secondItem="plW-oq-N1n" secondAttribute="trailing" id="l9J-2J-LNM"/>
+                        <constraint firstAttribute="trailing" secondItem="Tjl-gT-txv" secondAttribute="trailing" constant="5" id="n7q-dh-clg"/>
                         <constraint firstItem="plW-oq-N1n" firstAttribute="top" secondItem="QPS-oy-4BV" secondAttribute="bottom" constant="1" id="rwa-sV-HRN"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="5TA-ya-ZMf" secondAttribute="trailing" constant="5" id="AlJ-AT-VLk"/>
                 <constraint firstItem="5TA-ya-ZMf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="XjW-9C-OSa"/>
@@ -86,6 +90,7 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="btnDelete" destination="Tjl-gT-txv" id="Thy-2x-TDe"/>
                 <outlet property="containerView" destination="5TA-ya-ZMf" id="yca-Mn-cJJ"/>
                 <outlet property="podImageHeight" destination="GsB-5o-Zq6" id="ica-mj-nv2"/>
                 <outlet property="podImageView" destination="uJf-hC-DQj" id="dLD-lI-bbd"/>
@@ -97,4 +102,7 @@
             <point key="canvasLocation" x="336.5" y="224"/>
         </view>
     </objects>
+    <resources>
+        <image name="ic_delete" width="32" height="32"/>
+    </resources>
 </document>

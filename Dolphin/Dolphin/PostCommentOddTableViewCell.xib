@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,36 +14,32 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0d6-05-O7T">
-                    <rect key="frame" x="66" y="19" width="301" height="39"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="39" id="dhy-iA-GdH"/>
                     </constraints>
                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6v-ae-HK5">
-                    <rect key="frame" x="66" y="8" width="62" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="WVh-Rn-UfJ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8UL-7j-aVa">
-                    <rect key="frame" x="141" y="8" width="31" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="MtE-nl-GKa"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mRY-iq-9MM">
-                    <rect key="frame" x="8" y="8" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="32r-sO-01n"/>
                         <constraint firstAttribute="width" secondItem="mRY-iq-9MM" secondAttribute="height" multiplier="1:1" id="Gjf-fi-0IE"/>
@@ -54,12 +51,27 @@
                         </mask>
                     </variation>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ION-JV-AYH" userLabel="Button Like">
+                    <frame key="frameInset" minX="333" minY="40" width="25" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="likeTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="zs3-cG-JgK"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ViewsGlassIcon" translatesAutoresizingMaskIntoConstraints="NO" id="sqN-2l-dmz">
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="0lq-fK-xvp"/>
+                        <constraint firstAttribute="height" constant="22" id="fFP-zZ-sCR"/>
+                    </constraints>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="I6v-ae-HK5" firstAttribute="leading" secondItem="mRY-iq-9MM" secondAttribute="trailing" constant="8" id="0Zz-nm-s8U"/>
                 <constraint firstItem="I6v-ae-HK5" firstAttribute="top" secondItem="mRY-iq-9MM" secondAttribute="top" id="3hA-CB-pvl"/>
+                <constraint firstAttribute="trailing" secondItem="sqN-2l-dmz" secondAttribute="trailing" constant="17" id="BNr-na-iLu"/>
                 <constraint firstItem="0d6-05-O7T" firstAttribute="top" secondItem="8UL-7j-aVa" secondAttribute="bottom" constant="-4" id="Bdi-On-Vlz"/>
+                <constraint firstAttribute="bottom" secondItem="sqN-2l-dmz" secondAttribute="bottom" constant="4" id="CRb-2o-3d3"/>
                 <constraint firstAttribute="bottom" secondItem="0d6-05-O7T" secondAttribute="bottom" constant="8" id="CRj-b9-Vp9"/>
                 <constraint firstItem="8UL-7j-aVa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="O5j-dn-q7f"/>
                 <constraint firstItem="8UL-7j-aVa" firstAttribute="leading" secondItem="I6v-ae-HK5" secondAttribute="trailing" constant="13" id="Q7S-W2-Qh9"/>
@@ -75,7 +87,9 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="imgLiked" destination="sqN-2l-dmz" id="3g0-Un-SrL"/>
                 <outlet property="postCommentDateLabel" destination="8UL-7j-aVa" id="LDX-SK-7fI"/>
+                <outlet property="postCommentLike" destination="ION-JV-AYH" id="5gK-MY-zeT"/>
                 <outlet property="postCommentTextView" destination="0d6-05-O7T" id="Hfa-3r-HjL"/>
                 <outlet property="postCommentTextViewHeightConstraint" destination="dhy-iA-GdH" id="19N-30-nZY"/>
                 <outlet property="postCommentUserImageView" destination="mRY-iq-9MM" id="Lvn-Ze-nVL"/>
@@ -84,4 +98,7 @@
             <point key="canvasLocation" x="531.5" y="341.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="ViewsGlassIcon" width="44" height="18"/>
+    </resources>
 </document>

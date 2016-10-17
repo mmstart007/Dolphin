@@ -117,7 +117,7 @@ class PODSettingsViewController: DolphinViewController, UITableViewDelegate, UIT
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         let subViewsArray = NSBundle.mainBundle().loadNibNamed("PODSettingsFooter", owner: self, options: nil)
-        let footerViewFromNib = subViewsArray[0] as? UIView
+        let footerViewFromNib = subViewsArray![0] as? UIView
         footerViewFromNib?.userInteractionEnabled = true
         
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 100))

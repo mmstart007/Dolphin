@@ -149,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         } else {
-            if url.absoluteString.hasPrefix("fb") {
+            if url.absoluteString!.hasPrefix("fb") {
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
             }
         }

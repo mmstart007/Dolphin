@@ -26,7 +26,7 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
         cellInfo?.postTagsTextView.resignFirstResponder()
         
         //Get Info.
-        let description = cellInfo?.textViewDescription.text
+        let description = ""//cellInfo?.textViewDescription.text
         
         let topicsStringArray = cellInfo?.postTagsTextView.tokens()
         var topics: [Topic] = []
@@ -44,9 +44,38 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
             imageHeight = Float(postImage.size.height)
         }
         
-        if description != "" {
+        //if description != "" {
             let link = Link(url: postURL!, imageURL: postImageURL!)
             // crate the pod
+        if(comment != nil)
+        {
+            SVProgressHUD.showWithStatus("Sending comment")
+            self.comment?.postImageHeight = Int(imageHeight)
+            self.comment?.postImageWidth = Int(imageWidth)
+            self.comment?.postCommentText = self.comment?.url
+            
+            networkController.createCommentUpdate(self.comment!.postCommentId!, postComment: self.comment!, completionHandler: { (comment, error) -> () in
+                if error == nil {
+                    if comment?.postCommentId != nil {
+                        //self.navigationController?.popViewControllerAnimated(true)
+                        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+                        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true);
+                    } else {
+                        print("there was an error saving the post")
+                    }
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    SVProgressHUD.dismiss()
+                }
+            })
+        }
+        else if(mPost == nil) {
             let post = Post(user: nil, image: nil, imageData: nil, imageWidth: imageWidth, imageHeight: imageHeight, type: PostType(name: "link"), topics: topics, link: link, imageUrl: nil, title: nil, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
             SVProgressHUD.showWithStatus("Posting")
             networkController.createPost(post, completionHandler: { (post, error) -> () in
@@ -55,7 +84,8 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
                     if post?.postId != nil {
                         // everything worked ok
                         NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
-                        self.navigationController?.popToRootViewControllerAnimated(true)
+                        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+                        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true);
                     } else {
                         // there was an error saving the post
                     }
@@ -75,13 +105,46 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             })
-        } else {
+        }
+        else{
+            let post = PostRequest(image: nil, imageData: nil, imageWidth: imageWidth, imageHeight: imageHeight, type: "link", topics: topics, link: link, imageUrl: nil, title: nil, text: description, PODId: podId, PostId: self.mPost!.postId)
+            SVProgressHUD.showWithStatus("Posting")
+            networkController.updatePost(post, completionHandler: { (post, error) -> () in
+                if error == nil {
+                    
+                    if post?.postId != nil {
+                        // everything worked ok
+                        //NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
+                        //self.navigationController?.popToRootViewControllerAnimated(true)
+                        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+                        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true);
+                    } else {
+                        // there was an error saving the post
+                    }
+                    SVProgressHUD.dismiss()
+                    
+                } else {
+                    SVProgressHUD.dismiss()
+                    let errors: [String]? = error!["errors"] as? [String]
+                    var alert: UIAlertController
+                    if errors != nil && errors![0] != "" {
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                    } else {
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    }
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            })
+        }
+        /*} else {
             var alert: UIAlertController
             alert = UIAlertController(title: "Error", message: "Please, fill all the fields", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)
             self.presentViewController(alert, animated: true, completion: nil)
-        }
+        }*/
     }
     
     
@@ -95,6 +158,10 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
             cell?.textFieldPostTitle.delegate = self
             cell?.textViewDescription.delegate = self
             cell?.postTagsTextView.delegate = self
+            if(mPost != nil)
+            {
+                cell?.textFieldPostTitle.text = mPost?.postHeader
+            }
             cell?.configureWithImage(true, postImage: nil, postURL: postURL, postImageURL: postImageURL)
         }
         cell?.contentView.userInteractionEnabled = false

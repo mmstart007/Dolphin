@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateImagePostFinishPostingViewController" customModule="Dolphin" customModuleProvider="target">
             <connections>
+                <outlet property="btnSelectPicture" destination="qNM-dK-fSS" id="agm-LE-ujT"/>
                 <outlet property="postImagePreviewImageView" destination="0Do-Cj-hES" id="BMn-DU-lDk"/>
                 <outlet property="view" destination="iN0-l3-epB" id="uor-lv-Z6o"/>
             </connections>
@@ -16,18 +18,24 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Do-Cj-hES">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Do-Cj-hES"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qNM-dK-fSS" userLabel="Button Edit">
+                    <connections>
+                        <action selector="btnSelecPictureTapped:" destination="-1" eventType="touchUpInside" id="93S-76-Ekz"/>
+                    </connections>
+                </button>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="qNM-dK-fSS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Iwn-w1-G4J"/>
+                <constraint firstAttribute="trailing" secondItem="qNM-dK-fSS" secondAttribute="trailing" id="NLj-74-xVn"/>
                 <constraint firstAttribute="bottom" secondItem="0Do-Cj-hES" secondAttribute="bottom" id="Xum-Ld-xYK"/>
                 <constraint firstItem="0Do-Cj-hES" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="hrK-Gh-rI4"/>
+                <constraint firstItem="qNM-dK-fSS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jmG-pX-W3j"/>
                 <constraint firstAttribute="trailing" secondItem="0Do-Cj-hES" secondAttribute="trailing" id="n2H-bV-WNv"/>
                 <constraint firstItem="0Do-Cj-hES" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vKG-rn-WuL"/>
+                <constraint firstAttribute="bottom" secondItem="qNM-dK-fSS" secondAttribute="bottom" id="wZf-eh-heE"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="530.5" y="381.5"/>
         </view>
     </objects>

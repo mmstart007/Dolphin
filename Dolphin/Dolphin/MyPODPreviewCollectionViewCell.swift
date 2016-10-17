@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SVProgressHUD
 
 class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
     
@@ -17,10 +18,10 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
     @IBOutlet weak var userImagesContainerView: UIView!
     @IBOutlet weak var lastPostDateLabel: UILabel!
     @IBOutlet weak var createPODView: UIView!
-   
-  
     
+    let networkController = NetworkController.sharedInstance
     var pod: POD?
+    var delegate : DeletePodProtocol?
     var triangleView: TriangleView?
     
     override var frame: CGRect {
@@ -37,10 +38,9 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
             super.frame             = frame
         }
     }
-    
-    
     override func layoutSubviews() {
         super.layoutSubviews()
+        triangleView?.hidden = true
         if pod != nil {
             addUserImages(pod!)
             if pod!.isPrivate == 1 {
@@ -67,8 +67,21 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         self.layer.cornerRadius          = 5
         if pod != nil {
             podImageView.layer.cornerRadius  = 5
-            //podImageView.layer.masksToBounds = true
-            podImageView.sd_setImageWithURL(NSURL(string: pod!.imageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            podImageView.layer.masksToBounds = true
+            //self.podImageView.sd_setImageWithURL(NSURL(string: (pod!.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                let data = NSData(contentsOfURL: NSURL(string: pod!.imageURL!)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                dispatch_async(dispatch_get_main_queue(), {
+                    if(data != nil)
+                    {
+                        self.podImageView.image = UIImage(data: data!)
+                    }
+                    else{
+                        self.podImageView.sd_setImageWithURL(NSURL(string: (pod!.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+                    }
+                });
+            }
+            
             podTitleLabel.text = pod!.name
             if let lastPostDate = pod?.lastPostDate {
                 lastPostDateLabel.text = lastPostDate.formattedAsTimeAgo()
@@ -80,7 +93,6 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         } else {
             createPODView.hidden = false
         }
-       
     }
     
     func addUserImages(pod: POD) {
@@ -112,5 +124,13 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
 
         }
     }
+    
+    @IBAction func deleteTapped(sender: AnyObject) {
+        if(delegate != nil)
+        {
+            delegate?.deleteMyPod(self.pod!)
+        }
+    }
+    
     
 }

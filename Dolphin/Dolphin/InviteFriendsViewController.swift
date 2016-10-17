@@ -84,7 +84,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         segmentedControl.frame = CGRect(x: 0, y: 0, width: headerView.frame.size.width, height: headerView.frame.size.height)
         segmentedControl.selectionIndicatorHeight = 4.0
         segmentedControl.backgroundColor = UIColor.blueDolphin()
-        segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown
+        //segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown
+        segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocation.Down
         segmentedControl.selectionIndicatorColor = UIColor.whiteColor()
         segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()];
         segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.redColor()];

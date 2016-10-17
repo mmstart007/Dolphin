@@ -18,9 +18,11 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
     @IBOutlet weak var podLastPostDateLabel: UILabel!
     @IBOutlet weak var podUsersContainerView: UIView!
     @IBOutlet weak var podImageHeight: NSLayoutConstraint!
+    @IBOutlet weak var btnDelete: UIButton!
     
     var pod: POD?
     var triangleView: TriangleView?
+    var delegate : DeletePodProtocol?
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -68,7 +70,20 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         containerView.layer.shadowRadius = 3
 
         self.pod = pod
-        podImageView.sd_setImageWithURL(NSURL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        //let data = NSData(contentsOfURL: NSURL(string: pod.imageURL!)!)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            let data = NSData(contentsOfURL: NSURL(string: pod.imageURL!)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+            dispatch_async(dispatch_get_main_queue(), {
+                if(data != nil)
+                {
+                    self.podImageView.image = UIImage(data: data!)
+                }
+                else{
+                    self.podImageView.sd_setImageWithURL(NSURL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+                }
+            });
+        }
+        
         podImageView.contentMode = .ScaleAspectFill
         podImageView.layer.masksToBounds = true
         podNameLabel.text                = pod.name
@@ -139,9 +154,16 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         }
         
         userLastPost.hidden = true;
+        btnDelete.hidden = true;
         if(pod.isMyFeed != nil && pod.isMyFeed! && pod.total_unread != 0)
         {
             userLastPost.hidden = false
+            //btnDelete.hidden = false;
+        }
+        
+        if(pod.isMyFeed != nil)
+        {
+            //btnDelete.hidden = false;
         }
         
         if self.pod != nil {
@@ -160,5 +182,11 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
 
     }
     
+    @IBAction func deleteTapped(sender: AnyObject) {
+        if(delegate != nil)
+        {
+            delegate?.deleteMyPod(self.pod!)
+        }
+    }
 
 }

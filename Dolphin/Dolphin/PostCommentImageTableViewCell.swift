@@ -1,17 +1,18 @@
 //
-//  PostCommentTableViewCell.swift
+//  PostCommentImageTableViewCell.swift
 //  Dolphin
 //
-//  Created by Ninth Coast on 11/30/15.
-//  Copyright © 2015 Ninth Coast. All rights reserved.
+//  Created by Mobi Soft on 10/11/16.
+//  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 
 import Foundation
 import UIKit
 import SVProgressHUD
 
-class PostCommentOddTableViewCell : CustomFontTableViewCell {
+class PostCommentImageTableViewCell : CustomFontTableViewCell {
     
+    @IBOutlet weak var postCommentImage: UIImageView!
     @IBOutlet weak var imgLiked: UIImageView!
     @IBOutlet weak var postCommentLike: UIButton!
     @IBOutlet weak var postCommentUserImageView: UIImageView!
@@ -24,7 +25,6 @@ class PostCommentOddTableViewCell : CustomFontTableViewCell {
     let networkController = NetworkController.sharedInstance
     var mComment : PostComment?
     var mPost : Post?
-    
     
     override var frame: CGRect {
         get {
@@ -43,8 +43,8 @@ class PostCommentOddTableViewCell : CustomFontTableViewCell {
     
     func configureWithPostComment(comment: PostComment) {
         self.mComment = comment
-        self.layer.cornerRadius               = 5
         postCommentUserImageView.sd_setImageWithURL(NSURL(string: (comment.postCommentUser?.userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+        self.layer.cornerRadius                               = 5
         postCommentTextView.text                              = comment.postCommentText
         postCommentTextView.textContainer.lineFragmentPadding = 0
         postCommentUserNameLabel.text                         = comment.postCommentUser?.userName
@@ -54,12 +54,28 @@ class PostCommentOddTableViewCell : CustomFontTableViewCell {
         postCommentUserImageView.layer.cornerRadius           = postCommentUserImageView.frame.size.width / 2.0
         postCommentUserImageView.layer.masksToBounds          = true
         postCommentTextView.textColor                         = UIColor.lightGrayColor()
-        let fixedWidth                                        = postCommentTextView.frame.size.width
+        postCommentTextView.textAlignment                     = .Right
+        let fixedWidth = postCommentTextView.frame.size.width
         postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newHeight = max(newSize.height, 40)
         self.postCommentTextViewHeightConstraint.constant = newHeight + 10
         Utils.setFontFamilyForView(self, includeSubViews: true)
+        
+        var imageUrl: String? = ""
+        if(comment.postLink != nil)
+        {
+            imageUrl = comment.postLink?.imageURL
+        }
+        else{
+            imageUrl = comment.postImage?.imageURL
+        }
+        
+        if let userImageUrl = imageUrl {
+            postCommentImage.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+        } else {
+            postCommentImage.image = UIImage(named: "PostImagePlaceholder")
+        }
         
         self.updateLikeUI()
     }
@@ -82,42 +98,42 @@ class PostCommentOddTableViewCell : CustomFontTableViewCell {
         let commentIdString = String(self.mComment!.postCommentId!)
         SVProgressHUD.showWithStatus("Likeing...")
         if (mComment!.postCommentIsLike == 0) {
-        self.networkController.likeComment(commentIdString, podId: postIdString , completionHandler: { (liked, error) -> () in
-            if error == nil {
-                
-                /*if (liked != nil) {
+            self.networkController.likeComment(commentIdString, podId: postIdString , completionHandler: { (liked, error) -> () in
+                if error == nil {
+                    
+                    /*if (liked != nil) {
+                     self.mComment!.postCommentIsLike = 1;
+                     } else {
+                     // there was an error saving the post
+                     }*/
                     self.mComment!.postCommentIsLike = 1;
+                    self.updateLikeUI()
+                    SVProgressHUD.dismiss()
+                    
                 } else {
-                    // there was an error saving the post
-                }*/
-                self.mComment!.postCommentIsLike = 1;
-                self.updateLikeUI()
-                SVProgressHUD.dismiss()
-                
-            } else {
-                SVProgressHUD.dismiss()
-                let errors: [String]? = error!["errors"] as? [String]
-                var alert: UIAlertController
-                if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
-                } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    SVProgressHUD.dismiss()
+                    let errors: [String]? = error!["errors"] as? [String]
+                    var alert: UIAlertController
+                    if errors != nil && errors![0] != "" {
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                    } else {
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    }
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.controller!.presentViewController(alert, animated: true, completion: nil)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                alert.addAction(cancelAction)
-                self.controller!.presentViewController(alert, animated: true, completion: nil)
-            }
-        })
+            })
         }
         else{
             self.networkController.dislikeComment(commentIdString, podId: postIdString , completionHandler: { (liked, error) -> () in
                 if error == nil {
                     
                     /*if (liked != nil) {
-                        self.mComment!.postCommentIsLike = 0;
-                    } else {
-                        // there was an error saving the post
-                    }*/
+                     self.mComment!.postCommentIsLike = 0;
+                     } else {
+                     // there was an error saving the post
+                     }*/
                     self.mComment!.postCommentIsLike = 0;
                     self.updateLikeUI()
                     SVProgressHUD.dismiss()
@@ -136,10 +152,8 @@ class PostCommentOddTableViewCell : CustomFontTableViewCell {
                     self.controller!.presentViewController(alert, animated: true, completion: nil)
                 }
             })
-
+            
         }
     }
-    
-    
     
 }

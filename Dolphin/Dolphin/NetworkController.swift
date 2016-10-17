@@ -49,6 +49,7 @@ class NetworkController: NSObject {
         case GetUserLikes       = "users/%@/likes"
         case GetUserLikePost    = "users/%@/likes/%@"
         case GetUserComments    = "users/%@/comments"
+        case LikeComment        = "posts/%@/comments/%@/likes"
 
         case GetSubjects        = "subjects"
         case GetGrades          = "grades"
@@ -364,11 +365,34 @@ class NetworkController: NSObject {
     }
     
     // MARK: - POSTS
-    
     func createPost(post: Post, completionHandler: (Post?, AnyObject?) -> ()) -> () {
         var savedPost: Post?
         let parameters : [String : AnyObject]? = ["post": post.toJson()]
         performRequest(MethodType.POST, authenticated: true, method: .CreatePost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let postJson = result!["post"] as? [[String: AnyObject]] {
+                    savedPost = Post(jsonObject: postJson[0])
+                }
+                completionHandler(savedPost, nil)
+            } else {
+                completionHandler(savedPost, error)
+            }
+        }
+    }
+    
+    func updatePost(post: PostRequest, completionHandler: (Post?, AnyObject?) -> ()) -> () {
+        var savedPost: Post?
+        let parameters : [String : AnyObject]? = ["post": post.toJson()]
+        
+        var error : NSError?
+        
+        let jsonData = try! NSJSONSerialization.dataWithJSONObject(parameters!, options: NSJSONWritingOptions.PrettyPrinted)
+        
+        let jsonString = NSString(data: jsonData, encoding: NSUTF8StringEncoding)! as String
+        
+        print(jsonString)
+        
+        performRequest(MethodType.PATCH, authenticated: true, method: .CreatePost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
                 if let postJson = result!["post"] as? [[String: AnyObject]] {
                     savedPost = Post(jsonObject: postJson[0])
@@ -808,6 +832,63 @@ class NetworkController: NSObject {
         }
     }
     
+    func updateInfoPOD(pod: PODRequest, completionHandler: (POD?, AnyObject?) -> ()) -> () {
+        var savedPOD: POD?
+        let parameters : [String : AnyObject]? = ["pod": pod.toJson()]
+        performRequest(MethodType.PATCH, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let podJson = result!["pod"] as? [String: AnyObject] {
+                    savedPOD = POD(jsonObject: podJson)
+                }
+                completionHandler(savedPOD, nil)
+            } else {
+                
+                completionHandler(savedPOD, error)
+            }
+        }
+    }
+    
+    func likeComment(commentId: String,podId: String, completionHandler: (Bool?, AnyObject?) -> ()) -> () {
+        var savedPOD: POD?
+        let parameters : [String : AnyObject]? = ["like": "{}"]
+        let urlParameters : [CVarArgType] = [podId, commentId]
+        print(parameters)
+        performRequest(MethodType.POST, authenticated: true, method: .LikeComment, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                completionHandler(true, nil)
+                /*if let likeJson = result!["like"] as? [String: AnyObject] {
+                    savedPOD = POD(jsonObject: likeJson)
+                    completionHandler(true, nil)
+                }*/
+                
+            } else {
+                
+                completionHandler(false, error)
+            }
+        }
+    }
+    
+    func dislikeComment(commentId: String,podId: String, completionHandler: (Bool?, AnyObject?) -> ()) -> () {
+        var savedPOD: POD?
+        let parameters : [String : AnyObject]? = ["like": "{}"]
+        let urlParameters : [CVarArgType] = [podId, commentId]
+        print(parameters)
+        performRequest(MethodType.DELETE, authenticated: true, method: .LikeComment, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                completionHandler(true, nil)
+                /*if let likeJson = result!["like"] as? [String: AnyObject] {
+                    savedPOD = POD(jsonObject: likeJson)
+                    completionHandler(true, nil)
+                }*/
+                
+            } else {
+                
+                completionHandler(false, error)
+            }
+        }
+    }
+    
+    
     func updatePod(jsonParamter: NSDictionary, completionHandler: (POD?, AnyObject?) -> ()) -> () {
         var savedPOD: POD?
         let parameters : [String : AnyObject]? = ["pod": jsonParamter]
@@ -956,6 +1037,23 @@ class NetworkController: NSObject {
         
     }
     
+    func createCommentUpdate(postId: Int, postComment: PostCommentRequest, completionHandler: (PostComment?, AnyObject?) -> ()) -> () {
+        var savedPostComment: PostComment?
+        let urlParameters : [CVarArgType] = [String(postId)]
+        let parameters : [String : AnyObject]? = ["comment": postComment.toJson()]
+        performRequest(MethodType.POST, authenticated: true, method: .PostComments, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
+            if error == nil {
+                if let postJson = result!["comment"] as? [[String: AnyObject]] {
+                    savedPostComment = PostComment(jsonObject: postJson[0])
+                }
+                completionHandler(savedPostComment, nil)
+            } else {
+                completionHandler(savedPostComment, error)
+            }
+        }
+        
+    }
+    
     
     // MARK: - Internal Methods
     
@@ -1004,7 +1102,7 @@ class NetworkController: NSObject {
         
         var headers: [String: String]?
         if authenticated {
-            headers = ["X-Authorization": token!]
+            headers = ["X-Authorization": self.token!]
         } else {
             headers = nil
         }

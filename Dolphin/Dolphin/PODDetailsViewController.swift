@@ -109,7 +109,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     func checkRightActionButton() {
         if networkController.currentUserId == self.pod?.owner?.id {
-            setRightButtonItemWithText("Edit", target: self, action: #selector(deletePod))
+            setRightButtonItemWithText("Edit", target: self, action: #selector(editPod))
         }
         else {
             
@@ -161,6 +161,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
             headerView.addSubview(headerLabel)
             
             if pod?.owner?.id == networkController.currentUserId {
+                //let editButton = UIButton(frame: CGRect(x: headerView.frame.width - 35, y: 0, width: 25, height: 25))
                 let editButton = UIButton(frame: CGRect(x: 70, y: 0, width: 25, height: 25))
                 editButton.setImage(UIImage(named: "edit_icon"), forState: .Normal)
                 editButton.addTarget(self, action: #selector(didTapEditMember), forControlEvents: .TouchUpInside)
@@ -220,6 +221,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         if indexPath.section == 1 {
             let postDetailsVC = PostDetailsViewController()
             postDetailsVC.post = postOfPOD[indexPath.row]
+            postDetailsVC.pod = self.pod
             navigationController?.pushViewController(postDetailsVC, animated: true)
         }
     }
@@ -231,7 +233,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         
         print("Plus button pressed")
         let subViewsArray = NSBundle.mainBundle().loadNibNamed("NewPostMenu", owner: self, options: nil)
-        self.actionMenu = subViewsArray[0] as? UIView
+        self.actionMenu = subViewsArray![0] as? UIView
         actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(actionMenuBackgroundTapped)))
         self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
         UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
@@ -510,9 +512,15 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         navigationController?.pushViewController(nextView, animated: true)
     }
     
+    func editPod()  {
+        let createPODVC = CreatePodViewController()
+        createPODVC.podUpdate = self.pod;
+        navigationController?.pushViewController(createPODVC, animated: true)
+    }
+    
     // MARK: Delete Pod
     func deletePod() {
-      /*  let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.Alert)
         alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
             // delete the pod
             let podIdString = String(self.pod!.id!)
@@ -552,10 +560,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
         
         // show the alert
-        self.presentViewController(alertWarning, animated: true, completion: nil)*/
-        
-        let createPODVC = CreatePodViewController()
-        navigationController?.pushViewController(createPODVC, animated: true)
+        self.presentViewController(alertWarning, animated: true, completion: nil)
     }
     
     // MARK: Withdraw Member.

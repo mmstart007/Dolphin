@@ -28,7 +28,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     var imageSelected: UIImage?
     var selectedCropRect: CGRect! = CGRectZero
     var imageOriginalSelected: UIImage?
-    
+    var podUpdate: POD?
     var selectedMembers: [User] = []
     
     required init() {
@@ -63,12 +63,38 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         
         setBackButton()
         setRightButtonItemWithText("Save", target: self, action: Selector("saveSettingsPressed:"))
-        title = "Create a POD"
+        title = self.podUpdate == nil ? "Create a POD":"Edit a POD"
         
         membersCollectionView.registerNib(UINib(nibName: "UserImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "UserImageCollectionViewCell")
         membersCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         membersCollectionView.dataSource = self
         membersCollectionView.delegate   = self
+        
+        if(self.podUpdate != nil)
+        {
+            podNameTextField.text = self.podUpdate?.name
+            podDescriptionTextView.text = self.podUpdate?.descriptionText
+            switchIsPrivate.setOn(self.podUpdate?.isPrivate == 1, animated: true)
+            //podImageView.sd_setImageWithURL(NSURL(string: (self.podUpdate?.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            if(self.podUpdate?.users != nil)
+            {
+                membersDidSelected((self.podUpdate?.users)!)
+            }
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+                let data = NSData(contentsOfURL: NSURL(string: self.podUpdate!.imageURL!)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                dispatch_async(dispatch_get_main_queue(), {
+                    if(data != nil)
+                    {
+                        self.podImageView.image = UIImage(data: data!)
+                    }
+                    else{
+                        self.podImageView.sd_setImageWithURL(NSURL(string: (self.podUpdate!.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+                    }
+                });
+            }
+
+        }
         
 //        let tapViewGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
 //        self.view.addGestureRecognizer(tapViewGesture)
@@ -229,7 +255,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         // create the POD
         var newWidth: CGFloat
         if podNameTextField.text != "" && podDescriptionTextView.text != "" {
-            if imageSelected != nil {
+            if (imageSelected != nil || (self.podUpdate != nil && self.podUpdate?.imageURL != nil)){
 //                if imageSelected!.size.width < 414 {
 //                    newWidth = imageSelected!.size.width
 //                } else {
@@ -238,11 +264,13 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
 //                let resizedImage = Utils.resizeImage(imageSelected!, newWidth: newWidth)
                 
                 // crate the pod
-                let podToSave = POD(name: podNameTextField.text, description: podDescriptionTextView.text, imageURL: nil, isPrivate: (switchIsPrivate.on ? 1 : 0), owner: nil, users: selectedMembers, postsCount: nil, usersCount: nil, imageData: imageSelected, image_width: Int(imageSelected!.size.width), image_height: Int(imageSelected!.size.height), total_unread: 0)
+                if(self.podUpdate == nil)
+                {
+                    let podToSave = POD(name: podNameTextField.text, description: podDescriptionTextView.text, imageURL: nil, isPrivate: (switchIsPrivate.on ? 1 : 0), owner: nil, users: selectedMembers, postsCount: nil, usersCount: nil, imageData: imageSelected, image_width: Int(imageSelected!.size.width), image_height: Int(imageSelected!.size.height), total_unread: 0)
                 
-                SVProgressHUD.showWithStatus("Creating POD")
-                networkController.createPOD(podToSave, completionHandler: { (pod, error) -> () in
-                    if error == nil {
+                    SVProgressHUD.showWithStatus("Creating POD")
+                    networkController.createPOD(podToSave, completionHandler: { (pod, error) -> () in
+                        if error == nil {
                         
                         if pod?.id != nil {
                             // everything worked ok
@@ -253,20 +281,83 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
                         }
                         SVProgressHUD.dismiss()
                         
-                    } else {
-                        SVProgressHUD.dismiss()
-                        let errors: [String]? = error!["errors"] as? [String]
-                        var alert: UIAlertController
-                        if errors != nil && errors![0] != "" {
-                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
                         } else {
-                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                            SVProgressHUD.dismiss()
+                            let errors: [String]? = error!["errors"] as? [String]
+                            var alert: UIAlertController
+                            if errors != nil && errors![0] != "" {
+                                alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                            } else {
+                                alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                            }
+                            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                            alert.addAction(cancelAction)
+                            self.presentViewController(alert, animated: true, completion: nil)
                         }
-                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
-                        alert.addAction(cancelAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
+                    })
+                }
+                else{
+                    var retDic = [String: AnyObject]()
+                    
+                    if let podId = podUpdate!.id {
+                        retDic["id"] = podId
                     }
-                })
+                    
+                    let podToSave = PODRequest(name: podNameTextField.text, description: podDescriptionTextView.text, isPrivate: (switchIsPrivate.on ? 1 : 0), users: selectedMembers, imageData: nil, image_width: podUpdate!.image_width, image_height: podUpdate!.image_height)
+                    if let podId = podUpdate!.id {
+                        podToSave.id = podId
+                    }
+                    if(imageSelected != nil)
+                    {
+                        podToSave.imageData = imageSelected
+                        podToSave.image_width = Int(imageSelected!.size.width)
+                        podToSave.image_height = Int(imageSelected!.size.height)
+                    }
+                    
+                    SVProgressHUD.showWithStatus("Updating POD")
+                    networkController.updateInfoPOD(podToSave, completionHandler: { (pod, error) -> () in
+                        if error == nil {
+                            
+                            if pod?.id != nil {
+                                // everything worked ok
+                                NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPod, object: nil, userInfo: ["pod":pod!])
+                                self.navigationController?.popToRootViewControllerAnimated(true)
+                            } else {
+                                // there was an error saving the post
+                            }
+                            SVProgressHUD.dismiss()
+                            
+                        } else {
+                            SVProgressHUD.dismiss()
+                            let errors: [String]? = error!["errors"] as? [String]
+                            var alert: UIAlertController
+                            if errors != nil && errors![0] != "" {
+                                alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                            } else {
+                                alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                            }
+                            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                            alert.addAction(cancelAction)
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
+                    })
+                    
+                    /*retDic["name"] = "This is pod"//podNameTextField.text
+                    retDic["descriptionText"] = "Pod update description"//podDescriptionTextView.text
+                    //retDic["isPrivate"] = switchIsPrivate.on ? 1 : 0
+                    if(imageSelected != nil)
+                    {
+                        retDic["imageData"] = imageSelected
+                        retDic["image_width"] = Int(imageSelected!.size.width)
+                        retDic["image_height"] = Int(imageSelected!.size.height)
+                    }
+                    
+                    
+                    SVProgressHUD.show()
+                    networkController.updatePod(retDic) { (updatedPod, error) in
+                        SVProgressHUD.dismiss()
+                    }*/
+                }
             } else {
                 var alert: UIAlertController
                 alert = UIAlertController(title: "Error", message: "Please, select an image", preferredStyle: .Alert)

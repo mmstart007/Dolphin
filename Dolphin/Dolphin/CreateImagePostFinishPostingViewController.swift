@@ -9,18 +9,21 @@
 import Foundation
 import UIKit
 
-class CreateImagePostFinishPostingViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateImagePostFinishPostingViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ChooseSourceTypeViewDelegate {
 
     
     var postImage: UIImage?
     var picker: UIImagePickerController = UIImagePickerController()
     var podId: Int?
+    var mPost : Post?
+    var chooseSoureTypeView: ChooseSourceTypeView!
+    var overlayView: UIView!
     
     @IBOutlet weak var postImagePreviewImageView: UIImageView!
     
     init(image: UIImage?) {
         super.init(nibName: "CreateImagePostFinishPostingViewController", bundle: nil)
-        postImage = image
+        postImage = image;
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -34,6 +37,10 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
         setRightButtonItemWithText("Next", target: self, action: #selector(nextButtonTouchUpInside))
         self.edgesForExtendedLayout = .None
         title = "New Post"
+        if(mPost != nil)
+        {
+            title = "Edit Post"
+        }
         
         if postImage != nil {
             postImagePreviewImageView.image = postImage
@@ -57,6 +64,7 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         navigationController?.popViewControllerAnimated(true)
     }
+    
 
     // MARK: - Actions
     
@@ -71,9 +79,64 @@ class CreateImagePostFinishPostingViewController : DolphinViewController, UIImag
         } else {
             addDescriptionVC.postImage = postImage
             addDescriptionVC.podId = podId
+            addDescriptionVC.mPost = mPost;
             navigationController?.pushViewController(addDescriptionVC, animated: true)
         }
     }
     
+    func closedDialog() {
+        self.overlayView.removeFromSuperview()
+        self.chooseSoureTypeView.removeFromSuperview()
+    }
+    
+    func selectedCamera() {
+        self.closedDialog()
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker.delegate   = self
+            self.picker.allowsEditing = true
+            self.presentViewController(picker, animated: true, completion: nil)
+        }
+        else {
+            Utils.presentAlertMessage("Error", message: "Device has no camera", cancelActionText: "Ok", presentingViewContoller: self)
+        }
+    }
+    
+    func selectedPhotoGallery() {
+        self.closedDialog()
+        
+        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.delegate   = self
+        self.picker.allowsEditing = true
+        self.picker.navigationBar.tintColor = UIColor.whiteColor()
+        self.picker.navigationBar.barStyle = UIBarStyle.Black
+        self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    @IBOutlet weak var btnSelectPicture: UIButton!
 
+    @IBAction func btnSelecPictureTapped(sender: AnyObject) {
+        self.overlayView = UIView()
+        self.overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
+        self.overlayView.frame = (UIApplication.sharedApplication().keyWindow?.frame)!
+        UIApplication.sharedApplication().keyWindow?.addSubview(self.overlayView)
+        
+        self.chooseSoureTypeView = ChooseSourceTypeView.instanceFromNib()
+        self.chooseSoureTypeView.frame = CGRectMake(0, 0, 300, 200)
+        self.chooseSoureTypeView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height/2.0)
+        self.chooseSoureTypeView.delegate = self
+        UIApplication.sharedApplication().keyWindow?.addSubview(self.chooseSoureTypeView!)
+        
+        self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        UIView.animateWithDuration(0.1, animations: {
+            self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(1.2, 1.2)
+            UIView.animateWithDuration(0.05, animations: {
+                self.chooseSoureTypeView.transform = CGAffineTransformIdentity
+            }) { (finished) in
+            }
+        }) { (finished) in
+            
+        }
+    }
 }

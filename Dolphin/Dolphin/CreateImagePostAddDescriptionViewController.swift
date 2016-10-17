@@ -20,6 +20,8 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     // if this var is set, I'm creating a text post from a POD
     var podId: Int?
     let tags: Array<String> = List.names()
+    var mPost : Post?
+    var comment : PostCommentRequest?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,12 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
         tableViewPostDetails.dataSource = self
         tableViewPostDetails.tableFooterView = UIView(frame: CGRectZero)
         registerCells()
+        tableViewPostDetails.reloadData()
+        
+        if(mPost != nil)
+        {
+            
+        }
     }
     
     // MARK: - Actions
@@ -73,6 +81,8 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
             }
             
             let resizedImage = Utils.resizeImage(self.postImage!, newWidth: newWidth)
+            if(self.mPost == nil)
+            {
             let post = Post(user: nil, image: nil, imageData: resizedImage, imageWidth: Float(resizedImage.size.width), imageHeight: Float(resizedImage.size.height), type: PostType(name: "image"), topics: topics, link: nil, imageUrl: nil, title: title, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: self.podId)
             
             self.networkController.createPost(post, completionHandler: { (post, error) -> () in
@@ -100,6 +110,40 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             })
+            }
+            else{
+                let post = PostRequest(image: nil, imageData: resizedImage, imageWidth: Float(resizedImage.size.width), imageHeight: Float(resizedImage.size.height), type: "image", topics: topics, link: nil, imageUrl: nil, title: title, text: description, PODId: self.podId, PostId: self.mPost!.postId)
+                
+                self.networkController.updatePost(post, completionHandler: { (post, error) -> () in
+                    if error == nil {
+                        if post?.postId != nil {
+                            // everything worked ok
+                            //NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
+                            //self.navigationController?.popToRootViewControllerAnimated(true)
+                            let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
+                            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true);
+                        } else {
+                            // there was an error saving the post
+                        }
+                        SVProgressHUD.dismiss()
+                        
+                    } else {
+                        SVProgressHUD.dismiss()
+                        let errors: [String]? = error!["errors"] as? [String]
+                        var alert: UIAlertController
+                        if errors != nil && errors![0] != "" {
+                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        } else {
+                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        }
+                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                })
+            }
+            
+            
         }
     }
     
@@ -123,6 +167,10 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
             cell?.textFieldPostTitle.delegate = self
             cell?.textViewDescription.delegate = self
             cell?.postTagsTextView.delegate    = self
+            if(mPost != nil)
+            {
+                cell?.textFieldPostTitle.text = self.mPost?.postHeader
+            }
 
             cell?.configureWithImage(false, postImage: postImage, postURL: nil, postImageURL: nil)
         }

@@ -14,8 +14,12 @@ protocol UpdateProtocol {
     func updatePodUI()
 }
 
+protocol DeletePodProtocol {
+    func deleteMyPod(pod : POD)
+}
 
-class PODsListViewController : UIViewController, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate,UpdateProtocol {
+
+class PODsListViewController : UIViewController, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate,UpdateProtocol, DeletePodProtocol {
     
     let networkController = NetworkController.sharedInstance
     let kPageQuantity: Int = 10
@@ -116,6 +120,38 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         })
     }
 
+    func deleteMyPod(pod: POD) {
+        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.Alert)
+        alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+            // delete the pod
+            let podIdString = String(pod.id!)
+            
+            SVProgressHUD.showWithStatus("Deleting...")
+            self.networkController.deletePOD(podIdString) { (error) -> () in
+                SVProgressHUD.dismiss()
+                if error == nil {
+                    print("pod deleted")
+                    //NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.DeletedPod, object: nil, userInfo: ["pod":pod])
+                    self.deletedPod(pod);
+                    
+                } else {
+                    let errors: [String]? = error!["errors"] as? [String]
+                    let alert: UIAlertController
+                    if errors != nil && errors![0] != "" {
+                        alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    } else {
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    }
+                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    alert.addAction(cancelAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        }))
+        alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
+        self.presentViewController(alertWarning, animated: true, completion: nil)
+    
+    }
     
     func deletedPod(pod: POD) {
         var index = 0;
@@ -199,12 +235,41 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     func newPodCreated(notification: NSNotification) {
         if let userInfo = notification.userInfo as? Dictionary<String, POD> {
             if let pod = userInfo["pod"] {
-                if (!self.allPods.contains(pod)) {
-                    self.allPods.insert(pod, atIndex: 0)
-                }
                 
-                if (!self.myPods.contains(pod)) {
-                    self.myPods.insert(pod, atIndex: 0)
+                var result = self.allPods.filter{ $0.id == pod.id}
+                if(result.count != 0)
+                {
+                    result[0].imageURL = pod.imageURL;
+                    result[0].name = pod.name;
+                    result[0].descriptionText = pod.descriptionText;
+                    result[0].isPrivate = pod.isPrivate;
+                    result[0].users = pod.users;
+                    var mypod = self.myPods.filter{ $0.id == pod.id}
+                    if(mypod.count != 0)
+                    {
+                        mypod[0].imageURL = pod.imageURL;
+                        mypod[0].name = pod.name;
+                        mypod[0].descriptionText = pod.descriptionText;
+                        mypod[0].isPrivate = pod.isPrivate;
+                        mypod[0].users = pod.users;
+                    }
+                    var filterpod = self.filteredPODs.filter{ $0.id == pod.id}
+                    if(filterpod.count != 0)
+                    {
+                        filterpod[0].imageURL = pod.imageURL;
+                        filterpod[0].name = pod.name;
+                        filterpod[0].descriptionText = pod.descriptionText;
+                        filterpod[0].isPrivate = pod.isPrivate;
+                        filterpod[0].users = pod.users;
+                    }
+                }
+                else{
+                    if (!self.allPods.contains(pod)) {
+                        self.allPods.insert(pod, atIndex: 0)
+                    }
+                    if (!self.myPods.contains(pod)) {
+                        self.myPods.insert(pod, atIndex: 0)
+                    }
                 }
                 
                 self.allPODstableView.reloadData()
@@ -281,6 +346,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             cell?.configureWithPOD(allPods[indexPath.row])
         }
         cell?.selectionStyle = .None
+        cell!.contentView.userInteractionEnabled = false
+        cell?.delegate = self
         return cell!
     }
     
@@ -351,6 +418,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             }
         }
         
+        cell!.contentView.userInteractionEnabled = false
+        cell?.delegate = self
         return cell!
     }
     

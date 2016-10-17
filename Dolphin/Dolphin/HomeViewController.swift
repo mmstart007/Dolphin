@@ -130,7 +130,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     func plusButtonTouchUpInside() {
         print("Plus button pressed")
         let subViewsArray = NSBundle.mainBundle().loadNibNamed("NewPostMenu", owner: self, options: nil)
-        self.actionMenu = subViewsArray[0] as? UIView
+        self.actionMenu = subViewsArray![0] as? UIView
         actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(actionMenuBackgroundTapped)))
         self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
         UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)

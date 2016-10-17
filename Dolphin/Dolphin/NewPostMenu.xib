@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="Dolphin" customModuleProvider="target">
@@ -17,14 +18,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pjx-q7-9V1" userLabel="Transparent View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="401"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KXV-LU-Szl">
-                    <rect key="frame" x="0.0" y="400" width="375" height="267"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQL-Ez-GmZ" userLabel="Close Button">
-                            <rect key="frame" x="8" y="8" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="tQL-Ez-GmZ" secondAttribute="height" multiplier="1:1" id="Qsr-oX-1ms"/>
                             </constraints>
@@ -34,13 +32,11 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post to Dolphin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2S-rv-l78" userLabel="Title Label">
-                            <rect key="frame" x="61" y="5" width="253" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQx-yB-vvJ" userLabel="Post Photo Button">
-                            <rect key="frame" x="142" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="rQx-yB-vvJ" secondAttribute="height" multiplier="18:23" id="TbH-A6-Nbr"/>
                             </constraints>
@@ -51,7 +47,6 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnx-Ay-Ree" userLabel="Post Text Button">
-                            <rect key="frame" x="277" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="dnx-Ay-Ree" secondAttribute="height" multiplier="18:23" id="mqg-k0-eLU"/>
                             </constraints>
@@ -62,7 +57,6 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9G-IL-mdD" userLabel="Post Link Button">
-                            <rect key="frame" x="8" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="w9G-IL-mdD" secondAttribute="height" multiplier="18:23" id="3KT-aC-CzO"/>
                             </constraints>
@@ -73,7 +67,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="dnx-Ay-Ree" secondAttribute="trailing" constant="8" id="79a-ju-3xh"/>
                         <constraint firstItem="rQx-yB-vvJ" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="30:89" id="9IF-jX-c7V"/>
@@ -93,7 +87,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="KXV-LU-Szl" firstAttribute="width" secondItem="Pjx-q7-9V1" secondAttribute="height" multiplier="375:401" id="OrP-aR-2Wl"/>
                 <constraint firstItem="Pjx-q7-9V1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Un0-Ll-V0E"/>
@@ -104,7 +98,6 @@
                 <constraint firstAttribute="trailing" secondItem="KXV-LU-Szl" secondAttribute="trailing" id="teu-l4-uCE"/>
                 <constraint firstAttribute="bottom" secondItem="KXV-LU-Szl" secondAttribute="bottom" id="vfC-Fr-tcq"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="336.5" y="292.5"/>
         </view>
     </objects>

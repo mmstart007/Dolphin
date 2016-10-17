@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PODDetailsViewController" customModule="Dolphin" customModuleProvider="target">
@@ -17,10 +18,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="050-2l-1lx">
-                    <rect key="frame" x="0.0" y="400" width="375" height="267"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9W-xK-3Gn" userLabel="Close Button">
-                            <rect key="frame" x="8" y="8" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="M9W-xK-3Gn" secondAttribute="height" multiplier="1:1" id="Ozb-pf-NhK"/>
                             </constraints>
@@ -30,13 +29,11 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post to Dolphin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3oM-ZM-buU" userLabel="Title Label">
-                            <rect key="frame" x="61" y="5" width="253" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iuc-B0-ENg" userLabel="Post Photo Button">
-                            <rect key="frame" x="142" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Iuc-B0-ENg" secondAttribute="height" multiplier="18:23" id="tkP-yj-mLR"/>
                             </constraints>
@@ -47,7 +44,6 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y1A-Xx-jsv" userLabel="Post Text Button">
-                            <rect key="frame" x="277" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Y1A-Xx-jsv" secondAttribute="height" multiplier="18:23" id="1eI-2G-RzT"/>
                             </constraints>
@@ -58,7 +54,6 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xbd-UX-b3Q" userLabel="Post Link Button">
-                            <rect key="frame" x="8" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Xbd-UX-b3Q" secondAttribute="height" multiplier="18:23" id="eDA-sf-8gY"/>
                             </constraints>
@@ -69,7 +64,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="Y1A-Xx-jsv" secondAttribute="trailing" constant="8" id="2C4-u5-DwM"/>
                         <constraint firstItem="Xbd-UX-b3Q" firstAttribute="centerY" secondItem="050-2l-1lx" secondAttribute="centerY" id="5Wb-lp-YSC"/>
@@ -89,11 +84,10 @@
                     </constraints>
                 </view>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QL-Lc-rYY" userLabel="Transparent View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="401"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="1QL-Lc-rYY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0Om-hg-9oB"/>
                 <constraint firstAttribute="bottom" secondItem="050-2l-1lx" secondAttribute="bottom" id="59m-Ki-gJk"/>
@@ -104,7 +98,6 @@
                 <constraint firstItem="1QL-Lc-rYY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jfI-s1-SZh"/>
                 <constraint firstAttribute="trailing" secondItem="050-2l-1lx" secondAttribute="trailing" id="s8z-cO-uzq"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>
     <resources>

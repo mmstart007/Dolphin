@@ -64,6 +64,7 @@ class POD : NSObject {
             User(jsonObject: actual)
         })
         
+        
         self.id              = podJsonObject!["id"] as? Int
         self.name            = podJsonObject!["name"] as? String
         self.descriptionText = podJsonObject!["description"] as? String

@@ -30,6 +30,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     var pod: POD?
     var podsToShare: [POD] = []
     var isPresentMode = false
+    var mPost : Post?
     
     convenience init() {
         self.init(nibName: "CreateTextPostViewController", bundle: nil)
@@ -41,8 +42,19 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         setBackButton()
         title = "Write"
         setRightSystemButtonItem(.Done, target: self, action: #selector(donePressed(_:)))
-        
         setupFields()
+        
+        if(mPost != nil)
+        {
+            postTitleTextField.text = self.mPost?.postHeader
+            postTextView.text = self.mPost?.postText
+            for topic in (self.mPost?.postTopics!)! {
+                //postTagsTextView.tokens()?.append(topic.name)
+                postTagsTextView.addTokenWithTitle(topic.name!)
+            }
+            
+        }
+        
     }
     
     func setupFields() {
@@ -118,9 +130,11 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
             if podsToShare.count > 0 {
                 podToShare = podsToShare[0]
             }
-            
-            let post = Post(user: nil, image: nil, imageData: nil, imageWidth: 0, imageHeight: 0, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podToShare?.id)
             SVProgressHUD.showWithStatus("Posting")
+            if(mPost == nil)
+            {
+            let post = Post(user: nil, image: nil, imageData: nil, imageWidth: 0, imageHeight: 0, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podToShare?.id)
+            
             networkController.createPost(post, completionHandler: { (post, error) -> () in
                 if error == nil {
                     
@@ -153,6 +167,42 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             })
+            }
+            else{
+                let post = PostRequest(image: nil, imageData: nil, imageWidth: 0, imageHeight: 0, type: "text" , topics: topics, link: nil, imageUrl: nil, title: title, text: text,PODId: podToShare?.id, PostId: mPost!.postId)
+                networkController.updatePost(post, completionHandler: { (post, error) -> () in
+                    if error == nil {
+                        
+                        SVProgressHUD.dismiss()
+                        if post?.postId != nil {
+                            // everything worked ok
+                            //NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
+                            if(self.isPresentMode) {
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }
+                            else {
+                                self.navigationController?.popViewControllerAnimated(true)
+                            }
+                            
+                        } else {
+                            // there was an error saving the post
+                        }
+                        
+                    } else {
+                        SVProgressHUD.dismiss()
+                        let errors: [String]? = error!["errors"] as? [String]
+                        var alert: UIAlertController
+                        if errors != nil && errors![0] != "" {
+                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        } else {
+                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        }
+                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                })
+            }
         }
     }
     

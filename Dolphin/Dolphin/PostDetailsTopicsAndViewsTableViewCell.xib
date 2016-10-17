@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,21 +14,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIo-cI-pJK">
-                    <rect key="frame" x="326" y="10" width="31" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="44" id="2MI-jv-pTd"/>
                         <constraint firstAttribute="height" constant="20" id="Yz2-Dy-PjL"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fgL-ht-h1r">
-                    <rect key="frame" x="0.0" y="0.0" width="290" height="40"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="CqQ-LF-ocP">
-                            <rect key="frame" x="8" y="0.0" width="274" height="40"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="xon-uS-ghF"/>
                             </constraints>
@@ -43,7 +41,7 @@
                             </connections>
                         </collectionView>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="CqQ-LF-ocP" secondAttribute="bottom" id="q7e-w0-Uqq"/>
                         <constraint firstItem="CqQ-LF-ocP" firstAttribute="top" secondItem="fgL-ht-h1r" secondAttribute="top" id="sJ6-3W-7RR"/>
@@ -52,7 +50,6 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ViewsGlassIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Ofs-wd-gSV">
-                    <rect key="frame" x="298" y="10" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Yem-y2-YZY"/>
                         <constraint firstAttribute="width" secondItem="Ofs-wd-gSV" secondAttribute="height" multiplier="1:1" id="c2s-uQ-8GR"/>
@@ -65,7 +62,7 @@
                     </variation>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Ofs-wd-gSV" firstAttribute="leading" secondItem="fgL-ht-h1r" secondAttribute="trailing" constant="8" id="7tP-Rn-syU"/>
                 <constraint firstItem="Ofs-wd-gSV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="J06-2V-k6N"/>
