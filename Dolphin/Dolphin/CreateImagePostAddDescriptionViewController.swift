@@ -27,7 +27,7 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
         super.viewDidLoad()
 
         setBackButton()
-        setRightButtonItemWithText("Post", target: self, action: "postButtonTouchUpInside")
+        setRightButtonItemWithText("Post", target: self, action: #selector(CreateImagePostAddDescriptionViewController.postButtonTouchUpInside))
         self.edgesForExtendedLayout     = .None
         title                           = "Add description"
         tableViewPostDetails.delegate   = self
@@ -142,11 +142,8 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
                     }
                 })
             }
-            
-            
         }
     }
-    
     
     // MARK: - TableView DataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

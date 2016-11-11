@@ -31,7 +31,7 @@ class FriendToInviteTableViewCell : CustomFontTableViewCell {
         friendImageView.backgroundColor     = UIColor.clearColor()
         inviteButton.layer.cornerRadius     = 5
 
-        inviteButton.addTarget(self, action: "actionInvite:", forControlEvents: UIControlEvents.TouchUpInside)
+        inviteButton.addTarget(self, action: #selector(FriendToInviteTableViewCell.actionInvite(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
     }
     

@@ -147,8 +147,8 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
             {
                 
                 let screenWidth = screenSize.width - 10
-                var radio : CGFloat? = CGFloat(screenWidth/(commentInfo?.postLink != nil ? commentInfo?.postLink?.imageWidth : commentInfo?.postImage?.imageWidth)!)
-                var height:CGFloat? = CGFloat((commentInfo?.postLink != nil ? commentInfo?.postLink?.imageHeight : commentInfo?.postImage?.imageHeight!)!*radio!)
+                let radio : CGFloat? = CGFloat(screenWidth/(commentInfo?.postLink != nil ? commentInfo?.postLink?.imageWidth : commentInfo?.postImage?.imageWidth)!)
+                let height:CGFloat? = CGFloat((commentInfo?.postLink != nil ? commentInfo?.postLink?.imageHeight : commentInfo?.postImage?.imageHeight!)!*radio!)
                 
                 if(!(height?.isNaN)!)
                 {
@@ -205,8 +205,8 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     // MARK: - Keyboard management
     
     func addKeyboardObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillAppear:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostCommentsViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DolphinViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillAppear(sender: NSNotification) {
@@ -302,7 +302,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         print("didFinishPickingMediaWithInfo")
         chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         let screenWidth = (screenSize.width - 10)*2
-        var radio : CGFloat? = CGFloat(screenWidth/(self.chosenImage?.size.width)!)
+        let radio : CGFloat? = CGFloat(screenWidth/(self.chosenImage?.size.width)!)
         
         let intWidth :CGFloat? = CGFloat(screenWidth)
         let intHeight :CGFloat? = CGFloat((self.chosenImage?.size.height)!*radio!)

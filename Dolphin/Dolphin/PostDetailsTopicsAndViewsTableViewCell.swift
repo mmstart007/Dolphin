@@ -34,7 +34,7 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell, UICollec
         layout.minimumLineSpacing = 4;
         collectionView.collectionViewLayout = layout
 
-        likedImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "likeButtonPressed"))
+        likedImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostDetailsTopicsAndViewsTableViewCellDelegate.likeButtonPressed)))
         likedImageView.userInteractionEnabled = true
 
         self.backgroundColor = UIColor.clearColor()

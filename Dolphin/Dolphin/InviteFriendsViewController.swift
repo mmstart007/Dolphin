@@ -85,11 +85,11 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         segmentedControl.selectionIndicatorHeight = 4.0
         segmentedControl.backgroundColor = UIColor.blueDolphin()
         //segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown
-        segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocation.Down
+        segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown
         segmentedControl.selectionIndicatorColor = UIColor.whiteColor()
         segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()];
         segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.redColor()];
-        segmentedControl.addTarget(self, action: "segmentedControlChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        segmentedControl.addTarget(self, action: #selector(InviteFriendsViewController.segmentedControlChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
         headerView.addSubview(segmentedControl)
         segmentedControl.selectedSegmentIndex = 0
     }
@@ -105,10 +105,10 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         signInLabel.textColor     = UIColor.blueDolphin()
         self.view.addSubview(signInLabel)
         
-        loginFacebookTapGesture = UITapGestureRecognizer(target: self, action: "loginFacebookToGetFriends")
-        loginTwitterTapGesture = UITapGestureRecognizer(target: self, action: "loginTwitterToGetFriends")
-        contactsTapGesture = UITapGestureRecognizer(target: self, action: "openSettings")
-        loginPinterestTapGesture = UITapGestureRecognizer(target: self, action: "loginWithPinterest")
+        loginFacebookTapGesture = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.loginFacebookToGetFriends))
+        loginTwitterTapGesture = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.loginTwitterToGetFriends))
+        contactsTapGesture = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.openSettings))
+        loginPinterestTapGesture = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.loginWithPinterest))
         
         loginFacebookTapGesture.enabled = false
         loginTwitterTapGesture.enabled = false
@@ -705,7 +705,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     }
 
     func setSearchRightButton()  {
-        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "searchButtonPressed")
+        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(InviteFriendsViewController.searchButtonPressed))
         rightButton.tintColor             = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = rightButton;
     }

@@ -32,6 +32,9 @@ class NotificationTableViewCell: UITableViewCell {
         } else {
             self.avatarImageView.image = UIImage(named: "UserPlaceholder")
         }
+
+        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2.0
+        self.avatarImageView.layer.masksToBounds = true
         
         if let createdAt = notification.created_at {
             self.timeLabel.text = createdAt.formattedAsTimeAgo()
@@ -39,27 +42,34 @@ class NotificationTableViewCell: UITableViewCell {
         
         // Like
         if notification.type == 0 {
-            self.titleLabel.text = (notification.sender?.userName)! + " liked your post: \"" + (notification.post?.postHeader)! + "\""
+            if notification.post?.postHeader != nil || (notification.post?.postHeader?.isEmpty)! {
+                self.titleLabel.text = (notification.sender?.userName)! + " liked your post: \"" + (notification.post?.postHeader)! + "\""
+                print("Like..............")
+            }
         }
-            
+        
         //Comment.
         else if notification.type == 1 {
             self.titleLabel.text = (notification.sender?.userName)! + " commented your post: \"" + (notification.post?.postHeader)! + "\""
+            print("Comment..............")
         }
         
         //Join
         else if notification.type == 2 {
             self.titleLabel.text = (notification.sender?.userName)! + " joined as a member in your pod: \"" + (notification.pod?.name)! + "\""
+            print("Join..............")
         }
         
         //Withdraw
         else if notification.type == 3 {
-            self.titleLabel.text = (notification.sender?.userName)! + " withdrew as a member in your pod: \"" + (notification.pod?.name)! + "\""
+            //self.titleLabel.text = (notification.sender?.userName)! + " withdrew as a member in your pod: \"" + (notification.pod?.name)! + "\""
+            print("Withdraw..............")
         }
         
         //Added you
         else if notification.type == 4 {
-            self.titleLabel.text = (notification.sender?.userName)! + " added you as a member in this pod: \"" + (notification.pod?.name)! + "\""
+            //self.titleLabel.text = (notification.sender?.userName)! + " added you as a member in this pod: \"" + (notification.pod?.name)! + "\""
+            print("Added you..............")
         }
         
         let longestWordRange = (self.titleLabel.text! as NSString).rangeOfString((notification.sender?.userName)!)

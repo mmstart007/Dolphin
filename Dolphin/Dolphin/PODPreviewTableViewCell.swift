@@ -5,7 +5,6 @@
 //  Created by Ninth Coast on 12/1/15.
 //  Copyright © 2015 Ninth Coast. All rights reserved.
 //
-
 import Foundation
 import UIKit
 
@@ -22,7 +21,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
     
     var pod: POD?
     var triangleView: TriangleView?
-    var delegate : DeletePodProtocol?
+//    var delegate : DeletePodProtocol?
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -61,14 +60,14 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
     
     func configureWithPOD(pod: POD) {
         self.backgroundColor = UIColor.clearColor()
-
+        
         containerView.layer.cornerRadius = 5
         
         containerView.layer.shadowColor = UIColor.blackColor().CGColor
         containerView.layer.shadowOpacity = 0.1
         containerView.layer.shadowOffset = CGSizeZero
         containerView.layer.shadowRadius = 3
-
+        
         self.pod = pod
         //let data = NSData(contentsOfURL: NSURL(string: pod.imageURL!)!)
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
@@ -101,14 +100,14 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
     }
     
     func adjustImageSize(image_width: CGFloat, image_height: CGFloat) {
-//        if image_width == 0 || image_height == 0 {
-//            podImageHeight.constant = 130.0
-//        }
-//        else {
-//            let real_width = podImageView.frame.size.width
-//            let real_height = real_width * image_height / image_width
-//            podImageHeight.constant = real_height
-//        }
+        //        if image_width == 0 || image_height == 0 {
+        //            podImageHeight.constant = 130.0
+        //        }
+        //        else {
+        //            let real_width = podImageView.frame.size.width
+        //            let real_height = real_width * image_height / image_width
+        //            podImageHeight.constant = real_height
+        //        }
     }
     
     func addUserImages(pod: POD) {
@@ -168,7 +167,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         
         if self.pod != nil {
             
-            var otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userLastPost.frame.size.width, height: userLastPost.frame.size.height))
+            let otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userLastPost.frame.size.width, height: userLastPost.frame.size.height))
             otherUsersLabel.backgroundColor = Utils.hexStringToUIColor("#CC0000")//UIColor.redColor()
             otherUsersLabel.textColor = UIColor.whiteColor()
             otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
@@ -179,14 +178,14 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
             userLastPost.addSubview(otherUsersLabel)
             
         }
-
+        
     }
     
-    @IBAction func deleteTapped(sender: AnyObject) {
-        if(delegate != nil)
-        {
-            delegate?.deleteMyPod(self.pod!)
-        }
-    }
-
+//    @IBAction func deleteTapped(sender: AnyObject) {
+//        if(delegate != nil)
+//        {
+//            delegate?.deleteMyPod(self.pod!)
+//        }
+//    }
+    
 }

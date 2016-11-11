@@ -246,6 +246,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
     
+    // MARK: - Close button Actions.
     @IBAction func closeNewPostViewButtonTouchUpInside(sender: AnyObject) {
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.actionMenuBackground.alpha = 0
@@ -258,6 +259,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
     
+    // MARK: - Web post button Actions.
     @IBAction func postLinkButtonTouchUpInside(sender: AnyObject) {
         let createLinkPostVC = CreateURLPostViewController()
         createLinkPostVC.podId = pod?.id
@@ -266,6 +268,8 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         print("Post link button pressed")
         
     }
+    
+    // MARK: - Photo post button Actions.
     @IBAction func postPhotoButtonTouchUpInside(sender: AnyObject) {
         actionMenu?.removeFromSuperview()
         
@@ -290,6 +294,18 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }) { (finished) in
             
         }
+    }
+    
+    // MARK: - Text post button Actions.
+    @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
+        closeNewPostViewButtonTouchUpInside(self)
+        let createTextPostVC = CreateTextPostViewController()
+        createTextPostVC.pod = pod
+        createTextPostVC.isPresentMode = true
+        let textPostNavController = UINavigationController(rootViewController: createTextPostVC)
+        presentViewController(textPostNavController, animated: true, completion: nil)
+        print("Post text button pressed")
+        
     }
     
     // MARK: ChooseSourceTypeViewDelegate
@@ -339,17 +355,6 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
-        closeNewPostViewButtonTouchUpInside(self)
-        let createTextPostVC = CreateTextPostViewController()
-        createTextPostVC.pod = pod
-        createTextPostVC.isPresentMode = true
-        let textPostNavController = UINavigationController(rootViewController: createTextPostVC)
-        presentViewController(textPostNavController, animated: true, completion: nil)
-        print("Post text button pressed")
-        
     }
     
     func actionMenuBackgroundTapped() {

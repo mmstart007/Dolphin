@@ -1115,8 +1115,8 @@ class NetworkController: NSObject {
                 
                 print(response.request)  // original URL request
                 print(response.response) // URL response
-//                print(response.data)     // server data
-//                print(response.result)   // result of response serialization
+                //print(response.data)     // server data
+                //print(response.result)   // result of response serialization
                 
                 var errorJson: AnyObject? = nil
                 do {

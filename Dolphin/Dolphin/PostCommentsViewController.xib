@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PostCommentsViewController" customModule="Dolphin" customModuleProvider="target">
@@ -26,37 +26,39 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zy7-u5-kDC">
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="617"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="UIJ-fY-K4g"/>
                         <outlet property="delegate" destination="-1" id="uVc-So-6pW"/>
                     </connections>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0t5-wW-b7n" userLabel="Write Comment View">
+                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                     <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="K9L-Bp-c44" userLabel="Comment Text View">
-                            <frame key="frameInset" minX="44" minY="8" width="274" height="33"/>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="K9L-Bp-c44" userLabel="Comment Text View">
+                            <rect key="frame" x="10" y="8" width="313" height="33"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="33" id="yM0-Xg-5tA"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcP-ux-LuG">
-                            <frame key="frameInset" minX="320" minY="8" width="55" height="33"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcP-ux-LuG">
+                            <rect key="frame" x="325" y="10" width="50" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="TcP-ux-LuG" secondAttribute="height" multiplier="5:3" id="Wcw-E7-k4q"/>
                             </constraints>
                             <state key="normal" title="Post">
-                                <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
                                 <action selector="postCommentTapped:" destination="-1" eventType="touchUpInside" id="osj-Hk-ZeK"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQI-y4-gG7" userLabel="Camera Button">
-                            <frame key="frameInset" minX="265" minY="8" width="41" height="33"/>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQI-y4-gG7" userLabel="Camera Button">
+                            <rect key="frame" x="274" y="8" width="41" height="33"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="ZQI-y4-gG7" secondAttribute="height" multiplier="41:33" id="4ru-gt-wq5"/>
                                 <constraint firstAttribute="height" constant="33" id="Ujh-Ws-Oga"/>
@@ -67,7 +69,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="GFX-3X-5Gd"/>
                         <constraint firstItem="ZQI-y4-gG7" firstAttribute="centerY" secondItem="0t5-wW-b7n" secondAttribute="centerY" id="Kyz-S3-Pc6"/>
@@ -80,14 +82,17 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aqb-LL-Z7b">
+                    <rect key="frame" x="0.0" y="517" width="375" height="100"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sKn-K5-xLm">
-                            <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <rect key="frame" x="8" y="8" width="84" height="84"/>
+                            <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="sKn-K5-xLm" secondAttribute="height" multiplier="1:1" id="2ba-SU-R2N"/>
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4s2-KE-4d8">
+                            <rect key="frame" x="78" y="0.0" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="4s2-KE-4d8" secondAttribute="height" multiplier="1:1" id="iIf-VB-XTK"/>
                             </constraints>
@@ -97,7 +102,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="sKn-K5-xLm" secondAttribute="bottom" constant="8" id="8zF-CE-eHB"/>
                         <constraint firstItem="4s2-KE-4d8" firstAttribute="top" secondItem="sKn-K5-xLm" secondAttribute="top" constant="-8" id="OCr-mU-ewB"/>
@@ -109,17 +114,20 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sb2-3c-bpl" userLabel="View Comment Type">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yk0-NU-42S">
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="viewTypeCancelTapped:" destination="-1" eventType="touchUpInside" id="cPs-BR-zNZ"/>
                             </connections>
                         </button>
-                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cR7-di-wL7" userLabel="View comment">
-                            <frame key="frameInset" width="375" height="267"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cR7-di-wL7" userLabel="View comment">
+                            <rect key="frame" x="0.0" y="420" width="375" height="267"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m8G-u5-aeP" userLabel="Close Button">
+                                    <rect key="frame" x="8" y="8" width="15" height="15"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="m8G-u5-aeP" secondAttribute="height" multiplier="1:1" id="9tr-sx-cnE"/>
                                     </constraints>
@@ -129,11 +137,13 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post Comment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaB-dm-KaS" userLabel="Title Label">
+                                    <rect key="frame" x="61" y="6" width="253" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Hs-SB-2Dx" userLabel="Post Photo Button">
+                                    <rect key="frame" x="143" y="76" width="90" height="115"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="2Hs-SB-2Dx" secondAttribute="height" multiplier="18:23" id="KUq-Mw-u5U"/>
                                     </constraints>
@@ -144,6 +154,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jmE-Gx-KAZ" userLabel="Post Text Button">
+                                    <rect key="frame" x="277" y="76" width="90" height="115"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="jmE-Gx-KAZ" secondAttribute="height" multiplier="18:23" id="WiY-S5-JQe"/>
                                     </constraints>
@@ -154,6 +165,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvv-W4-DhW" userLabel="Post Link Button">
+                                    <rect key="frame" x="8" y="76" width="90" height="115"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="wvv-W4-DhW" secondAttribute="height" multiplier="18:23" id="jin-v6-mbp"/>
                                     </constraints>
@@ -164,7 +176,7 @@
                                     </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="2Hs-SB-2Dx" firstAttribute="centerY" secondItem="cR7-di-wL7" secondAttribute="centerY" id="4Ns-tj-wCy"/>
                                 <constraint firstItem="2Hs-SB-2Dx" firstAttribute="width" secondItem="cR7-di-wL7" secondAttribute="height" multiplier="30:89" id="Ddy-ds-1oM"/>
@@ -196,7 +208,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="0t5-wW-b7n" firstAttribute="top" secondItem="aqb-LL-Z7b" secondAttribute="bottom" id="5qO-kk-Isr"/>
                 <constraint firstAttribute="bottom" secondItem="0t5-wW-b7n" secondAttribute="bottom" id="FKN-RV-riR"/>
@@ -213,6 +225,7 @@
                 <constraint firstItem="0t5-wW-b7n" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="sAC-ZD-Vha"/>
                 <constraint firstItem="zy7-u5-kDC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="y5L-LK-0j8"/>
             </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="290.5" y="230.5"/>
         </view>
     </objects>

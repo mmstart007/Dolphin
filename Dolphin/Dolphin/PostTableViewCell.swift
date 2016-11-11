@@ -147,7 +147,7 @@ class PostTableViewCell : UITableViewCell {
             
             adjustImageSize(image_width!, image_height: image_height!)
         }
-            
+
         //Link Image
         else if let linkImage = post.postLink {
             postTitle.text = post.postText

@@ -27,7 +27,7 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
 
         self.contentView.userInteractionEnabled = false
         postContent.userInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: "openWebPage")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PostDetailHeaderTableViewCell.openWebPage))
         tapGesture.numberOfTapsRequired = 1
         postContent.addGestureRecognizer(tapGesture)
     }

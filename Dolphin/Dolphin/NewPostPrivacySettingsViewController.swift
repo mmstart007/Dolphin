@@ -61,7 +61,7 @@ class NewPostPrivacySettingsViewController : DolphinViewController, UITableViewD
         super.viewDidLoad()
         
         setBackButton()
-        setRightSystemButtonItem(.Done, target: self, action: "doneButtonPressed:")
+        setRightSystemButtonItem(.Done, target: self, action: #selector(NewPostPrivacySettingsViewController.doneButtonPressed(_:)))
         title = "Post Privacy Settings"
         
         tableView.registerNib(UINib(nibName: "NewPostPrivacySettingsVisibilityCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "NewPostPrivacySettingsVisibilityCell")

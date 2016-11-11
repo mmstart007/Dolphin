@@ -43,7 +43,7 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         super.viewDidLoad()
         
         title = areSubjects ? "Select subjects" : "Select grades"
-        setRightButtonItemWithText("Done", target: self, action: Selector("doneTouchUpInside:"))
+        setRightButtonItemWithText("Done", target: self, action: #selector(PickGradesOrSubjectsViewController.doneTouchUpInside(_:)))
         setBackButton()        
         tableViewGradesOrSubjects.delegate = self
         tableViewGradesOrSubjects.dataSource = self

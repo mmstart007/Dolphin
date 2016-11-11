@@ -19,8 +19,8 @@ class UserImagePODMemberCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageViewUserAvatar.layer.cornerRadius = imageViewUserAvatar.frame.size.width / 2
-        imageViewUserAvatar.layer.masksToBounds = true
+//        imageViewUserAvatar.layer.cornerRadius = imageViewUserAvatar.frame.size.width / 2
+//        imageViewUserAvatar.layer.masksToBounds = true
     }
     
     func configureAsUser(imageUrl: String) {
@@ -42,8 +42,8 @@ class UserImagePODMemberCollectionViewCell: UICollectionViewCell {
         let otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: imageViewUserAvatar.frame.size.width, height: imageViewUserAvatar.frame.size.width))
         otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
         otherUsersLabel.textColor = UIColor.lightTextColor()
-        otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
-        otherUsersLabel.layer.masksToBounds = true
+//        otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
+//        otherUsersLabel.layer.masksToBounds = true
         otherUsersLabel.text = String(format: "+%li", arguments: [count])
         otherUsersLabel.textAlignment = .Center
         otherUsersLabel.font = UIFont.systemFontOfSize(16)

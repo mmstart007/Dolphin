@@ -50,11 +50,11 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         podDescriptionTextView.placeholderColor = UIColor.lightGrayColor()
         podDescriptionTextView.textContainerInset = UIEdgeInsets(top: 0, left: 31, bottom: 0, right: 0)
         
-        podNameTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
+        podNameTextField.addTarget(self, action: #selector(CreatePodViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         leftCharactersLabel.text = String(format: "%li / %li", arguments: [(podNameTextField!.text?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))!, maxNameCharacters])
         
         podImageView.userInteractionEnabled = true
-        let tapPodImageView = UITapGestureRecognizer(target: self, action: "didTapPodImageView")
+        let tapPodImageView = UITapGestureRecognizer(target: self, action: #selector(CreatePodViewController.didTapPodImageView))
         podImageView.addGestureRecognizer(tapPodImageView)
     }
     
@@ -62,7 +62,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         super.viewDidLoad()
         
         setBackButton()
-        setRightButtonItemWithText("Save", target: self, action: Selector("saveSettingsPressed:"))
+        setRightButtonItemWithText("Save", target: self, action: #selector(CreatePodViewController.saveSettingsPressed(_:)))
         title = self.podUpdate == nil ? "Create a POD":"Edit a POD"
         
         membersCollectionView.registerNib(UINib(nibName: "UserImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "UserImageCollectionViewCell")

@@ -157,7 +157,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         
         
         //Notification.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "createdNewPost:", name: Constants.Notifications.CreatedPost, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FeedViewController.createdNewPost(_:)), name: Constants.Notifications.CreatedPost, object: nil)
         
     }
     

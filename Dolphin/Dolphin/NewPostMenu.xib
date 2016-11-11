@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="Dolphin" customModuleProvider="target">
@@ -18,11 +18,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pjx-q7-9V1" userLabel="Transparent View">
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="468"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KXV-LU-Szl">
+                    <rect key="frame" x="0.0" y="467" width="375" height="267"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQL-Ez-GmZ" userLabel="Close Button">
+                            <rect key="frame" x="8" y="8" width="15" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="tQL-Ez-GmZ" secondAttribute="height" multiplier="1:1" id="Qsr-oX-1ms"/>
                             </constraints>
@@ -32,11 +35,13 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post to Dolphin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2S-rv-l78" userLabel="Title Label">
+                            <rect key="frame" x="61" y="5" width="253" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQx-yB-vvJ" userLabel="Post Photo Button">
+                            <rect key="frame" x="143" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="rQx-yB-vvJ" secondAttribute="height" multiplier="18:23" id="TbH-A6-Nbr"/>
                             </constraints>
@@ -47,6 +52,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnx-Ay-Ree" userLabel="Post Text Button">
+                            <rect key="frame" x="277" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="dnx-Ay-Ree" secondAttribute="height" multiplier="18:23" id="mqg-k0-eLU"/>
                             </constraints>
@@ -57,6 +63,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9G-IL-mdD" userLabel="Post Link Button">
+                            <rect key="frame" x="8" y="76" width="90" height="115"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="w9G-IL-mdD" secondAttribute="height" multiplier="18:23" id="3KT-aC-CzO"/>
                             </constraints>
@@ -67,8 +74,9 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="tQL-Ez-GmZ" firstAttribute="centerY" secondItem="K2S-rv-l78" secondAttribute="centerY" id="46z-ue-qgU"/>
                         <constraint firstAttribute="trailing" secondItem="dnx-Ay-Ree" secondAttribute="trailing" constant="8" id="79a-ju-3xh"/>
                         <constraint firstItem="rQx-yB-vvJ" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="30:89" id="9IF-jX-c7V"/>
                         <constraint firstItem="w9G-IL-mdD" firstAttribute="centerY" secondItem="KXV-LU-Szl" secondAttribute="centerY" id="A45-rZ-ChG"/>
@@ -82,22 +90,37 @@
                         <constraint firstItem="w9G-IL-mdD" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="30:89" id="WlR-2S-EE3"/>
                         <constraint firstItem="tQL-Ez-GmZ" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="5:89" id="qBE-rd-GU6"/>
                         <constraint firstItem="dnx-Ay-Ree" firstAttribute="centerY" secondItem="KXV-LU-Szl" secondAttribute="centerY" id="qIx-gf-EZ7"/>
+                        <constraint firstItem="w9G-IL-mdD" firstAttribute="top" secondItem="K2S-rv-l78" secondAttribute="bottom" constant="50" id="qKi-iZ-Ro4"/>
                         <constraint firstItem="dnx-Ay-Ree" firstAttribute="width" secondItem="KXV-LU-Szl" secondAttribute="height" multiplier="30:89" id="toi-Ss-dcb"/>
                         <constraint firstItem="tQL-Ez-GmZ" firstAttribute="top" secondItem="KXV-LU-Szl" secondAttribute="top" constant="8" id="yX4-KS-Vgn"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="KXV-LU-Szl" secondAttribute="bottom" constant="-67" id="9Km-96-tSh"/>
+                <constraint firstItem="KXV-LU-Szl" firstAttribute="trailing" secondItem="Pjx-q7-9V1" secondAttribute="trailing" id="LVu-AY-HS1"/>
                 <constraint firstItem="KXV-LU-Szl" firstAttribute="width" secondItem="Pjx-q7-9V1" secondAttribute="height" multiplier="375:401" id="OrP-aR-2Wl"/>
+                <constraint firstItem="KXV-LU-Szl" firstAttribute="leading" secondItem="Pjx-q7-9V1" secondAttribute="leading" id="SzW-Tb-hSj"/>
                 <constraint firstItem="Pjx-q7-9V1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Un0-Ll-V0E"/>
                 <constraint firstAttribute="trailing" secondItem="Pjx-q7-9V1" secondAttribute="trailing" id="Wk0-rY-4AD"/>
                 <constraint firstItem="Pjx-q7-9V1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="YPf-re-UMh"/>
                 <constraint firstItem="KXV-LU-Szl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fwO-mQ-PO9"/>
                 <constraint firstItem="KXV-LU-Szl" firstAttribute="top" secondItem="Pjx-q7-9V1" secondAttribute="bottom" constant="-1" id="qk7-TV-1Zj"/>
+                <constraint firstItem="Pjx-q7-9V1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="sWm-gm-Pet"/>
                 <constraint firstAttribute="trailing" secondItem="KXV-LU-Szl" secondAttribute="trailing" id="teu-l4-uCE"/>
                 <constraint firstAttribute="bottom" secondItem="KXV-LU-Szl" secondAttribute="bottom" id="vfC-Fr-tcq"/>
             </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="YPf-re-UMh"/>
+                    <exclude reference="OrP-aR-2Wl"/>
+                    <exclude reference="fwO-mQ-PO9"/>
+                    <exclude reference="teu-l4-uCE"/>
+                    <exclude reference="vfC-Fr-tcq"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="336.5" y="292.5"/>
         </view>
     </objects>

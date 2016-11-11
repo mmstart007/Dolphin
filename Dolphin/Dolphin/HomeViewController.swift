@@ -272,7 +272,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         filterContentForSearchText("")
         removeSearchBar()
-        selectedViewController?.performSelector("userDidCancelSearch", withObject: nil)
+        selectedViewController?.performSelector(Selector("userDidCancelSearch"), withObject: nil)
         searchBar.resignFirstResponder()
     }
     
@@ -289,7 +289,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     }
     
     func filterContentForSearchText(searchText: String) {
-        selectedViewController?.performSelector("filterResults:", withObject: searchText)
+        selectedViewController?.performSelector(Selector("filterResults:"), withObject: searchText)
     }
     
     func hideSearchField() {
@@ -343,7 +343,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
                     if pm.administrativeArea != nil {
                         administrativeArea = "," + pm.administrativeArea!
                     }
-                   
+                    
                     var country: String = ""
                     if pm.country != nil {
                         country = "," + pm.country!

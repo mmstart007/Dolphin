@@ -111,7 +111,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         
         var siteURLString = ""
         if let siteToPinURL = webView.request?.URL {
-            siteURLString = siteToPinURL.absoluteString!
+            siteURLString = siteToPinURL.absoluteString
         }
         
         SVProgressHUD.showWithMaskType(.None)
@@ -131,14 +131,14 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
                         
                         if !url.hasPrefix("/") {
                             if let baseURL = NSURL(string: "/", relativeToURL: siteURL) {
-                                imageURL = baseURL.absoluteString!.stringByAppendingString(url)
+                                imageURL = baseURL.absoluteString.stringByAppendingString(url)
                             }
                         }
                         else
                         {
                             if let baseURL = NSURL(string: "/", relativeToURL: siteURL) {
                                 let newURL = String(url.characters.dropFirst())
-                                imageURL = baseURL.absoluteString!.stringByAppendingString(newURL)
+                                imageURL = baseURL.absoluteString.stringByAppendingString(newURL)
                             }
                         }
                     }

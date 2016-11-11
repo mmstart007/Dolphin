@@ -26,7 +26,7 @@ class ProfileAvatarTableViewCell: UITableViewCell {
         // Initialization code
         
         Utils.setFontFamilyForView(labelChangeImage, includeSubViews: true)
-        let tapImageGesture = UITapGestureRecognizer(target: self, action: "selectImage:")
+        let tapImageGesture = UITapGestureRecognizer(target: self, action: #selector(ProfileAvatarTableViewCell.selectImage(_:)))
         imageViewProfileAvatar.addGestureRecognizer(tapImageGesture)
         imageViewProfileAvatar.userInteractionEnabled = true
     }
