@@ -21,7 +21,6 @@ class MyFeedViewController: FeedViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     override func loadData(pullToRefresh: Bool) {
         page = 0
@@ -72,7 +71,6 @@ class MyFeedViewController: FeedViewController {
                 self.allPosts.appendContentsOf(posts)
                 self.postsTableView.reloadData()
                 
-                
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
@@ -88,5 +86,6 @@ class MyFeedViewController: FeedViewController {
             self.postsTableView.infiniteScrollingView.stopAnimating()
         })
     }
-
 }
+
+

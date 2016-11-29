@@ -432,7 +432,6 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                 self.allPosts.appendContentsOf(posts)
                 self.postsTableView.reloadData()
                 
-                
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
@@ -462,7 +461,4 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     func removeTableEmtpyMessage() {
         postsTableView.backgroundView = nil
     }
-    
-    
-    
 }

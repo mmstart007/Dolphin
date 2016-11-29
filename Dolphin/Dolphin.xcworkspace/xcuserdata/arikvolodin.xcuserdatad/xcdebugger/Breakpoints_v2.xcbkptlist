@@ -26,7 +26,7 @@
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/CreateURLPostAddDescriptionViewController.swift"
-                  timestampString = "500494075.506755"
+                  timestampString = "502123794.394438"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "81"
@@ -41,7 +41,7 @@
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/CreateURLPostAddDescriptionViewController.swift"
-                  timestampString = "500494075.506989"
+                  timestampString = "502123794.394787"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "82"
@@ -54,46 +54,46 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dolphin/NetworkController.swift"
-            timestampString = "499702744.156369"
+            timestampString = "501007795.841641"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
-            landmarkName = "createPost(_:completionHandler:)"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "login(_:password:completionHandler:)"
             landmarkType = "5">
             <Locations>
                <Location
-                  shouldBeEnabled = "No"
+                  shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Dolphin.NetworkController.createPost (Dolphin.Post, completionHandler : (Swift.Optional&lt;Dolphin.Post&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "Dolphin.NetworkController.login (Swift.String, password : Swift.String, completionHandler : (Swift.Optional&lt;Dolphin.User&gt;, Swift.Optional&lt;Swift.String&gt;, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NetworkController.swift"
-                  timestampString = "500494075.507808"
+                  timestampString = "502123794.396585"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "371"
-                  endingLineNumber = "371"
-                  offsetFromSymbolStart = "436">
+                  startingLineNumber = "90"
+                  endingLineNumber = "90"
+                  offsetFromSymbolStart = "1424">
                </Location>
                <Location
-                  shouldBeEnabled = "No"
+                  shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Dolphin.NetworkController.(createPost (Dolphin.Post, completionHandler : (Swift.Optional&lt;Dolphin.Post&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  symbolName = "Dolphin.NetworkController.(login (Swift.String, password : Swift.String, completionHandler : (Swift.Optional&lt;Dolphin.User&gt;, Swift.Optional&lt;Swift.String&gt;, Swift.Optional&lt;Swift.Int&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()).(closure #1)"
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NetworkController.swift"
-                  timestampString = "500494075.507942"
+                  timestampString = "502123794.396915"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "369"
-                  endingLineNumber = "369"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
                   offsetFromSymbolStart = "24">
                </Location>
             </Locations>
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dolphin/CreateImagePostAddDescriptionViewController.swift"
-            timestampString = "499702776.942906"
+            timestampString = "500919553.869732"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
@@ -122,7 +122,7 @@
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/CreateImagePostAddDescriptionViewController.swift"
-                  timestampString = "500494075.508642"
+                  timestampString = "502117958.399237"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "88"
@@ -137,7 +137,7 @@
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/CreateImagePostAddDescriptionViewController.swift"
-                  timestampString = "500494075.508753"
+                  timestampString = "502117958.399498"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "89"
@@ -153,13 +153,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dolphin/CreateImagePostFinishPostingViewController.swift"
-            timestampString = "499702868.94695"
+            filePath = "Dolphin/CreateImagePostAddDescriptionViewController.swift"
+            timestampString = "500963754.667718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "nextButtonTouchUpInside()"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "postButtonTouchUpInside()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -169,60 +169,44 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dolphin/PODDetailsViewController.swift"
-            timestampString = "499703315.274772"
+            filePath = "Dolphin/NetworkController.swift"
+            timestampString = "501007795.841641"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/PODDetailsViewController.swift"
-            timestampString = "499703645.791031"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
-            landmarkName = "plusButtonTouchUpInside()"
+            startingLineNumber = "569"
+            endingLineNumber = "569"
+            landmarkName = "filterMyFeedsPost(_:page:completionHandler:)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Dolphin.PODDetailsViewController.plusButtonTouchUpInside () -&gt; ()"
+                  symbolName = "Dolphin.NetworkController.filterMyFeedsPost (Swift.Optional&lt;Swift.Int&gt;, page : Swift.Optional&lt;Swift.Int&gt;, completionHandler : (Swift.Array&lt;Dolphin.Post&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/PODDetailsViewController.swift"
-                  timestampString = "499703954.334738"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NetworkController.swift"
+                  timestampString = "502116575.26687"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "238"
-                  endingLineNumber = "238"
-                  offsetFromSymbolStart = "1188">
+                  startingLineNumber = "569"
+                  endingLineNumber = "569"
+                  offsetFromSymbolStart = "2272">
                </Location>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Dolphin.PODDetailsViewController.plusButtonTouchUpInside () -&gt; ()"
+                  symbolName = "Dolphin.NetworkController.(filterMyFeedsPost (Swift.Optional&lt;Swift.Int&gt;, page : Swift.Optional&lt;Swift.Int&gt;, completionHandler : (Swift.Array&lt;Dolphin.Post&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()).(closure #1)"
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/PODDetailsViewController.swift"
-                  timestampString = "499703954.335199"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NetworkController.swift"
+                  timestampString = "502116575.26706"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "238"
-                  endingLineNumber = "238"
-                  offsetFromSymbolStart = "2996">
+                  startingLineNumber = "553"
+                  endingLineNumber = "553"
+                  offsetFromSymbolStart = "24">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -230,159 +214,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/PODDetailsViewController.swift"
-            timestampString = "499703958.540577"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "352"
-            endingLineNumber = "352"
-            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/HomeViewController.swift"
-            timestampString = "499704001.028543"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "imagePickerController(_:didFinishPickingMediaWithInfo:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/HomeViewController.swift"
-            timestampString = "499704065.663126"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "postTextButtonTouchUpInside(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/PODRequest.swift"
-            timestampString = "499746143.942365"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "toJson()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/POD.swift"
-            timestampString = "499746156.197732"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "toJson()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/Post.swift"
-            timestampString = "499746192.141201"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
-            landmarkName = "toJson()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/PostRequest.swift"
-            timestampString = "499746215.619291"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "toJson()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/PostRequest.swift"
-            timestampString = "499746217.754233"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "toJson()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dolphin/NetworkController.swift"
-            timestampString = "499790197.00296"
+            timestampString = "501007795.841641"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
-            landmarkName = "createPost(_:completionHandler:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dolphin/NetworkController.swift"
-            timestampString = "499797129.603021"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1112"
-            endingLineNumber = "1112"
+            startingLineNumber = "1111"
+            endingLineNumber = "1111"
             landmarkName = "performRequest(_:authenticated:method:urlParams:params:jsonEconding:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -393,44 +233,108 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dolphin/NotificationTableViewCell.swift"
-            timestampString = "500480119.479101"
+            filePath = "Dolphin/NetworkController.swift"
+            timestampString = "501007795.841641"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "configureCell(_:)"
+            startingLineNumber = "1134"
+            endingLineNumber = "1134"
+            landmarkName = "performRequest(_:authenticated:method:urlParams:params:jsonEconding:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dolphin/NetworkController.swift"
+            timestampString = "502063840.430339"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "537"
+            endingLineNumber = "537"
+            landmarkName = "filterPost(_:types:fromDate:toDate:userId:quantity:page:sort_by:completionHandler:)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Dolphin.NotificationTableViewCell.configureCell (Swift.ImplicitlyUnwrappedOptional&lt;Dolphin.Notification&gt;) -&gt; ()"
+                  symbolName = "Dolphin.NetworkController.filterPost (Swift.Optional&lt;Swift.Array&lt;Dolphin.Topic&gt;&gt;, types : Swift.Optional&lt;Swift.Array&lt;Dolphin.PostType&gt;&gt;, fromDate : Swift.Optional&lt;__ObjC.NSDate&gt;, toDate : Swift.Optional&lt;__ObjC.NSDate&gt;, userId : Swift.Optional&lt;Swift.Int&gt;, quantity : Swift.Optional&lt;Swift.Int&gt;, page : Swift.Optional&lt;Swift.Int&gt;, sort_by : Swift.Optional&lt;Swift.String&gt;, completionHandler : (Swift.Array&lt;Dolphin.Post&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NotificationTableViewCell.swift"
-                  timestampString = "500450165.432148"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NetworkController.swift"
+                  timestampString = "502116575.294497"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "50"
-                  endingLineNumber = "50"
-                  offsetFromSymbolStart = "3077">
+                  startingLineNumber = "537"
+                  endingLineNumber = "537"
+                  offsetFromSymbolStart = "5100">
                </Location>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Dolphin.NotificationTableViewCell.configureCell (Swift.ImplicitlyUnwrappedOptional&lt;Dolphin.Notification&gt;) -&gt; ()"
+                  symbolName = "Dolphin.NetworkController.(filterPost (Swift.Optional&lt;Swift.Array&lt;Dolphin.Topic&gt;&gt;, types : Swift.Optional&lt;Swift.Array&lt;Dolphin.PostType&gt;&gt;, fromDate : Swift.Optional&lt;__ObjC.NSDate&gt;, toDate : Swift.Optional&lt;__ObjC.NSDate&gt;, userId : Swift.Optional&lt;Swift.Int&gt;, quantity : Swift.Optional&lt;Swift.Int&gt;, page : Swift.Optional&lt;Swift.Int&gt;, sort_by : Swift.Optional&lt;Swift.String&gt;, completionHandler : (Swift.Array&lt;Dolphin.Post&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()).(closure #3)"
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NotificationTableViewCell.swift"
-                  timestampString = "500450165.43227"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NetworkController.swift"
+                  timestampString = "502116575.294633"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "50"
-                  endingLineNumber = "50"
-                  offsetFromSymbolStart = "10437">
+                  startingLineNumber = "499"
+                  endingLineNumber = "499"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dolphin/PostCommentsViewController.swift"
+            timestampString = "502067134.336245"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
+            landmarkName = "loadComments(_:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dolphin.PostCommentsViewController.loadComments (Swift.Bool) -&gt; ()"
+                  moduleName = "Dolphin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/PostCommentsViewController.swift"
+                  timestampString = "502123794.398868"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "360"
+                  endingLineNumber = "360"
+                  offsetFromSymbolStart = "228">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dolphin.PostCommentsViewController.(loadComments (Swift.Bool) -&gt; ()).(closure #1)"
+                  moduleName = "Dolphin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/PostCommentsViewController.swift"
+                  timestampString = "502123794.399155"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "361"
+                  endingLineNumber = "361"
+                  offsetFromSymbolStart = "28">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -441,44 +345,44 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dolphin/NotificationTableViewCell.swift"
-            timestampString = "500480119.479101"
+            filePath = "Dolphin/PostDetailsViewController.swift"
+            timestampString = "502067139.151758"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "configureCell(_:)"
+            startingLineNumber = "744"
+            endingLineNumber = "744"
+            landmarkName = "loadComments(_:)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Dolphin.NotificationTableViewCell.configureCell (Swift.ImplicitlyUnwrappedOptional&lt;Dolphin.Notification&gt;) -&gt; ()"
+                  symbolName = "Dolphin.PostDetailsViewController.loadComments (Swift.Bool) -&gt; ()"
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NotificationTableViewCell.swift"
-                  timestampString = "500450165.433124"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/PostDetailsViewController.swift"
+                  timestampString = "502116575.345628"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "5092">
+                  startingLineNumber = "744"
+                  endingLineNumber = "744"
+                  offsetFromSymbolStart = "228">
                </Location>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Dolphin.NotificationTableViewCell.configureCell (Swift.ImplicitlyUnwrappedOptional&lt;Dolphin.Notification&gt;) -&gt; ()"
+                  symbolName = "Dolphin.PostDetailsViewController.(loadComments (Swift.Bool) -&gt; ()).(closure #1)"
                   moduleName = "Dolphin"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NotificationTableViewCell.swift"
-                  timestampString = "500450165.433237"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/PostDetailsViewController.swift"
+                  timestampString = "502116575.345787"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "55"
-                  endingLineNumber = "55"
-                  offsetFromSymbolStart = "10453">
+                  startingLineNumber = "745"
+                  endingLineNumber = "745"
+                  offsetFromSymbolStart = "28">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -489,13 +393,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dolphin/NotificationTableViewCell.swift"
-            timestampString = "500480119.479101"
+            filePath = "Dolphin/NetworkController.swift"
+            timestampString = "502122296.040169"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "configureCell(_:)"
+            startingLineNumber = "540"
+            endingLineNumber = "540"
+            landmarkName = "filterPost(_:types:fromDate:toDate:userId:quantity:page:sort_by:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -505,30 +409,62 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dolphin/NotificationTableViewCell.swift"
-            timestampString = "500480119.479101"
+            filePath = "Dolphin/PostDetailsViewController.swift"
+            timestampString = "502123602.683022"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "configureCell(_:)"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
+            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dolphin/NotificationTableViewCell.swift"
-            timestampString = "500480119.479101"
+            filePath = "Dolphin/NetworkController.swift"
+            timestampString = "502124510.458511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "configureCell(_:)"
+            startingLineNumber = "370"
+            endingLineNumber = "370"
+            landmarkName = "createPost(_:completionHandler:)"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dolphin.NetworkController.createPost (Dolphin.Post, completionHandler : (Swift.Optional&lt;Dolphin.Post&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Dolphin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NetworkController.swift"
+                  timestampString = "502124510.479826"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "370"
+                  endingLineNumber = "370"
+                  offsetFromSymbolStart = "436">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dolphin.NetworkController.(createPost (Dolphin.Post, completionHandler : (Swift.Optional&lt;Dolphin.Post&gt;, Swift.Optional&lt;Swift.AnyObject&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "Dolphin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Volumes/My%20Data/%20Work/NinthCoast/DolphinAPP/Dolphin/Dolphin/NetworkController.swift"
+                  timestampString = "502124510.480007"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "368"
+                  endingLineNumber = "368"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

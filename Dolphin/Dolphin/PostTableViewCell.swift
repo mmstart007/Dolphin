@@ -141,7 +141,7 @@ class PostTableViewCell : UITableViewCell {
         if let image = post.postImage {
             postTitle.text = post.postHeader
             postContent.text = ""
-            self.postImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            self.postImageView.sd_setImageWithURL(NSURL(string: (Constants.RESTAPIConfig.Developement.BaseUrl + image.imageURL!)), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             let image_width = image.imageWidth
             let image_height = image.imageHeight
             

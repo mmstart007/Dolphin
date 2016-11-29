@@ -13,7 +13,8 @@ class Constants {
     struct RESTAPIConfig {
         struct Developement {
             //static let BaseUrl: String = "http://dolphin-api.ninthcoast.com/"
-            static let BaseUrl: String = "http://54.226.62.106/dolphin-api/public/"
+            //static let BaseUrl: String = "http://54.226.62.106/dolphin-api/public/"
+            static let BaseUrl: String = "http://54.174.44.174/"
         }
     }
     

@@ -75,7 +75,6 @@ class NetworkController: NSObject {
         case FilterNotification    = "notifications/filter"
     }
     
-    
     // MARK: - Public Methods
     // MARK: - USERS
     

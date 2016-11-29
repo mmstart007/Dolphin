@@ -65,7 +65,7 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
             
             if let postImage = actualPost!.postImage {
                 let manager = SDWebImageManager.sharedManager()
-                manager.downloadImageWithURL(NSURL(string: (postImage.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                manager.downloadImageWithURL(NSURL(string: (Constants.RESTAPIConfig.Developement.BaseUrl + postImage.imageURL!)), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
                         self.postImageView.image = image
                         
@@ -75,7 +75,7 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
                 })
             } else if let postLink = actualPost!.postLink {
                 let manager = SDWebImageManager.sharedManager()
-                manager.downloadImageWithURL(NSURL(string: (postLink.imageURL)!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                manager.downloadImageWithURL(NSURL(string: (Constants.RESTAPIConfig.Developement.BaseUrl + postLink.imageURL!)), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
                         self.postImageView.image = image
                     } else {
