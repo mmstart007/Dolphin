@@ -65,7 +65,10 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
             
             if let postImage = actualPost!.postImage {
                 let manager = SDWebImageManager.sharedManager()
-                manager.downloadImageWithURL(NSURL(string: (Constants.RESTAPIConfig.Developement.BaseUrl + postImage.imageURL!)), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                
+                let urlString = convertURL(postImage.imageURL!)
+                
+                manager.downloadImageWithURL(NSURL(string: urlString), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
                         self.postImageView.image = image
                         
@@ -75,7 +78,10 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
                 })
             } else if let postLink = actualPost!.postLink {
                 let manager = SDWebImageManager.sharedManager()
-                manager.downloadImageWithURL(NSURL(string: (Constants.RESTAPIConfig.Developement.BaseUrl + postLink.imageURL!)), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                
+                let urlString = convertURL(postLink.imageURL!)
+                
+                manager.downloadImageWithURL(NSURL(string: urlString), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
                         self.postImageView.image = image
                     } else {
@@ -120,4 +126,11 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
         }
     }
     
+    func convertURL(urlString: String) -> String {
+        if urlString.containsString("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
 }

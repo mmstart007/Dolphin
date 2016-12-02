@@ -383,7 +383,7 @@ class NetworkController: NSObject {
         var savedPost: Post?
         let parameters : [String : AnyObject]? = ["post": post.toJson()]
         
-        var error : NSError?
+        //var error : NSError?
         
         let jsonData = try! NSJSONSerialization.dataWithJSONObject(parameters!, options: NSJSONWritingOptions.PrettyPrinted)
         
@@ -848,7 +848,7 @@ class NetworkController: NSObject {
     }
     
     func likeComment(commentId: String,podId: String, completionHandler: (Bool?, AnyObject?) -> ()) -> () {
-        var savedPOD: POD?
+        //var savedPOD: POD?
         let parameters : [String : AnyObject]? = ["like": "{}"]
         let urlParameters : [CVarArgType] = [podId, commentId]
         print(parameters)
@@ -868,7 +868,7 @@ class NetworkController: NSObject {
     }
     
     func dislikeComment(commentId: String,podId: String, completionHandler: (Bool?, AnyObject?) -> ()) -> () {
-        var savedPOD: POD?
+        //var savedPOD: POD?
         let parameters : [String : AnyObject]? = ["like": "{}"]
         let urlParameters : [CVarArgType] = [podId, commentId]
         print(parameters)

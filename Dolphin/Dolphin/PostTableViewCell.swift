@@ -141,7 +141,10 @@ class PostTableViewCell : UITableViewCell {
         if let image = post.postImage {
             postTitle.text = post.postHeader
             postContent.text = ""
-            self.postImageView.sd_setImageWithURL(NSURL(string: (Constants.RESTAPIConfig.Developement.BaseUrl + image.imageURL!)), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            
+            let urlString = convertURL(image.imageURL!)
+            
+            self.postImageView.sd_setImageWithURL(NSURL(string: urlString), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             let image_width = image.imageWidth
             let image_height = image.imageHeight
             
@@ -179,4 +182,13 @@ class PostTableViewCell : UITableViewCell {
             }
         }
     }
+    
+    func convertURL(urlString: String) -> String {
+        if urlString.containsString("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
+    
 }

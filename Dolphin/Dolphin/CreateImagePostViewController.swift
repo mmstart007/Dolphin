@@ -50,7 +50,7 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
         
         if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
             
-            for (var i = 0; i < fetchResult.count; i++) {
+            for i in (0..<fetchResult.count) {
                 
                 autoreleasepool {
                     
