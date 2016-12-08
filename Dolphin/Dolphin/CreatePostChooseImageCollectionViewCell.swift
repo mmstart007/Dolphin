@@ -13,12 +13,12 @@ class CreatePostChooseImageCollectionViewCell : UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    func configureWithImageURL(url: String) {
-        imageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+    func configureWithImageURL(_ url: String) {
+        imageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "PostImagePlaceholder"))
 //        imageView.contentMode = .ScaleAspectFit
     }
     
-    func configureWithImage(image: UIImage) {
+    func configureWithImage(_ image: UIImage) {
         imageView.image = image.imageByScalingAndCroppingForSize(imageView.frame.size)
 //        imageView.contentMode = .ScaleAspectFit
     }

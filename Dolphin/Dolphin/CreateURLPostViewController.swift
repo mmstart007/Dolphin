@@ -38,7 +38,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         
         title                           = "Dolphin"
         urlTextField.text               = "http://google.com"
-        urlTextField.autocorrectionType = .No
+        urlTextField.autocorrectionType = .no
         addTextFieldToKeyboradControlsTextFields(urlTextField)
         
         addressView.layer.masksToBounds = true
@@ -56,29 +56,29 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         loadRequest(linkRequest)
         urlTextField.text               = linkRequest
         self.webView.scalesPageToFit = true;
-        self.webView.contentMode = .ScaleAspectFit;
+        self.webView.contentMode = .scaleAspectFit;
     }
     
-    override func goBackButtonPressed(sender: UIBarButtonItem) {
+    override func goBackButtonPressed(_ sender: UIBarButtonItem) {
         super.goBackButtonPressed(sender)
         SVProgressHUD.dismiss()
     }
     
-    func loadRequest(urlString: String) {
-        if webView.loading {
+    func loadRequest(_ urlString: String) {
+        if webView.isLoading {
             webView.stopLoading()
         }
         
-        SVProgressHUD.showWithMaskType(.None)
-        let url = NSURL(string: urlString)
-        let requestObj = NSMutableURLRequest(URL: url!)
+        SVProgressHUD.show(with: .none)
+        let url = URL(string: urlString)
+        let requestObj = NSMutableURLRequest(url: url!)
         requestObj.setValue("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3", forHTTPHeaderField: "User-Agent")
-        webView.loadRequest(requestObj)
+        webView.loadRequest(requestObj as URLRequest)
     }
     
     // MARK: TextField Delegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
         var urlText = textField.text!
         if Utils.verifyUrl(urlToLoad) {
@@ -86,12 +86,12 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
                 urlText = "http://" + urlText
             }
         }
-        urlToLoad = urlText.stringByTrimmingCharactersInSet(
-            NSCharacterSet.whitespaceAndNewlineCharacterSet()
+        urlToLoad = urlText.trimmingCharacters(
+            in: CharacterSet.whitespacesAndNewlines
         )
         
         if !Utils.verifyUrl(urlToLoad) {
-            urlToLoad = "http://www.google.com/search?q=".stringByAppendingString(urlToLoad.stringByReplacingOccurrencesOfString(" ", withString: "+").stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
+            urlToLoad = "http://www.google.com/search?q=" + urlToLoad.replacingOccurrences(of: " ", with: "+").addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         }
         
         urlTextField.text = urlToLoad
@@ -101,44 +101,44 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        textField.selectedTextRange = textField.textRangeFromPosition(textField.beginningOfDocument, toPosition: textField.endOfDocument)
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
     }
     
     // MARK: Actions
     
-    @IBAction func pinPageButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func pinPageButtonTouchUpInside(_ sender: AnyObject) {
         
         var siteURLString = ""
-        if let siteToPinURL = webView.request?.URL {
+        if let siteToPinURL = webView.request?.url {
             siteURLString = siteToPinURL.absoluteString
         }
         
-        SVProgressHUD.showWithMaskType(.None)
-        dispatch_async(dispatch_get_main_queue()) {
-            let pageData = NSData(contentsOfURL: (self.webView.request?.URL!)!)
-            let doc = TFHpple(HTMLData: pageData)
-            let images = doc.searchWithXPathQuery("//img")
+        SVProgressHUD.show(with: .none)
+        DispatchQueue.main.async {
+            let pageData = try? Data(contentsOf: (self.webView.request?.url!)!)
+            let doc = TFHpple(htmlData: pageData)
+            let images = doc?.search(withXPathQuery: "//img")
             var imageURLs: [String] = []
             for image: TFHppleElement in (images as? [TFHppleElement])! {
-                var imageURL: String? = image.objectForKey("data-src")
+                var imageURL: String? = image.object(forKey: "data-src")
                 if imageURL == nil || imageURL == "" {
-                    imageURL = image.objectForKey("src")
+                    imageURL = image.object(forKey: "src")
                 }
-                if let url = imageURL where imageURL != "" {
+                if let url = imageURL, imageURL != "" {
                     if !url.hasPrefix("http") {
-                        let siteURL = self.webView.request?.URL
+                        let siteURL = self.webView.request?.url
                         
                         if !url.hasPrefix("/") {
-                            if let baseURL = NSURL(string: "/", relativeToURL: siteURL) {
-                                imageURL = baseURL.absoluteString.stringByAppendingString(url)
+                            if let baseURL = URL(string: "/", relativeTo: siteURL) {
+                                imageURL = baseURL.absoluteString + url
                             }
                         }
                         else
                         {
-                            if let baseURL = NSURL(string: "/", relativeToURL: siteURL) {
+                            if let baseURL = URL(string: "/", relativeTo: siteURL) {
                                 let newURL = String(url.characters.dropFirst())
-                                imageURL = baseURL.absoluteString.stringByAppendingString(newURL)
+                                imageURL = baseURL.absoluteString + newURL
                             }
                         }
                     }
@@ -157,49 +157,49 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
                 chooseImageVC.mPost = self.mPost
                 self.navigationController?.pushViewController(chooseImageVC, animated: true)
             } else {
-                let alert = UIAlertController(title: "Error", message: "No images obtained from the website", preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let alert = UIAlertController(title: "Error", message: "No images obtained from the website", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
-    @IBAction func refreshAndStopLoadingButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func refreshAndStopLoadingButtonTouchUpInside(_ sender: AnyObject) {
         if isLoadingPage {
             webView.stopLoading()
             isLoadingPage = false
             setRefreshButton(isLoadingPage)
             SVProgressHUD.dismiss()
         } else {
-            SVProgressHUD.showWithMaskType(.None)
+            SVProgressHUD.show(with: .none)
             webView.reload()
         }
     }
     
-    func setRefreshButton(isLoading: Bool) {
+    func setRefreshButton(_ isLoading: Bool) {
         if isLoadingPage {
-            refreshAndStopLoadingButton.setImage(UIImage(named: "StopLoadingPageIcon"), forState: .Normal)
-            refreshAndStopLoadingButton.setImage(UIImage(named: "StopLoadingPageIcon"), forState: .Highlighted)
+            refreshAndStopLoadingButton.setImage(UIImage(named: "StopLoadingPageIcon"), for: UIControlState())
+            refreshAndStopLoadingButton.setImage(UIImage(named: "StopLoadingPageIcon"), for: .highlighted)
         } else {
-            refreshAndStopLoadingButton.setImage(UIImage(named: "WebPageRefreshIcon"), forState: .Normal)
-            refreshAndStopLoadingButton.setImage(UIImage(named: "WebPageRefreshIcon"), forState: .Highlighted)
+            refreshAndStopLoadingButton.setImage(UIImage(named: "WebPageRefreshIcon"), for: UIControlState())
+            refreshAndStopLoadingButton.setImage(UIImage(named: "WebPageRefreshIcon"), for: .highlighted)
         }
         
     }
         
     //MARK: WebViewDelegate
     
-    func webViewDidStartLoad(webView: UIWebView) {
+    func webViewDidStartLoad(_ webView: UIWebView) {
         print("Started Loading")
         isLoadingPage = true
         setRefreshButton(isLoadingPage)
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         print("Fnished Loading")
         
         SVProgressHUD.dismiss()
-        if let siteURL = webView.request?.URL {
+        if let siteURL = webView.request?.url {
             if siteURL.absoluteString != ""{
                 urlTextField.text = siteURL.absoluteString
             }
@@ -209,9 +209,9 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
         setRefreshButton(isLoadingPage)
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         SVProgressHUD.dismiss()
-        print("Error loading page. The error is: \(error?.description)")
+        print("Error loading page. The error is: \(error.localizedDescription)")
     }
     
 }

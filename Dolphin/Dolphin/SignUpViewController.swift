@@ -8,6 +8,41 @@
 
 import UIKit
 import SVProgressHUD
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
@@ -26,7 +61,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         super.init(coder: aDecoder)!
     }
     
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: Bundle!) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -34,23 +69,23 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.init(nibName: "SignUpViewController", bundle: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let tapLoginGesture = UITapGestureRecognizer(target: self, action: #selector(loginTapped))
-        self.loginLabel.userInteractionEnabled = true
+        self.loginLabel.isUserInteractionEnabled = true
         self.loginLabel.addGestureRecognizer(tapLoginGesture)
         
         let tapViewGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
@@ -60,25 +95,25 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setAppearance() {
-        usernameTextField.attributedPlaceholder = NSAttributedString(string: usernameTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        usernameTextField.attributedPlaceholder = NSAttributedString(string: usernameTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.white])
         usernameTextField.layer.cornerRadius    = usernameTextField.frame.height/2.0
         usernameTextField.layer.borderWidth     = 1
-        usernameTextField.layer.borderColor     = UIColor.whiteColor().CGColor
+        usernameTextField.layer.borderColor     = UIColor.white.cgColor
 
-        emailTextField.attributedPlaceholder    = NSAttributedString(string: emailTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        emailTextField.attributedPlaceholder    = NSAttributedString(string: emailTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.white])
         emailTextField.layer.cornerRadius       = emailTextField.frame.height/2.0
         emailTextField.layer.borderWidth        = 1
-        emailTextField.layer.borderColor        = UIColor.whiteColor().CGColor
+        emailTextField.layer.borderColor        = UIColor.white.cgColor
 
-        passwordTextField.attributedPlaceholder = NSAttributedString(string: passwordTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        passwordTextField.attributedPlaceholder = NSAttributedString(string: passwordTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.white])
         passwordTextField.layer.cornerRadius    = passwordTextField.frame.height/2.0
         passwordTextField.layer.borderWidth     = 1
-        passwordTextField.layer.borderColor     = UIColor.whiteColor().CGColor
+        passwordTextField.layer.borderColor     = UIColor.white.cgColor
         
         signUpButton.layer.cornerRadius               = signUpButton.frame.height/2.0
     }
 
-     @IBAction func signUpButtonTouchUpInside(sender: AnyObject) {
+     @IBAction func signUpButtonTouchUpInside(_ sender: AnyObject) {
         self.viewTapped()
         
         var fieldsValidated = true
@@ -100,7 +135,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         
         if fieldsValidated {
             // fields validated, reigster user
-            let deviceId: String = UIDevice.currentDevice().identifierForVendor!.UUIDString
+            let deviceId: String = UIDevice.current.identifierForVendor!.uuidString
             let userName: String = usernameTextField.text!
             let avatarImage: String = ""
             let email: String = emailTextField.text!
@@ -117,16 +152,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                             zip: Globals.currentZip,
                             location: Globals.currentAddress)
             
-            SVProgressHUD.showWithStatus("Signing up")
+            SVProgressHUD.show(withStatus: "Signing up")
             networkController.registerUser(user, completionHandler: { (user, token, userId, error) -> () in
                 if error == nil {
                     // Store the apiToken
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setObject(token, forKey: "api_token")
+                    let defaults = UserDefaults.standard
+                    defaults.set(token, forKey: "api_token")
                     
                     // Store the currentUserId
-                    defaults.setObject(userId, forKey: "current_user_id")
-                    defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
+                    defaults.set(userId, forKey: "current_user_id")
+                    defaults.set(Globals.jsonToNSData((user?.toJson())! as AnyObject), forKey: "current_user")
                     
                     let createProfileVC = CreateProfileViewController()
                     self.navigationController?.pushViewController(createProfileVC, animated: true)
@@ -135,17 +170,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     SVProgressHUD.dismiss()
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Signup failure", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Signup failure", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             })
         } else {
-            let alert = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
     }
 
@@ -153,15 +188,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return usernameTextField.text?.characters.count > 0
     }
     
-    func checkValidPassword(login: Bool) -> Bool {
+    func checkValidPassword(_ login: Bool) -> Bool {
         return passwordTextField.text?.characters.count >= 5
     }
     
-    func checkValidMail(login: Bool) -> Bool {
+    func checkValidMail(_ login: Bool) -> Bool {
         let emailRegex = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegex)
-        return emailTest.evaluateWithObject(emailTextField.text)
+        return emailTest.evaluate(with: emailTextField.text)
     }
     
     func viewTapped() {
@@ -169,13 +204,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func loginTapped() {
-        self.navigationController?.popViewControllerAnimated(true)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: UITextField Delegate.
     
 
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         var offset = CGFloat(0)
         if Constants.DeviceType.IS_IPHONE_4_OR_LESS || Constants.DeviceType.IS_IPHONE_5 {
             if textField == self.usernameTextField {
@@ -189,14 +224,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        self.mainScrollView.setContentOffset(CGPointMake(0, offset), animated: true)
+        self.mainScrollView.setContentOffset(CGPoint(x: 0, y: offset), animated: true)
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        self.mainScrollView.setContentOffset(CGPointZero, animated: true)
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.mainScrollView.setContentOffset(CGPoint.zero, animated: true)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == self.usernameTextField {
             self.emailTextField.becomeFirstResponder()
         }

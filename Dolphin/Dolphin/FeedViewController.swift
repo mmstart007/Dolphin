@@ -37,25 +37,25 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.postsTableView.reloadData()
         self.postsTableView.estimatedRowHeight = 470
         
         if networkController.currentUserId == nil {
-            let alert = UIAlertController(title: "Warning", message: "You need to logout and login again, sorry this is for this time because we are in development", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: "Warning", message: "You need to logout and login again, sorry this is for this time because we are in development", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         } else {
             
             //Set notification handler to get posted feed.
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPostCreated(_:)) , name: Constants.Notifications.CreatedPost, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(postRemoved(_:)) , name: Constants.Notifications.DeletedPost, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(newPostCreated(_:)) , name: NSNotification.Name(rawValue: Constants.Notifications.CreatedPost), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(postRemoved(_:)) , name: NSNotification.Name(rawValue: Constants.Notifications.DeletedPost), object: nil)
             
             if !isDataLoaded {
                 if myLikes {
@@ -67,14 +67,14 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         }
     }
     
-    func postRemoved(notification: NSNotification) {
+    func postRemoved(_ notification: Foundation.Notification) {
         if let userInfo = notification.userInfo as? Dictionary<String, Post> {
             if let post = userInfo["post"] {
                 var index = 0;
                 
                 for item in self.allPosts {
                     if item.postId == post.postId {
-                        self.allPosts.removeAtIndex(index)
+                        self.allPosts.remove(at: index)
                         break
                     }
                     
@@ -84,7 +84,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                 index = 0;
                 for item in self.filteredPosts {
                     if item.postId == post.postId {
-                        self.filteredPosts.removeAtIndex(index)
+                        self.filteredPosts.remove(at: index)
                         break
                     }
                     
@@ -94,7 +94,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                 index = 0;
                 for item in self.likedPosts {
                     if item.postId == post.postId {
-                        self.likedPosts.removeAtIndex(index)
+                        self.likedPosts.remove(at: index)
                         break
                     }
                     
@@ -106,7 +106,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         }
     }
     
-    func newPostCreated(notification: NSNotification) {
+    func newPostCreated(_ notification: Foundation.Notification) {
         if myLikes {
             return;
         }
@@ -122,10 +122,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     }
 
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
         searchText = ""
-        (self.parentViewController as? HomeViewController)?.removeSearchBar()
+        (self.parent as? HomeViewController)?.removeSearchBar()
     }
     
     override func viewDidLoad() {
@@ -135,12 +135,12 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             setBackButton()
             title = "My Likes"
         }
-        self.edgesForExtendedLayout = .None
-        postsTableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
-        postsTableView.separatorStyle     = .None
+        self.edgesForExtendedLayout = UIRectEdge()
+        postsTableView.register(UINib(nibName: "PostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostTableViewCell")
+        postsTableView.separatorStyle     = .none
         postsTableView.estimatedRowHeight = 400
         
-        postsTableView.addPullToRefreshWithActionHandler { () -> Void in
+        postsTableView.addPullToRefresh { () -> Void in
             
             if self.myLikes {
                 self.loadUserLikes(true)
@@ -150,22 +150,22 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         }
         
         if !self.myLikes {
-            postsTableView.addInfiniteScrollingWithActionHandler { () -> Void in
+            postsTableView.addInfiniteScrolling { () -> Void in
                 self.loadNextPosts()
             }
         }
         
         
         //Notification.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FeedViewController.createdNewPost(_:)), name: Constants.Notifications.CreatedPost, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FeedViewController.createdNewPost(_:)), name: NSNotification.Name(rawValue: Constants.Notifications.CreatedPost), object: nil)
         
     }
     
-    func createdNewPost(note: NSNotification) {
+    func createdNewPost(_ note: Foundation.Notification) {
         
         if let info = note.userInfo as? Dictionary<String, Post> {
             if let post:Post = info["post"] {
-                self.allPosts.insert(post, atIndex: 0)
+                self.allPosts.insert(post, at: 0)
                 self.postsTableView.reloadData()
             }
         }
@@ -173,11 +173,11 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     // MARK: TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if myLikes {
             return likedPosts.count
         } else {
@@ -190,8 +190,8 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: PostTableViewCell? = postsTableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as? PostTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: PostTableViewCell? = postsTableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as? PostTableViewCell
         if cell == nil {
             cell = PostTableViewCell()
         }
@@ -206,19 +206,19 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
             }
         }
         
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         cell?.delegate = self
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
     // MARK: Tableview delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        (self.parentViewController as? HomeViewController)?.hideSearchField()
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        (self.parent as? HomeViewController)?.hideSearchField()
         let postDetailsVC = PostDetailsViewController()
         if myLikes {
             postDetailsVC.post = likedPosts[indexPath.row]
@@ -235,24 +235,24 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     }
     
     // MARK: PostTableViewCell Delegate.
-    func downloadedPostImage(indexPath: NSIndexPath?) {
-        postsTableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.None)
+    func downloadedPostImage(_ indexPath: IndexPath?) {
+        postsTableView.reloadRows(at: [indexPath!], with: UITableViewRowAnimation.none)
     }
     
-    func tapUserInfo(userInfo: User?) {
+    func tapUserInfo(_ userInfo: User?) {
         let userView = OtherProfileViewController(userInfo: userInfo)
         navigationController?.pushViewController(userView, animated: true)
     }
     
-    func tapURL(url: String?) {
+    func tapURL(_ url: String?) {
         let webVC = WebViewController()
         webVC.siteLink = url
         navigationController?.pushViewController(webVC, animated: true)
     }
     
-    func tapLike(post: Post?, cell: PostTableViewCell?) {
+    func tapLike(_ post: Post?, cell: PostTableViewCell?) {
         if !(post?.isLikedByUser)! {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
             networkController.createLike("\(post!.postId!)", completionHandler: { (like, error) -> () in
                 if error == nil {
                     if like?.id != nil {
@@ -264,16 +264,16 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
         } else {
             
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
             networkController.deleteLike("\(post!.postId!)", completionHandler: { (error) -> () in
                 if error == nil {
                     post?.postNumberOfLikes = (post?.postNumberOfLikes)! - 1
@@ -283,10 +283,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
@@ -295,18 +295,18 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     // MARK: Search Posts
     
-    func filterResults(textToSearch: String) {
+    func filterResults(_ textToSearch: String) {
         print("Search text: \(textToSearch)")
         print("allPosts: \(allPosts.count)")
         
         filteredPosts.removeAll()
         filteredPosts = allPosts.filter({( post : Post) -> Bool in
-            let containInText = (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
-            let containInTitle = (post.postHeader?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            let containInText = (post.postText?.lowercased().contains(textToSearch.lowercased()))!
+            let containInTitle = (post.postHeader?.lowercased().contains(textToSearch.lowercased()))!
             var containInTag = false
             
             for t in post.postTopics!  {
-                if t.name?.lowercaseString.containsString(textToSearch.lowercaseString) == true {
+                if t.name?.lowercased().contains(textToSearch.lowercased()) == true {
                     containInTag = true
                     break
                 }
@@ -328,10 +328,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
     
     // MARK: - Auxiliary methods
     // Not used for now, the post has if the user likes it or not
-    func loadUserLikes(pullToRefresh: Bool) {
+    func loadUserLikes(_ pullToRefresh: Bool) {
         
         if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         networkController.getUserLikes(String(networkController.currentUserId!)) { (likes, error) -> () in
             SVProgressHUD.dismiss()
@@ -357,13 +357,13 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
@@ -372,10 +372,10 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         }
     }
     
-    func loadData(pullToRefresh: Bool) {
+    func loadData(_ pullToRefresh: Bool) {
         page = 0
         if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: 0, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
@@ -398,13 +398,13 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
@@ -413,7 +413,7 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         })
     }
     
-    func deletePost(postId: Int) {
+    func deletePost(_ postId: Int) {
         let postIdString = String(postId)
         networkController.deletePost(postIdString) { (error) -> () in
             if error == nil {
@@ -429,30 +429,30 @@ class FeedViewController : DolphinViewController, UITableViewDataSource, UITable
         page = page + 1
         networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
-                self.allPosts.appendContentsOf(posts)
+                self.allPosts.append(contentsOf: posts)
                 self.postsTableView.reloadData()
                 
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             self.postsTableView.infiniteScrollingView.stopAnimating()
         })
     }
     
-    func addTableEmptyMessage(message: String) {
+    func addTableEmptyMessage(_ message: String) {
         let labelBackground = UILabel(frame: CGRect(x: 0, y: 0, width: postsTableView.frame.width, height: 200))
         labelBackground.text = message
         labelBackground.textColor = UIColor.blueDolphin()
-        labelBackground.textAlignment = .Center
+        labelBackground.textAlignment = .center
         labelBackground.numberOfLines = 0
         Utils.setFontFamilyForView(labelBackground, includeSubViews: true)
         postsTableView.backgroundView = labelBackground

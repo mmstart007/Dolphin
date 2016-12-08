@@ -15,8 +15,8 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Alamofire (3.4.1)
-  - BEMCheckBox (1.2.1)
+  - Alamofire (4.2.0)
+  - BEMCheckBox (1.4.0)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -24,40 +24,43 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
   - BSKeyboardControls (2.2)
-  - Crashlytics (3.7.2):
+  - Crashlytics (3.8.3):
     - Fabric (~> 1.6.3)
-  - Fabric (1.6.7)
-  - FBSDKCoreKit (4.14.0):
+  - Fabric (1.6.11)
+  - FBSDKCoreKit (4.18.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.14.0):
+  - FBSDKLoginKit (4.18.0):
     - FBSDKCoreKit
   - FBSDKMessengerShareKit (1.3.2)
-  - FBSDKShareKit (4.14.0):
+  - FBSDKShareKit (4.18.0):
     - FBSDKCoreKit
-  - HMSegmentedControl (1.5.2)
+  - HMSegmentedControl (1.5.3)
   - hpple (0.2.0)
-  - KeychainSwift (3.0.16)
-  - KSTokenView (2.3.1)
-  - KTCenterFlowLayout (1.3)
+  - KeychainSwift (7.0.0)
+  - KTCenterFlowLayout (1.3.1)
   - NSDate+TimeAgo (1.0.6)
-  - OAuthSwift (0.5.2)
-  - RSKImageCropper (1.5.1)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
+  - OAuthSwift (1.1.0)
+  - PinterestSDK (1.0.2):
+    - AFNetworking (~> 3.0)
+    - SSKeychain
+  - RSKImageCropper (1.5.2)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - SSKeychain (1.4.1)
-  - SVProgressHUD (2.0.3)
+  - SVProgressHUD (2.1.1)
   - SVPullToRefresh (0.4.1)
-  - TwitterCore (2.3.0):
+  - SwiftyJSON (3.1.3)
+  - TwitterCore (2.6.1):
     - Fabric
-  - TwitterKit (2.3.0):
-    - TwitterCore (= 2.3.0)
+  - TwitterKit (2.6.1):
+    - TwitterCore (= 2.6.1)
   - UITextView+Placeholder (1.2.0)
 
 DEPENDENCIES:
   - ActionSheetPicker-3.0
   - AFNetworking
-  - Alamofire (~> 3.0)
+  - Alamofire (~> 4.0)
   - BEMCheckBox
   - BSKeyboardControls (~> 2.2)
   - Crashlytics
@@ -68,16 +71,17 @@ DEPENDENCIES:
   - FBSDKShareKit
   - HMSegmentedControl
   - hpple
-  - KeychainSwift (~> 3.0)
-  - KSTokenView (~> 2.3.0)
+  - KeychainSwift (~> 7.0)
   - KTCenterFlowLayout
   - NSDate+TimeAgo
-  - OAuthSwift (~> 0.5.0)
+  - OAuthSwift (~> 1.1.0)
+  - PinterestSDK
   - RSKImageCropper
   - SDWebImage (~> 3.7)
   - SSKeychain
   - SVProgressHUD
   - SVPullToRefresh
+  - SwiftyJSON
   - TwitterCore
   - TwitterKit
   - UITextView+Placeholder
@@ -85,32 +89,33 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
-  BEMCheckBox: 264b8b72aa92adbfefa265cc58a0cdb86b207b9f
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  BEMCheckBox: e18e4a148905b290bd03d98b767651c104f4eda3
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
-  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
-  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
-  FBSDKCoreKit: 6e020b5db0b5bd1e01f5fb0902131befd129a502
-  FBSDKLoginKit: da563567a108050ef83739c8c8c001ee9e25fa13
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
+  FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
-  FBSDKShareKit: e8e5d4ccef69b41132fe33acda26db1e33143e33
-  HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
+  FBSDKShareKit: 0b8d6cc3f103c75297eb3c62caec284a2ccf1b9e
+  HMSegmentedControl: 7c6145afb50f26cec5f3243082f6f12b9f41318f
   hpple: 3b765f96fc2cd56ad1a49aef6f7be5cb2aa64b57
-  KeychainSwift: a5bb85cd498ce2217b55e055ec59e9268d83384c
-  KSTokenView: 15150f0aec162ac5b61e7cc10ba356e02da8f355
-  KTCenterFlowLayout: 2905970d36c653d9a7736c20bfa0d37dcf797d6b
+  KeychainSwift: b6947435dd78cc442c64a84ae648dd0e871cf448
+  KTCenterFlowLayout: 6e02b50ab2bd865025ae82fe266ed13b6d9eaf97
   NSDate+TimeAgo: 35601c619b2d59290055e4fe76e61d97677a2360
-  OAuthSwift: 1ef042d4362e755e24a78f158d817245641a5d24
-  RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  OAuthSwift: 7ec2c62274f6bdc30b1ba3b799c39a6fdcaea0e5
+  PinterestSDK: 6c6d92cc749e6520d1b6f1e75410c6fd1d05844c
+  RSKImageCropper: 27d0e7efa800b509720163c3561fe08a04853780
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
-  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SVProgressHUD: 1127180503b9a308ddf7006f3cc58fc05cc1092d
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
-  TwitterCore: 817eae3e291fa4125b47789e26a4f6f024115c1f
-  TwitterKit: 8a383da8d9c21b0423716381ea8bbfce20622d91
+  SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
+  TwitterCore: a8aea8bdaf2abd6572c8f264707a4ea4dc2d0eab
+  TwitterKit: d38c08d31dfd4ba604f95deca6cf8e174b5cbd96
   UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
 
-PODFILE CHECKSUM: 6cbfa6134163ee2d6352f3324a8a4cf1af60ad5d
+PODFILE CHECKSUM: 6aa6f49239a0fd936a7dc15ce7a0da1b53e3f911
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

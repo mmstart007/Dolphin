@@ -20,7 +20,7 @@ class SubjectOrGradeTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    func configureWithGradeOrSubjectName(name: String, checked: Bool) {
+    func configureWithGradeOrSubjectName(_ name: String, checked: Bool) {
         labelName.text = name
         checkBox.on = checked
         Utils.setFontFamilyForView(self, includeSubViews: true)

@@ -35,7 +35,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     var isFillter: Bool  = false
     
     required init() {
-        super.init(nibName: "PODsListViewController", bundle: NSBundle.mainBundle())
+        super.init(nibName: "PODsListViewController", bundle: Bundle.main)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -45,15 +45,15 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.edgesForExtendedLayout = .None
+        self.edgesForExtendedLayout = UIRectEdge()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newPodCreated(_:)) , name: Constants.Notifications.CreatedPod, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(podRemoved(_:)) , name: Constants.Notifications.DeletedPod, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newPodCreated(_:)) , name: NSNotification.Name(rawValue: Constants.Notifications.CreatedPod), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(podRemoved(_:)) , name: NSNotification.Name(rawValue: Constants.Notifications.DeletedPod), object: nil)
         
-        allPODstableView.registerNib(UINib(nibName: "PODPreviewTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODPreviewTableViewCell")
-        myPODsCollectionView.registerNib(UINib(nibName: "MyPODPreviewCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "MyPODPreviewCollectionViewCell")
+        allPODstableView.register(UINib(nibName: "PODPreviewTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PODPreviewTableViewCell")
+        myPODsCollectionView.register(UINib(nibName: "MyPODPreviewCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "MyPODPreviewCollectionViewCell")
         myPODsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        allPODstableView.separatorStyle = .None
+        allPODstableView.separatorStyle = .none
         myPODsCollectionView.dataSource = self
         myPODsCollectionView.delegate   = self
         
@@ -61,14 +61,14 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         segmentedControl.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
         segmentedControl.sizeToFit()
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        segmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: UIControlEvents.valueChanged)
         
         allPODstableView.estimatedRowHeight = 206
-        allPODstableView.addPullToRefreshWithActionHandler { () -> Void in
+        allPODstableView.addPullToRefresh { () -> Void in
             self.loadData(true)
         }
         
-        allPODstableView.addInfiniteScrollingWithActionHandler { () -> Void in
+        allPODstableView.addInfiniteScrolling { () -> Void in
             self.loadNextPODs()
         }
         loadData(false)
@@ -105,23 +105,23 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 let errors: [String]? = error!["errors"] as? [String]
                 var alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
         })
     }
 
     
-    func deletedPod(pod: POD) {
+    func deletedPod(_ pod: POD) {
         var index = 0;
         for item in allPods {
             if item.id == pod.id {
-                allPods.removeAtIndex(index)
+                allPods.remove(at: index)
                 break
             }
             index += 1
@@ -130,7 +130,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         index = 0;
         for item in myPods {
             if item.id == pod.id {
-                myPods.removeAtIndex(index)
+                myPods.remove(at: index)
                 break
             }
             index += 1
@@ -140,7 +140,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         myPODsCollectionView.reloadData()
     }
     
-    func updatedPod(pod: POD) {
+    func updatedPod(_ pod: POD) {
         var index = 0;
         for item in allPods {
             if item.id == pod.id {
@@ -169,42 +169,42 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         loadData(false)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if segmentedControl.selectedSegmentIndex == 0 {
             allPODstableView.reloadData()
         } else {
             myPODsCollectionView.reloadData()
         }
-        let parent = self.parentViewController as? HomeViewController
+        let parent = self.parent as? HomeViewController
         if (searchText == nil || searchText == "") {
             parent?.removeSearchBar()
             parent?.setSearchRightButton()
-            self.parentViewController?.navigationItem.titleView = segmentedControl
+            self.parent?.navigationItem.titleView = segmentedControl
         } else {
             parent?.searchBar?.becomeFirstResponder()
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchText = ""
-        self.parentViewController?.navigationItem.titleView = nil
+        self.parent?.navigationItem.titleView = nil
     }
     
-    func newPodCreated(notification: NSNotification) {
+    func newPodCreated(_ notification: Foundation.Notification) {
         if let userInfo = notification.userInfo as? Dictionary<String, POD> {
             if let pod = userInfo["pod"] {
                 if (!self.allPods.contains(pod)) {
-                    self.allPods.insert(pod, atIndex: 0)
+                    self.allPods.insert(pod, at: 0)
                 }
                 
                 if (!self.myPods.contains(pod)) {
-                    self.myPods.insert(pod, atIndex: 0)
+                    self.myPods.insert(pod, at: 0)
                 }
                 
                 self.allPODstableView.reloadData()
@@ -213,14 +213,14 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
     }
     
-    func podRemoved(notification: NSNotification) {
+    func podRemoved(_ notification: Foundation.Notification) {
         if let userInfo = notification.userInfo as? Dictionary<String, POD> {
             if let pod = userInfo["pod"] {
                 var index = 0;
                 
                 for item in self.allPods {
                     if item.id == pod.id {
-                        self.allPods.removeAtIndex(index)
+                        self.allPods.remove(at: index)
                         break
                     }
                     
@@ -230,7 +230,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 
                 for item in self.myPods {
                     if item.id == pod.id {
-                        self.myPods.removeAtIndex(index)
+                        self.myPods.remove(at: index)
                         break
                     }
                     
@@ -245,16 +245,16 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     // MARK: Segmented Control
     
-    func segmentedControlChanged(event: UIEvent) {
+    func segmentedControlChanged(_ event: UIEvent) {
         print("Event changed to \(segmentedControl.selectedSegmentIndex)")
         if segmentedControl.selectedSegmentIndex == 0 {
-            allPODstableView.hidden     = false
-            myPODsCollectionView.hidden = true
+            allPODstableView.isHidden     = false
+            myPODsCollectionView.isHidden = true
             allPODstableView.reloadData()
 
         } else {
-            allPODstableView.hidden     = true
-            myPODsCollectionView.hidden = false
+            allPODstableView.isHidden     = true
+            myPODsCollectionView.isHidden = false
             myPODsCollectionView.reloadData()
 
         }
@@ -262,11 +262,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     // MARK: TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchText != nil && searchText != "" {
             return filteredPODs.count
         } else {
@@ -274,8 +274,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: PODPreviewTableViewCell? = tableView.dequeueReusableCellWithIdentifier("PODPreviewTableViewCell") as? PODPreviewTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: PODPreviewTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "PODPreviewTableViewCell") as? PODPreviewTableViewCell
         if cell == nil {
             cell = PODPreviewTableViewCell()
         }
@@ -284,15 +284,15 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         } else {
             cell?.configureWithPOD(allPods[indexPath.row])
         }
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    private func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
         if searchText != nil && searchText != "" {
             (cell as? PODPreviewTableViewCell)!.addUserImages(filteredPODs[indexPath.row])
         } else {
@@ -303,7 +303,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     // MARK: Tableview delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    private func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         print("POD selected: " + String(indexPath.row))
         
         if (searchText == nil || searchText == "") {
@@ -328,11 +328,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     // MARK: CollectionView Datasource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if searchText != nil && searchText != "" {
             return filteredPODs.count
         } else {
@@ -340,8 +340,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: MyPODPreviewCollectionViewCell? = myPODsCollectionView.dequeueReusableCellWithReuseIdentifier("MyPODPreviewCollectionViewCell", forIndexPath: indexPath) as? MyPODPreviewCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell: MyPODPreviewCollectionViewCell? = myPODsCollectionView.dequeueReusableCell(withReuseIdentifier: "MyPODPreviewCollectionViewCell", for: indexPath) as? MyPODPreviewCollectionViewCell
         if cell == nil {
             cell = MyPODPreviewCollectionViewCell()
         }
@@ -364,8 +364,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     // MARK: UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        (self.parentViewController as? HomeViewController)?.hideSearchField()
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        (self.parent as? HomeViewController)?.hideSearchField()
         if (searchText == nil || searchText == "") && indexPath.row == 0 {
             let createPODVC = CreatePodViewController()
             navigationController?.pushViewController(createPODVC, animated: true)
@@ -387,7 +387,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize
     {
         let cellSize = CGSize(width: (self.view.frame.size.width / 2) - 15, height: self.view.frame.size.width / 2.5)
 
@@ -405,7 +405,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
 */
     }
     
-    func getCellSize(pod: POD) -> CGSize {
+    func getCellSize(_ pod: POD) -> CGSize {
         let cellSize = CGSize(width: (self.view.frame.size.width / 2) - 15, height: self.view.frame.size.width / 2.5)
         
         let image_width = CGFloat(pod.image_width!)
@@ -417,28 +417,28 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             let real_width = cellSize.width
             let real_height = real_width * image_height / image_width
             
-            return CGSizeMake(real_width, real_height)
+            return CGSize(width: real_width, height: real_height)
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     }
     
     // MARK: Search Posts
     
-    func filterResults(textToSearch: String) {
+    func filterResults(_ textToSearch: String) {
         print("Search text: \(textToSearch)")
         
         searchText = textToSearch
         if segmentedControl.selectedSegmentIndex == 0 {
             filteredPODs = allPods.filter({( pod : POD) -> Bool in
-                return (pod.name!.lowercaseString.containsString(textToSearch.lowercaseString))
+                return (pod.name!.lowercased().contains(textToSearch.lowercased()))
             })
             allPODstableView.reloadData()
         } else {
             filteredPODs = myPods.filter({( pod : POD) -> Bool in
-                return (pod.name!.lowercaseString.containsString(textToSearch.lowercaseString))
+                return (pod.name!.lowercased().contains(textToSearch.lowercased()))
             })
             myPODsCollectionView.reloadData()
         }
@@ -452,12 +452,12 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         } else {
             myPODsCollectionView.reloadData()
         }
-        self.parentViewController?.navigationItem.titleView = segmentedControl
+        self.parent?.navigationItem.titleView = segmentedControl
     }
     
     // MARK: - Auxiliary methods
     
-    func checkPrivatePODs(goToViewController: UIViewController, pod: POD?) {
+    func checkPrivatePODs(_ goToViewController: UIViewController, pod: POD?) {
         if pod != nil {
             var isMember = false
             for user in (pod?.users)! {
@@ -468,9 +468,9 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
             }
             
             if pod!.isPrivate == 1 && pod?.owner?.id != networkController.currentUserId && !isMember {
-                let alert = UIAlertController(title: "Access", message: "This is a PRIVATE POD, do you want to request access to it?", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Access", message: "This is a PRIVATE POD, do you want to request access to it?", preferredStyle: UIAlertControllerStyle.alert)
                 
-                alert.addAction(UIAlertAction(title: "Request", style: UIAlertActionStyle.Default, handler: { action in
+                alert.addAction(UIAlertAction(title: "Request", style: UIAlertActionStyle.default, handler: { action in
                     SVProgressHUD.show()
                     self.networkController.joinPodMember(String(pod!.id!), completionHandler: { (error) in
                         SVProgressHUD.dismiss()
@@ -482,10 +482,10 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                     })
                     
                 }))
-                alert.addAction(UIAlertAction(title: "Not now", style: UIAlertActionStyle.Cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Not now", style: UIAlertActionStyle.cancel, handler: nil))
                 
                 // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             } else {
                 navigationController?.pushViewController(goToViewController, animated: true)
             }
@@ -493,10 +493,10 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
     }
     
-    func loadData(pullToRefresh: Bool) {
+    func loadData(_ pullToRefresh: Bool) {
         page = 0
         if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: 0, sort_by: nil) { (pods, error) -> () in
             
@@ -526,13 +526,13 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
@@ -545,7 +545,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         page = page + 1
         networkController.filterPOD(nil, userId: nil, fromDate: nil, toDate: nil, quantity: kPageQuantity, page: page, sort_by: nil) {  (pods, error) -> () in
             if error == nil {
-                self.allPods.appendContentsOf(pods)
+                self.allPods.append(contentsOf: pods)
                 for pod in self.allPods {
                     let result = self.myPods.filter{ $0.id == pod.id}
                     if(result.count != 0)
@@ -560,21 +560,21 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             self.allPODstableView.infiniteScrollingView.stopAnimating()
         }
     }
     
-    func loadMyData(pullToRefresh: Bool) {
+    func loadMyData(_ pullToRefresh: Bool) {
         if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0, sort_by: nil) { (pods, error) -> () in
             
@@ -582,7 +582,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 self.isDataLoaded = true
                 self.myPods = pods
                 for pod in self.allPods {
-                    var result = self.myPods.filter{ $0.id == pod.id}
+                    let result = self.myPods.filter{ $0.id == pod.id}
                     if(result.count != 0)
                     {
                         pod.isMyFeed = true;
@@ -603,13 +603,13 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
@@ -618,11 +618,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         }
     }
     
-    func addTableEmptyMessage(message: String) {
+    func addTableEmptyMessage(_ message: String) {
         let labelBackground = UILabel(frame: CGRect(x: 0, y: 0, width: allPODstableView.frame.width, height: 200))
         labelBackground.text = message
         labelBackground.textColor = UIColor.blueDolphin()
-        labelBackground.textAlignment = .Center
+        labelBackground.textAlignment = .center
         labelBackground.numberOfLines = 0
         Utils.setFontFamilyForView(labelBackground, includeSubViews: true)
         allPODstableView.backgroundView = labelBackground

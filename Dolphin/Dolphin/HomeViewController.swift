@@ -9,6 +9,30 @@
 import Foundation
 import UIKit
 import CoreLocation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UITabBarControllerDelegate, CLLocationManagerDelegate, ChooseSourceTypeViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -23,7 +47,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         super.init(coder: aDecoder)!
     }
     
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: Bundle!) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -34,14 +58,14 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     @IBOutlet weak var actionMenuBackground: UIView!
     
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // Enable Swipe gesture for sidebar
-        revealViewController().panGestureRecognizer().enabled = true
+        revealViewController().panGestureRecognizer().isEnabled = true
         
         // if the login is the rootViewController we have to change it for HomeViewController
-        if navigationController!.viewControllers[0].isKindOfClass(LoginViewController) {
+        if navigationController!.viewControllers[0].isKind(of: LoginViewController.self) {
             navigationController?.setViewControllers([self], animated: true)
         }
         
@@ -60,11 +84,11 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     }
     
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         // Disable Swipe gesture for sidebar
-        revealViewController().panGestureRecognizer().enabled = false
+        revealViewController().panGestureRecognizer().isEnabled = false
     }
     
     // MARK: Appearance and Initialization
@@ -75,12 +99,12 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         UITabBar.appearance().tintColor = UIColor.yellowHighlightedMenuItem()
         UITabBarItem.appearance().setTitleTextAttributes(
             [NSFontAttributeName: UIFont(name:"ArialRoundedMTBold", size:11)!,
-                NSForegroundColorAttributeName: UIColor.whiteColor()],
-            forState: .Normal)
+                NSForegroundColorAttributeName: UIColor.white],
+            for: UIControlState())
         UITabBarItem.appearance().setTitleTextAttributes(
             [NSFontAttributeName: UIFont(name:"ArialRoundedMTBold", size:11)!,
                 NSForegroundColorAttributeName: UIColor.yellowHighlightedMenuItem()],
-            forState: .Selected)
+            for: .selected)
         
         let controller1 = RecentsViewController(likes: false)
         let controller2 = MyFeedViewController(likes: false)
@@ -90,34 +114,34 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         
         
         controller1.tabBarItem = UITabBarItem(title: "Recent",
-            image: UIImage(named:"TabbarLatestIcon")!.imageWithRenderingMode(.AlwaysOriginal),
+            image: UIImage(named:"TabbarLatestIcon")!.withRenderingMode(.alwaysOriginal),
             selectedImage: UIImage(named:"TabbarLatestIcon"))
         
         controller2.tabBarItem = UITabBarItem(title: "My Feed",
-            image: UIImage(named:"SidebarDolphinIcon")!.imageWithRenderingMode(.AlwaysOriginal),
+            image: UIImage(named:"SidebarDolphinIcon")!.withRenderingMode(.alwaysOriginal),
             selectedImage: UIImage(named:"SidebarDolphinIcon"))
         
         controller3.tabBarItem = UITabBarItem(title: "", image: UIImage(named: ""), selectedImage: UIImage(named: ""))
         
         controller4.tabBarItem = UITabBarItem(title: "Popular",
-            image: UIImage(named:"SidebarGlassesIcon")!.imageWithRenderingMode(.AlwaysOriginal),
+            image: UIImage(named:"SidebarGlassesIcon")!.withRenderingMode(.alwaysOriginal),
             selectedImage: UIImage(named:"SidebarGlassesIcon"))
         
         controller5.tabBarItem = UITabBarItem(title: "PODs",
-            image: UIImage(named:"SidebarMyPODsIcon")!.imageWithRenderingMode(.AlwaysOriginal),
+            image: UIImage(named:"SidebarMyPODsIcon")!.withRenderingMode(.alwaysOriginal),
             selectedImage: UIImage(named:"SidebarMyPODsIcon"))
         
         let tabViewControllers = [controller1, controller2, controller3, controller4, controller5]
         viewControllers = tabViewControllers
         
         // Add plus button
-        let plusButton = UIButton(frame: CGRect(x: (UIScreen.mainScreen().bounds.size.width / 2.0) - 40, y: UIScreen.mainScreen().bounds.size.height - 130, width: 80, height: 80))
-        plusButton.enabled = true
+        let plusButton = UIButton(frame: CGRect(x: (UIScreen.main.bounds.size.width / 2.0) - 40, y: UIScreen.main.bounds.size.height - 130, width: 80, height: 80))
+        plusButton.isEnabled = true
         plusButton.layer.cornerRadius = 40
-        plusButton.layer.borderColor = UIColor.whiteColor().CGColor
+        plusButton.layer.borderColor = UIColor.white.cgColor
         plusButton.layer.borderWidth = 3
-        plusButton.setImage(UIImage(named: "TabbarPlusIcon"), forState: .Normal)
-        plusButton .addTarget(self , action: #selector(plusButtonTouchUpInside), forControlEvents: .TouchUpInside)
+        plusButton.setImage(UIImage(named: "TabbarPlusIcon"), for: UIControlState())
+        plusButton .addTarget(self , action: #selector(plusButtonTouchUpInside), for: .touchUpInside)
         plusButton.backgroundColor = UIColor.blueDolphin()
         self.view.addSubview(plusButton)
         
@@ -129,63 +153,63 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     
     func plusButtonTouchUpInside() {
         print("Plus button pressed")
-        let subViewsArray = NSBundle.mainBundle().loadNibNamed("NewPostMenu", owner: self, options: nil)
+        let subViewsArray = Bundle.main.loadNibNamed("NewPostMenu", owner: self, options: nil)
         self.actionMenu = subViewsArray![0] as? UIView
         actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(actionMenuBackgroundTapped)))
-        self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-        UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            self.actionMenu?.frame = CGRect(x: 0, y: 0, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-            }) { (finished) -> Void in
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
+        self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.shared.keyWindow?.frame.size.height)!, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+        UIApplication.shared.keyWindow?.addSubview(actionMenu!)
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.actionMenu?.frame = CGRect(x: 0, y: 0, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+            }, completion: { (finished) -> Void in
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
                     self.actionMenuBackground.alpha = 0.4
                 })
-        }
+        }) 
     }
     
-    @IBAction func closeNewPostViewButtonTouchUpInside(sender: AnyObject) {
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+    @IBAction func closeNewPostViewButtonTouchUpInside(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.actionMenuBackground.alpha = 0
-            }) { (finished) -> Void in
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-                    }) { (finished) -> Void in
+            }, completion: { (finished) -> Void in
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                    self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.shared.keyWindow?.frame.size.height)!, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+                    }, completion: { (finished) -> Void in
                         self.actionMenu?.removeFromSuperview()
-                }
-        }
+                }) 
+        }) 
     }
     
-    @IBAction func postLinkButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func postLinkButtonTouchUpInside(_ sender: AnyObject) {
         let createLinkPostVC = CreateURLPostViewController()
         navigationController?.pushViewController(createLinkPostVC, animated: true)
         actionMenu?.removeFromSuperview()
         print("Post link button pressed")
         
     }
-    @IBAction func postPhotoButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func postPhotoButtonTouchUpInside(_ sender: AnyObject) {
         actionMenu?.removeFromSuperview()
         
         self.overlayView = UIView()
         self.overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
-        self.overlayView.frame = (UIApplication.sharedApplication().keyWindow?.frame)!
-        UIApplication.sharedApplication().keyWindow?.addSubview(self.overlayView)
+        self.overlayView.frame = (UIApplication.shared.keyWindow?.frame)!
+        UIApplication.shared.keyWindow?.addSubview(self.overlayView)
         
         self.chooseSoureTypeView = ChooseSourceTypeView.instanceFromNib()
-        self.chooseSoureTypeView.frame = CGRectMake(0, 0, 300, 200)
-        self.chooseSoureTypeView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height/2.0)
+        self.chooseSoureTypeView.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
+        self.chooseSoureTypeView.center = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height/2.0)
         self.chooseSoureTypeView.delegate = self
-        UIApplication.sharedApplication().keyWindow?.addSubview(self.chooseSoureTypeView!)
+        UIApplication.shared.keyWindow?.addSubview(self.chooseSoureTypeView!)
         
-        self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        UIView.animateWithDuration(0.1, animations: { 
-            self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(1.2, 1.2)
-            UIView.animateWithDuration(0.05, animations: {
-                self.chooseSoureTypeView.transform = CGAffineTransformIdentity
-            }) { (finished) in
-            }
-        }) { (finished) in
+        self.chooseSoureTypeView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        UIView.animate(withDuration: 0.1, animations: { 
+            self.chooseSoureTypeView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            UIView.animate(withDuration: 0.05, animations: {
+                self.chooseSoureTypeView.transform = CGAffineTransform.identity
+            }, completion: { (finished) in
+            }) 
+        }, completion: { (finished) in
             
-        }
+        }) 
     }
     
     // MARK: ChooseSourceTypeViewDelegate
@@ -197,11 +221,11 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     func selectedCamera() {
         self.closedDialog()
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            self.picker.sourceType = UIImagePickerControllerSourceType.camera
             self.picker.delegate   = self
             self.picker.allowsEditing = true
-            self.presentViewController(picker, animated: true, completion: nil)
+            self.present(picker, animated: true, completion: nil)
         }
         else {
             Utils.presentAlertMessage("Error", message: "Device has no camera", cancelActionText: "Ok", presentingViewContoller: self)
@@ -211,33 +235,33 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     func selectedPhotoGallery() {
         self.closedDialog()
         
-        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         self.picker.delegate   = self
         self.picker.allowsEditing = true
-        self.picker.navigationBar.tintColor = UIColor.whiteColor()
-        self.picker.navigationBar.barStyle = UIBarStyle.Black
-        self.presentViewController(picker, animated: true, completion: nil)
+        self.picker.navigationBar.tintColor = UIColor.white
+        self.picker.navigationBar.barStyle = UIBarStyle.black
+        self.present(picker, animated: true, completion: nil)
     }
     
-    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("didFinishPickingMediaWithInfo")
-        dismissViewControllerAnimated(true) { 
+        dismiss(animated: true) { 
             let image = info[UIImagePickerControllerEditedImage] as? UIImage
             let finishImagePostVC = CreateImagePostFinishPostingViewController(image: image)
             self.navigationController?.pushViewController(finishImagePostVC, animated: true)
         }
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 
     
-    @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func postTextButtonTouchUpInside(_ sender: AnyObject) {
         let createTextPostVC = CreateTextPostViewController()
         navigationController?.pushViewController(createTextPostVC, animated: true)
         actionMenu?.removeFromSuperview()
@@ -253,30 +277,30 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     
     func searchButtonPressed() {
         if searchBar == nil {
-            searchBar                    = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 40))
+            searchBar                    = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
         }
         removeAllItemsFromNavBar()
         
         navigationItem.titleView     = searchBar
-        searchBar?.tintColor = UIColor.whiteColor()
-        UITextField.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
+        searchBar?.tintColor = UIColor.white
+        UITextField.my_appearanceWhenContained(within: [UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
         searchBar?.becomeFirstResponder()
         searchBar?.showsCancelButton = true
         searchBar?.delegate          = self
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterContentForSearchText(searchText)
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         filterContentForSearchText("")
         removeSearchBar()
-        selectedViewController?.performSelector(Selector("userDidCancelSearch"), withObject: nil)
+        selectedViewController?.perform(Selector(("userDidCancelSearch")), with: nil)
         searchBar.resignFirstResponder()
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
     
@@ -288,8 +312,8 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         setSearchRightButton()
     }
     
-    func filterContentForSearchText(searchText: String) {
-        selectedViewController?.performSelector(Selector("filterResults:"), withObject: searchText)
+    func filterContentForSearchText(_ searchText: String) {
+        selectedViewController?.perform(Selector(("filterResults:")), with: searchText)
     }
     
     func hideSearchField() {
@@ -298,7 +322,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     
     // MARK: TabbarControllerDelegate
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         removeSearchBar()
         setSearchRightButton()
     }
@@ -312,7 +336,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         locationManager.startUpdatingLocation()
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.count > 0 {
             let firstLoc = locations[0]
             Globals.currentLat = firstLoc.coordinate.latitude
@@ -359,7 +383,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         }
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("location service error = \(error)")
     }
    

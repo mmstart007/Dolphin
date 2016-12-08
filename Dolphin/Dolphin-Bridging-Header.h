@@ -9,9 +9,10 @@
 #import "SWRevealViewController.h"
 #import "UIAppearance_Swift.h"
 #import "ImageCropView.h"
-#import "PinterestSDK.h"
-#import "PDKUser.h"
-#import "PDKImageInfo.h"
+#import <PinterestSDK/PinterestSDK.h>
+//#import "PinterestSDK.h"
+//#import "PDKUser.h"
+//#import "PDKImageInfo.h"
 
 //#import "UIImageView+WebCache.h"
 //#import <SDWebImage/SDImageCache.h>

@@ -18,21 +18,21 @@ class GridPostCell: UICollectionViewCell {
         // Initialization code
     }
 
-    func configurePost(p: Post) {
+    func configurePost(_ p: Post) {
         if let image = p.postImage {
-            self.photoImageView.sd_setImageWithURL(NSURL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-            self.photoImageView.hidden = false
-            self.titleLabel.hidden = true
+            self.photoImageView.sd_setImage(with: URL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            self.photoImageView.isHidden = false
+            self.titleLabel.isHidden = true
         }
         else if let linkImage = p.postLink {
-            self.photoImageView.sd_setImageWithURL(NSURL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-            self.photoImageView.hidden = false
-            self.titleLabel.hidden = true
+            self.photoImageView.sd_setImage(with: URL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            self.photoImageView.isHidden = false
+            self.titleLabel.isHidden = true
         }
         else {
             self.titleLabel.text = p.postHeader
-            self.photoImageView.hidden = true
-            self.titleLabel.hidden = false
+            self.photoImageView.isHidden = true
+            self.titleLabel.isHidden = false
         }
     }
 }

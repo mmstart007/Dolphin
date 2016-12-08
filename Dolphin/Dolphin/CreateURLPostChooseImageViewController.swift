@@ -36,21 +36,21 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
         
         setBackButton()
         title = "Pick an Image"
-        collectionView.registerNib(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
+        collectionView.register(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
     }
     
     // MARK: - CollectionView Datasource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageURLs!.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: CreatePostChooseImageCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("CreatePostChooseImageCollectionViewCell", forIndexPath: indexPath) as? CreatePostChooseImageCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell: CreatePostChooseImageCollectionViewCell? = collectionView.dequeueReusableCell(withReuseIdentifier: "CreatePostChooseImageCollectionViewCell", for: indexPath) as? CreatePostChooseImageCollectionViewCell
         if cell == nil {
             cell = CreatePostChooseImageCollectionViewCell()
         }
@@ -58,18 +58,18 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
         return cell!
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = (UIScreen.mainScreen().bounds.width - 10.0) / 3.0 - 10.0
-        return CGSizeMake(width, width)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        let width = (UIScreen.main.bounds.width - 10.0) / 3.0 - 10.0
+        return CGSize(width: width, height: width)
     }
     
     // MARK: - CollectionView delegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    private func collectionView(_ collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: IndexPath) {
         let selectedImageURL = imageURLs![indexPath.row]
         let addDescriptionVC = CreateURLPostAddDescriptionViewController()
         addDescriptionVC.postImageURL = selectedImageURL

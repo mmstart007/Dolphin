@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol SettingsGenderTableViewCellDelegate {
-    func changedGender(gender: Int)
+    func changedGender(_ gender: Int)
 }
 
 class SettingsGenderTableViewCell: UITableViewCell {
@@ -22,12 +22,12 @@ class SettingsGenderTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func configureWithSetting(delegate: SettingsGenderTableViewCellDelegate?, gender: Int!) {
+    func configureWithSetting(_ delegate: SettingsGenderTableViewCellDelegate?, gender: Int!) {
         self.delegate = delegate
         self.genderSegement.selectedSegmentIndex = gender
     }
     
-    @IBAction func switchSettingValueChanged(sender: AnyObject) {
+    @IBAction func switchSettingValueChanged(_ sender: AnyObject) {
         if delegate != nil {
             delegate?.changedGender(self.genderSegement.selectedSegmentIndex)
         }

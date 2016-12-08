@@ -22,10 +22,10 @@ class MyFeedViewController: FeedViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func loadData(pullToRefresh: Bool) {
+    override func loadData(_ pullToRefresh: Bool) {
         page = 0
         if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         
         networkController.filterMyFeedsPost(kPageQuantity, page: 0, completionHandler: { (posts, error) -> () in
@@ -49,13 +49,13 @@ class MyFeedViewController: FeedViewController {
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
@@ -68,20 +68,20 @@ class MyFeedViewController: FeedViewController {
         page = page + 1
         networkController.filterMyFeedsPost(kPageQuantity, page: page, completionHandler: { (posts, error) -> () in
             if error == nil {
-                self.allPosts.appendContentsOf(posts)
+                self.allPosts.append(contentsOf: posts)
                 self.postsTableView.reloadData()
                 
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             self.postsTableView.infiniteScrollingView.stopAnimating()
         })

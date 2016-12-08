@@ -24,48 +24,48 @@ class BaseViewController: UIViewController {
 
     func setBackButton() {
         
-        let leftButton = UIBarButtonItem(image: UIImage(named: "NavBarGoBackButton"), style: UIBarButtonItemStyle.Plain, target: self, action:#selector(goBackButtonPressed(_:)))
+        let leftButton = UIBarButtonItem(image: UIImage(named: "NavBarGoBackButton"), style: UIBarButtonItemStyle.plain, target: self, action:#selector(goBackButtonPressed(_:)))
         self.navigationItem.leftBarButtonItem = leftButton;
         
     }
     
     func setDismissButton() {
         
-        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: #selector(dismissButtonPressed(_:)))
+        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(dismissButtonPressed(_:)))
         self.navigationItem.leftBarButtonItem = leftButton;
         
     }
     
-    func goBackButtonPressed(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    func goBackButtonPressed(_ sender: UIBarButtonItem) {
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func dismissButtonPressed(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func dismissButtonPressed(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func setRightSystemButtonItem(systemItem: UIBarButtonSystemItem, target: AnyObject?, action: Selector) {
+    func setRightSystemButtonItem(_ systemItem: UIBarButtonSystemItem, target: AnyObject?, action: Selector) {
         let rightButton = UIBarButtonItem(barButtonSystemItem: systemItem, target: target, action: action)
-        rightButton.tintColor = UIColor.whiteColor()
+        rightButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = rightButton;
     }
     
-    func setRightButtonItemWithText(text: String, target: AnyObject?, action: Selector) {
-        let rightButton = UIBarButtonItem(title: text, style: .Plain, target: target, action: action)
-        rightButton.tintColor = UIColor.whiteColor()
-        rightButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: Constants.Fonts.Raleway_Regular, size: 14)!], forState: UIControlState.Normal)
+    func setRightButtonItemWithText(_ text: String, target: AnyObject?, action: Selector) {
+        let rightButton = UIBarButtonItem(title: text, style: .plain, target: target, action: action)
+        rightButton.tintColor = UIColor.white
+        rightButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: Constants.Fonts.Raleway_Regular, size: 14)!], for: UIControlState())
         navigationItem.rightBarButtonItem = rightButton;
     }
     
-    func setLeftButtonItemWithText(text: String, target: AnyObject?, action: Selector) {
-        let leftButton = UIBarButtonItem(title: text, style: .Plain, target: target, action: action)
-        leftButton.tintColor = UIColor.whiteColor()
+    func setLeftButtonItemWithText(_ text: String, target: AnyObject?, action: Selector) {
+        let leftButton = UIBarButtonItem(title: text, style: .plain, target: target, action: action)
+        leftButton.tintColor = UIColor.white
         navigationItem.leftBarButtonItem = leftButton;
     }
     
-    func addRightButtonItemWithImage(imageName: String, target: AnyObject?, action: Selector) {
-        let rightButton = UIBarButtonItem(image: UIImage(named: imageName), style: .Plain, target: target, action: action)
-        rightButton.tintColor = UIColor.whiteColor()
+    func addRightButtonItemWithImage(_ imageName: String, target: AnyObject?, action: Selector) {
+        let rightButton = UIBarButtonItem(image: UIImage(named: imageName), style: .plain, target: target, action: action)
+        rightButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItems?.append(rightButton)
     }
 

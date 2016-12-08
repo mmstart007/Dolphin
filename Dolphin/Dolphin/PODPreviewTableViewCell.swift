@@ -7,6 +7,30 @@
 //
 import Foundation
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class PODPreviewTableViewCell : CustomFontTableViewCell {
     
@@ -27,9 +51,9 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         super.layoutSubviews()
         
         //Set round border only top.
-        let path = UIBezierPath(roundedRect:containerView.bounds, byRoundingCorners:[.TopRight, .TopLeft], cornerRadii: CGSizeMake(5, 5))
+        let path = UIBezierPath(roundedRect:containerView.bounds, byRoundingCorners:[.topRight, .topLeft], cornerRadii: CGSize(width: 5, height: 5))
         let maskLayer = CAShapeLayer()
-        maskLayer.path = path.CGPath
+        maskLayer.path = path.cgPath
         containerView.layer.mask = maskLayer
         
         if pod != nil {
@@ -38,15 +62,15 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
                     triangleView        = TriangleView()
                 }
                 triangleView!.frame = CGRect(x: self.containerView.frame.size.width - 60, y: 0, width: 60, height: 60)
-                triangleView?.hidden             = false
+                triangleView?.isHidden             = false
                 triangleView!.color              = pod!.podColor()
-                triangleView!.backgroundColor    = UIColor.clearColor()
+                triangleView!.backgroundColor    = UIColor.clear
                 triangleView!.layer.cornerRadius = 5
                 self.containerView.addSubview(triangleView!)
                 triangleView!.addImage("PrivatePODIcon")
             } else {
                 if triangleView != nil {
-                    triangleView?.hidden = true
+                    triangleView?.isHidden = true
                 }
             }
             
@@ -58,32 +82,32 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         }
     }
     
-    func configureWithPOD(pod: POD) {
-        self.backgroundColor = UIColor.clearColor()
+    func configureWithPOD(_ pod: POD) {
+        self.backgroundColor = UIColor.clear
         
         containerView.layer.cornerRadius = 5
         
-        containerView.layer.shadowColor = UIColor.blackColor().CGColor
+        containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.1
-        containerView.layer.shadowOffset = CGSizeZero
+        containerView.layer.shadowOffset = CGSize.zero
         containerView.layer.shadowRadius = 3
         
         self.pod = pod
         //let data = NSData(contentsOfURL: NSURL(string: pod.imageURL!)!)
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            let data = NSData(contentsOfURL: NSURL(string: pod.imageURL!)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
-            dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+            let urlString = self.convertURL(pod.imageURL!)
+            let data = try? Data(contentsOf: URL(string: urlString)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+            DispatchQueue.main.async(execute: {
                 if(data != nil)
                 {
                     self.podImageView.image = UIImage(data: data!)
-                }
-                else{
-                    self.podImageView.sd_setImageWithURL(NSURL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+                } else{
+                    self.podImageView.sd_setImage(with: URL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
                 }
             });
         }
         
-        podImageView.contentMode = .ScaleAspectFill
+        podImageView.contentMode = .scaleAspectFill
         podImageView.layer.masksToBounds = true
         podNameLabel.text                = pod.name
         if let lastPostDate = pod.lastPostDate {
@@ -99,7 +123,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         adjustImageSize(CGFloat(image_width!), image_height: CGFloat(image_height!))
     }
     
-    func adjustImageSize(image_width: CGFloat, image_height: CGFloat) {
+    func adjustImageSize(_ image_width: CGFloat, image_height: CGFloat) {
         //        if image_width == 0 || image_height == 0 {
         //            podImageHeight.constant = 130.0
         //        }
@@ -110,7 +134,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         //        }
     }
     
-    func addUserImages(pod: POD) {
+    func addUserImages(_ pod: POD) {
         for userView in podUsersContainerView.subviews {
             userView.removeFromSuperview()
         }
@@ -127,36 +151,40 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
                 
                 // Add Label that shows number of remaining users in POD
                 let otherUsersLabel = UILabel(frame: CGRect(x: x, y: 0, width: w, height: w))
-                otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
-                otherUsersLabel.textColor = UIColor.lightTextColor()
+                otherUsersLabel.backgroundColor = UIColor.lightGray
+                otherUsersLabel.textColor = UIColor.lightText
                 otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
                 otherUsersLabel.layer.masksToBounds = true
                 otherUsersLabel.text = String(format: "+%li", arguments: [(pod.users?.count)! - 4])
-                otherUsersLabel.textAlignment = .Center
-                otherUsersLabel.font = UIFont.systemFontOfSize(12)
+                otherUsersLabel.textAlignment = .center
+                otherUsersLabel.font = UIFont.systemFont(ofSize: 12)
                 podUsersContainerView.addSubview(otherUsersLabel)
                 
                 x = x - w - offset
             }
             
-            for var i = count! - 1; i >= 0; i=i-1 {
-                // Sow image of user in POD
-                let userAvatarImageView = UIImageView(frame: CGRect(x: x, y: 0, width: w, height: w))
-                userAvatarImageView.sd_setImageWithURL(NSURL(string: (pod.users![i].userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
-                userAvatarImageView.layer.cornerRadius  = userAvatarImageView.frame.size.width / 2.0
-                userAvatarImageView.layer.masksToBounds = true
-                userAvatarImageView.contentMode         = .ScaleAspectFill
-                podUsersContainerView.addSubview(userAvatarImageView)
-                
-                x = x - w - offset
+            if count != nil {
+                for i in 0 ..< count! {
+    //            for var i = count! - 1; i >= 0; i=i-1 {
+                    // Sow image of user in POD
+                    let index = count! - i - 1
+                    let userAvatarImageView = UIImageView(frame: CGRect(x: x, y: 0, width: w, height: w))
+                    userAvatarImageView.sd_setImage(with: URL(string: (pod.users![index].userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+                    userAvatarImageView.layer.cornerRadius  = userAvatarImageView.frame.size.width / 2.0
+                    userAvatarImageView.layer.masksToBounds = true
+                    userAvatarImageView.contentMode         = .scaleAspectFill
+                    podUsersContainerView.addSubview(userAvatarImageView)
+                    
+                    x = x - w - offset
+                }
             }
         }
         
-        userLastPost.hidden = true;
-        btnDelete.hidden = true;
+        userLastPost.isHidden = true;
+        btnDelete.isHidden = true;
         if(pod.isMyFeed != nil && pod.isMyFeed! && pod.total_unread != 0)
         {
-            userLastPost.hidden = false
+            userLastPost.isHidden = false
             //btnDelete.hidden = false;
         }
         
@@ -169,16 +197,24 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
             
             let otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userLastPost.frame.size.width, height: userLastPost.frame.size.height))
             otherUsersLabel.backgroundColor = Utils.hexStringToUIColor("#CC0000")//UIColor.redColor()
-            otherUsersLabel.textColor = UIColor.whiteColor()
+            otherUsersLabel.textColor = UIColor.white
             otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
             otherUsersLabel.layer.masksToBounds = true
             otherUsersLabel.text = String(format: "+%li", arguments: [(pod.total_unread)!])
-            otherUsersLabel.textAlignment = .Center
-            otherUsersLabel.font = UIFont.systemFontOfSize(12)
+            otherUsersLabel.textAlignment = .center
+            otherUsersLabel.font = UIFont.systemFont(ofSize: 12)
             userLastPost.addSubview(otherUsersLabel)
             
         }
         
+    }
+    
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
     }
     
 //    @IBAction func deleteTapped(sender: AnyObject) {

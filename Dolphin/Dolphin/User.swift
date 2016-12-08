@@ -81,67 +81,67 @@ class User : NSObject {
         var retDic: [String: AnyObject] = [:]
         
         if self.deviceId != nil {
-            retDic["device_id"] = self.deviceId!
+            retDic["device_id"] = self.deviceId! as AnyObject?
         }
         
         if let uname = self.userName {
-            retDic["username"] = uname
+            retDic["username"] = uname as AnyObject?
         }
         if let mail = self.userEmail {
-            retDic["email"] = mail
+            retDic["email"] = mail as AnyObject?
         }
         if let pass = self.userPassword {
-            retDic["password"] = pass
+            retDic["password"] = pass as AnyObject?
         }
         if let fName = self.firstName {
-            retDic["first_name"] = fName
+            retDic["first_name"] = fName as AnyObject?
         }
         if let lName = self.lastName {
-            retDic["last_name"] = lName
+            retDic["last_name"] = lName as AnyObject?
         }
         if let loc = self.location {
-            retDic["location"] = loc
+            retDic["location"] = loc as AnyObject?
         }
         if let priv = self.isPrivate {
-            retDic["is_private"] = priv
+            retDic["is_private"] = priv as AnyObject?
         }
         if let image = self.userAvatarImageData {
-            retDic["avatar_image"] = Utils.encodeBase64(image)
+            retDic["avatar_image"] = Utils.encodeBase64(image) as AnyObject?
         }
         if let image_url = self.userAvatarImageURL {
-            retDic["avatar_image_url"] = image_url
+            retDic["avatar_image_url"] = image_url as AnyObject?
         }
         if let gender = self.gender {
-            retDic["gender"] = gender
+            retDic["gender"] = gender as AnyObject?
         }
         if let city = self.city {
-            retDic["city"] = city
+            retDic["city"] = city as AnyObject?
         }
         if let country = self.country {
-            retDic["country"] = country
+            retDic["country"] = country as AnyObject?
         }
         if let zip = self.zip {
-            retDic["zip"] = zip
+            retDic["zip"] = zip as AnyObject?
         }
         
         if self.subjects != nil {
             
             var array: [AnyObject] = []
             for item in self.subjects! {
-                array.append(item.toJson())
+                array.append(item.toJson() as AnyObject)
             }
             
-            retDic["subjects"] = array
+            retDic["subjects"] = array as AnyObject?
         }
         
         if self.grades != nil {
             
             var array: [AnyObject] = []
             for item in self.grades! {
-                array.append(item.toJson())
+                array.append(item.toJson() as AnyObject)
             }
             
-            retDic["grades"] = array
+            retDic["grades"] = array as AnyObject?
         }
         return retDic
     }
@@ -170,7 +170,7 @@ class User : NSObject {
                 subject_name.append(item.name!)
             }
         }
-        return subject_name.joinWithSeparator(",")
+        return subject_name.joined(separator: ",")
     }
     
     func getGradeIds() -> [String] {
@@ -196,7 +196,7 @@ class User : NSObject {
                 grade_name.append(item.name!)
             }
         }
-        return grade_name.joinWithSeparator(",")
+        return grade_name.joined(separator: ",")
     }
     
 }

@@ -10,6 +10,30 @@ import Foundation
 import UIKit
 import SVProgressHUD
 import KeychainSwift
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
@@ -27,7 +51,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
         super.init(coder: aDecoder)!
     }
     
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: Bundle!) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -35,23 +59,23 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
         self.init(nibName: "LoginViewController", bundle: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
 //        navigationController?.navigationBarHidden = true
     }
     
-    override func viewDidAppear(animated: Bool) {
-        if navigationController!.viewControllers[0].isKindOfClass(HomeViewController) {
+    override func viewDidAppear(_ animated: Bool) {
+        if navigationController!.viewControllers[0].isKind(of: HomeViewController.self) {
             navigationController?.setViewControllers([self], animated: true)
         }
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
 //        navigationController?.navigationBarHidden = false
@@ -62,7 +86,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
         
         let tapSignUpLabelGesture = UITapGestureRecognizer(target: self, action: #selector(signUpLabelTapped))
         signUpForDolphinLabel.addGestureRecognizer(tapSignUpLabelGesture)
-        signUpForDolphinLabel.userInteractionEnabled = true
+        signUpForDolphinLabel.isUserInteractionEnabled = true
         
         let tapViewGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         self.view.addGestureRecognizer(tapViewGesture)
@@ -72,15 +96,15 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
     }
     
     func setAppearance() {
-        emailTextField.attributedPlaceholder     = NSAttributedString(string: emailTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        emailTextField.attributedPlaceholder     = NSAttributedString(string: emailTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.white])
         emailTextField.layer.cornerRadius        = emailTextField.frame.height/2.0
         emailTextField.layer.borderWidth         = 1
-        emailTextField.layer.borderColor         = UIColor.whiteColor().CGColor
+        emailTextField.layer.borderColor         = UIColor.white.cgColor
         
-        passwordTextField.attributedPlaceholder  = NSAttributedString(string: passwordTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        passwordTextField.attributedPlaceholder  = NSAttributedString(string: passwordTextField.placeholder!, attributes: [NSForegroundColorAttributeName:UIColor.white])
         passwordTextField.layer.cornerRadius     = passwordTextField.frame.height/2.0
         passwordTextField.layer.borderWidth      = 1
-        passwordTextField.layer.borderColor      = UIColor.whiteColor().CGColor
+        passwordTextField.layer.borderColor      = UIColor.white.cgColor
         
         loginButton.layer.cornerRadius                = loginButton.frame.height/2.0
     }
@@ -92,7 +116,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
     
     // MARK: Actions
     
-    @IBAction func loginButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func loginButtonTouchUpInside(_ sender: AnyObject) {
         self.viewTapped()
         
         let userName = emailTextField.text
@@ -111,48 +135,48 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
             errorMsg = Constants.Messages.PasswordErrorMsg
         }
         if fieldsValidated {
-            SVProgressHUD.showWithStatus("Signing in")
+            SVProgressHUD.show(withStatus: "Signing in")
             networkController.login(userName!, password: password!, completionHandler: { (user, token, userId, error) -> () in
                 if error == nil {
                     // Store the apiToken
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setObject(token, forKey: "api_token")
+                    let defaults = UserDefaults.standard
+                    defaults.set(token, forKey: "api_token")
                     // Store the currentUserId
-                    defaults.setObject(userId, forKey: "current_user_id")
-                    defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
-                    self.navigationController?.navigationBarHidden = false
-                    self.navigationController?.pushViewController((UIApplication.sharedApplication().delegate as! AppDelegate).homeViewController, animated: true)
+                    defaults.set(userId, forKey: "current_user_id")
+                    defaults.set(Globals.jsonToNSData((user?.toJson())! as AnyObject), forKey: "current_user")
+                    self.navigationController?.isNavigationBarHidden = false
+                    self.navigationController?.pushViewController((UIApplication.shared.delegate as! AppDelegate).homeViewController, animated: true)
                     SVProgressHUD.dismiss()
                     
                 } else {
                     SVProgressHUD.dismiss()
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Login failure", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Login failure", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             })
         } else {
-            let alert = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: errorTitle, message: errorMsg, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
     }
     
     
     // MARK: - Auxiliary methods
     
-    func checkValidPassword(login: Bool) -> Bool {
+    func checkValidPassword(_ login: Bool) -> Bool {
         return passwordTextField.text?.characters.count >= 5
     }
     
-    func checkValidMail(login: Bool) -> Bool {
+    func checkValidMail(_ login: Bool) -> Bool {
         let emailRegex = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegex)
-        return emailTest.evaluateWithObject(emailTextField.text)
+        return emailTest.evaluate(with: emailTextField.text)
     }
     
     // MARK: Keyboard handling
@@ -172,7 +196,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
         }
     }
     
-    func saveCredentialsInKeychain(email: String, password: String) {
+    func saveCredentialsInKeychain(_ email: String, password: String) {
         keychain.set(email, forKey: "email")
         keychain.set(password, forKey: "password")
     }
@@ -183,7 +207,7 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
     
     // MARK: - UITextField Delegate.
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         var offset = CGFloat(0)
         if Constants.DeviceType.IS_IPHONE_4_OR_LESS || Constants.DeviceType.IS_IPHONE_5 {
             if textField == self.emailTextField {
@@ -194,14 +218,14 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
             }
         }
         
-        self.mainScrollView.setContentOffset(CGPointMake(0, offset), animated: true)
+        self.mainScrollView.setContentOffset(CGPoint(x: 0, y: offset), animated: true)
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        self.mainScrollView.setContentOffset(CGPointZero, animated: true)
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.mainScrollView.setContentOffset(CGPoint.zero, animated: true)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == self.emailTextField {
             self.passwordTextField.becomeFirstResponder()
         }

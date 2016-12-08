@@ -21,13 +21,13 @@ class NewPostPrivacySettingsShareToPODCell : CustomFontTableViewCell {
         selectedImageView.layer.masksToBounds = true
     }
     
-    func configureWithPODPrivacySetting(setting: NewPostPrivacySettingsViewController.PODSharePrivacySetting) {
+    func configureWithPODPrivacySetting(_ setting: NewPostPrivacySettingsViewController.PODSharePrivacySetting) {
         
         if setting.selected {
-            selectedImageView.backgroundColor = UIColor.clearColor()
+            selectedImageView.backgroundColor = UIColor.clear
             selectedImageView.image           = UIImage(named: "CheckboxTickIcon")
         } else {
-            selectedImageView.backgroundColor = UIColor.lightGrayColor()
+            selectedImageView.backgroundColor = UIColor.lightGray
             selectedImageView.image           = nil
         }
         podName.text = setting.pod!.name

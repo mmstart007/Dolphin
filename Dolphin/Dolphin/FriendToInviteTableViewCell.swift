@@ -8,9 +8,10 @@
 
 import Foundation
 import UIKit
+import PinterestSDK
 
 @objc protocol FriendToInviteTableViewCellDelegate{
-    optional func inviteFriend(friend: AnyObject, type: Int)
+    @objc optional func inviteFriend(_ friend: AnyObject, type: Int)
 }
 
 class FriendToInviteTableViewCell : CustomFontTableViewCell {
@@ -28,30 +29,30 @@ class FriendToInviteTableViewCell : CustomFontTableViewCell {
         
         friendImageView.layer.cornerRadius  = friendImageView.frame.size.width / 2.0
         friendImageView.layer.masksToBounds = true
-        friendImageView.backgroundColor     = UIColor.clearColor()
+        friendImageView.backgroundColor     = UIColor.clear
         inviteButton.layer.cornerRadius     = 5
 
-        inviteButton.addTarget(self, action: #selector(FriendToInviteTableViewCell.actionInvite(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        inviteButton.addTarget(self, action: #selector(FriendToInviteTableViewCell.actionInvite(_:)), for: UIControlEvents.touchUpInside)
 
     }
     
-    func configureWithFacebookFriend(friend: FacebookFriend) {
+    func configureWithFacebookFriend(_ friend: FacebookFriend) {
         friendMember = friend
         type = Constants.InviteType.Invite_Facebook
         
-        friendImageView.sd_setImageWithURL(NSURL(string: friend.userImageURL), placeholderImage: UIImage(named: "UserPlaceholder"))
+        friendImageView.sd_setImage(with: URL(string: friend.userImageURL), placeholderImage: UIImage(named: "UserPlaceholder"))
         friendNameLabel.text = friend.userName
     }
     
-    func configureWithTwitterFriend(friend: TwitterFriend) {
+    func configureWithTwitterFriend(_ friend: TwitterFriend) {
         friendMember = friend
         type = Constants.InviteType.Invite_Twitter
         
-        friendImageView.sd_setImageWithURL(NSURL(string: friend.userImageURL), placeholderImage: UIImage(named: "UserPlaceholder"))
+        friendImageView.sd_setImage(with: URL(string: friend.userImageURL), placeholderImage: UIImage(named: "UserPlaceholder"))
         friendNameLabel.text = friend.userName
     }
     
-    func configureWithAddressBookContact(contact: AddressBookContact) {
+    func configureWithAddressBookContact(_ contact: AddressBookContact) {
         friendMember = contact
         type = Constants.InviteType.Invite_Contact
         
@@ -63,30 +64,32 @@ class FriendToInviteTableViewCell : CustomFontTableViewCell {
         friendNameLabel.text = contact.userName
     }
     
-    func configureWithPinterestFriend(friend: PDKUser) {
+    func configureWithPinterestFriend(_ friend: PDKUser) {
         friendMember = friend
         type = Constants.InviteType.Invite_Instagram
         friendNameLabel.text = friend.firstName + friend.lastName
         if friend.images != nil {
-            let url = Array(friend.images.values)[0]["url"] as! String
-            friendImageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "UserPlaceholder"))
+            let url = (friend.images.values.first! as! [String: Any])["url"] as! String
+            
+//            let url = Array(friend.images.values)[0]["url"] as! String
+            friendImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "UserPlaceholder"))
         }
         else {
             friendImageView.image = UIImage(named: "UserPlaceholder")
         }
     }
     
-    func configureWithPODMember(member: User) {
+    func configureWithPODMember(_ member: User) {
         if member.userAvatarImageURL == "" {
             friendImageView.image = UIImage(named: "UserPlaceholder")
         } else {
-            friendImageView.sd_setImageWithURL(NSURL(string: member.userAvatarImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
+            friendImageView.sd_setImage(with: URL(string: member.userAvatarImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
         }
         friendNameLabel.text = member.userName
-        inviteButton.hidden = true
+        inviteButton.isHidden = true
     }
     
-    @IBAction func actionInvite(sender: AnyObject) {
+    @IBAction func actionInvite(_ sender: AnyObject) {
         if friendMember != nil {
             self.delegate?.inviteFriend!(friendMember!, type: type!)
         }

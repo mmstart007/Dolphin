@@ -19,16 +19,16 @@ class NotificationTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func configureCell(notification: Notification!) {
+    func configureCell(_ notification: Notification!) {
         
         if let userImageUrl = notification.sender?.userAvatarImageURL {
-            self.avatarImageView.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+            self.avatarImageView.sd_setImage(with: URL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             self.avatarImageView.image = UIImage(named: "UserPlaceholder")
         }
@@ -80,9 +80,9 @@ class NotificationTableViewCell: UITableViewCell {
             }
         }
         
-        let longestWordRange = (self.titleLabel.text! as NSString).rangeOfString((notification.sender?.userName)!)
+        let longestWordRange = (self.titleLabel.text! as NSString).range(of: (notification.sender?.userName)!)
         let attributedString = NSMutableAttributedString(string: self.titleLabel.text!, attributes: [NSFontAttributeName : UIFont(name: Constants.Fonts.Raleway_Regular, size: 14.0)!])
-        attributedString.setAttributes([NSFontAttributeName : UIFont(name: Constants.Fonts.Raleway_Bold, size: 14.0)! , NSForegroundColorAttributeName : UIColor.blackColor()], range: longestWordRange)
+        attributedString.setAttributes([NSFontAttributeName : UIFont(name: Constants.Fonts.Raleway_Bold, size: 14.0)! , NSForegroundColorAttributeName : UIColor.black], range: longestWordRange)
         self.titleLabel.attributedText = attributedString
 
     }

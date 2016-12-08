@@ -18,7 +18,7 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
     
     override func postButtonTouchUpInside() {
 
-        let cellInfo = tableViewPostDetails.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? CreatePostAddDescriptionTableViewCell
+        let cellInfo = tableViewPostDetails.cellForRow(at: IndexPath(row: 0, section: 0)) as? CreatePostAddDescriptionTableViewCell
         
         //Hide Keyboard
         cellInfo?.textViewDescription.resignFirstResponder()
@@ -49,7 +49,7 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
             // crate the pod
         if(comment != nil)
         {
-            SVProgressHUD.showWithStatus("Sending comment")
+            SVProgressHUD.show(withStatus: "Sending comment")
             self.comment?.postImageHeight = Int(imageHeight)
             self.comment?.postImageWidth = Int(imageWidth)
             self.comment?.postCommentText = self.comment?.url
@@ -67,23 +67,23 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
         }
         else if(mPost == nil) {
             let post = Post(user: nil, image: nil, imageData: nil, imageWidth: imageWidth, imageHeight: imageHeight, type: PostType(name: "link"), topics: topics, link: link, imageUrl: nil, title: nil, text: description, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podId)
-            SVProgressHUD.showWithStatus("Posting")
+            SVProgressHUD.show(withStatus: "Posting")
             networkController.createPost(post, completionHandler: { (post, error) -> () in
                 if error == nil {
                     
                     if post?.postId != nil {
                         // everything worked ok
-                        NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
+                        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: Constants.Notifications.CreatedPost), object: nil, userInfo: ["post":post!])
                         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController];
                         self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true);
                     } else {
@@ -96,19 +96,19 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
                     let errors: [String]? = error!["errors"] as? [String]
                     var alert: UIAlertController
                     if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                     } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                     }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             })
         }
         else{
             let post = PostRequest(image: nil, imageData: nil, imageWidth: imageWidth, imageHeight: imageHeight, type: "link", topics: topics, link: link, imageUrl: nil, title: nil, text: description, PODId: podId, PostId: self.mPost!.postId)
-            SVProgressHUD.showWithStatus("Posting")
+            SVProgressHUD.show(withStatus: "Posting")
             networkController.updatePost(post, completionHandler: { (post, error) -> () in
                 if error == nil {
                     
@@ -128,13 +128,13 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
                     let errors: [String]? = error!["errors"] as? [String]
                     var alert: UIAlertController
                     if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                     } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                     }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             })
         }
@@ -148,10 +148,10 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
     }
     
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: CreatePostAddDescriptionTableViewCell?
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("CreatePostAddDescriptionTableViewCell") as? CreatePostAddDescriptionTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "CreatePostAddDescriptionTableViewCell") as? CreatePostAddDescriptionTableViewCell
             if cell == nil {
                 cell = CreatePostAddDescriptionTableViewCell()
             }
@@ -164,8 +164,8 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
             }
             cell?.configureWithImage(true, postImage: nil, postURL: postURL, postImageURL: postImageURL)
         }
-        cell?.contentView.userInteractionEnabled = false
-        cell?.selectionStyle = .None
+        cell?.contentView.isUserInteractionEnabled = false
+        cell?.selectionStyle = .none
         return cell!
     }
 }

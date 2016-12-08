@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 @objc protocol PODMemberToAddTableViewCellDelegate {
-    optional func deleteMember(user: User?, index: Int)
-    optional func addMember(user: User?, index: Int)
+    @objc optional func deleteMember(_ user: User?, index: Int)
+    @objc optional func addMember(_ user: User?, index: Int)
 }
 
 class PODMemberToAddTableViewCell : UITableViewCell {
@@ -35,7 +35,7 @@ class PODMemberToAddTableViewCell : UITableViewCell {
         actionButton.layer.cornerRadius = 3.0
     }
     
-    func configureWithUser(user: User, isAdded: Bool, index: Int) {
+    func configureWithUser(_ user: User, isAdded: Bool, index: Int) {
 
         self.index = index
         self.selectedUser = user
@@ -44,17 +44,17 @@ class PODMemberToAddTableViewCell : UITableViewCell {
         if user.userAvatarImageURL == nil || user.userAvatarImageURL == "" {
             userImageView.image = UIImage(named: "UserPlaceholder")
         } else {
-            userImageView.sd_setImageWithURL(NSURL(string: user.userAvatarImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
+            userImageView.sd_setImage(with: URL(string: user.userAvatarImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
         }
         userNameLabel.text = user.userName
         
         if isAdded {
             actionButton.backgroundColor = UIColor.redDolphin()
-            actionButton.setTitle("Delete", forState: .Normal)
+            actionButton.setTitle("Delete", for: UIControlState())
             
         } else {
             actionButton.backgroundColor = UIColor.greenDolphinDealHeader()
-            actionButton.setTitle("Add", forState: .Normal)
+            actionButton.setTitle("Add", for: UIControlState())
         }
     }
     

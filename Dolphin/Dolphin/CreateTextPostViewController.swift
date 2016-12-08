@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 import UITextView_Placeholder
-import KSTokenView
 import SVProgressHUD
+//import KSTokenView
 
 class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettingsViewControllerDelegate, KSTokenViewDelegate {
     
@@ -41,7 +41,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         
         setBackButton()
         title = "Write"
-        setRightSystemButtonItem(.Done, target: self, action: #selector(donePressed(_:)))
+        setRightSystemButtonItem(.done, target: self, action: #selector(donePressed(_:)))
         setupFields()
         
         if(mPost != nil)
@@ -58,7 +58,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     }
     
     func setupFields() {
-        postTextView.placeholderColor = UIColor.lightGrayColor()
+        postTextView.placeholderColor = UIColor.lightGray
         postTextView.placeholder = "Write your moment..."
         
         postTagsTextView.delegate         = self
@@ -66,16 +66,16 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         postTagsTextView.promptText       = ""
         postTagsTextView.placeholder      = ""
         postTagsTextView.maxTokenLimit    = 15
-        postTagsTextView.style            = .Squared
+        postTagsTextView.style            = .squared
         postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 70)
-        postTagsTextView.font             = UIFont.systemFontOfSize(14)
-        postTagsTextView.backgroundColor = UIColor.clearColor()
+        postTagsTextView.font             = UIFont.systemFont(ofSize: 14)
+        postTagsTextView.backgroundColor = UIColor.clear
 
         parentScrollView = scrollViewContainer
         
         var visibilityString = ""
         if podsToShare.count > 0 {
-            visibilityString = podsToShare.map({"\($0.name!)"}).joinWithSeparator(", ")
+            visibilityString = podsToShare.map({"\($0.name!)"}).joined(separator: ", ")
         } else if pod != nil {
             visibilityString = pod!.name!
         } else {
@@ -83,19 +83,19 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         }
         visibilityLabel.text = visibilityString
         if pod != nil {
-            adjustVisitivilitySettingsIndicator.hidden = true
+            adjustVisitivilitySettingsIndicator.isHidden = true
         } else {
             let tapVisibilityViewGesture = UITapGestureRecognizer(target: self, action: #selector(goToPrivacySettings))
             postToFieldView.addGestureRecognizer(tapVisibilityViewGesture)
         }
     }
     
-    override func goBackButtonPressed(sender: UIBarButtonItem) {
+    override func goBackButtonPressed(_ sender: UIBarButtonItem) {
         if(self.isPresentMode) {
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
         else {
-            self.navigationController?.popViewControllerAnimated(true)
+            let _ = self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -107,14 +107,14 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     }
     
     // MARK: - Actions
-    func donePressed(sender: AnyObject) {
+    func donePressed(_ sender: AnyObject) {
         print("Create post pressed")
         if postTitleTextField.text == nil || postTitleTextField.text == "" || postTextView.text == "" {
             var alert: UIAlertController
-            alert = UIAlertController(title: "Error", message: "Please, fill all the fields", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert = UIAlertController(title: "Error", message: "Please, fill all the fields", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         } else {
             var topics: [Topic] = []
             if postTagsTextView.tokens() != nil {
@@ -130,7 +130,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
             if podsToShare.count > 0 {
                 podToShare = podsToShare[0]
             }
-            SVProgressHUD.showWithStatus("Posting")
+            SVProgressHUD.show(withStatus: "Posting")
             if(mPost == nil)
             {
             let post = Post(user: nil, image: nil, imageData: nil, imageWidth: 0, imageHeight: 0, type: PostType(name: "text"), topics: topics, link: nil, imageUrl: nil, title: title, text: text, date: nil, numberOfLikes: nil, numberOfComments: nil, comments: nil, PODId: podToShare?.id)
@@ -141,12 +141,12 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
                     SVProgressHUD.dismiss()
                     if post?.postId != nil {
                         // everything worked ok
-                        NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
+                        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: Constants.Notifications.CreatedPost), object: nil, userInfo: ["post":post!])
                         if(self.isPresentMode) {
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                            self.dismiss(animated: true, completion: nil)
                         }
                         else {
-                            self.navigationController?.popViewControllerAnimated(true)
+                            let _ = self.navigationController?.popViewController(animated: true)
                         }
                         
                     } else {
@@ -158,13 +158,13 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
                     let errors: [String]? = error!["errors"] as? [String]
                     var alert: UIAlertController
                     if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                     } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                     }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             })
             }
@@ -178,10 +178,10 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
                             // everything worked ok
                             //NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
                             if(self.isPresentMode) {
-                                self.dismissViewControllerAnimated(true, completion: nil)
+                                self.dismiss(animated: true, completion: nil)
                             }
                             else {
-                                self.navigationController?.popViewControllerAnimated(true)
+                                let _ = self.navigationController?.popViewController(animated: true)
                             }
                             
                         } else {
@@ -193,13 +193,13 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
                         let errors: [String]? = error!["errors"] as? [String]
                         var alert: UIAlertController
                         if errors != nil && errors![0] != "" {
-                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                         } else {
-                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                         }
-                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                         alert.addAction(cancelAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 })
             }
@@ -208,28 +208,28 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     
     // MARK: - NewPostPrivacySettingsViewControllerDelegate
     
-    func didFinishSettingOptions(selectedPods: [POD]) {
+    func didFinishSettingOptions(_ selectedPods: [POD]) {
         podsToShare = selectedPods
         var visibilityString = ""
         if podsToShare.count > 0 {
-            visibilityString = podsToShare.map({"\($0.name!)"}).joinWithSeparator(", ")
+            visibilityString = podsToShare.map({"\($0.name!)"}).joined(separator: ", ")
         } else {
             visibilityString = "Public"
         }
         visibilityLabel.text = visibilityString
     }
     
-    func tokenView(token: KSTokenView, performSearchWithString string: String, completion: ((results: Array<AnyObject>) -> Void)?) {
+    func tokenView(_ token: KSTokenView, performSearchWithString string: String, completion: ((_ results: Array<AnyObject>) -> Void)?) {
         var data: Array<String> = []
         for value: String in tags {
-            if value.lowercaseString.rangeOfString(string.lowercaseString) != nil {
+            if value.lowercased().range(of: string.lowercased()) != nil {
                 data.append(value)
             }
         }
-        completion!(results: data)
+        completion!(data as Array<AnyObject>)
     }
     
-    func tokenView(token: KSTokenView, displayTitleForObject object: AnyObject) -> String {
+    func tokenView(_ token: KSTokenView, displayTitleForObject object: AnyObject) -> String {
         return object as! String
     }
 }

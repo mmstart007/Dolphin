@@ -10,12 +10,36 @@ import Foundation
 import UIKit
 import SDWebImage
 import NSDate_TimeAgo
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 @objc protocol PostTableViewCellDelegate {
-    optional func tapURL(url: String?)
-    optional func tapLike(post: Post?, cell: PostTableViewCell?)
-    optional func downloadedPostImage(indexPath: NSIndexPath?)
-    optional func tapUserInfo(userInfo: User?)
+    @objc optional func tapURL(_ url: String?)
+    @objc optional func tapLike(_ post: Post?, cell: PostTableViewCell?)
+    @objc optional func downloadedPostImage(_ indexPath: IndexPath?)
+    @objc optional func tapUserInfo(_ userInfo: User?)
 }
 
 class PostTableViewCell : UITableViewCell {
@@ -35,18 +59,18 @@ class PostTableViewCell : UITableViewCell {
     @IBOutlet var postImageViewHeightConstraint: NSLayoutConstraint!
     
     var cellPost: Post?
-    var cellIndexPath: NSIndexPath?
+    var cellIndexPath: IndexPath?
     var triangleView: TriangleView?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.userInteractionEnabled = false
+        self.contentView.isUserInteractionEnabled = false
         
         containerView.layer.cornerRadius      = 5
 
         postuserImageView.layer.cornerRadius  = postuserImageView.frame.size.width / 2.0
         postuserImageView.layer.masksToBounds = true
-        postuserImageView.userInteractionEnabled = true
+        postuserImageView.isUserInteractionEnabled = true
         
         let tapGestureLike = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.actionLike))
         tapGestureLike.numberOfTapsRequired = 1
@@ -56,16 +80,16 @@ class PostTableViewCell : UITableViewCell {
         tapGestureURL.numberOfTapsRequired = 1
         postContent.addGestureRecognizer(tapGestureURL)
         
-        containerView.layer.shadowColor = UIColor.blackColor().CGColor
+        containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.1
-        containerView.layer.shadowOffset = CGSizeZero
+        containerView.layer.shadowOffset = CGSize.zero
         containerView.layer.shadowRadius = 3
         
         if triangleView == nil {
             triangleView        = TriangleView()
             let xPosition       = containerView.frame.size.width - 30
             triangleView!.frame = CGRect(x: xPosition, y: 0, width: 30, height: 30)
-            triangleView!.backgroundColor = UIColor.clearColor()
+            triangleView!.backgroundColor = UIColor.clear
             containerView.addSubview(triangleView!)
         }
         
@@ -90,13 +114,13 @@ class PostTableViewCell : UITableViewCell {
         triangleView!.frame = CGRect(x: xPosition, y: 0, width: 30, height: 30)
         
         //Set round border only top.
-        let path = UIBezierPath(roundedRect:containerView.bounds, byRoundingCorners:[.TopRight, .TopLeft], cornerRadii: CGSizeMake(5, 5))
+        let path = UIBezierPath(roundedRect:containerView.bounds, byRoundingCorners:[.topRight, .topLeft], cornerRadii: CGSize(width: 5, height: 5))
         let maskLayer = CAShapeLayer()
-        maskLayer.path = path.CGPath
+        maskLayer.path = path.cgPath
         containerView.layer.mask = maskLayer
     }
     
-    func adjustImageSize(image_width: CGFloat, image_height: CGFloat) {
+    func adjustImageSize(_ image_width: CGFloat, image_height: CGFloat) {
         if image_width == 0 || image_height == 0 {
             let real_width = postImageView.frame.size.width
             postImageViewHeightConstraint.constant = real_width
@@ -108,16 +132,16 @@ class PostTableViewCell : UITableViewCell {
         }
     }
     
-    func configureWithPost(post: Post) {
+    func configureWithPost(_ post: Post) {
         configureWithPost(post, indexPath: self.cellIndexPath!)
     }
     
-    func configureWithPost(post: Post, indexPath: NSIndexPath) {
+    func configureWithPost(_ post: Post, indexPath: IndexPath) {
         self.cellPost = post
         self.cellIndexPath = indexPath
         
         if let userImageUrl = post.postUser?.userAvatarImageURL {
-            postuserImageView.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+            postuserImageView.sd_setImage(with: URL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             postuserImageView.image = UIImage(named: "PostImagePlaceholder")
         }
@@ -144,7 +168,7 @@ class PostTableViewCell : UITableViewCell {
             
             let urlString = convertURL(image.imageURL!)
             
-            self.postImageView.sd_setImageWithURL(NSURL(string: urlString), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            self.postImageView.sd_setImage(with: URL(string: urlString), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             let image_width = image.imageWidth
             let image_height = image.imageHeight
             
@@ -155,7 +179,7 @@ class PostTableViewCell : UITableViewCell {
         else if let linkImage = post.postLink {
             postTitle.text = post.postText
             postContent.text = post.postLink?.url
-            self.postImageView.sd_setImageWithURL(NSURL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            self.postImageView.sd_setImage(with: URL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             
             let image_width = linkImage.imageWidth
             let image_height = linkImage.imageHeight
@@ -183,8 +207,8 @@ class PostTableViewCell : UITableViewCell {
         }
     }
     
-    func convertURL(urlString: String) -> String {
-        if urlString.containsString("http") {
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
             return urlString
         } else {
             return Constants.RESTAPIConfig.Developement.BaseUrl + urlString

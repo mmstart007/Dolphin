@@ -23,30 +23,30 @@ class UserImagePODMemberCollectionViewCell: UICollectionViewCell {
 //        imageViewUserAvatar.layer.masksToBounds = true
     }
     
-    func configureAsUser(imageUrl: String) {
-        let url : NSURL = NSURL(string: imageUrl)!
-        imageViewUserAvatar.backgroundColor = UIColor.whiteColor()
-        imageViewUserAvatar.sd_setImageWithURL(url, placeholderImage: UIImage(named: "UserPlaceholder"))
-        imageViewUserAvatar.contentMode = .ScaleAspectFill
+    func configureAsUser(_ imageUrl: String) {
+        let url : URL = URL(string: imageUrl)!
+        imageViewUserAvatar.backgroundColor = UIColor.white
+        imageViewUserAvatar.sd_setImage(with: url, placeholderImage: UIImage(named: "UserPlaceholder"))
+        imageViewUserAvatar.contentMode = .scaleAspectFill
         imageViewUserAvatar.subviews.forEach { subview in
             subview.removeFromSuperview()
         }
 
     }
     
-    func configureAsMoreUsers(count: Int) {
+    func configureAsMoreUsers(_ count: Int) {
         
-        imageViewUserAvatar.backgroundColor = UIColor.whiteColor()
-        imageViewUserAvatar.contentMode = .Center
+        imageViewUserAvatar.backgroundColor = UIColor.white
+        imageViewUserAvatar.contentMode = .center
         
         let otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: imageViewUserAvatar.frame.size.width, height: imageViewUserAvatar.frame.size.width))
-        otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
-        otherUsersLabel.textColor = UIColor.lightTextColor()
+        otherUsersLabel.backgroundColor = UIColor.lightGray
+        otherUsersLabel.textColor = UIColor.lightText
 //        otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
 //        otherUsersLabel.layer.masksToBounds = true
         otherUsersLabel.text = String(format: "+%li", arguments: [count])
-        otherUsersLabel.textAlignment = .Center
-        otherUsersLabel.font = UIFont.systemFontOfSize(16)
+        otherUsersLabel.textAlignment = .center
+        otherUsersLabel.font = UIFont.systemFont(ofSize: 16)
         imageViewUserAvatar.addSubview(otherUsersLabel)
         imageViewUserAvatar.image = nil
     }

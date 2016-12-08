@@ -24,33 +24,33 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     var filteredPosts: [Post]   = []
     var searchText: String?     = nil
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 //        (parentViewController as? HomeViewController)?.removeRightButton()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.edgesForExtendedLayout = .None
+        self.edgesForExtendedLayout = UIRectEdge()
         
-        tableView.registerNib(UINib(nibName: "PopularTrendingTopicsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PopularTrendingTopicsTableViewCell")
-        tableView.registerNib(UINib(nibName: "PopularPODsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PopularPODsTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
-        tableView.separatorStyle = .None
+        tableView.register(UINib(nibName: "PopularTrendingTopicsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PopularTrendingTopicsTableViewCell")
+        tableView.register(UINib(nibName: "PopularPODsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PopularPODsTableViewCell")
+        tableView.register(UINib(nibName: "PostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostTableViewCell")
+        tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 400
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(postRemoved(_:)) , name: Constants.Notifications.DeletedPost, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(postRemoved(_:)) , name: NSNotification.Name(rawValue: Constants.Notifications.DeletedPost), object: nil)
         loadData()
     }
     
-    func postRemoved(notification: NSNotification) {
+    func postRemoved(_ notification: Foundation.Notification) {
         if let userInfo = notification.userInfo as? Dictionary<String, Post> {
             if let post = userInfo["post"] {
                 var index = 0;
                 
                 for item in self.posts {
                     if item.postId == post.postId {
-                        self.posts.removeAtIndex(index)
+                        self.posts.remove(at: index)
                         break
                     }
                     
@@ -60,7 +60,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
                 index = 0;
                 for item in self.filteredPosts {
                     if item.postId == post.postId {
-                        self.filteredPosts.removeAtIndex(index)
+                        self.filteredPosts.remove(at: index)
                         break
                     }
                     
@@ -74,7 +74,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
 
     func loadData() {
         
-        SVProgressHUD.showWithStatus("Loading")
+        SVProgressHUD.show(withStatus: "Loading")
         //Load Topic.
         networkController.filterTopic(nil, quantity: Constants.Popular.Topic_Limit, page: 0, sort_by: "posts_count") { (topics, error) -> () in 
             
@@ -108,11 +108,11 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         } else if section == 1{
@@ -126,10 +126,10 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : UITableViewCell?
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("PopularTrendingTopicsTableViewCell") as? PopularTrendingTopicsTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "PopularTrendingTopicsTableViewCell") as? PopularTrendingTopicsTableViewCell
             if cell == nil {
                 cell = PopularTrendingTopicsTableViewCell()
             }
@@ -137,14 +137,14 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             (cell as? PopularTrendingTopicsTableViewCell)!.collectionView.reloadData()
             
         } else if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier("PopularPODsTableViewCell") as? PopularPODsTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "PopularPODsTableViewCell") as? PopularPODsTableViewCell
             if cell == nil {
                 cell = PopularPODsTableViewCell()
             }
             (cell as? PopularPODsTableViewCell)!.configureWithDataSource(self, delegate: self)
             (cell as? PopularPODsTableViewCell)!.podsCollectionView.reloadData()
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as? PostTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as? PostTableViewCell
             if cell == nil {
                 cell = PostTableViewCell()
             }
@@ -156,11 +156,11 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             }
             (cell as? PostTableViewCell)!.delegate = self
         }
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 90
         } else if indexPath.section == 1 {
@@ -170,13 +170,13 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
         let headerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
         headerView.backgroundColor = self.view.backgroundColor
-        headerLabel.backgroundColor = UIColor.clearColor()
-        headerLabel.textAlignment = .Center
+        headerLabel.backgroundColor = UIColor.clear
+        headerLabel.textAlignment = .center
         headerLabel.font = UIFont(name: Constants.Fonts.Raleway_Bold, size: 11.0)
         headerLabel.textColor = UIColor(red: 83.0/255.0, green: 83.0/255.0, blue: 85.0/255.0, alpha: 1.0)
         if section == 0 {
@@ -190,18 +190,18 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         return headerView
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Adjust views of comment cells
         if indexPath.section == 1 {
-            cell.selectionStyle = .None
+            cell.selectionStyle = .none
         }
     }
     
     // MARK: - Tableview delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
-            (self.parentViewController as? HomeViewController)?.hideSearchField()
+            (self.parent as? HomeViewController)?.hideSearchField()
             let postDetailsVC = PostDetailsViewController()
             postDetailsVC.post = posts[indexPath.row]
             navigationController?.pushViewController(postDetailsVC, animated: true)
@@ -210,11 +210,11 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: - CollectionView Datasource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView.tag == 0 {
             if searchText != nil && searchText != "" {
                 return filteredTopics.count
@@ -233,21 +233,21 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView.tag == 0 {
-            var cell: TopicCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("TopicCollectionViewCell", forIndexPath: indexPath) as? TopicCollectionViewCell
+            var cell: TopicCollectionViewCell? = collectionView.dequeueReusableCell(withReuseIdentifier: "TopicCollectionViewCell", for: indexPath) as? TopicCollectionViewCell
             if cell == nil {
                 cell = TopicCollectionViewCell()
             }
             
             if searchText != nil && searchText != "" {
-                cell?.configureWithName(filteredTopics[indexPath.row].name!.uppercaseString, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
+                cell?.configureWithName(filteredTopics[indexPath.row].name!.uppercased(), color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
             } else {
-                cell?.configureWithName(topics[indexPath.row].name!.uppercaseString, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
+                cell?.configureWithName(topics[indexPath.row].name!.uppercased(), color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
             }
             return cell!
         } else {
-            var cell: PODCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("PODCollectionViewCell", forIndexPath: indexPath) as? PODCollectionViewCell
+            var cell: PODCollectionViewCell? = collectionView.dequeueReusableCell(withReuseIdentifier: "PODCollectionViewCell", for: indexPath) as? PODCollectionViewCell
             if cell == nil {
                 cell = PODCollectionViewCell()
             }
@@ -262,14 +262,14 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView.tag == 0 {
-            let text = topics[indexPath.row].name!.uppercaseString
-            let font = UIFont.systemFontOfSize(16)
+            let text = topics[indexPath.row].name!.uppercased()
+            let font = UIFont.systemFont(ofSize: 16)
             let textString = text as NSString
             
             let textAttributes = [NSFontAttributeName: font]
-            var size = textString.boundingRectWithSize(CGSizeMake(self.view.frame.size.width - 20, 35), options: .UsesLineFragmentOrigin, attributes: textAttributes, context: nil).size
+            var size = textString.boundingRect(with: CGSize(width: self.view.frame.size.width - 20, height: 35), options: .usesLineFragmentOrigin, attributes: textAttributes, context: nil).size
             if size.width < self.view.frame.size.width / 4 {
                 size = CGSize(width: self.view.frame.size.width / 4, height: size.height)
             }
@@ -279,14 +279,14 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
     
     // MARK: - CollectionView Delegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView.tag == 0 {
             let topic = topics[indexPath.row]
             let topicPost = TagPostsViewController(likes: false)
@@ -294,7 +294,7 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
             navigationController?.pushViewController(topicPost, animated: true)
 
         } else if collectionView.tag == 1 {
-            print("Pod %@ pressed", pods[indexPath.row].name)
+            print("Pod %@ pressed", pods[indexPath.row].name!)
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = pods[indexPath.row]
             podDetailsVC.pod = selectedPOD
@@ -303,24 +303,24 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     }
 
     // MARK: PostTableViewCell Delegate.
-    func downloadedPostImage(indexPath: NSIndexPath?) {
-        tableView.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.None)
+    func downloadedPostImage(_ indexPath: IndexPath?) {
+        tableView.reloadRows(at: [indexPath!], with: UITableViewRowAnimation.none)
     }
     
-    func tapUserInfo(userInfo: User?) {
+    func tapUserInfo(_ userInfo: User?) {
         let userView = OtherProfileViewController(userInfo: userInfo)
         navigationController?.pushViewController(userView, animated: true)
     }
     
-    func tapURL(url: String?) {
+    func tapURL(_ url: String?) {
         let webVC = WebViewController()
         webVC.siteLink = url
         navigationController?.pushViewController(webVC, animated: true)
     }
     
-    func tapLike(post: Post?, cell: PostTableViewCell?) {
+    func tapLike(_ post: Post?, cell: PostTableViewCell?) {
         if !(post?.isLikedByUser)! {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
             networkController.createLike("\(post!.postId!)", completionHandler: { (like, error) -> () in
                 if error == nil {
                     if like?.id != nil {
@@ -332,16 +332,16 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
         } else {
             
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
             networkController.deleteLike("\(post!.postId!)", completionHandler: { (error) -> () in
                 if error == nil {
                     post?.postNumberOfLikes = (post?.postNumberOfLikes)! - 1
@@ -351,10 +351,10 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
@@ -364,16 +364,16 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: Search Posts
     
-    func filterResults(textToSearch: String) {
+    func filterResults(_ textToSearch: String) {
         print("Search text: \(textToSearch)")
         filteredPosts.removeAll()
         filteredPosts = posts.filter({( post : Post) -> Bool in
-            let containInText = (post.postText?.lowercaseString.containsString(textToSearch.lowercaseString))!
-            let containInTitle = (post.postHeader?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            let containInText = (post.postText?.lowercased().contains(textToSearch.lowercased()))!
+            let containInTitle = (post.postHeader?.lowercased().contains(textToSearch.lowercased()))!
             var containInTag = false
             
             for t in post.postTopics!  {
-                if t.name?.lowercaseString.containsString(textToSearch.lowercaseString) == true {
+                if t.name?.lowercased().contains(textToSearch.lowercased()) == true {
                     containInTag = true
                     break
                 }
@@ -384,14 +384,14 @@ class PopularViewController : UIViewController, UITableViewDataSource, UITableVi
         filteredPods.removeAll()
         filteredPods = pods.filter({( pod : POD) -> Bool in
             
-            let containInName = (pod.name?.lowercaseString.containsString(textToSearch.lowercaseString))!
-            let containInDescription = (pod.descriptionText?.lowercaseString.containsString(textToSearch.lowercaseString))!
+            let containInName = (pod.name?.lowercased().contains(textToSearch.lowercased()))!
+            let containInDescription = (pod.descriptionText?.lowercased().contains(textToSearch.lowercased()))!
             return containInName || containInDescription
         })
         
         filteredTopics.removeAll()
         filteredTopics = topics.filter({( topic : Topic) -> Bool in
-            return (topic.name!.lowercaseString.containsString(textToSearch.lowercaseString))
+            return (topic.name!.lowercased().contains(textToSearch.lowercased()))
         })
 
         searchText = textToSearch

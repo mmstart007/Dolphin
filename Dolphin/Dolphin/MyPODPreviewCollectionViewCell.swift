@@ -44,7 +44,7 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         
         // Initialization code
         
-        unreadLabel.hidden = true
+        unreadLabel.isHidden = true
         self.refreshLayout()
     }
 
@@ -59,27 +59,27 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.height / 2
         otherUsersLabel.clipsToBounds = true
         otherUsersLabel.layer.masksToBounds = true
-        otherUsersLabel.backgroundColor = UIColor.lightGrayColor()
-        otherUsersLabel.textColor = UIColor.lightTextColor()
-        otherUsersLabel.textAlignment = .Center
-        otherUsersLabel.font = UIFont.systemFontOfSize(12)
+        otherUsersLabel.backgroundColor = UIColor.lightGray
+        otherUsersLabel.textColor = UIColor.lightText
+        otherUsersLabel.textAlignment = .center
+        otherUsersLabel.font = UIFont.systemFont(ofSize: 12)
         
         unreadLabel.layer.cornerRadius = unreadLabel.frame.size.height / 2
         unreadLabel.layer.masksToBounds = true
         unreadLabel.backgroundColor = Utils.hexStringToUIColor("#CC0000")//UIColor.redColor()
-        unreadLabel.textColor = UIColor.lightTextColor()
-        unreadLabel.textAlignment = .Center
-        unreadLabel.font = UIFont.systemFontOfSize(12)
+        unreadLabel.textColor = UIColor.lightText
+        unreadLabel.textAlignment = .center
+        unreadLabel.font = UIFont.systemFont(ofSize: 12)
 
     }
     
-    func configureWithPOD(pod: POD?) {
+    func configureWithPOD(_ pod: POD?) {
         self.pod = pod
         self.layer.cornerRadius          = 5
         if pod != nil {
             //podImageView.layer.cornerRadius  = 5
             podImageView.layer.masksToBounds = true
-            podImageView.sd_setImageWithURL(NSURL(string: pod!.imageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            podImageView.sd_setImage(with: URL(string: pod!.imageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             podTitleLabel.text = pod!.name
             if let lastPostDate = pod?.lastPostDate {
                 lastPostDateLabel.text = lastPostDate.formattedAsTimeAgo()
@@ -87,22 +87,22 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
                 lastPostDateLabel.text = "No posts yet"
             }
             
-            createPODView.hidden = true
+            createPODView.isHidden = true
             
             addUserImages(pod!)
         } else {
-            createPODView.hidden = false
-            unreadLabel.hidden = true
-            triangleView?.hidden = true
+            createPODView.isHidden = false
+            unreadLabel.isHidden = true
+            triangleView?.isHidden = true
         }
         
         self.refreshLayout()
                 
     }
     
-    func addUserImages(pod: POD) {
+    func addUserImages(_ pod: POD) {
         
-        unreadLabel.hidden = true
+        unreadLabel.isHidden = true
         
         //let otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: userContainerLastPost.frame.size.width, height: userContainerLastPost.frame.size.height))
         self.otherUsersLabel.text = String(format: "+%li", arguments: [(pod.users?.count)!])
@@ -110,7 +110,7 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         
         if(pod.total_unread != 0)
         {
-            unreadLabel.hidden = false
+            unreadLabel.isHidden = false
             
             unreadLabel.text = String(format: "+%li", arguments: [(pod.total_unread)!])
             //userContainerLastPost.addSubview(unreadLabel)
@@ -121,15 +121,15 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
                 triangleView        = TriangleView()
                 triangleView!.frame = CGRect(x: self.frame.size.width - 50, y: 0, width: 50, height: 50)
             }
-            triangleView?.hidden             = false
+            triangleView?.isHidden             = false
             triangleView!.color              = pod.podColor()
-            triangleView!.backgroundColor    = UIColor.clearColor()
+            triangleView!.backgroundColor    = UIColor.clear
             //triangleView!.layer.cornerRadius = 5
             self.addSubview(triangleView!)
             triangleView!.addImage("PrivatePODIcon")
         } else {
             if triangleView != nil {
-                triangleView?.hidden = true
+                triangleView?.isHidden = true
             }
         }
         

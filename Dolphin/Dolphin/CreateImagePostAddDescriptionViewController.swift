@@ -8,7 +8,31 @@
 
 import UIKit
 import SVProgressHUD
-import KSTokenView
+//import KSTokenView
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 class CreateImagePostAddDescriptionViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, KSTokenViewDelegate {
 
@@ -28,11 +52,11 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
 
         setBackButton()
         setRightButtonItemWithText("Post", target: self, action: #selector(CreateImagePostAddDescriptionViewController.postButtonTouchUpInside))
-        self.edgesForExtendedLayout     = .None
+        self.edgesForExtendedLayout     = UIRectEdge()
         title                           = "Add description"
         tableViewPostDetails.delegate   = self
         tableViewPostDetails.dataSource = self
-        tableViewPostDetails.tableFooterView = UIView(frame: CGRectZero)
+        tableViewPostDetails.tableFooterView = UIView(frame: CGRect.zero)
         registerCells()
         tableViewPostDetails.reloadData()
         
@@ -45,7 +69,7 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     // MARK: - Actions
     func postButtonTouchUpInside() {
 
-        let cellInfo = tableViewPostDetails.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? CreatePostAddDescriptionTableViewCell
+        let cellInfo = tableViewPostDetails.cellForRow(at: IndexPath(row: 0, section: 0)) as? CreatePostAddDescriptionTableViewCell
         
         //Hide Keyboard
         cellInfo?.textViewDescription.resignFirstResponder()
@@ -68,8 +92,8 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
             return
         }
         
-        SVProgressHUD.showWithStatus("Posting")
-        dispatch_async(dispatch_get_main_queue()) {
+        SVProgressHUD.show(withStatus: "Posting")
+        DispatchQueue.main.async {
             // do your stuff here
             // crate the image pod
             
@@ -89,8 +113,8 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
                 if error == nil {
                     if post?.postId != nil {
                         // everything worked ok
-                        NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.CreatedPost, object: nil, userInfo: ["post":post!])
-                        self.navigationController?.popToRootViewControllerAnimated(true)
+                        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: Constants.Notifications.CreatedPost), object: nil, userInfo: ["post":post!])
+                        let _ = self.navigationController?.popToRootViewController(animated: true)
                     } else {
                         // there was an error saving the post
                     }
@@ -101,13 +125,13 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
                     let errors: [String]? = error!["errors"] as? [String]
                     var alert: UIAlertController
                     if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                     } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                     }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             })
             }
@@ -132,13 +156,13 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
                         let errors: [String]? = error!["errors"] as? [String]
                         var alert: UIAlertController
                         if errors != nil && errors![0] != "" {
-                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                            alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                         } else {
-                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                            alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                         }
-                        let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                        let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                         alert.addAction(cancelAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 })
             }
@@ -146,18 +170,18 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
     }
     
     // MARK: - TableView DataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: CreatePostAddDescriptionTableViewCell?
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("CreatePostAddDescriptionTableViewCell") as? CreatePostAddDescriptionTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "CreatePostAddDescriptionTableViewCell") as? CreatePostAddDescriptionTableViewCell
             if cell == nil {
                 cell = CreatePostAddDescriptionTableViewCell()
             }
@@ -171,59 +195,59 @@ class CreateImagePostAddDescriptionViewController: DolphinViewController, UITabl
 
             cell?.configureWithImage(false, postImage: postImage, postURL: nil, postImageURL: nil)
         }
-        cell?.contentView.userInteractionEnabled = false
-        cell?.selectionStyle = .None
+        cell?.contentView.isUserInteractionEnabled = false
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (self.view.frame.height - (self.navigationController?.navigationBar.frame.size.height)! + 50.0)
     }
     
     // MARK: - Auxiliary methods
     
     func registerCells() {
-        tableViewPostDetails.registerNib(UINib(nibName: "CreatePostAddDescriptionTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "CreatePostAddDescriptionTableViewCell")
+        tableViewPostDetails.register(UINib(nibName: "CreatePostAddDescriptionTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "CreatePostAddDescriptionTableViewCell")
         
     }
     
     // MARK: UITextField Delegate.
-    func textFieldDidBeginEditing(textField: UITextField) {
-        tableViewPostDetails.setContentOffset(CGPointMake(0.0, 200.0), animated: true)
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tableViewPostDetails.setContentOffset(CGPoint(x: 0.0, y: 200.0), animated: true)
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        tableViewPostDetails.setContentOffset(CGPointZero, animated: true)
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        tableViewPostDetails.setContentOffset(CGPoint.zero, animated: true)
     }
     
     // MARK: UITextView Delegate.
-    func textViewDidBeginEditing(textView: UITextView) {
-        tableViewPostDetails.setContentOffset(CGPointMake(0.0, 200.0), animated: true)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        tableViewPostDetails.setContentOffset(CGPoint(x: 0.0, y: 200.0), animated: true)
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
-        tableViewPostDetails.setContentOffset(CGPointZero, animated: true)
+    func textViewDidEndEditing(_ textView: UITextView) {
+        tableViewPostDetails.setContentOffset(CGPoint.zero, animated: true)
     }
     
-    func tokenView(token: KSTokenView, performSearchWithString string: String, completion: ((results: Array<AnyObject>) -> Void)?) {
+    func tokenView(_ token: KSTokenView, performSearchWithString string: String, completion: ((_ results: Array<AnyObject>) -> Void)?) {
         var data: Array<String> = []
         for value: String in tags {
-            if value.lowercaseString.rangeOfString(string.lowercaseString) != nil {
+            if value.lowercased().range(of: string.lowercased()) != nil {
                 data.append(value)
             }
         }
-        completion!(results: data)
+        completion!(data as Array<AnyObject>)
     }
     
-    func tokenView(token: KSTokenView, displayTitleForObject object: AnyObject) -> String {
+    func tokenView(_ token: KSTokenView, displayTitleForObject object: AnyObject) -> String {
         return object as! String
     }
     
-    func tokenViewDidBeginEditing(tokenView: KSTokenView) {
-        tableViewPostDetails.setContentOffset(CGPointMake(0.0, 400.0), animated: true)
+    func tokenViewDidBeginEditing(_ tokenView: KSTokenView) {
+        tableViewPostDetails.setContentOffset(CGPoint(x: 0.0, y: 400.0), animated: true)
     }
     
-    func tokenViewDidEndEditing(tokenView: KSTokenView) {
-        tableViewPostDetails.setContentOffset(CGPointZero, animated: true)
+    func tokenViewDidEndEditing(_ tokenView: KSTokenView) {
+        tableViewPostDetails.setContentOffset(CGPoint.zero, animated: true)
     }
 }

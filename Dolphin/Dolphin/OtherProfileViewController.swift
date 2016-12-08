@@ -35,24 +35,24 @@ class OtherProfileViewController: DolphinViewController, UICollectionViewDelegat
 
         setBackButton()
         
-        postCollectionView!.registerNib(UINib(nibName: "GridPostCell", bundle: nil), forCellWithReuseIdentifier: "GridPostCell")
-        postCollectionView.registerNib(UINib(nibName: "UserInfoReusableView", bundle: nil), forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "UserInfoReusableView")
+        postCollectionView!.register(UINib(nibName: "GridPostCell", bundle: nil), forCellWithReuseIdentifier: "GridPostCell")
+        postCollectionView.register(UINib(nibName: "UserInfoReusableView", bundle: nil), forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "UserInfoReusableView")
         
-        postCollectionView.addPullToRefreshWithActionHandler { () -> Void in
+        postCollectionView.addPullToRefresh { () -> Void in
             self.loadData(true)
         }
         
-        postCollectionView.addInfiniteScrollingWithActionHandler { () -> Void in
+        postCollectionView.addInfiniteScrolling { () -> Void in
             self.loadNextPosts()
         }
         
         loadData(false)
     }
     
-    func loadData(pullToRefresh: Bool) {
+    func loadData(_ pullToRefresh: Bool) {
         page = 0
         if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         
         networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: selectedUser.id, quantity: kPageQuantity, page: 0, podId: nil, filterByUserInterests: false, sort_by: nil, completionHandler: { (posts, error) -> () in
@@ -76,13 +76,13 @@ class OtherProfileViewController: DolphinViewController, UICollectionViewDelegat
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
@@ -95,7 +95,7 @@ class OtherProfileViewController: DolphinViewController, UICollectionViewDelegat
         page = page + 1
         networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: selectedUser.id, quantity: kPageQuantity, page: page, podId: nil, filterByUserInterests: false, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
-                self.allPosts.appendContentsOf(posts)
+                self.allPosts.append(contentsOf: posts)
                 self.postCollectionView.reloadData()
                 
                 
@@ -103,29 +103,29 @@ class OtherProfileViewController: DolphinViewController, UICollectionViewDelegat
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             self.postCollectionView.infiniteScrollingView.stopAnimating()
         })
     }
     
     // MARK: CollectionView Datasource
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return allPosts.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: GridPostCell? = collectionView.dequeueReusableCellWithReuseIdentifier("GridPostCell", forIndexPath: indexPath) as? GridPostCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell: GridPostCell? = collectionView.dequeueReusableCell(withReuseIdentifier: "GridPostCell", for: indexPath) as? GridPostCell
         if cell == nil {
             cell = GridPostCell()
         }
@@ -134,15 +134,15 @@ class OtherProfileViewController: DolphinViewController, UICollectionViewDelegat
     }
     
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String,atIndexPath indexPath: NSIndexPath) ->UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String,at indexPath: IndexPath) ->UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader,
-                                                                                   withReuseIdentifier:"UserInfoReusableView", forIndexPath: indexPath) as! UserInfoReusableView
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader,
+                                                                                   withReuseIdentifier:"UserInfoReusableView", for: indexPath) as! UserInfoReusableView
             
             headerView.nameLabel.text = selectedUser.userName
             headerView.usernameLabel.text = selectedUser.userEmail
             if let userImageUrl = selectedUser?.userAvatarImageURL {
-                headerView.avatarImageView.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+                headerView.avatarImageView.sd_setImage(with: URL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
             } else {
                 headerView.avatarImageView.image = UIImage(named: "PostImagePlaceholder")
             }
@@ -153,22 +153,22 @@ class OtherProfileViewController: DolphinViewController, UICollectionViewDelegat
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSizeMake(collectionView.frame.width, 190.0)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 190.0)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - 10.0) / 3.0 - 10.0
-        return CGSizeMake(width, width)
+        return CGSize(width: width, height: width)
     }
     
     // MARK: CollectionView Delegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let postDetailsVC = PostDetailsViewController()
         postDetailsVC.post = allPosts[indexPath.row]
         navigationController?.pushViewController(postDetailsVC, animated: true)

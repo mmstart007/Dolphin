@@ -10,6 +10,30 @@ import Foundation
 import UIKit
 import SVProgressHUD
 import SDWebImage
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class PostDetailsViewController : DolphinViewController, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,ImageCropViewControllerDelegate, PostDetailsTopicsAndViewsTableViewCellDelegate,ChooseSourceTypeViewDelegate {
 
@@ -27,7 +51,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     var pod : POD?
     var chooseSoureTypeView: ChooseSourceTypeView!
     var overlayView: UIView!
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    let screenSize: CGRect = UIScreen.main.bounds
     
     @IBOutlet weak var actionMenuBackground: UIView!
     @IBOutlet weak var writeCommentBottomConstraint: NSLayoutConstraint!
@@ -53,20 +77,20 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         setNavBarButtons()
         
         title = "Dolphin"
-        tableView.registerNib(UINib(nibName: "PostDetailHeaderTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostDetailHeaderTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostCommentOddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentOddTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostCommentEvenTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentEvenTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostCommentImageTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentImageTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostCommentImageLeftTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentImageLeftTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostDetailsTopicsAndViewsTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostDetailsTopicsAndViewsTableViewCell")
-        tableView.separatorStyle = .None
+        tableView.register(UINib(nibName: "PostDetailHeaderTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostDetailHeaderTableViewCell")
+        tableView.register(UINib(nibName: "PostCommentOddTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCommentOddTableViewCell")
+        tableView.register(UINib(nibName: "PostCommentEvenTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCommentEvenTableViewCell")
+        tableView.register(UINib(nibName: "PostCommentImageTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCommentImageTableViewCell")
+        tableView.register(UINib(nibName: "PostCommentImageLeftTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCommentImageLeftTableViewCell")
+        tableView.register(UINib(nibName: "PostDetailsTopicsAndViewsTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostDetailsTopicsAndViewsTableViewCell")
+        tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 10
         
         addKeyboardObservers()
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         loadPost()
         if needToReloadPost {
@@ -78,26 +102,26 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     func setAppearance() {
-        ViewTypeParent.hidden = true
-        self.edgesForExtendedLayout = .None
+        ViewTypeParent.isHidden = true
+        self.edgesForExtendedLayout = UIRectEdge()
         title = "Dolphin"
         setBackButton()
-        chosenImageContainer.hidden         = true
+        chosenImageContainer.isHidden         = true
         commentTextView.layer.cornerRadius  = 10
         commentTextView.layer.masksToBounds = true
         commentTextView.layer.borderWidth   = 1
-        commentTextView.layer.borderColor   = UIColor.lightGrayColor().CGColor
-        commentTextView.backgroundColor     = UIColor.lightTextColor()
+        commentTextView.layer.borderColor   = UIColor.lightGray.cgColor
+        commentTextView.backgroundColor     = UIColor.lightText
         commentTextView.delegate            = self
         commentTextView.text                = commentTextViewPlaceHolder
-        commentTextView.textColor           = UIColor.darkGrayColor()
+        commentTextView.textColor           = UIColor.darkGray
         let viewTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
         viewTapRecognizer.cancelsTouchesInView = false
         tableView.addGestureRecognizer(viewTapRecognizer)
     }
     
-    func viewTapped(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
+    func viewTapped(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
             view.endEditing(true)
         }
         sender.cancelsTouchesInView = false
@@ -108,22 +132,22 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         // comments new windows
         if(self.post?.postUser?.id == networkController.currentUserId) {
             let customVieweditButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-            customVieweditButton.setImage(UIImage(named: "ic_edit"), forState: .Normal)
-            customVieweditButton.setImage(UIImage(named: "ic_edit"), forState: .Highlighted)
-            customVieweditButton.addTarget(self, action: #selector(editButtonPressed), forControlEvents: .TouchUpInside)
+            customVieweditButton.setImage(UIImage(named: "ic_edit"), for: UIControlState())
+            customVieweditButton.setImage(UIImage(named: "ic_edit"), for: .highlighted)
+            customVieweditButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
             let edtBarButton        = UIBarButtonItem(customView: customVieweditButton)
 
             
             let customViewRemoveButton = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-            customViewRemoveButton.setImage(UIImage(named: "garbage"), forState: .Normal)
-            customViewRemoveButton.setImage(UIImage(named: "garbage"), forState: .Highlighted)
-            customViewRemoveButton.addTarget(self, action: #selector(removeButtonPressed), forControlEvents: .TouchUpInside)
+            customViewRemoveButton.setImage(UIImage(named: "garbage"), for: UIControlState())
+            customViewRemoveButton.setImage(UIImage(named: "garbage"), for: .highlighted)
+            customViewRemoveButton.addTarget(self, action: #selector(removeButtonPressed), for: .touchUpInside)
             let removeBarButton        = UIBarButtonItem(customView: customViewRemoveButton)
             
             let customViewActionButton  = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Normal)
-            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Highlighted)
-            customViewActionButton.addTarget(self, action: #selector(actionButtonPressed), forControlEvents: .TouchUpInside)
+            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), for: UIControlState())
+            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), for: .highlighted)
+            customViewActionButton.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
             let actionBarButton         = UIBarButtonItem(customView: customViewActionButton)
             
             navigationItem.rightBarButtonItems = [actionBarButton, removeBarButton, edtBarButton]
@@ -131,9 +155,9 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
 
         else {
             let customViewActionButton  = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Normal)
-            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), forState: .Highlighted)
-            customViewActionButton.addTarget(self, action: #selector(actionButtonPressed), forControlEvents: .TouchUpInside)
+            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), for: UIControlState())
+            customViewActionButton.setImage(UIImage(named: "ActionNavBarIcon"), for: .highlighted)
+            customViewActionButton.addTarget(self, action: #selector(actionButtonPressed), for: .touchUpInside)
             let actionBarButton         = UIBarButtonItem(customView: customViewActionButton)
             
             navigationItem.rightBarButtonItems = [actionBarButton]
@@ -153,7 +177,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         let type : String = (self.post!.postType?.name)!
         if(type.isEmpty) {return}
         
-        if(type.containsString("text"))
+        if(type.contains("text"))
         {
             let createTextPostVC = CreateTextPostViewController()
             //createTextPostVC.pod = pod
@@ -164,16 +188,16 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                 createTextPostVC.pod = self.pod;
             }
             let textPostNavController = UINavigationController(rootViewController: createTextPostVC)
-            presentViewController(textPostNavController, animated: true, completion: nil)
-        } else if(type.containsString("image"))
+            present(textPostNavController, animated: true, completion: nil)
+        } else if(type.contains("image"))
         {
             if(self.post?.postImage == nil)
             {
                 return
             }
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                let data = NSData(contentsOfURL: NSURL(string: (self.post?.postImage?.imageURL!)!)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
-                dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+                let data = try? Data(contentsOf: URL(string: (self.post?.postImage?.imageURL!)!)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                DispatchQueue.main.async(execute: {
                     if(data != nil)
                     {
                         self.post?.postImageData = UIImage(data: data!)
@@ -191,7 +215,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
 
             
         }
-        else if(type.containsString("link"))
+        else if(type.contains("link"))
         {
             let createLinkPostVC = CreateURLPostViewController()
             if(pod != nil)
@@ -209,35 +233,35 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // MARK: NavBar Actions and Action Menu
     func removeButtonPressed() {
-        let alertController = UIAlertController(title: nil, message: Constants.Messages.RemovePostMsg, preferredStyle: .Alert)
-        let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: { action -> Void in
+        let alertController = UIAlertController(title: nil, message: Constants.Messages.RemovePostMsg, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { action -> Void in
             SVProgressHUD.show()
             let postIdString = String(self.post!.postId!)
             self.networkController.deletePost(postIdString) { (error) -> () in
                 SVProgressHUD.dismiss()
                 if error == nil {
                     print("post deleted")
-                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.DeletedPost, object: nil, userInfo: ["post":self.post!])
-                    self.navigationController?.popViewControllerAnimated(true)
+                    NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: Constants.Notifications.DeletedPost), object: nil, userInfo: ["post":self.post!])
+                    let _ = self.navigationController?.popViewController(animated: true)
                 }
             }
         })
-        let noAction = UIAlertAction(title: "No", style: .Default, handler: nil)
+        let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func actionButtonPressed() {
         if post?.postType?.name == "link" {
-            let imageURL = NSURL(string: (post?.postLink?.imageURL)!)
+            let imageURL = URL(string: (post?.postLink?.imageURL)!)
             
             let shareText = (post?.postText)! + "\n" + Constants.Messages.ShareSuffix + "\n" + Constants.iTunesURL
-            let manager = SDWebImageManager.sharedManager()
+            let manager = SDWebImageManager.shared()
             
-            manager.downloadImageWithURL(imageURL, options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+            manager?.downloadImage(with: imageURL, options: .refreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                 if error == nil {
-                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText, image], applicationActivities: nil)
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText, image!], applicationActivities: nil)
                     self.showActivityController(shareVC)
                 } else {
                     let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
@@ -251,13 +275,13 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             self.showActivityController(shareVC)
         } else {
             
-            let imageURL = NSURL(string: (post?.postImage?.imageURL)!)
-            let manager = SDWebImageManager.sharedManager()
+            let imageURL = URL(string: (post?.postImage?.imageURL)!)
+            let manager = SDWebImageManager.shared()
             let shareText = (post?.postHeader)! + "\n" + (post?.postText)! + "\n" + Constants.Messages.ShareSuffix + "\n" + Constants.iTunesURL
             
-            manager.downloadImageWithURL(imageURL, options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+            manager?.downloadImage(with: imageURL, options: .refreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                 if error == nil {
-                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText, image], applicationActivities: nil)
+                    let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText, image!], applicationActivities: nil)
                     self.showActivityController(shareVC)
                 } else {
                     let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
@@ -267,23 +291,22 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         }
     }
     
-    func showActivityController(shareVC: UIActivityViewController) {
-        shareVC.completionWithItemsHandler = {(activityType, success:Bool, items:[AnyObject]?, error:NSError?) in
+    func showActivityController(_ shareVC: UIActivityViewController) {
+        shareVC.completionWithItemsHandler = {(activityType, success, items, error) in
             if !success {
                 print("cancelled")
-            }
-            else {
+            } else {
                 var shareType = Constants.ShareType.Share_Other
-                if activityType == UIActivityTypeMail {
+                if activityType == UIActivityType.mail {
                     shareType = Constants.ShareType.Share_Mail
                 }
-                else if activityType == UIActivityTypeMessage {
+                else if activityType == UIActivityType.message {
                     shareType = Constants.ShareType.Share_SMS
                 }
-                else if activityType == UIActivityTypePostToFacebook {
+                else if activityType == UIActivityType.postToFacebook {
                     shareType = Constants.ShareType.Share_Facebook
                 }
-                else if activityType == UIActivityTypePostToTwitter {
+                else if activityType == UIActivityType.postToTwitter {
                     shareType = Constants.ShareType.Share_Twitter
                 }
                 
@@ -293,25 +316,24 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     } else {
                     }
                 })
-                
             }
         }
-        self.presentViewController(shareVC, animated: true, completion: nil)
+        self.present(shareVC, animated: true, completion: nil)
     }
     
     func setupActionMenuFields() {
         if self.actionMenu != nil {
             firstActionButton.layer.cornerRadius  = 5
             firstActionButton.layer.borderWidth   = 1
-            firstActionButton.layer.borderColor   = UIColor.darkGrayColor().CGColor
+            firstActionButton.layer.borderColor   = UIColor.darkGray.cgColor
 
             fourthActionButton.layer.cornerRadius = 5
             fourthActionButton.layer.borderWidth  = 1
-            fourthActionButton.layer.borderColor  = UIColor.darkGrayColor().CGColor
+            fourthActionButton.layer.borderColor  = UIColor.darkGray.cgColor
 
             sixthActionButton.layer.cornerRadius  = 5
             sixthActionButton.layer.borderWidth   = 1
-            sixthActionButton.layer.borderColor   = UIColor.darkGrayColor().CGColor
+            sixthActionButton.layer.borderColor   = UIColor.darkGray.cgColor
 
             secondActionButton.layer.cornerRadius = 5
             thirdActionButton.layer.cornerRadius  = 5
@@ -319,16 +341,16 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         }
     }
     
-    @IBAction func closePostActionViewTouchUpInside(sender: AnyObject) {
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+    @IBAction func closePostActionViewTouchUpInside(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.actionMenuBackground.alpha = 0
-            }) { (finished) -> Void in
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-                    }) { (finished) -> Void in
+            }, completion: { (finished) -> Void in
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                    self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.shared.keyWindow?.frame.size.height)!, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+                    }, completion: { (finished) -> Void in
                         self.actionMenu?.removeFromSuperview()
-                }
-        }
+                }) 
+        }) 
     }
     
     func actionMenuBackgroundTapped() {
@@ -343,7 +365,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     func likeButtonPressed() {
         if !(post?.isLikedByUser)! {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
             networkController.createLike("\(post!.postId!)", completionHandler: { (like, error) -> () in
                 if error == nil {
                     if like?.id != nil {
@@ -355,16 +377,16 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
         } else {
             
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
             networkController.deleteLike("\(post!.postId!)", completionHandler: { (error) -> () in
                 if error == nil {
                     self.post?.postNumberOfLikes = (self.post?.postNumberOfLikes)! - 1
@@ -374,10 +396,10 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
@@ -387,11 +409,11 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // MARK: TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         } else if section == 1 {
@@ -401,22 +423,22 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("PostDetailHeaderTableViewCell") as? PostDetailHeaderTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailHeaderTableViewCell") as? PostDetailHeaderTableViewCell
             if cell == nil {
                 cell = PostDetailHeaderTableViewCell()
             }
             (cell as? PostDetailHeaderTableViewCell)?.configureWithPost(post!)
             
         } else if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier("PostDetailsTopicsAndViewsTableViewCell") as? PostDetailsTopicsAndViewsTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "PostDetailsTopicsAndViewsTableViewCell") as? PostDetailsTopicsAndViewsTableViewCell
             if cell == nil {
                 cell = PostDetailsTopicsAndViewsTableViewCell()
             }
-            cell?.contentView.userInteractionEnabled = false
+            cell?.contentView.isUserInteractionEnabled = false
             (cell as? PostDetailsTopicsAndViewsTableViewCell)!.configureWithPost(post!)
             (cell as? PostDetailsTopicsAndViewsTableViewCell)?.delegate = self
         } else {
@@ -424,7 +446,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             if indexPath.row % 2 == 1 {
                 if(commentInfo?.postLink != nil || commentInfo?.postImage != nil)
                 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("PostCommentImageTableViewCell") as? PostCommentImageTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentImageTableViewCell") as? PostCommentImageTableViewCell
                     if cell == nil {
                         cell = PostCommentImageTableViewCell()
                     }
@@ -434,7 +456,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
 
                 }
                 else{
-                    cell = tableView.dequeueReusableCellWithIdentifier("PostCommentEvenTableViewCell") as? PostCommentEvenTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentEvenTableViewCell") as? PostCommentEvenTableViewCell
                     if cell == nil {
                         cell = PostCommentEvenTableViewCell()
                     }
@@ -446,7 +468,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             } else {
                 if(commentInfo?.postLink != nil || commentInfo?.postImage != nil)
                 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("PostCommentImageLeftTableViewCell") as? PostCommentImageLeftTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentImageLeftTableViewCell") as? PostCommentImageLeftTableViewCell
                     if cell == nil {
                         cell = PostCommentImageLeftTableViewCell()
                     }
@@ -455,7 +477,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     (cell as? PostCommentImageLeftTableViewCell)?.mPost = self.post
                 }
                 else{
-                cell = tableView.dequeueReusableCellWithIdentifier("PostCommentOddTableViewCell") as? PostCommentOddTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentOddTableViewCell") as? PostCommentOddTableViewCell
                 if cell == nil {
                     cell = PostCommentOddTableViewCell()
                 }
@@ -467,12 +489,12 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             }
         }
         
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    private func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         if(indexPath.section == 2)
         {
             if(self.post!.postComments?.count > 0)
@@ -497,7 +519,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
         // Adjust views of image
         if indexPath.section == 0 {
             (cell as? PostDetailHeaderTableViewCell)?.adjustCellViews()
@@ -527,7 +549,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    private func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // Only header for comments section
         if section == 2 {
             return 30
@@ -536,14 +558,14 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         }
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    private func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Only header for comments section
         if section == 2 {
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
             let headerImage = UIImageView(frame: CGRect(x: self.view.frame.size.width * 3 / 8.0, y: 5, width: self.view.frame.size.width / 4.0, height: 20))
-            headerView.backgroundColor = UIColor.clearColor()
-            headerImage.backgroundColor = UIColor.clearColor()
-            headerImage.contentMode = .ScaleAspectFit
+            headerView.backgroundColor = UIColor.clear
+            headerImage.backgroundColor = UIColor.clear
+            headerImage.contentMode = .scaleAspectFit
             headerImage.image = UIImage(named: "CommentsTitleImage")
             headerView.addSubview(headerImage)
             return headerView
@@ -554,7 +576,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // MARK: Tableview delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    private func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         if indexPath.section == 2 {
             let postCommentsVC  = PostCommentsViewController(post: post!)
             navigationController?.pushViewController(postCommentsVC, animated: true)
@@ -564,26 +586,26 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     // MARK: Keyboard management
     
     func addKeyboardObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillAppear(sender: NSNotification) {
+    func keyboardWillAppear(_ sender: Foundation.Notification) {
         print("Keyboard appeared")
         if let userInfo = sender.userInfo {
-            if let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+            if let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                 writeCommentBottomConstraint.constant = keyboardSize.height
-                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
                     self.view.layoutIfNeeded()
                 })
             }
         }
     }
     
-    override func keyboardWillHide(notification: NSNotification) {
+    override func keyboardWillHide(_ notification: Foundation.Notification) {
         print("Keyboard hidden")
         writeCommentBottomConstraint.constant = 0
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
     }
@@ -591,14 +613,14 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // MARK UItextViewDelegate
     
-    func textViewDidBeginEditing(textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == commentTextViewPlaceHolder {
             textView.text = ""
         }
         textView.becomeFirstResponder()
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
             textView.text = commentTextViewPlaceHolder
         }
@@ -607,21 +629,21 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // Photo actions
     
-    @IBAction func selectImageButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func selectImageButtonTouchUpInside(_ sender: AnyObject) {
         
         picker.delegate = self
-        let alert = UIAlertController(title: "Lets get a picture", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let libButton = UIAlertAction(title: "Select photo from library", style: UIAlertActionStyle.Default) { (alert) -> Void in
-            self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            self.picker.navigationBar.translucent = false
+        let alert = UIAlertController(title: "Lets get a picture", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        let libButton = UIAlertAction(title: "Select photo from library", style: UIAlertActionStyle.default) { (alert) -> Void in
+            self.picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.picker.navigationBar.isTranslucent = false
             self.picker.navigationBar.barTintColor = UIColor.blueDolphin()
-            self.presentViewController(self.picker, animated: true, completion: nil)
+            self.present(self.picker, animated: true, completion: nil)
         }
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
-            let cameraButton = UIAlertAction(title: "Take a picture", style: UIAlertActionStyle.Default) { (alert) -> Void in
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+            let cameraButton = UIAlertAction(title: "Take a picture", style: UIAlertActionStyle.default) { (alert) -> Void in
                 print("Take Photo")
-                self.picker.sourceType = UIImagePickerControllerSourceType.Camera
-                self.presentViewController(self.picker, animated: true, completion: nil)
+                self.picker.sourceType = UIImagePickerControllerSourceType.camera
+                self.present(self.picker, animated: true, completion: nil)
                 
             }
             alert.addAction(cameraButton)
@@ -629,23 +651,23 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             print("Camera not available")
             
         }
-        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (alert) -> Void in
             print("Cancel Pressed")
         }
         
         alert.addAction(libButton)
         alert.addAction(cancelButton)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func removeImageFromCommentButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func removeImageFromCommentButtonTouchUpInside(_ sender: AnyObject) {
         chosenImage = nil
         chosenImageView.image = nil
-        chosenImageContainer.hidden = true
+        chosenImageContainer.isHidden = true
     }
     
     //MARK: Images Delegates
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("didFinishPickingMediaWithInfo")
         chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         let screenWidth = (screenSize.width - 10)*2
@@ -654,13 +676,13 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         let intWidth :CGFloat? = CGFloat(screenWidth)
         let intHeight :CGFloat? = CGFloat((self.chosenImage?.size.height)!*radio!)
 
-        chosenImage = self.ResizeImage(chosenImage!, targetSize: CGSizeMake(intWidth!, intHeight!))
-        chosenImageContainer.hidden = false
+        chosenImage = self.ResizeImage(chosenImage!, targetSize: CGSize(width: intWidth!, height: intHeight!))
+        chosenImageContainer.isHidden = false
         if(chosenImageView != nil)
         {
             chosenImageView.image = chosenImage!
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
         /*var imageOriginalSelected : UIImage? = info[UIImagePickerControllerOriginalImage] as! UIImage
         let cropController = ImageCropViewController(image: imageOriginalSelected, cropRect: CGRectZero)
         cropController.delegate = self
@@ -668,7 +690,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         dismissViewControllerAnimated(true, completion: nil)*/
     }
     
-    func ResizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+    func ResizeImage(_ image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
         
         let widthRatio  = targetSize.width  / image.size.width
@@ -677,17 +699,17 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
         if(widthRatio > heightRatio) {
-            newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
         } else {
-            newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }
         
         // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
         
         // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.drawInRect(rect)
+        image.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -695,31 +717,31 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("imagePickerControllerDidCancel")
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     
-    func ImageCropViewControllerSuccess(controller: UIViewController!, didFinishCroppingImage croppedImage: UIImage!, cropRect: CGRect) {
+    func imageCropViewControllerSuccess(_ controller: UIViewController!, didFinishCroppingImage croppedImage: UIImage!, cropRect: CGRect) {
         //selectedCropRect = cropRect
         //imageSelected = croppedImage
         //podImageView.image = croppedImage
-        chosenImageContainer.hidden = false
+        chosenImageContainer.isHidden = false
         chosenImage = croppedImage!
         chosenImageView.image = croppedImage!
         
-        navigationController?.popViewControllerAnimated(true)
+        let _ = navigationController?.popViewController(animated: true)
     }
     
-    func ImageCropViewControllerDidCancel(controller: UIViewController!) {
-        navigationController?.popViewControllerAnimated(true)
+    func imageCropViewControllerDidCancel(_ controller: UIViewController!) {
+        let _ = navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Auxiliary methods
     
     func loadPost() {
-        SVProgressHUD.showWithStatus("Loading")
+        SVProgressHUD.show(withStatus: "Loading")
         networkController.getPostById(String(post!.postId!), completionHandler: { (post, error) in
             if error == nil {
                 self.post = post
@@ -728,17 +750,17 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             else {
                 SVProgressHUD.dismiss()
                 let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
         })
     }
     
-    func loadComments(showIndicator:Bool) {
+    func loadComments(_ showIndicator:Bool) {
         if showIndicator {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         
         networkController.getPostComments(String(post!.postId!)) { (postComments, error) -> () in
@@ -748,15 +770,15 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                 
                 //Add Open History.
                 self.networkController.createPostOpen(String(self.post!.postId!), completionHandler: { (error) in
-                    print(error);
+                    print(error!);
                 })
                 
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             SVProgressHUD.dismiss()
         }
@@ -764,11 +786,11 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     
     // MARK: - Actions
     
-    @IBAction func postMessageTouchUpInside(sender: AnyObject) {
+    @IBAction func postMessageTouchUpInside(_ sender: AnyObject) {
         print("send message pressed")
         commentTextView.resignFirstResponder()
         if commentTextView.text != "" && commentTextView.text != "Write a comment..." {
-            SVProgressHUD.showWithStatus("Sending comment")
+            SVProgressHUD.show(withStatus: "Sending comment")
             var type : String? = "text"
             var intWidth :Int? = 0
             var intHeight : Int? = 0
@@ -787,7 +809,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                 if error == nil {
                     if comment?.postCommentId != nil {
                         self.chosenImage = nil
-                        self.chosenImageContainer.hidden = true
+                        self.chosenImageContainer.isHidden = true
                         self.chosenImageContainer.subviews.forEach({ $0.removeFromSuperview() })
                         // add the comment returned locally
                         self.post?.postComments?.append(comment!)
@@ -797,9 +819,9 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                         self.commentTextView.text = ""
                         // after a delay, scroll the table to the last comment
                         let delay = 0.1 * Double(NSEC_PER_SEC)
-                        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-                        dispatch_after(time, dispatch_get_main_queue(), {
-                            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.post!.postComments!.count - 1, inSection: 2), atScrollPosition: .Bottom, animated: true)
+                        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+                        DispatchQueue.main.asyncAfter(deadline: time, execute: {
+                            self.tableView.scrollToRow(at: IndexPath(row: self.post!.postComments!.count - 1, section: 2), at: .bottom, animated: true)
                         })
                     } else {
                         print("there was an error saving the post")
@@ -808,58 +830,58 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
             
         } else {
             var alert: UIAlertController
-            alert = UIAlertController(title: "Error", message: "The message can't be empty!", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert = UIAlertController(title: "Error", message: "The message can't be empty!", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
     //Topic
-    func tapTopic(topic: Topic?) {
+    func tapTopic(_ topic: Topic?) {
         let topicPost = TagPostsViewController(likes: false)
         topicPost.selectedTopic = topic
         navigationController?.pushViewController(topicPost, animated: true)
     }
     
     
-    @IBAction func btnCloseTapped(sender: AnyObject) {
+    @IBAction func btnCloseTapped(_ sender: AnyObject) {
         self.ViewTypeCancelTapped(self)
     }
     
-    @IBAction func postPhotoCommentTapped(sender: AnyObject) {
+    @IBAction func postPhotoCommentTapped(_ sender: AnyObject) {
         self.ViewTypeCancelTapped(self)
         self.overlayView = UIView()
         self.overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
-        self.overlayView.frame = (UIApplication.sharedApplication().keyWindow?.frame)!
-        UIApplication.sharedApplication().keyWindow?.addSubview(self.overlayView)
+        self.overlayView.frame = (UIApplication.shared.keyWindow?.frame)!
+        UIApplication.shared.keyWindow?.addSubview(self.overlayView)
         
         self.chooseSoureTypeView = ChooseSourceTypeView.instanceFromNib()
-        self.chooseSoureTypeView.frame = CGRectMake(0, 0, 300, 200)
-        self.chooseSoureTypeView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height/2.0)
+        self.chooseSoureTypeView.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
+        self.chooseSoureTypeView.center = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height/2.0)
         self.chooseSoureTypeView.delegate = self
-        UIApplication.sharedApplication().keyWindow?.addSubview(self.chooseSoureTypeView!)
+        UIApplication.shared.keyWindow?.addSubview(self.chooseSoureTypeView!)
         
-        self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        UIView.animateWithDuration(0.1, animations: {
-            self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(1.2, 1.2)
-            UIView.animateWithDuration(0.05, animations: {
-                self.chooseSoureTypeView.transform = CGAffineTransformIdentity
-            }) { (finished) in
-            }
-        }) { (finished) in
+        self.chooseSoureTypeView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        UIView.animate(withDuration: 0.1, animations: {
+            self.chooseSoureTypeView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            UIView.animate(withDuration: 0.05, animations: {
+                self.chooseSoureTypeView.transform = CGAffineTransform.identity
+            }, completion: { (finished) in
+            }) 
+        }, completion: { (finished) in
             
-        }
+        }) 
 
     }
     
@@ -867,10 +889,10 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         let addDescriptionVC = CreateImagePostAddDescriptionViewController()
         if chosenImage == nil {
             var alert: UIAlertController
-            alert = UIAlertController(title: "Error", message: "You have to select an image", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert = UIAlertController(title: "Error", message: "You have to select an image", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         } else {
             addDescriptionVC.postImage = chosenImage
             //addDescriptionVC.podId = podId
@@ -887,11 +909,11 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     func selectedCamera() {
         self.closedDialog()
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            self.picker.sourceType = UIImagePickerControllerSourceType.camera
             self.picker.delegate   = self
             self.picker.allowsEditing = true
-            self.presentViewController(picker, animated: true, completion: nil)
+            self.present(picker, animated: true, completion: nil)
         }
         else {
             Utils.presentAlertMessage("Error", message: "Device has no camera", cancelActionText: "Ok", presentingViewContoller: self)
@@ -901,19 +923,19 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     func selectedPhotoGallery() {
         self.closedDialog()
         
-        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         self.picker.delegate   = self
         self.picker.allowsEditing = true
-        self.picker.navigationBar.tintColor = UIColor.whiteColor()
-        self.picker.navigationBar.barStyle = UIBarStyle.Black
-        self.presentViewController(picker, animated: true, completion: nil)
+        self.picker.navigationBar.tintColor = UIColor.white
+        self.picker.navigationBar.barStyle = UIBarStyle.black
+        self.present(picker, animated: true, completion: nil)
     }
     
-    @IBAction func postTextCommentTapped(sender: AnyObject) {
+    @IBAction func postTextCommentTapped(_ sender: AnyObject) {
         self.ViewTypeCancelTapped(self)
     }
     
-    @IBAction func postWedCommentTapped(sender: AnyObject) {
+    @IBAction func postWedCommentTapped(_ sender: AnyObject) {
         let commentToSend = PostCommentRequest(text: commentTextView.text, image: nil ,type: "link",url: nil, imageWidth: 0, imageHeight: 0)
         let createLinkPostVC = CreateURLPostViewController()
         commentToSend.postCommentId = post!.postId!
@@ -923,27 +945,27 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         print("Post link button pressed")
     }
     
-    @IBAction func showCommentTypeTapped(sender: AnyObject) {
+    @IBAction func showCommentTypeTapped(_ sender: AnyObject) {
         
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            self.ViewTypeParent?.frame = CGRect(x: 0, y: 0, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-        }) { (finished) -> Void in
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.ViewTypeParent.hidden = false
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.ViewTypeParent?.frame = CGRect(x: 0, y: 0, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+        }, completion: { (finished) -> Void in
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                self.ViewTypeParent.isHidden = false
                 self.ViewTypeCancel.alpha = 0.4
             })
-        }
+        }) 
     }
-    @IBAction func ViewTypeCancelTapped(sender: AnyObject) {
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+    @IBAction func ViewTypeCancelTapped(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.ViewTypeCancel.alpha = 0
-        }) { (finished) -> Void in
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-            }) { (finished) -> Void in
-                self.ViewTypeParent.hidden = true
+        }, completion: { (finished) -> Void in
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.shared.keyWindow?.frame.size.height)!, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+            }, completion: { (finished) -> Void in
+                self.ViewTypeParent.isHidden = true
                 //self.ViewTypeParent?.removeFromSuperview()
-            }
-        }
+            }) 
+        }) 
     }
 }

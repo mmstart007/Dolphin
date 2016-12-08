@@ -39,26 +39,26 @@ class PODRequest : NSObject {
     func toJson() -> [String: AnyObject] {
         var retDic = [String: AnyObject]()
         if let podId = self.id {
-            retDic["id"] = podId
+            retDic["id"] = podId as AnyObject?
         }
         
         if let nm = self.name {
-            retDic["name"] = nm
+            retDic["name"] = nm as AnyObject?
         }
         if let descrip = self.descriptionText {
-            retDic["description"] = descrip
+            retDic["description"] = descrip as AnyObject?
         }
         if let image = self.imageData {
-            retDic["image"] = Utils.encodeBase64(image)
+            retDic["image"] = Utils.encodeBase64(image) as AnyObject?
         }
         if let priv = self.isPrivate {
-            retDic["is_private"] = priv
+            retDic["is_private"] = priv as AnyObject?
         }
         if let width = self.image_width {
-            retDic["image_width"] = width
+            retDic["image_width"] = width as AnyObject?
         }
         if let height = self.image_height {
-            retDic["image_height"] = height
+            retDic["image_height"] = height as AnyObject?
         }
         
         
@@ -66,7 +66,7 @@ class PODRequest : NSObject {
             let usersIds: [Int]? = usrs.map({ (actual) -> Int in
                 actual.id!
             })
-            retDic["users"] = usersIds
+            retDic["users"] = usersIds as AnyObject?
         }
         
         return retDic

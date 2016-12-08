@@ -32,28 +32,28 @@ class PostCommentRequest : NSObject {
     func toJson() -> [String: AnyObject] {
         var retDic = [String: AnyObject]()
         if let text = self.postCommentText {
-            retDic["body"] = text
+            retDic["body"] = text as AnyObject?
         }
         if let image = self.postCommentImage {
-            retDic["image"] = Utils.encodeBase64(image)
+            retDic["image"] = Utils.encodeBase64(image) as AnyObject?
         }
         if let type = self.type {
-            retDic["type"] = type
+            retDic["type"] = type as AnyObject?
         }
         if let url = self.url {
-            retDic["url"] = url
+            retDic["url"] = url as AnyObject?
         }
         
         if let imageUrl = self.postImageUrl {
-            retDic["image_url"] = imageUrl
+            retDic["image_url"] = imageUrl as AnyObject?
         }
         
         if let image_width = self.postImageWidth {
-            retDic["image_width"] = image_width
+            retDic["image_width"] = image_width as AnyObject?
         }
         
         if let image_height = self.postImageHeight {
-            retDic["image_height"] = image_height
+            retDic["image_height"] = image_height as AnyObject?
         }
         
         

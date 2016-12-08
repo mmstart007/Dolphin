@@ -17,16 +17,16 @@ class PopularPODsTableViewCell : CustomFontTableViewCell {
         
         let collectionViewFlowControl = UICollectionViewFlowLayout()
         podsCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: collectionViewFlowControl)
-        podsCollectionView.registerNib(UINib(nibName: "PODCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "PODCollectionViewCell")
+        podsCollectionView.register(UINib(nibName: "PODCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "PODCollectionViewCell")
         podsCollectionView.tag = 1
-        podsCollectionView.scrollEnabled = false
-        podsCollectionView.backgroundColor = UIColor.clearColor()
+        podsCollectionView.isScrollEnabled = false
+        podsCollectionView.backgroundColor = UIColor.clear
         
         self.addSubview(podsCollectionView)
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
     }
     
-    func configureWithDataSource(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate) {
+    func configureWithDataSource(_ dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate) {
         podsCollectionView.dataSource = dataSource
         podsCollectionView.delegate   = delegate
     }

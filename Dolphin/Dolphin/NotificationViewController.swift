@@ -33,22 +33,22 @@ class NotificationViewController: DolphinViewController, UITableViewDataSource, 
         // Do any additional setup after loading the view.
         setBackButton()
         self.title = "Notifications"
-        contentTableView.registerNib(UINib(nibName: "NotificationTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "NotificationTableViewCell")
+        contentTableView.register(UINib(nibName: "NotificationTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "NotificationTableViewCell")
         contentTableView.estimatedRowHeight = 60.0
         contentTableView.rowHeight = UITableViewAutomaticDimension
-        contentTableView.addPullToRefreshWithActionHandler { () -> Void in
+        contentTableView.addPullToRefresh { () -> Void in
             self.loadData(true)
         }
         
-        contentTableView.addInfiniteScrollingWithActionHandler { () -> Void in
+        contentTableView.addInfiniteScrolling { () -> Void in
             self.loadNextPosts()
         }
     }
     
-    func loadData(pullToRefresh: Bool) {
+    func loadData(_ pullToRefresh: Bool) {
         page = 0
         if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         
         networkController.filterNotification(nil, quantity: kPageQuantity, page: 0, sort_by: nil) { (notifications, error) in
@@ -69,13 +69,13 @@ class NotificationViewController: DolphinViewController, UITableViewDataSource, 
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
@@ -88,7 +88,7 @@ class NotificationViewController: DolphinViewController, UITableViewDataSource, 
         page = page + 1
         networkController.filterNotification(nil, quantity: kPageQuantity, page: page, sort_by: nil) { (notifications, error) in
             if error == nil {
-                self.notifications.appendContentsOf(notifications)
+                self.notifications.append(contentsOf: notifications)
                 self.contentTableView.reloadData()
                 
                 
@@ -96,23 +96,23 @@ class NotificationViewController: DolphinViewController, UITableViewDataSource, 
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             self.contentTableView.infiniteScrollingView.stopAnimating()
         }
     }
     
-    func addTableEmptyMessage(message: String) {
+    func addTableEmptyMessage(_ message: String) {
         let labelBackground = UILabel(frame: CGRect(x: 0, y: 0, width: contentTableView.frame.width, height: 200))
         labelBackground.text = message
         labelBackground.textColor = UIColor.blueDolphin()
-        labelBackground.textAlignment = .Center
+        labelBackground.textAlignment = .center
         labelBackground.numberOfLines = 0
         Utils.setFontFamilyForView(labelBackground, includeSubViews: true)
         contentTableView.backgroundView = labelBackground
@@ -124,33 +124,33 @@ class NotificationViewController: DolphinViewController, UITableViewDataSource, 
     
     // MARK: TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notifications.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: NotificationTableViewCell? = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell") as? NotificationTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: NotificationTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell") as? NotificationTableViewCell
         if cell == nil {
             cell = NotificationTableViewCell()
         }
         
         cell?.configureCell(notifications[indexPath.row])
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
 //        cell?.delegate = self
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
    
     // MARK: Tableview delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let notification = notifications[indexPath.row]
         
         if let post = notification.post {

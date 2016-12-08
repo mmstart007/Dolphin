@@ -43,27 +43,27 @@ class PostRequest : NSObject {
     
     
     func toJson() -> [String: AnyObject] {
-        var retDic: [String: AnyObject] = ["type": self.postType!]
+        var retDic: [String: AnyObject] = ["type": self.postType! as AnyObject]
         if let title = self.postHeader {
-            retDic["title"] = title
+            retDic["title"] = title as AnyObject?
         }
         if let body = self.postText {
-            retDic["body"] = body
+            retDic["body"] = body as AnyObject?
         }
         if let link = self.postLink {
-            retDic["url"] = link.url
-            retDic["image_url"] = link.imageURL
+            retDic["url"] = link.url as AnyObject?
+            retDic["image_url"] = link.imageURL as AnyObject?
         }
         if let imageUrl = self.postImageUrl {
-            retDic["image_url"] = imageUrl
+            retDic["image_url"] = imageUrl as AnyObject?
         }
         
         if let image_width = self.postImageWidth {
-            retDic["image_width"] = image_width
+            retDic["image_width"] = image_width as AnyObject?
         }
         
         if let image_height = self.postImageHeight {
-            retDic["image_height"] = image_height
+            retDic["image_height"] = image_height as AnyObject?
         }
         
         if let topics = self.postTopics {
@@ -71,17 +71,17 @@ class PostRequest : NSObject {
             for t in topics {
                 topicsNames.append(t.name!)
             }
-            retDic["topics"] = topicsNames
+            retDic["topics"] = topicsNames as AnyObject?
         }
         if let image = self.postImageData {
-            retDic["image"] = Utils.encodeBase64(image)
+            retDic["image"] = Utils.encodeBase64(image) as AnyObject?
         }
         if let podId = self.postPODId {
-            retDic["pod_id"] = podId
+            retDic["pod_id"] = podId as AnyObject?
         }
         
         if let postId = self.postId {
-            retDic["id"] = postId
+            retDic["id"] = postId as AnyObject?
         }
         return retDic
     }

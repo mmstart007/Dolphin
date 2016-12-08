@@ -41,9 +41,9 @@ class PostCommentImageTableViewCell : CustomFontTableViewCell {
         }
     }
     
-    func configureWithPostComment(comment: PostComment) {
+    func configureWithPostComment(_ comment: PostComment) {
         self.mComment = comment
-        postCommentUserImageView.sd_setImageWithURL(NSURL(string: (comment.postCommentUser?.userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+        postCommentUserImageView.sd_setImage(with: URL(string: (comment.postCommentUser?.userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
         self.layer.cornerRadius                               = 5
         postCommentTextView.text                              = comment.postCommentText
         postCommentTextView.textContainer.lineFragmentPadding = 0
@@ -53,11 +53,11 @@ class PostCommentImageTableViewCell : CustomFontTableViewCell {
         }
         postCommentUserImageView.layer.cornerRadius           = postCommentUserImageView.frame.size.width / 2.0
         postCommentUserImageView.layer.masksToBounds          = true
-        postCommentTextView.textColor                         = UIColor.lightGrayColor()
-        postCommentTextView.textAlignment                     = .Right
+        postCommentTextView.textColor                         = UIColor.lightGray
+        postCommentTextView.textAlignment                     = .right
         let fixedWidth = postCommentTextView.frame.size.width
-        postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        let newSize = postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        let newSize = postCommentTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = max(newSize.height, 40)
         self.postCommentTextViewHeightConstraint.constant = newHeight + 10
         Utils.setFontFamilyForView(self, includeSubViews: true)
@@ -72,7 +72,7 @@ class PostCommentImageTableViewCell : CustomFontTableViewCell {
         }
         
         if let userImageUrl = imageUrl {
-            postCommentImage.sd_setImageWithURL(NSURL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+            postCommentImage.sd_setImage(with: URL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             postCommentImage.image = UIImage(named: "PostImagePlaceholder")
         }
@@ -93,10 +93,10 @@ class PostCommentImageTableViewCell : CustomFontTableViewCell {
         postCommentUserImageView.layer.cornerRadius  = postCommentUserImageView.frame.size.width / 2.0
     }
     
-    @IBAction func likeTapped(sender: AnyObject) {
+    @IBAction func likeTapped(_ sender: AnyObject) {
         let postIdString = String(self.mPost!.postId!)
         let commentIdString = String(self.mComment!.postCommentId!)
-        SVProgressHUD.showWithStatus("Likeing...")
+        SVProgressHUD.show(withStatus: "Likeing...")
         if (mComment!.postCommentIsLike == 0) {
             self.networkController.likeComment(commentIdString, podId: postIdString , completionHandler: { (liked, error) -> () in
                 if error == nil {
@@ -115,13 +115,13 @@ class PostCommentImageTableViewCell : CustomFontTableViewCell {
                     let errors: [String]? = error!["errors"] as? [String]
                     var alert: UIAlertController
                     if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                     } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                     }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.controller!.presentViewController(alert, animated: true, completion: nil)
+                    self.controller!.present(alert, animated: true, completion: nil)
                 }
             })
         }
@@ -143,13 +143,13 @@ class PostCommentImageTableViewCell : CustomFontTableViewCell {
                     let errors: [String]? = error!["errors"] as? [String]
                     var alert: UIAlertController
                     if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                     } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                     }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.controller!.presentViewController(alert, animated: true, completion: nil)
+                    self.controller!.present(alert, animated: true, completion: nil)
                 }
             })
             

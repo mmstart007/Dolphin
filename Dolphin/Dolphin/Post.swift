@@ -19,7 +19,7 @@ class Post : NSObject {
         case "text":
             return UIColor(red: 232/255.0, green: 97/255.0, blue: 39/255.0, alpha: 1)
         default:
-            return UIColor.blackColor()
+            return UIColor.black
         }
     }
     
@@ -36,7 +36,7 @@ class Post : NSObject {
     var postImageHeight: Float?
     var postHeader: String?
     var postText: String?
-    var postDate: NSDate?
+    var postDate: Date?
     var postNumberOfLikes: Int?
     var postNumberOfComments: Int?
     var postComments: [PostComment]?
@@ -44,7 +44,7 @@ class Post : NSObject {
     
     convenience init(user: User?, image: Image?, imageData: UIImage?, imageWidth: Float?, imageHeight: Float?, type: PostType?,
         topics: [Topic]?, link: Link?, imageUrl: String?, title: String?, text: String?,
-        date: NSDate?, numberOfLikes: Int?, numberOfComments: Int?, comments: [PostComment]?, PODId: Int?) {
+        date: Date?, numberOfLikes: Int?, numberOfComments: Int?, comments: [PostComment]?, PODId: Int?) {
             self.init()
             
             self.postPODId            = PODId
@@ -70,21 +70,21 @@ class Post : NSObject {
         
         let postJsonObject = jsonObject as? [String: AnyObject]
         if let userJson = postJsonObject!["user"] as? [String: AnyObject] {
-            self.postUser  = User(jsonObject: userJson)
+            self.postUser  = User(jsonObject: userJson as AnyObject)
         }
         if let imageJson = postJsonObject!["image"] as? [String: AnyObject] {
-            self.postImage = Image(jsonObject: imageJson)
+            self.postImage = Image(jsonObject: imageJson as AnyObject)
         }
         if let typeJson = postJsonObject!["type"] as? [String: AnyObject] {
-            self.postType = PostType(jsonObject: typeJson)
+            self.postType = PostType(jsonObject: typeJson as AnyObject)
         }
         if let linkJson = postJsonObject!["link"] as? [String: AnyObject] {
-            self.postLink = Link(jsonObject: linkJson)
+            self.postLink = Link(jsonObject: linkJson as AnyObject)
         }
         self.postTopics = []
         if let topicsJsonArray = postJsonObject!["topics"] as? [[String: AnyObject]] {
             for elem in topicsJsonArray {
-                self.postTopics?.append(Topic(jsonObject: elem))
+                self.postTopics?.append(Topic(jsonObject: elem as AnyObject))
             }
         }
         if let likeIt = postJsonObject!["is_liked"] as? Int {
@@ -98,33 +98,33 @@ class Post : NSObject {
         self.postId               = postJsonObject!["id"] as? Int
         self.postImageUrl         = postJsonObject!["image_url"] as? String
         let dateString            = postJsonObject!["created_at"] as? String
-        self.postDate             = NSDate(timeIntervalSince1970: Double(dateString!)!)
+        self.postDate             = Date(timeIntervalSince1970: Double(dateString!)!)
         self.postComments         = []
         
     }
     
     func toJson() -> [String: AnyObject] {
-        var retDic: [String: AnyObject] = ["type": self.postType!.name!]
+        var retDic: [String: AnyObject] = ["type": self.postType!.name! as AnyObject]
         if let title = self.postHeader {
-            retDic["title"] = title
+            retDic["title"] = title as AnyObject?
         }
         if let body = self.postText {
-            retDic["body"] = body
+            retDic["body"] = body as AnyObject?
         }
         if let link = self.postLink {
-            retDic["url"] = link.url
-            retDic["image_url"] = link.imageURL
+            retDic["url"] = link.url as AnyObject?
+            retDic["image_url"] = link.imageURL as AnyObject?
         }
         if let imageUrl = self.postImageUrl {
-            retDic["image_url"] = imageUrl
+            retDic["image_url"] = imageUrl as AnyObject?
         }
         
         if let image_width = self.postImageWidth {
-            retDic["image_width"] = image_width
+            retDic["image_width"] = image_width as AnyObject?
         }
         
         if let image_height = self.postImageHeight {
-            retDic["image_height"] = image_height
+            retDic["image_height"] = image_height as AnyObject?
         }
         
         if let topics = self.postTopics {
@@ -132,13 +132,13 @@ class Post : NSObject {
             for t in topics {
                 topicsNames.append(t.name!)
             }
-            retDic["topics"] = topicsNames
+            retDic["topics"] = topicsNames as AnyObject?
         }
         if let image = self.postImageData {
-            retDic["image"] = Utils.encodeBase64(image)
+            retDic["image"] = Utils.encodeBase64(image) as AnyObject?
         }
         if let podId = self.postPODId {
-            retDic["pod_id"] = podId
+            retDic["pod_id"] = podId as AnyObject?
         }
         return retDic
     }

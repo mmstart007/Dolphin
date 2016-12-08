@@ -22,17 +22,17 @@ class NewPostPrivacySettingsVisibilityCell : CustomFontTableViewCell {
         selectedImageView.layer.masksToBounds = true
     }
     
-    func configureWithVisibilitySetting(setting: NewPostPrivacySettingsViewController.VisibilitySetting, selected: Bool) {
+    func configureWithVisibilitySetting(_ setting: NewPostPrivacySettingsViewController.VisibilitySetting, selected: Bool) {
         
         if selected {
-            selectedImageView.backgroundColor = UIColor.clearColor()
+            selectedImageView.backgroundColor = UIColor.clear
             selectedImageView.image           = UIImage(named: "CheckboxTickIcon")
         } else {
-            selectedImageView.backgroundColor = UIColor.lightGrayColor()
+            selectedImageView.backgroundColor = UIColor.lightGray
             selectedImageView.image           = nil
         }
-        visibilityIconImageView.image      = setting.image != nil && setting.image != "" ? UIImage(named: setting.image!)?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate) : nil
-        visibilityIconImageView.tintColor  = UIColor.darkGrayColor()
+        visibilityIconImageView.image      = setting.image != nil && setting.image != "" ? UIImage(named: setting.image!)?.withRenderingMode(UIImageRenderingMode.alwaysTemplate) : nil
+        visibilityIconImageView.tintColor  = UIColor.darkGray
         visibilityLabel.text               = setting.name
     }
     

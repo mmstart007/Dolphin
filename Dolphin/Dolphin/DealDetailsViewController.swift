@@ -23,13 +23,13 @@ class DealDetailsViewController: DolphinViewController, UITableViewDelegate, UIT
         
         tableViewDealDetails.delegate = self
         tableViewDealDetails.dataSource = self
-        tableViewDealDetails.separatorStyle = .None
+        tableViewDealDetails.separatorStyle = .none
         tableViewDealDetails.estimatedRowHeight = 700
         tableViewDealDetails.rowHeight = UITableViewAutomaticDimension;
         tableViewDealDetails.backgroundColor = UIColor.lightGrayBackground()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         tableViewDealDetails.reloadData()
@@ -44,43 +44,43 @@ class DealDetailsViewController: DolphinViewController, UITableViewDelegate, UIT
     //Mark: - Auxiliary methods
     
     func registerCells() {
-        tableViewDealDetails.registerNib(UINib(nibName: "DealDetailsHeaderTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "DealDetailsHeaderTableViewCell")
-        tableViewDealDetails.registerNib(UINib(nibName: "DealDetailsCodeSectionTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "DealDetailsCodeSectionTableViewCell")        
+        tableViewDealDetails.register(UINib(nibName: "DealDetailsHeaderTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "DealDetailsHeaderTableViewCell")
+        tableViewDealDetails.register(UINib(nibName: "DealDetailsCodeSectionTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "DealDetailsCodeSectionTableViewCell")        
     }
     
     // MARK: TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("DealDetailsHeaderTableViewCell") as? DealDetailsHeaderTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "DealDetailsHeaderTableViewCell") as? DealDetailsHeaderTableViewCell
             if cell == nil {
                 cell = DealDetailsHeaderTableViewCell()
             }
             (cell as? DealDetailsHeaderTableViewCell)?.configureWithDeal(deal!)
         } else if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier("DealDetailsCodeSectionTableViewCell") as? DealDetailsCodeSectionTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "DealDetailsCodeSectionTableViewCell") as? DealDetailsCodeSectionTableViewCell
             if cell == nil {
                 cell = DealDetailsCodeSectionTableViewCell()
             }
             (cell as? DealDetailsCodeSectionTableViewCell)!.configureWithDeal(deal!)
         }
         
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
     // MARK: Tableview delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     

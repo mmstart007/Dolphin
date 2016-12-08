@@ -11,7 +11,7 @@ import UIKit
 import SVProgressHUD
 
 protocol SelectPODMembersDelegate {
-    func membersDidSelected(members: [User])
+    func membersDidSelected(_ members: [User])
 }
 
 class SelectPODMembersViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, PODMemberToAddTableViewCellDelegate {
@@ -26,7 +26,7 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     var searchResults: [User] = []
     
     required init() {
-        super.init(nibName: "SelectPODMembersViewController", bundle: NSBundle.mainBundle())
+        super.init(nibName: "SelectPODMembersViewController", bundle: Bundle.main)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -44,65 +44,65 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        tableView.registerNib(UINib(nibName: "PODMemberToAddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
+        tableView.register(UINib(nibName: "PODMemberToAddTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
         
         showSearchBar()
         filterContentForSearchText("", isFirstLoading: true)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
-    override func keyboardWillShow(sender: NSNotification) {
+    override func keyboardWillShow(_ sender: Foundation.Notification) {
         if let userInfo = sender.userInfo {
-            if let keyboardHeight = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
+            if let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size.height {
                 self.bottomConstraint.constant = keyboardHeight
                 self.view.layoutIfNeeded()
             }
         }
     }
     
-    override func keyboardWillHide(notification: NSNotification) {
+    override func keyboardWillHide(_ notification: Foundation.Notification) {
         self.bottomConstraint.constant = 0
         self.view.layoutIfNeeded()
     }
     
     // MARK: - TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("PODMemberToAddTableViewCell") as? PODMemberToAddTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "PODMemberToAddTableViewCell") as? PODMemberToAddTableViewCell
         if cell == nil {
             cell = PODMemberToAddTableViewCell()
         }
         cell!.configureWithUser(searchResults[indexPath.row], isAdded: false, index: indexPath.row)
         cell!.delegate = self
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
     // MARK: - UITableViewDelegate
     
-    func addMember(user: User?, index: Int) {
+    func addMember(_ user: User?, index: Int) {
         selectedMembers.append(searchResults[index])
-        searchResults.removeAtIndex(index)
+        searchResults.remove(at: index)
         
         self.tableView.reloadData()
     }
@@ -110,29 +110,29 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
     // MARK: - Handle SearchBar
     
     func showSearchBar() {
-        searchBar?.tintColor = UIColor.whiteColor()
+        searchBar?.tintColor = UIColor.white
         searchBar?.barTintColor = UIColor.blueDolphin()
-        UITextField.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
-        UIBarButtonItem.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.whiteColor()
-        UIView.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.whiteColor()
+        UITextField.my_appearanceWhenContained(within: [UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
+        UIBarButtonItem.my_appearanceWhenContained(within: [UISearchBar.classForCoder()]).tintColor = UIColor.white
+        UIView.my_appearanceWhenContained(within: [UISearchBar.classForCoder()]).tintColor = UIColor.white
 
         searchBar?.becomeFirstResponder()
         searchBar?.showsCancelButton = true
         searchBar?.delegate          = self
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterContentForSearchText(searchText, isFirstLoading: false)
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         resignResponder()
         searchBar.text = ""
 //        searchResults = []        
 //        self.tableView.reloadData()
     }
     
-    func filterContentForSearchText(searchText: String, isFirstLoading: Bool) {
+    func filterContentForSearchText(_ searchText: String, isFirstLoading: Bool) {
         if isFirstLoading == true {
             SVProgressHUD.show()
         }
@@ -156,21 +156,21 @@ class SelectPODMembersViewController : DolphinViewController, UITableViewDataSou
                 let errors: [String]? = error!["errors"] as? [String]
                 var alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Oops", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
 
             }
         }
     }
     
     // MARK: - Auxiliary methods
-    func doneSelectingMembersPressed(sender: AnyObject) {
+    func doneSelectingMembersPressed(_ sender: AnyObject) {
         delegate?.membersDidSelected(selectedMembers)
-        navigationController?.popViewControllerAnimated(true)
+        let _ = navigationController?.popViewController(animated: true)
     }
 }

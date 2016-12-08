@@ -26,23 +26,23 @@ class UserImageCollectionViewCell : CustomFontCollectionViewCell  {
     }
     
     func configureAsAddUser() {
-        userAvatarImageView.backgroundColor = UIColor.whiteColor()
+        userAvatarImageView.backgroundColor = UIColor.white
         userAvatarImageView.image = UIImage(named: "PlusIconSmall")
-        userAvatarImageView.contentMode = .Center
+        userAvatarImageView.contentMode = .center
         userNameLabel.text = "Add"
-        deleteButton.hidden = true
+        deleteButton.isHidden = true
     }
     
-    func configureWithUser(user: User) {
+    func configureWithUser(_ user: User) {
         self.selectedUser = user
-        userAvatarImageView.backgroundColor = UIColor.whiteColor()
-        userAvatarImageView.contentMode = .ScaleAspectFill
+        userAvatarImageView.backgroundColor = UIColor.white
+        userAvatarImageView.contentMode = .scaleAspectFill
         if let userAvatarURL = user.userAvatarImageURL {
-            userAvatarImageView.sd_setImageWithURL(NSURL(string: userAvatarURL), placeholderImage: UIImage(named: "UserPlaceholder"))
+            userAvatarImageView.sd_setImage(with: URL(string: userAvatarURL), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             userAvatarImageView.image = UIImage(named: "UserPlaceholder")
         }
         userNameLabel.text = user.userName
-        deleteButton.hidden = false
+        deleteButton.isHidden = false
     }
 }

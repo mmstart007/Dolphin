@@ -22,12 +22,12 @@ class EditPodMemberViewController: DolphinViewController, PODMemberToAddTableVie
         // Do any additional setup after loading the view.
         self.title = "Edit Members"
         
-        let rightButton = UIBarButtonItem(image: UIImage(named: "PlusIconSmall"), style: .Plain, target: self, action: #selector(addNewMember))
-        rightButton.tintColor = UIColor.whiteColor()
+        let rightButton = UIBarButtonItem(image: UIImage(named: "PlusIconSmall"), style: .plain, target: self, action: #selector(addNewMember))
+        rightButton.tintColor = UIColor.white
         self.navigationItem.rightBarButtonItem = rightButton
 
         setBackButton()
-        tableView.registerNib(UINib(nibName: "PODMemberToAddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
+        tableView.register(UINib(nibName: "PODMemberToAddTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PODMemberToAddTableViewCell")
     }
 
     func addNewMember() {
@@ -39,46 +39,46 @@ class EditPodMemberViewController: DolphinViewController, PODMemberToAddTableVie
 
     // MARK: - TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (pod?.users!.count)!
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("PODMemberToAddTableViewCell") as? PODMemberToAddTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "PODMemberToAddTableViewCell") as? PODMemberToAddTableViewCell
         if cell == nil {
             cell = PODMemberToAddTableViewCell()
         }
         cell!.configureWithUser((pod?.users![indexPath.row])!, isAdded: true, index: indexPath.row)
         cell!.delegate = self
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
-    func deleteMember(user: User?, index: Int) {
-        pod?.users?.removeAtIndex(index)
+    func deleteMember(_ user: User?, index: Int) {
+        pod?.users?.remove(at: index)
         var retDic = [String: AnyObject]()
         
         if let podId = pod!.id {
-            retDic["id"] = podId
+            retDic["id"] = podId as AnyObject?
         }
         
         if let usrs = pod!.users {
             let usersIds: [Int]? = usrs.map({ (actual) -> Int in
                 actual.id!
             })
-            retDic["users"] = usersIds
+            retDic["users"] = usersIds as AnyObject?
         }
         
         SVProgressHUD.show()
-        networkController.updatePod(retDic) { (updatedPod, error) in
+        networkController.updatePod(retDic as NSDictionary) { (updatedPod, error) in
             SVProgressHUD.dismiss()
             self.tableView.reloadData()            
         }
@@ -86,23 +86,23 @@ class EditPodMemberViewController: DolphinViewController, PODMemberToAddTableVie
     
     
     // MARK: - SelectPODMembersDelegate
-    func membersDidSelected(members: [User]) {
+    func membersDidSelected(_ members: [User]) {
         pod?.users = members
         var retDic = [String: AnyObject]()
         
         if let podId = pod!.id {
-            retDic["id"] = podId
+            retDic["id"] = podId as AnyObject?
         }
         
         if let usrs = pod!.users {
             let usersIds: [Int]? = usrs.map({ (actual) -> Int in
                 actual.id!
             })
-            retDic["users"] = usersIds
+            retDic["users"] = usersIds as AnyObject?
         }
         
         SVProgressHUD.show()
-        networkController.updatePod(retDic) { (updatedPod, error) in
+        networkController.updatePod(retDic as NSDictionary) { (updatedPod, error) in
             SVProgressHUD.dismiss()
             self.tableView.reloadData()
         }

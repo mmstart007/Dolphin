@@ -9,9 +9,9 @@
 import UIKit
 
 @objc protocol ChooseSourceTypeViewDelegate{
-    optional func closedDialog()
-    optional func selectedCamera()
-    optional func selectedPhotoGallery()
+    @objc optional func closedDialog()
+    @objc optional func selectedCamera()
+    @objc optional func selectedPhotoGallery()
 }
 
 
@@ -19,15 +19,15 @@ class ChooseSourceTypeView: UIView {
     var delegate: ChooseSourceTypeViewDelegate?
 
     class func instanceFromNib() -> ChooseSourceTypeView {
-        return UINib(nibName: "ChooseSourceTypeView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! ChooseSourceTypeView
+        return UINib(nibName: "ChooseSourceTypeView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! ChooseSourceTypeView
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.layer.shadowColor = UIColor.blackColor().CGColor
+        self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 1
-        self.layer.shadowOffset = CGSizeZero
+        self.layer.shadowOffset = CGSize.zero
         self.layer.shadowRadius = 10
         self.layer.cornerRadius = 3.0
     }

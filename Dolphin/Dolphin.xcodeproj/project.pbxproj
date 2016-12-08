@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07CDBCCA1DF8938D00928C1E /* KSToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CDBCC61DF8938D00928C1E /* KSToken.swift */; };
+		07CDBCCB1DF8938D00928C1E /* KSTokenField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CDBCC71DF8938D00928C1E /* KSTokenField.swift */; };
+		07CDBCCC1DF8938D00928C1E /* KSTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CDBCC81DF8938D00928C1E /* KSTokenView.swift */; };
+		07CDBCCD1DF8938D00928C1E /* KSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CDBCC91DF8938D00928C1E /* KSUtils.swift */; };
 		3607AAD51C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3607AAD41C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift */; };
 		3607AAD91C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3607AAD81C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift */; };
 		3607AADB1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3607AADA1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib */; };
@@ -164,15 +168,6 @@
 		AA6E4F0F1D77CAA600EE4C75 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA6E4F0D1D77CAA600EE4C75 /* NotificationTableViewCell.xib */; };
 		AA72535D1D6D90620050DF7D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72535C1D6D90620050DF7D /* BaseViewController.swift */; };
 		AA7253631D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7253621D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib */; };
-		AA72BE181D5810C0001543BE /* PDKBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE061D5810BF001543BE /* PDKBoard.m */; };
-		AA72BE191D5810C0001543BE /* PDKCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE081D5810BF001543BE /* PDKCategories.m */; };
-		AA72BE1A1D5810C0001543BE /* PDKClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE0A1D5810BF001543BE /* PDKClient.m */; };
-		AA72BE1B1D5810C0001543BE /* PDKImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE0C1D5810BF001543BE /* PDKImageInfo.m */; };
-		AA72BE1C1D5810C0001543BE /* PDKInterest.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE0E1D5810BF001543BE /* PDKInterest.m */; };
-		AA72BE1D1D5810C0001543BE /* PDKModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE101D5810C0001543BE /* PDKModelObject.m */; };
-		AA72BE1E1D5810C0001543BE /* PDKPin.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE121D5810C0001543BE /* PDKPin.m */; };
-		AA72BE1F1D5810C0001543BE /* PDKResponseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE141D5810C0001543BE /* PDKResponseObject.m */; };
-		AA72BE201D5810C0001543BE /* PDKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72BE161D5810C0001543BE /* PDKUser.m */; };
 		AA7452B91D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7452B71D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift */; };
 		AA7452BA1D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7452B81D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib */; };
 		AA7AEF7D1D0A5D4800AA36B5 /* TagPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */; };
@@ -211,6 +206,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07CDBCC61DF8938D00928C1E /* KSToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSToken.swift; sourceTree = "<group>"; };
+		07CDBCC71DF8938D00928C1E /* KSTokenField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSTokenField.swift; sourceTree = "<group>"; };
+		07CDBCC81DF8938D00928C1E /* KSTokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSTokenView.swift; sourceTree = "<group>"; };
+		07CDBCC91DF8938D00928C1E /* KSUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KSUtils.swift; sourceTree = "<group>"; };
 		3607AAD41C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		3607AAD81C8F5DAA00B9DD8F /* SettingsSwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		3607AADA1C8F5DC400B9DD8F /* SettingsSwitchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsSwitchTableViewCell.xib; sourceTree = "<group>"; };
@@ -380,25 +379,6 @@
 		AA6E4F0D1D77CAA600EE4C75 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
 		AA72535C1D6D90620050DF7D /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		AA7253621D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsTextFieldTableViewCell.xib; sourceTree = "<group>"; };
-		AA72BE051D5810BF001543BE /* PDKBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKBoard.h; path = Extensions/Pinterest/PDKBoard.h; sourceTree = "<group>"; };
-		AA72BE061D5810BF001543BE /* PDKBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKBoard.m; path = Extensions/Pinterest/PDKBoard.m; sourceTree = "<group>"; };
-		AA72BE071D5810BF001543BE /* PDKCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKCategories.h; path = Extensions/Pinterest/PDKCategories.h; sourceTree = "<group>"; };
-		AA72BE081D5810BF001543BE /* PDKCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKCategories.m; path = Extensions/Pinterest/PDKCategories.m; sourceTree = "<group>"; };
-		AA72BE091D5810BF001543BE /* PDKClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKClient.h; path = Extensions/Pinterest/PDKClient.h; sourceTree = "<group>"; };
-		AA72BE0A1D5810BF001543BE /* PDKClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKClient.m; path = Extensions/Pinterest/PDKClient.m; sourceTree = "<group>"; };
-		AA72BE0B1D5810BF001543BE /* PDKImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKImageInfo.h; path = Extensions/Pinterest/PDKImageInfo.h; sourceTree = "<group>"; };
-		AA72BE0C1D5810BF001543BE /* PDKImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKImageInfo.m; path = Extensions/Pinterest/PDKImageInfo.m; sourceTree = "<group>"; };
-		AA72BE0D1D5810BF001543BE /* PDKInterest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKInterest.h; path = Extensions/Pinterest/PDKInterest.h; sourceTree = "<group>"; };
-		AA72BE0E1D5810BF001543BE /* PDKInterest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKInterest.m; path = Extensions/Pinterest/PDKInterest.m; sourceTree = "<group>"; };
-		AA72BE0F1D5810BF001543BE /* PDKModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKModelObject.h; path = Extensions/Pinterest/PDKModelObject.h; sourceTree = "<group>"; };
-		AA72BE101D5810C0001543BE /* PDKModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKModelObject.m; path = Extensions/Pinterest/PDKModelObject.m; sourceTree = "<group>"; };
-		AA72BE111D5810C0001543BE /* PDKPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKPin.h; path = Extensions/Pinterest/PDKPin.h; sourceTree = "<group>"; };
-		AA72BE121D5810C0001543BE /* PDKPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKPin.m; path = Extensions/Pinterest/PDKPin.m; sourceTree = "<group>"; };
-		AA72BE131D5810C0001543BE /* PDKResponseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKResponseObject.h; path = Extensions/Pinterest/PDKResponseObject.h; sourceTree = "<group>"; };
-		AA72BE141D5810C0001543BE /* PDKResponseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKResponseObject.m; path = Extensions/Pinterest/PDKResponseObject.m; sourceTree = "<group>"; };
-		AA72BE151D5810C0001543BE /* PDKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDKUser.h; path = Extensions/Pinterest/PDKUser.h; sourceTree = "<group>"; };
-		AA72BE161D5810C0001543BE /* PDKUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDKUser.m; path = Extensions/Pinterest/PDKUser.m; sourceTree = "<group>"; };
-		AA72BE171D5810C0001543BE /* PinterestSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinterestSDK.h; path = Extensions/Pinterest/PinterestSDK.h; sourceTree = "<group>"; };
 		AA7452B71D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGenderTableViewCell.swift; sourceTree = "<group>"; };
 		AA7452B81D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsGenderTableViewCell.xib; sourceTree = "<group>"; };
 		AA7AEF7C1D0A5D4800AA36B5 /* TagPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPostsViewController.swift; sourceTree = "<group>"; };
@@ -453,6 +433,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07CDBCC51DF8938D00928C1E /* KSTokenView */ = {
+			isa = PBXGroup;
+			children = (
+				07CDBCC61DF8938D00928C1E /* KSToken.swift */,
+				07CDBCC71DF8938D00928C1E /* KSTokenField.swift */,
+				07CDBCC81DF8938D00928C1E /* KSTokenView.swift */,
+				07CDBCC91DF8938D00928C1E /* KSUtils.swift */,
+			);
+			path = KSTokenView;
+			sourceTree = "<group>";
+		};
 		3607AAD31C8F547800B9DD8F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -844,6 +835,7 @@
 		36BE4CF91C061AE1002E52D9 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				07CDBCC51DF8938D00928C1E /* KSTokenView */,
 				3650E0B91C6D427400BB9301 /* Image Cropping */,
 				369382AD1C3191320005FCB0 /* Facebook */,
 				36BE4CFA1C061AEC002E52D9 /* SWRevealViewController */,
@@ -879,7 +871,6 @@
 		36BE4D041C062162002E52D9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				AA72BE041D5810A6001543BE /* Pinterest */,
 				36129FA31CA5999C00446503 /* AFDateExtension.swift */,
 				360993121C4049530082B995 /* UIAppearance_Swift.h */,
 				360993131C4049530082B995 /* UIAppearance_Swift.m */,
@@ -986,32 +977,6 @@
 			name = Notification;
 			sourceTree = "<group>";
 		};
-		AA72BE041D5810A6001543BE /* Pinterest */ = {
-			isa = PBXGroup;
-			children = (
-				AA72BE051D5810BF001543BE /* PDKBoard.h */,
-				AA72BE061D5810BF001543BE /* PDKBoard.m */,
-				AA72BE071D5810BF001543BE /* PDKCategories.h */,
-				AA72BE081D5810BF001543BE /* PDKCategories.m */,
-				AA72BE091D5810BF001543BE /* PDKClient.h */,
-				AA72BE0A1D5810BF001543BE /* PDKClient.m */,
-				AA72BE0B1D5810BF001543BE /* PDKImageInfo.h */,
-				AA72BE0C1D5810BF001543BE /* PDKImageInfo.m */,
-				AA72BE0D1D5810BF001543BE /* PDKInterest.h */,
-				AA72BE0E1D5810BF001543BE /* PDKInterest.m */,
-				AA72BE0F1D5810BF001543BE /* PDKModelObject.h */,
-				AA72BE101D5810C0001543BE /* PDKModelObject.m */,
-				AA72BE111D5810C0001543BE /* PDKPin.h */,
-				AA72BE121D5810C0001543BE /* PDKPin.m */,
-				AA72BE131D5810C0001543BE /* PDKResponseObject.h */,
-				AA72BE141D5810C0001543BE /* PDKResponseObject.m */,
-				AA72BE151D5810C0001543BE /* PDKUser.h */,
-				AA72BE161D5810C0001543BE /* PDKUser.m */,
-				AA72BE171D5810C0001543BE /* PinterestSDK.h */,
-			);
-			name = Pinterest;
-			sourceTree = "<group>";
-		};
 		AAE472F81D75304D00DB1C4F /* Side */ = {
 			isa = PBXGroup;
 			children = (
@@ -1058,6 +1023,8 @@
 					36BE4CC71C061524002E52D9 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = 3R2S97YZLA;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1182,7 +1149,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		21F3FF6462050FA0BAAFF17F /* [CP] Embed Pods Frameworks */ = {
@@ -1246,7 +1213,6 @@
 				36D0C69E1C08CFDE0002AE35 /* PostTableViewCell.swift in Sources */,
 				36D0C6A11C08D0990002AE35 /* Post.swift in Sources */,
 				363F7ACD1C9348A3009866AE /* Constants.swift in Sources */,
-				AA72BE1D1D5810C0001543BE /* PDKModelObject.m in Sources */,
 				361FFE281C0D0C46007EE366 /* PostComment.swift in Sources */,
 				F89DF7C21D491B8D0052FCBF /* GridPostCell.swift in Sources */,
 				36D0C6A61C08E35F0002AE35 /* FeedViewController.swift in Sources */,
@@ -1255,6 +1221,7 @@
 				368798981C2B34A60088AC24 /* DolphinCustomFontViewController.swift in Sources */,
 				36BE4D081C062404002E52D9 /* HomeViewController.swift in Sources */,
 				36DCCD771C73EB8800D4B171 /* UserImagePODMemberCollectionViewCell.swift in Sources */,
+				07CDBCCB1DF8938D00928C1E /* KSTokenField.swift in Sources */,
 				361F508E1C693AA500153B6C /* NewPostPrivacySettingsShareToPODCell.swift in Sources */,
 				361FFE2A1C0D1792007EE366 /* PostCommentEvenTableViewCell.swift in Sources */,
 				36129FA71CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift in Sources */,
@@ -1271,8 +1238,8 @@
 				36BE4D0C1C062668002E52D9 /* SidebarViewController.swift in Sources */,
 				AA7452B91D6D4D8E00CD9FF1 /* SettingsGenderTableViewCell.swift in Sources */,
 				36E998261C24C3A5007FCF64 /* UIImage+ScaleAndCrop.swift in Sources */,
-				AA72BE201D5810C0001543BE /* PDKUser.m in Sources */,
 				3689ECE01C0E45D40087F828 /* PODPreviewTableViewCell.swift in Sources */,
+				07CDBCCA1DF8938D00928C1E /* KSToken.swift in Sources */,
 				36C2CF6C1C98CD5400E7B4E3 /* Like.swift in Sources */,
 				36E998221C24A936007FCF64 /* CreateImagePostFinishPostingViewController.swift in Sources */,
 				AAE6A8C41D6CA9C800A997B0 /* SignUpViewController.swift in Sources */,
@@ -1299,20 +1266,18 @@
 				CE0CFCB11DC82E330037D904 /* PostCommentImageTableViewCell.swift in Sources */,
 				3616E49C1C760B50004ED92E /* DealDetailsCodeSectionTableViewCell.swift in Sources */,
 				3607AAD51C8F553700B9DD8F /* SettingsTextFieldTableViewCell.swift in Sources */,
-				AA72BE181D5810C0001543BE /* PDKBoard.m in Sources */,
 				AAE472FB1D75306100DB1C4F /* SideTableViewCell.swift in Sources */,
 				361FFE201C0CFAB2007EE366 /* PostDetailHeaderTableViewCell.swift in Sources */,
-				AA72BE1F1D5810C0001543BE /* PDKResponseObject.m in Sources */,
 				36129FA41CA5999C00446503 /* AFDateExtension.swift in Sources */,
 				36BE4CCC1C061524002E52D9 /* AppDelegate.swift in Sources */,
 				3607AADE1C8F7E6200B9DD8F /* PODSettingsViewController.swift in Sources */,
 				36736F681C6130790040A263 /* DolphinButton.swift in Sources */,
 				36B1F41A1C0FA7780091A1B3 /* PopularPODsTableViewCell.swift in Sources */,
+				07CDBCCD1DF8938D00928C1E /* KSUtils.swift in Sources */,
 				3609207E1C978575003F5CB8 /* Topic.swift in Sources */,
 				36B1F41E1C0FA9720091A1B3 /* PODCollectionViewCell.swift in Sources */,
 				369382B71C31B7FE0005FCB0 /* FriendToInviteTableViewCell.swift in Sources */,
 				3689ECE61C0E62E40087F828 /* POD.swift in Sources */,
-				AA72BE1B1D5810C0001543BE /* PDKImageInfo.m in Sources */,
 				361FFE1A1C0CE8DE007EE366 /* TriangleView.swift in Sources */,
 				3650E0BC1C6D428400BB9301 /* ImageCropView.m in Sources */,
 				36D841151C31EDC500C3065C /* TwitterFriend.swift in Sources */,
@@ -1327,6 +1292,7 @@
 				361BFDAF1C9CA04C00F994F1 /* Link.swift in Sources */,
 				361F50861C65337C00153B6C /* NewPostPrivacySettingsViewController.swift in Sources */,
 				F8483E721CFE7BFA0060CC8C /* WebViewController.swift in Sources */,
+				07CDBCCC1DF8938D00928C1E /* KSTokenView.swift in Sources */,
 				3636F9641C1EF79000999200 /* MyPODPreviewCollectionViewCell.swift in Sources */,
 				3668B2FD1C6A7A6200469FF9 /* DealCollectionViewCell.swift in Sources */,
 				3650E0BF1C6D42C200BB9301 /* FXBlurView.m in Sources */,
@@ -1334,15 +1300,12 @@
 				369697451C725ECB00774055 /* PODDetailsViewController.swift in Sources */,
 				361ADC491CA5FB3B00F45A6E /* CreateURLPostAddDescriptionViewController.swift in Sources */,
 				36BE4CFE1C061AFD002E52D9 /* SWRevealViewController.m in Sources */,
-				AA72BE1A1D5810C0001543BE /* PDKClient.m in Sources */,
 				361FFE1C1C0CF36E007EE366 /* PostDetailsViewController.swift in Sources */,
 				CE0CFCB81DC82ED40037D904 /* PODRequest.swift in Sources */,
 				36DCCD731C73AC3A00D4B171 /* PODMembersTableViewCell.swift in Sources */,
 				365D76C91C7540AA00A0833F /* DealDetailsViewController.swift in Sources */,
 				3668B2F61C6A761400469FF9 /* Deal.swift in Sources */,
 				AAB7E8F31D4A7ED000B19397 /* EditPodMemberViewController.swift in Sources */,
-				AA72BE191D5810C0001543BE /* PDKCategories.m in Sources */,
-				AA72BE1E1D5810C0001543BE /* PDKPin.m in Sources */,
 				3650E0B61C6D1AFA00BB9301 /* CreatePodViewController.swift in Sources */,
 				36C5DAA01C35A05300DFF60F /* InstagramFriend.swift in Sources */,
 				36BE4D061C06217D002E52D9 /* UIColor+DolphinAdditions.swift in Sources */,
@@ -1352,7 +1315,6 @@
 				AA6E4F0A1D77C07500EE4C75 /* Notification.swift in Sources */,
 				AAB7E8F71D4A88F800B19397 /* PODMemberToAddTableViewCell.swift in Sources */,
 				36E411701C8E3DE9002DC736 /* SettingsViewController.swift in Sources */,
-				AA72BE1C1D5810C0001543BE /* PDKInterest.m in Sources */,
 				364140651C173B820022D1BE /* CreateURLPostViewController.swift in Sources */,
 				369382B41C31B1FF0005FCB0 /* FacebookFriend.swift in Sources */,
 				3641405F1C110F770022D1BE /* PostCommentsViewController.swift in Sources */,
@@ -1474,8 +1436,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Menlo Ed, Inc (3R2S97YZLA)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Menlo Ed, Inc (3R2S97YZLA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Roque (UUV65RY822)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Roque (UUV65RY822)";
+				DEVELOPMENT_TEAM = 3R2S97YZLA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1494,13 +1457,15 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = Dolphin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "94fc86ea-cf0e-49cb-8cd1-eb59194843a0";
-				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
+				PROVISIONING_PROFILE = "027b75c8-1e50-48ee-9226-7a2b6efe61c3";
+				PROVISIONING_PROFILE_SPECIFIER = DophinDevProvision_1128;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Dolphin-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1511,8 +1476,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Menlo Ed, Inc (3R2S97YZLA)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Menlo Ed, Inc (3R2S97YZLA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Roque (UUV65RY822)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Roque (UUV65RY822)";
+				DEVELOPMENT_TEAM = 3R2S97YZLA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1531,12 +1497,14 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = Dolphin/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "94fc86ea-cf0e-49cb-8cd1-eb59194843a0";
-				SWIFT_OBJC_BRIDGING_HEADER = "Dolphin-Bridging-Header.h";
+				PROVISIONING_PROFILE = "027b75c8-1e50-48ee-9226-7a2b6efe61c3";
+				PROVISIONING_PROFILE_SPECIFIER = DophinDevProvision_1128;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Dolphin-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

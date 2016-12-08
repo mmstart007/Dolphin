@@ -65,7 +65,7 @@ extension UIColor {
         }
     }
     
-    class func lighterColorForColor(color: UIColor) -> (UIColor) {
+    class func lighterColorForColor(_ color: UIColor) -> (UIColor) {
         var red: CGFloat   = 0.0
         var green: CGFloat = 0.0
         var blue: CGFloat  = 0.0
@@ -77,7 +77,7 @@ extension UIColor {
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    class func darkerColorForColor(color: UIColor) -> (UIColor) {
+    class func darkerColorForColor(_ color: UIColor) -> (UIColor) {
         var red: CGFloat   = 0.0
         var green: CGFloat = 0.0
         var blue: CGFloat  = 0.0

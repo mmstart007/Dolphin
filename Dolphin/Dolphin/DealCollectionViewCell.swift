@@ -37,10 +37,10 @@ class DealCollectionViewCell : UICollectionViewCell {
         layer.cornerRadius = 5
     }
     
-    func configureWithDeal(deal: Deal) {
+    func configureWithDeal(_ deal: Deal) {
         
         if deal.dealImage != nil {
-            dealImageView.sd_setImageWithURL(NSURL(string: deal.dealImage!))
+            dealImageView.sd_setImage(with: URL(string: deal.dealImage!))
         }
         dealDescriptionLabel.text = deal.dealDescription
         dealDateLabel.text        = deal.dealDate?.formattedAsTimeAgo()
@@ -52,7 +52,7 @@ class DealCollectionViewCell : UICollectionViewCell {
     func configureAsDealsHeader() {
         dealImageView.image = UIImage(named: "DolphinDealHeader")
         dealDescriptionLabel.text = "List your Deal for other Dolphins to Explore!"
-        dealDescriptionLabel.textAlignment = .Center
+        dealDescriptionLabel.textAlignment = .center
         dealDescriptionLabel.numberOfLines = 0
         dealDescriptionLabel.adjustsFontSizeToFitWidth = true
         
@@ -60,9 +60,9 @@ class DealCollectionViewCell : UICollectionViewCell {
             triangleView        = TriangleView()
             triangleView!.frame = CGRect(x: self.frame.size.width - 60, y: 0, width: 60, height: 60)
         }
-        triangleView?.hidden             = false
+        triangleView?.isHidden             = false
         triangleView!.color              = UIColor.greenDolphinDealHeader()
-        triangleView!.backgroundColor    = UIColor.clearColor()
+        triangleView!.backgroundColor    = UIColor.clear
         triangleView!.layer.cornerRadius = 5
         self.addSubview(triangleView!)
         triangleView!.addImage("DollarIcon")

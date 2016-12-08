@@ -20,21 +20,21 @@ class SettingsTextFieldTableViewCell: UITableViewCell {
     }
 
     
-    func configureWithSetting(name: String, placeholder: String, value: String?, isEdit: Bool, subItem: Bool) {
+    func configureWithSetting(_ name: String, placeholder: String, value: String?, isEdit: Bool, subItem: Bool) {
         labelSettingName.text = name
         textFieldValue.placeholder = placeholder
-        textFieldValue.enabled = isEdit
+        textFieldValue.isEnabled = isEdit
         
         if value != nil {
             textFieldValue.text = value
         }
         
         if subItem {
-            self.accessoryType = .DisclosureIndicator
+            self.accessoryType = .disclosureIndicator
             self.layoutTextRight.constant = 0
         } else
         {
-            self.accessoryType = .None
+            self.accessoryType = .none
             self.layoutTextRight.constant = 15
         }
     }

@@ -25,7 +25,7 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
         
     }
     
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -35,48 +35,48 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
     
     func setBackButton() {
         
-        let leftButton = UIBarButtonItem(image: UIImage(named: "NavBarGoBackButton"), style: UIBarButtonItemStyle.Plain, target: self, action:#selector(goBackButtonPressed(_:)))
+        let leftButton = UIBarButtonItem(image: UIImage(named: "NavBarGoBackButton"), style: UIBarButtonItemStyle.plain, target: self, action:#selector(goBackButtonPressed(_:)))
         self.navigationItem.leftBarButtonItem = leftButton;
         
     }
     
     func setDismissButton() {
         
-        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Stop, target: self, action: #selector(dismissButtonPressed(_:)))
+        let leftButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(dismissButtonPressed(_:)))
         self.navigationItem.leftBarButtonItem = leftButton;
         
     }
     
-    func goBackButtonPressed(sender: UIBarButtonItem) {
-        self.navigationController?.popViewControllerAnimated(true)
+    func goBackButtonPressed(_ sender: UIBarButtonItem) {
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
-    func dismissButtonPressed(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func dismissButtonPressed(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    func setRightSystemButtonItem(systemItem: UIBarButtonSystemItem, target: AnyObject?, action: Selector) {
+    func setRightSystemButtonItem(_ systemItem: UIBarButtonSystemItem, target: AnyObject?, action: Selector) {
         let rightButton = UIBarButtonItem(barButtonSystemItem: systemItem, target: target, action: action)
-        rightButton.tintColor = UIColor.whiteColor()
+        rightButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItem = rightButton;
     }
     
-    func setRightButtonItemWithText(text: String, target: AnyObject?, action: Selector) {
-        let rightButton = UIBarButtonItem(title: text, style: .Plain, target: target, action: action)
-        rightButton.tintColor = UIColor.whiteColor()
-        rightButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: Constants.Fonts.Raleway_Regular, size: 14)!], forState: UIControlState.Normal)
+    func setRightButtonItemWithText(_ text: String, target: AnyObject?, action: Selector) {
+        let rightButton = UIBarButtonItem(title: text, style: .plain, target: target, action: action)
+        rightButton.tintColor = UIColor.white
+        rightButton.setTitleTextAttributes([NSFontAttributeName: UIFont(name: Constants.Fonts.Raleway_Regular, size: 14)!], for: UIControlState())
         navigationItem.rightBarButtonItem = rightButton;
     }
     
-    func setLeftButtonItemWithText(text: String, target: AnyObject?, action: Selector) {
-        let leftButton = UIBarButtonItem(title: text, style: .Plain, target: target, action: action)
-        leftButton.tintColor = UIColor.whiteColor()
+    func setLeftButtonItemWithText(_ text: String, target: AnyObject?, action: Selector) {
+        let leftButton = UIBarButtonItem(title: text, style: .plain, target: target, action: action)
+        leftButton.tintColor = UIColor.white
         navigationItem.leftBarButtonItem = leftButton;
     }
     
-    func addRightButtonItemWithImage(imageName: String, target: AnyObject?, action: Selector) {
-        let rightButton = UIBarButtonItem(image: UIImage(named: imageName), style: .Plain, target: target, action: action)
-        rightButton.tintColor = UIColor.whiteColor()
+    func addRightButtonItemWithImage(_ imageName: String, target: AnyObject?, action: Selector) {
+        let rightButton = UIBarButtonItem(image: UIImage(named: imageName), style: .plain, target: target, action: action)
+        rightButton.tintColor = UIColor.white
         navigationItem.rightBarButtonItems?.append(rightButton)
     }
     
@@ -88,27 +88,27 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
     
     // MARK: Handle Keyboard showing
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Foundation.Notification) {
         
         if let activeView = self.view.findViewThatIsFirstResponder() {
-            if let keyboardSize = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size {
+            if let keyboardSize = (notification.userInfo![UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size {
                 let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
                 parentScrollView?.contentInset = contentInsets
                 parentScrollView?.scrollIndicatorInsets = contentInsets
                 var aRect = self.view.frame
                 aRect.size.height -= keyboardSize.height;
-                let activeViewAbsoluteFrame = activeView.convertRect(activeView.frame, toView: nil)
+                let activeViewAbsoluteFrame = activeView.convert(activeView.frame, to: nil)
 //                let distance = (UIScreen.mainScreen().bounds.height - keyboardSize.height) - (activeViewAbsoluteFrame.origin.y + activeViewAbsoluteFrame.size.height)
-                if !CGRectContainsPoint(aRect, activeViewAbsoluteFrame.origin) {
+                if !aRect.contains(activeViewAbsoluteFrame.origin) {
                     parentScrollView?.scrollRectToVisible(activeViewAbsoluteFrame, animated: true)
                 }
             }
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Foundation.Notification) {
         
-        let contentInsets = UIEdgeInsetsZero
+        let contentInsets = UIEdgeInsets.zero
         parentScrollView?.contentInset = contentInsets
         parentScrollView?.scrollIndicatorInsets = contentInsets
         
@@ -116,20 +116,20 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
     
     // MARK: - Keyboard Controls
     
-    func keyboardControls(keyboardControls: BSKeyboardControls!, selectedField field: UIView!, inDirection direction: BSKeyboardControlsDirection) {
+    func keyboardControls(_ keyboardControls: BSKeyboardControls!, selectedField field: UIView!, in direction: BSKeyboardControlsDirection) {
         print("Changed seletion")
         if let scrollView = parentScrollView {
             scrollView.scrollRectToVisible((keyboardControls.activeField.superview?.superview?.frame)!, animated: true)
         }
     }
     
-    func keyboardControlsDonePressed(keyboardControls: BSKeyboardControls!) {
+    func keyboardControlsDonePressed(_ keyboardControls: BSKeyboardControls!) {
         resignResponder()
     }
     
-    func addTextFieldToKeyboradControlsTextFields(textField: UITextField) {
+    func addTextFieldToKeyboradControlsTextFields(_ textField: UITextField) {
         textFieldsForKeyboardControls.append(textField)
-        textFieldsForKeyboardControls      = textFieldsForKeyboardControls.sort({ $0.tag < $1.tag})
+        textFieldsForKeyboardControls      = textFieldsForKeyboardControls.sorted(by: { $0.tag < $1.tag})
         keyboardControls.fields            = textFieldsForKeyboardControls
     }
     

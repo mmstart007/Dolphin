@@ -13,11 +13,11 @@ class TopicCollectionViewCell : CustomFontCollectionViewCell {
     
     @IBOutlet weak var topicNameLabel: UILabel!
     
-    func configureWithName(name: String, color: UIColor) {
+    func configureWithName(_ name: String, color: UIColor) {
         self.topicNameLabel.text = name
         self.layer.cornerRadius  = 10
         self.backgroundColor     = color
-        self.layer.borderColor   = UIColor.darkerColorForColor(color).CGColor
+        self.layer.borderColor   = UIColor.darkerColorForColor(color).cgColor
         self.layer.borderWidth   = 2
     }
     

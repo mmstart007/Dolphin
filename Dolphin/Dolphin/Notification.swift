@@ -11,7 +11,7 @@ import Foundation
 class Notification : NSObject {
     
     var notification_id: Int?
-    var created_at: NSDate?
+    var created_at: Date?
     var is_read: Bool?
     var object_id: Int?
     var receiver_id: Int?
@@ -26,7 +26,7 @@ class Notification : NSObject {
         
         self.notification_id        = jsonObject["notification_id"] as? Int
         if let createdAtString         = jsonObject["created_at"] as? String {
-            self.created_at             = NSDate(timeIntervalSince1970: Double(createdAtString)!)
+            self.created_at             = Date(timeIntervalSince1970: Double(createdAtString)!)
         }
         
         self.is_read                = jsonObject["is_read"] as? Bool
@@ -35,15 +35,15 @@ class Notification : NSObject {
         self.type                   = jsonObject["type"] as? Int
         self.user_id                = jsonObject["user_id"] as? Int
         if let userJson = jsonObject["user"] as? [String: AnyObject] {
-            self.sender  = User(jsonObject: userJson)
+            self.sender  = User(jsonObject: userJson as AnyObject)
         }
 
         if let postJson = jsonObject["post"] as? [String: AnyObject] {
-            self.post  = Post(jsonObject: postJson)
+            self.post  = Post(jsonObject: postJson as AnyObject)
         }
         
         if let podJson = jsonObject["pod"] as? [String: AnyObject] {
-            self.pod  = POD(jsonObject: podJson)
+            self.pod  = POD(jsonObject: podJson as AnyObject)
         }
     }
     

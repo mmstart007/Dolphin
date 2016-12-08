@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Globals: NSObject {
+open class Globals: NSObject {
     
     static var currentLat: Double = 0.0
     static var currentLng: Double = 0.0
@@ -19,9 +19,10 @@ public class Globals: NSObject {
     static var currentAddress: String       = ""
     
     // Convert from NSData to json object
-    public static func nsdataToJSON(data: NSData) -> AnyObject? {
+    open static func nsdataToJSON(_ data: Data) -> AnyObject? {
         do {
-            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+            return try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
+            //return try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
         } catch let myJSONError {
             print(myJSONError)
         }
@@ -29,9 +30,9 @@ public class Globals: NSObject {
     }
     
     // Convert from JSON to nsdata
-    public static func jsonToNSData(json: AnyObject) -> NSData?{
+    open static func jsonToNSData(_ json: AnyObject) -> Data?{
         do {
-            return try NSJSONSerialization.dataWithJSONObject(json, options: NSJSONWritingOptions.PrettyPrinted)
+            return try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
         } catch let myJSONError {
             print(myJSONError)
         }

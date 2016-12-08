@@ -11,28 +11,28 @@ import UIKit
 
 class TriangleView : UIView {
     
-    var color: UIColor = UIColor.redColor()
+    var color: UIColor = UIColor.red
     
-    override func drawRect(rect: CGRect) {
-        let ctx: CGContextRef = UIGraphicsGetCurrentContext()!
-        CGContextBeginPath(ctx)
-        CGContextMoveToPoint   (ctx, CGRectGetMinX(rect), CGRectGetMinY(rect));  // top left
-        CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMinY(rect));  // mid right
-        CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMaxY(rect));  // bottom left
-        CGContextClosePath(ctx);
+    override func draw(_ rect: CGRect) {
+        let ctx: CGContext = UIGraphicsGetCurrentContext()!
+        ctx.beginPath()
+        ctx.move   (to: CGPoint(x: rect.minX, y: rect.minY));  // top left
+        ctx.addLine(to: CGPoint(x: rect.maxX, y: rect.minY));  // mid right
+        ctx.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY));  // bottom left
+        ctx.closePath();
 
         var fRed : CGFloat = 0
         var fGreen : CGFloat = 0
         var fBlue : CGFloat = 0
         var fAlpha: CGFloat = 0
         if color.getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha) {
-            CGContextSetRGBFillColor(ctx, fRed, fGreen, fBlue, fAlpha)
+            ctx.setFillColor(red: fRed, green: fGreen, blue: fBlue, alpha: fAlpha)
         }
         
-        CGContextFillPath(ctx);
+        ctx.fillPath();
     }
     
-    func addImage(name: String) {
+    func addImage(_ name: String) {
         let image = UIImage(named: name)
         let imageView = UIImageView(frame: CGRect(x: self.frame.size.width * (5 / 9), y: self.frame.size.height * (1 / 5), width: self.frame.size.width / 3, height: self.frame.size.width / 3))
         imageView.image = image

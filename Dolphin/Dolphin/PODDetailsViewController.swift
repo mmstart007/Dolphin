@@ -30,7 +30,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     var picker: UIImagePickerController = UIImagePickerController()
 
     required init() {
-        super.init(nibName: "PODDetailsViewController", bundle: NSBundle.mainBundle())
+        super.init(nibName: "PODDetailsViewController", bundle: Bundle.main)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -46,30 +46,30 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         // setup delegate and datesource
         tableViewPosts.delegate           = self
         tableViewPosts.dataSource         = self
-        tableViewPosts.separatorStyle     = .None
+        tableViewPosts.separatorStyle     = .none
         tableViewPosts.estimatedRowHeight = 400
         tableViewPosts.backgroundColor    = UIColor.lightGrayBackground()
         
-        tableViewPosts.addPullToRefreshWithActionHandler { () -> Void in
+        tableViewPosts.addPullToRefresh { () -> Void in
             self.loadData(true)
         }
         
-        tableViewPosts.addInfiniteScrollingWithActionHandler { () -> Void in
+        tableViewPosts.addInfiniteScrolling { () -> Void in
             self.loadNextPosts()
         }
         
         // Add bottom blue bar
-        let fakeTabBar = UIView(frame: CGRect(x: 0, y: UIScreen.mainScreen().bounds.size.height - 113, width: UIScreen.mainScreen().bounds.size.width, height: 49))
+        let fakeTabBar = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.size.height - 113, width: UIScreen.main.bounds.size.width, height: 49))
         fakeTabBar.backgroundColor = UIColor.blueDolphin()
         
         // Add plus button
-        let plusButton = UIButton(frame: CGRect(x: (UIScreen.mainScreen().bounds.size.width / 2.0) - 40, y: UIScreen.mainScreen().bounds.size.height - 130, width: 80, height: 80))
-        plusButton.enabled = true
+        let plusButton = UIButton(frame: CGRect(x: (UIScreen.main.bounds.size.width / 2.0) - 40, y: UIScreen.main.bounds.size.height - 130, width: 80, height: 80))
+        plusButton.isEnabled = true
         plusButton.layer.cornerRadius = 40
-        plusButton.layer.borderColor = UIColor.whiteColor().CGColor
+        plusButton.layer.borderColor = UIColor.white.cgColor
         plusButton.layer.borderWidth = 3
-        plusButton.setImage(UIImage(named: "TabbarPlusIcon"), forState: .Normal)
-        plusButton.addTarget(self , action: #selector(PODDetailsViewController.plusButtonTouchUpInside), forControlEvents: .TouchUpInside)
+        plusButton.setImage(UIImage(named: "TabbarPlusIcon"), for: UIControlState())
+        plusButton.addTarget(self , action: #selector(PODDetailsViewController.plusButtonTouchUpInside), for: .touchUpInside)
         plusButton.backgroundColor = UIColor.blueDolphin()
         self.view.addSubview(fakeTabBar)
         self.view.addSubview(plusButton)
@@ -79,14 +79,14 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableViewPosts.reloadData()
         loadData(false)
         
     }
     
-    override func goBackButtonPressed(sender: UIBarButtonItem) {
+    override func goBackButtonPressed(_ sender: UIBarButtonItem) {
         super.goBackButtonPressed(sender)
         if(self.pListener != nil)
         {
@@ -134,13 +134,13 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     // MARK: - Auxiliary methods
     
     func registerCells() {
-        tableViewPosts.registerNib(UINib(nibName: "PostTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostTableViewCell")
-        tableViewPosts.registerNib(UINib(nibName: "PODMembersTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PODMembersTableViewCell")
+        tableViewPosts.register(UINib(nibName: "PostTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostTableViewCell")
+        tableViewPosts.register(UINib(nibName: "PODMembersTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PODMembersTableViewCell")
     }
     
     // MARK: - TableView datasource
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // Only header for comments section
         if section == 0 {
             return 25
@@ -149,22 +149,22 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Only header for comments section
         if section == 0 {
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 25))
             headerView.backgroundColor = UIColor.skyBlueDolphinMembersHeader()
             let headerLabel = UILabel(frame: CGRect(x: 15, y: 0, width: 50, height: 25))
             headerLabel.text = "Members"
-            headerLabel.textColor = UIColor.grayColor()
-            headerLabel.font = headerLabel.font.fontWithSize(11)
+            headerLabel.textColor = UIColor.gray
+            headerLabel.font = headerLabel.font.withSize(11)
             headerView.addSubview(headerLabel)
             
             if pod?.owner?.id == networkController.currentUserId {
                 //let editButton = UIButton(frame: CGRect(x: headerView.frame.width - 35, y: 0, width: 25, height: 25))
                 let editButton = UIButton(frame: CGRect(x: 70, y: 0, width: 25, height: 25))
-                editButton.setImage(UIImage(named: "edit_icon"), forState: .Normal)
-                editButton.addTarget(self, action: #selector(didTapEditMember), forControlEvents: .TouchUpInside)
+                editButton.setImage(UIImage(named: "edit_icon"), for: UIControlState())
+                editButton.addTarget(self, action: #selector(didTapEditMember), for: .touchUpInside)
                 headerView.addSubview(editButton)
             }
             return headerView
@@ -174,11 +174,11 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     }
     
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1;
         } else {
@@ -186,38 +186,38 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            var cell = tableViewPosts.dequeueReusableCellWithIdentifier("PODMembersTableViewCell") as? PODMembersTableViewCell
+            var cell = tableViewPosts.dequeueReusableCell(withIdentifier: "PODMembersTableViewCell") as? PODMembersTableViewCell
             if cell == nil {
                 cell = PODMembersTableViewCell()
             }
             cell?.configureWithPOD(pod!)
             cell?.delegate = self
-            cell?.selectionStyle = .None
+            cell?.selectionStyle = .none
             return cell!
             
         } else {
-            var cell = tableViewPosts.dequeueReusableCellWithIdentifier("PostTableViewCell") as? PostTableViewCell
+            var cell = tableViewPosts.dequeueReusableCell(withIdentifier: "PostTableViewCell") as? PostTableViewCell
             if cell == nil {
                 cell = PostTableViewCell()
             }
             cell?.configureWithPost(postOfPOD[indexPath.row], indexPath: indexPath)
             cell?.delegate = self
-            cell?.selectionStyle = .None
+            cell?.selectionStyle = .none
             return cell!
         }
         
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
         
     }
     
     // MARK: - TableView delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             let postDetailsVC = PostDetailsViewController()
             postDetailsVC.post = postOfPOD[indexPath.row]
@@ -232,35 +232,35 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     func plusButtonTouchUpInside() {
         
         print("Plus button pressed")
-        let subViewsArray = NSBundle.mainBundle().loadNibNamed("NewPostMenu", owner: self, options: nil)
+        let subViewsArray = Bundle.main.loadNibNamed("NewPostMenu", owner: self, options: nil)
         self.actionMenu = subViewsArray![0] as? UIView
         actionMenuBackground.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(actionMenuBackgroundTapped)))
-        self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-        UIApplication.sharedApplication().keyWindow?.addSubview(actionMenu!)
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            self.actionMenu?.frame = CGRect(x: 0, y: 0, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-            }) { (finished) -> Void in
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
+        self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.shared.keyWindow?.frame.size.height)!, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+        UIApplication.shared.keyWindow?.addSubview(actionMenu!)
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.actionMenu?.frame = CGRect(x: 0, y: 0, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+            }, completion: { (finished) -> Void in
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
                     self.actionMenuBackground.alpha = 0.4
                 })
-        }
+        }) 
     }
     
     // MARK: - Close button Actions.
-    @IBAction func closeNewPostViewButtonTouchUpInside(sender: AnyObject) {
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+    @IBAction func closeNewPostViewButtonTouchUpInside(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.actionMenuBackground.alpha = 0
-            }) { (finished) -> Void in
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-                    }) { (finished) -> Void in
+            }, completion: { (finished) -> Void in
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                    self.actionMenu?.frame = CGRect(x: 0, y: (UIApplication.shared.keyWindow?.frame.size.height)!, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+                    }, completion: { (finished) -> Void in
                         self.actionMenu?.removeFromSuperview()
-                }
-        }
+                }) 
+        }) 
     }
     
     // MARK: - Web post button Actions.
-    @IBAction func postLinkButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func postLinkButtonTouchUpInside(_ sender: AnyObject) {
         let createLinkPostVC = CreateURLPostViewController()
         createLinkPostVC.podId = pod?.id
         navigationController?.pushViewController(createLinkPostVC, animated: true)
@@ -270,40 +270,40 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     }
     
     // MARK: - Photo post button Actions.
-    @IBAction func postPhotoButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func postPhotoButtonTouchUpInside(_ sender: AnyObject) {
         actionMenu?.removeFromSuperview()
         
         self.overlayView = UIView()
         self.overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
-        self.overlayView.frame = (UIApplication.sharedApplication().keyWindow?.frame)!
-        UIApplication.sharedApplication().keyWindow?.addSubview(self.overlayView)
+        self.overlayView.frame = (UIApplication.shared.keyWindow?.frame)!
+        UIApplication.shared.keyWindow?.addSubview(self.overlayView)
         
         self.chooseSoureTypeView = ChooseSourceTypeView.instanceFromNib()
-        self.chooseSoureTypeView.frame = CGRectMake(0, 0, 300, 200)
-        self.chooseSoureTypeView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height/2.0)
+        self.chooseSoureTypeView.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
+        self.chooseSoureTypeView.center = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height/2.0)
         self.chooseSoureTypeView.delegate = self
-        UIApplication.sharedApplication().keyWindow?.addSubview(self.chooseSoureTypeView!)
+        UIApplication.shared.keyWindow?.addSubview(self.chooseSoureTypeView!)
         
-        self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        UIView.animateWithDuration(0.1, animations: {
-            self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(1.2, 1.2)
-            UIView.animateWithDuration(0.05, animations: {
-                self.chooseSoureTypeView.transform = CGAffineTransformIdentity
-            }) { (finished) in
-            }
-        }) { (finished) in
+        self.chooseSoureTypeView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        UIView.animate(withDuration: 0.1, animations: {
+            self.chooseSoureTypeView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            UIView.animate(withDuration: 0.05, animations: {
+                self.chooseSoureTypeView.transform = CGAffineTransform.identity
+            }, completion: { (finished) in
+            }) 
+        }, completion: { (finished) in
             
-        }
+        }) 
     }
     
     // MARK: - Text post button Actions.
-    @IBAction func postTextButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func postTextButtonTouchUpInside(_ sender: AnyObject) {
         closeNewPostViewButtonTouchUpInside(self)
         let createTextPostVC = CreateTextPostViewController()
         createTextPostVC.pod = pod
         createTextPostVC.isPresentMode = true
         let textPostNavController = UINavigationController(rootViewController: createTextPostVC)
-        presentViewController(textPostNavController, animated: true, completion: nil)
+        present(textPostNavController, animated: true, completion: nil)
         print("Post text button pressed")
         
     }
@@ -317,11 +317,11 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     func selectedCamera() {
         self.closedDialog()
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            self.picker.sourceType = UIImagePickerControllerSourceType.camera
             self.picker.delegate   = self
             self.picker.allowsEditing = true
-            self.presentViewController(picker, animated: true, completion: nil)
+            self.present(picker, animated: true, completion: nil)
         }
         else {
             Utils.presentAlertMessage("Error", message: "Device has no camera", cancelActionText: "Ok", presentingViewContoller: self)
@@ -331,21 +331,21 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     func selectedPhotoGallery() {
         self.closedDialog()
         
-        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         self.picker.delegate   = self
         self.picker.allowsEditing = true
-        self.picker.navigationBar.tintColor = UIColor.whiteColor()
-        self.picker.navigationBar.barStyle = UIBarStyle.Black
-        self.presentViewController(picker, animated: true, completion: nil)
+        self.picker.navigationBar.tintColor = UIColor.white
+        self.picker.navigationBar.barStyle = UIBarStyle.black
+        self.present(picker, animated: true, completion: nil)
     }
     
-    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("didFinishPickingMediaWithInfo")
-        dismissViewControllerAnimated(true) {
+        dismiss(animated: true) {
             let image = info[UIImagePickerControllerEditedImage] as? UIImage
             let finishImagePostVC = CreateImagePostFinishPostingViewController(image: image)
             finishImagePostVC.podId = self.pod?.id
@@ -353,8 +353,8 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         }
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
     func actionMenuBackgroundTapped() {
@@ -364,11 +364,11 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     // MARK: - Network
     
-    func loadData(pullToRefresh: Bool) {
+    func loadData(_ pullToRefresh: Bool) {
         page = 0
         tableViewPosts.showsInfiniteScrolling = true
         if !pullToRefresh {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId:  nil, quantity: kPageQuantity, page: 0, podId: pod?.id, filterByUserInterests: false, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
@@ -390,13 +390,13 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
                 if !pullToRefresh {
                     SVProgressHUD.dismiss()
                 }
@@ -411,7 +411,7 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
         networkController.filterPost(nil, types: nil, fromDate: nil, toDate: nil, userId: nil, quantity: kPageQuantity, page: page, podId: pod?.id, filterByUserInterests: false, sort_by: nil, completionHandler: { (posts, error) -> () in
             if error == nil {
                 if posts.count > 0 {
-                    self.postOfPOD.appendContentsOf(posts)
+                    self.postOfPOD.append(contentsOf: posts)
                     self.tableViewPosts.reloadData()
                 } else {
                     // remove the infinite scrolling because we don't have more elements
@@ -425,23 +425,23 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             self.tableViewPosts.infiniteScrollingView.stopAnimating()
         })
     }
     
-    func addTableEmptyMessage(message: String) {
+    func addTableEmptyMessage(_ message: String) {
         let labelBackground = UILabel(frame: CGRect(x: 0, y: 0, width: tableViewPosts.frame.width, height: 200))
         labelBackground.text = message
         labelBackground.textColor = UIColor.blueDolphin()
-        labelBackground.textAlignment = .Center
+        labelBackground.textAlignment = .center
         labelBackground.numberOfLines = 0
         Utils.setFontFamilyForView(labelBackground, includeSubViews: true)
         tableViewPosts.backgroundView = labelBackground
@@ -452,19 +452,19 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     }
     
     // MARK: PostTableViewCell Delegate.
-    func downloadedPostImage(indexPath: NSIndexPath?) {
-        tableViewPosts.reloadRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.None)
+    func downloadedPostImage(_ indexPath: IndexPath?) {
+        tableViewPosts.reloadRows(at: [indexPath!], with: UITableViewRowAnimation.none)
     }
     
-    func tapURL(url: String?) {
+    func tapURL(_ url: String?) {
         let webVC = WebViewController()
         webVC.siteLink = url
         navigationController?.pushViewController(webVC, animated: true)
     }
     
-    func tapLike(post: Post?, cell: PostTableViewCell?) {
+    func tapLike(_ post: Post?, cell: PostTableViewCell?) {
         if !(post?.isLikedByUser)! {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
             networkController.createLike("\(post!.postId!)", completionHandler: { (like, error) -> () in
                 if error == nil {
                     if like?.id != nil {
@@ -476,16 +476,16 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
         } else {
             
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
             networkController.deleteLike("\(post!.postId!)", completionHandler: { (error) -> () in
                 if error == nil {
                     post?.postNumberOfLikes = (post?.postNumberOfLikes)! - 1
@@ -495,17 +495,17 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
         }
     }
 
-    func tapUserInfo(userInfo: User?) {
+    func tapUserInfo(_ userInfo: User?) {
         let userView = OtherProfileViewController(userInfo: userInfo)
         navigationController?.pushViewController(userView, animated: true)
     }
@@ -525,53 +525,53 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
     
     // MARK: Delete Pod
     func deletePod() {
-        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.Alert)
-        alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure your work with this POD is complete?", preferredStyle: UIAlertControllerStyle.alert)
+        alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
             // delete the pod
             let podIdString = String(self.pod!.id!)
             
-            SVProgressHUD.showWithStatus("Deleting...")
+            SVProgressHUD.show(withStatus: "Deleting...")
             self.networkController.deletePOD(podIdString) { (error) -> () in
                 SVProgressHUD.dismiss()
                 if error == nil {
                     print("pod deleted")
-                    NSNotificationCenter.defaultCenter().postNotificationName(Constants.Notifications.DeletedPod, object: nil, userInfo: ["pod":self.pod!])
+                    NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: Constants.Notifications.DeletedPod), object: nil, userInfo: ["pod":self.pod!])
 
                     if self.prevViewController != nil {
-                        if self.prevViewController.isKindOfClass(PODsListViewController) {
+                        if self.prevViewController is PODsListViewController {
                             let listViewController = self.prevViewController as! PODsListViewController
                             listViewController.deletedPod(self.pod!)
-                        } else if self.prevViewController.isKindOfClass(SettingsViewController) {
+                        } else if self.prevViewController is SettingsViewController {
                             let settingsViewController = self.prevViewController as! SettingsViewController
                             settingsViewController.refreshView()
                         }
                     }
-                    self.navigationController?.popViewControllerAnimated(true)
+                    let _ = self.navigationController?.popViewController(animated: true)
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
                     let alert: UIAlertController
                     if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                     } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                     }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }))
-        alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
+        alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.cancel, handler: nil))
         
         // show the alert
-        self.presentViewController(alertWarning, animated: true, completion: nil)
+        self.present(alertWarning, animated: true, completion: nil)
     }
     
     // MARK: Withdraw Member.
     func withdrawMember() {
-        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure to withdraw member with this POD?", preferredStyle: UIAlertControllerStyle.Alert)
-        alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler: { action in
+        let alertWarning = UIAlertController(title: "Warning", message: "Are you sure to withdraw member with this POD?", preferredStyle: UIAlertControllerStyle.alert)
+        alertWarning.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
             // withdraw member from pod
             let podIdString = String(self.pod!.id!)
             let userIdString = String(self.networkController.currentUserId!)
@@ -587,20 +587,20 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                     let errors: [String]? = error!["errors"] as? [String]
                     let alert: UIAlertController
                     if errors != nil && errors![0] != "" {
-                        alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                     } else {
-                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                        alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                     }
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                 }
             }
         }))
-        alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.Cancel, handler: nil))
+        alertWarning.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.cancel, handler: nil))
         
         // show the alert
-        self.presentViewController(alertWarning, animated: true, completion: nil)
+        self.present(alertWarning, animated: true, completion: nil)
     }
     
     // MARK: Join Member.
@@ -625,10 +625,10 @@ class PODDetailsViewController: DolphinViewController, UITableViewDataSource, UI
                 self.checkRightActionButton()
                 
                 if self.prevViewController != nil {
-                    if self.prevViewController.isKindOfClass(PODsListViewController) {
+                    if self.prevViewController is PODsListViewController {
                         let listViewController = self.prevViewController as! PODsListViewController
                         listViewController.updatedPod(self.pod!)
-                    } else if self.prevViewController.isKindOfClass(SettingsViewController) {
+                    } else if self.prevViewController is SettingsViewController {
                         let settingsViewController = self.prevViewController as! SettingsViewController
                         settingsViewController.refreshView()
                     }

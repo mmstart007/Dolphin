@@ -8,7 +8,7 @@
 
 import UIKit
 import SDWebImage
-import KSTokenView
+//import KSTokenView
 
 class CreatePostAddDescriptionTableViewCell: UITableViewCell, UITextFieldDelegate, UITextViewDelegate {
 
@@ -23,32 +23,32 @@ class CreatePostAddDescriptionTableViewCell: UITableViewCell, UITextFieldDelegat
         textViewDescription.placeholder = "Write your moment..."
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func configureWithImage(isLink: Bool, postImage: UIImage?, postURL: String?, postImageURL: String?) {
+    func configureWithImage(_ isLink: Bool, postImage: UIImage?, postURL: String?, postImageURL: String?) {
         postTagsTextView.promptText       = ""
         postTagsTextView.placeholder      = ""
         postTagsTextView.maxTokenLimit    = 8//default is -1 for unlimited number of tokens
-        postTagsTextView.style            = .Rounded
+        postTagsTextView.style            = .rounded
         postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 70)
-        postTagsTextView.font             = UIFont.systemFontOfSize(14)
-        postTagsTextView.backgroundColor = UIColor.clearColor()
+        postTagsTextView.font             = UIFont.systemFont(ofSize: 14)
+        postTagsTextView.backgroundColor = UIColor.clear
         for view in postTagsTextView.subviews {
-            if view.isKindOfClass(UITextField) {
+            if view.isKind(of: UITextField.self) {
                 
                 let textField = view as? UITextField
-                textField?.borderStyle = .None
+                textField?.borderStyle = .none
                 
             }
         }
         
         if isLink {
-            let manager = SDWebImageManager.sharedManager()
-            manager.downloadImageWithURL(NSURL(string: postImageURL!), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+            let manager = SDWebImageManager.shared()
+            manager?.downloadImage(with: URL(string: postImageURL!), options: .refreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                 if error == nil {
                     self.imageViewPostImage.image = image
                 } else {
@@ -60,9 +60,9 @@ class CreatePostAddDescriptionTableViewCell: UITableViewCell, UITextFieldDelegat
         }
         if isLink {
             textFieldPostTitle.text = postURL
-            textFieldPostTitle.userInteractionEnabled = false
+            textFieldPostTitle.isUserInteractionEnabled = false
         } else {
-            textFieldPostTitle.userInteractionEnabled = true
+            textFieldPostTitle.isUserInteractionEnabled = true
         }
     }
 }

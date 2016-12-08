@@ -23,10 +23,10 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.registerNib(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
+        collectionView.register(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
         title = "New Post"
-        navigationItem.rightBarButtonItem?.enabled = false
-        self.edgesForExtendedLayout = .None
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        self.edgesForExtendedLayout = UIRectEdge()
         setBackButton()
         fetchPhotos()
     }
@@ -35,33 +35,33 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
     
     func fetchPhotos () {
         
-        let imgManager = PHImageManager.defaultManager()
+        let imgManager = PHImageManager.default()
         
         // Note that if the request is not set to synchronous
         // the requestImageForAsset will return both the image
         // and thumbnail; by setting synchronous to true it
         // will return just the thumbnail
         let requestOptions = PHImageRequestOptions()
-        requestOptions.synchronous = true
+        requestOptions.isSynchronous = true
         
         // Sort the images by creation date
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
         
-        if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
+        if let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: fetchOptions) {
             
             for i in (0..<fetchResult.count) {
                 
                 autoreleasepool {
                     
-                    let asset = fetchResult.objectAtIndex(i)
+                    let asset = fetchResult.object(at: i)
                     // Perform the image request
                     let options = PHImageRequestOptions()
-                    options.resizeMode = .Fast
-                    options.synchronous = true
+                    options.resizeMode = .fast
+                    options.isSynchronous = true
                     
-                    let width = (UIScreen.mainScreen().bounds.width - 10.0) / 3.0 - 10.0
-                    imgManager.requestImageForAsset(asset as! PHAsset, targetSize: CGSizeMake(width, width), contentMode: PHImageContentMode.AspectFit, options: requestOptions, resultHandler: { (image, _) in
+                    let width = (UIScreen.main.bounds.width - 10.0) / 3.0 - 10.0
+                    imgManager.requestImage(for: asset , targetSize: CGSize(width: width, height: width), contentMode: PHImageContentMode.aspectFit, options: requestOptions, resultHandler: { (image, _) in
                         
                         // Add the returned image to your array
                         self.images.append(image!)
@@ -73,16 +73,16 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
     
     // MARK: CollectionView Datasource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images!.count + 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: CreatePostChooseImageCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("CreatePostChooseImageCollectionViewCell", forIndexPath: indexPath) as? CreatePostChooseImageCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell: CreatePostChooseImageCollectionViewCell? = collectionView.dequeueReusableCell(withReuseIdentifier: "CreatePostChooseImageCollectionViewCell", for: indexPath) as? CreatePostChooseImageCollectionViewCell
         if cell == nil {
             cell = CreatePostChooseImageCollectionViewCell()
         }
@@ -95,45 +95,45 @@ class CreateImagePostViewController : DolphinViewController, UINavigationControl
     }
     
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = (UIScreen.mainScreen().bounds.width - 10.0) / 3.0 - 10.0
-        return CGSizeMake(width, width)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        let width = (UIScreen.main.bounds.width - 10.0) / 3.0 - 10.0
+        return CGSize(width: width, height: width)
     }
     
     // MARK: CollectionView Delegate
     
-    func collectionView(collectionView: UICollectionView,
-        didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath) {
             
             if indexPath.row == 0 {
-                if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
+                if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
                     let finishImagePostVC = CreateImagePostFinishPostingViewController(image: nil)
                     self.navigationController?.pushViewController(finishImagePostVC, animated: true)
                 }
             } else {
-                let imgManager = PHImageManager.defaultManager()
+                let imgManager = PHImageManager.default()
                 
                 // Note that if the request is not set to synchronous
                 // the requestImageForAsset will return both the image
                 // and thumbnail; by setting synchronous to true it
                 // will return just the thumbnail
                 let requestOptions = PHImageRequestOptions()
-                requestOptions.synchronous = true
+                requestOptions.isSynchronous = true
                 
                 // Sort the images by creation date
                 let fetchOptions = PHFetchOptions()
                 fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
                 
-                if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
+                if let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: fetchOptions) {
                     
                     let options = PHImageRequestOptions()
-                    options.resizeMode = .None
-                    options.synchronous = true
-                    imgManager.requestImageDataForAsset(fetchResult.objectAtIndex(indexPath.row - 1) as! PHAsset, options: options, resultHandler: { (data, dataUTI, orientation, info) -> Void in
+                    options.resizeMode = .none
+                    options.isSynchronous = true
+                    imgManager.requestImageData(for: fetchResult.object(at: indexPath.row - 1) , options: options, resultHandler: { (data, dataUTI, orientation, info) -> Void in
                         let image = UIImage(data: data!)!
                         let finishImagePostVC = CreateImagePostFinishPostingViewController(image: image)
                         finishImagePostVC.podId = self.podId

@@ -11,7 +11,7 @@ import Foundation
 extension UIView {
     
     func findViewThatIsFirstResponder() -> UIView? {
-        if self.isFirstResponder() {
+        if self.isFirstResponder {
             return self
         } else {
             for subView: UIView in self.subviews {

@@ -32,7 +32,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     var selectedSubjects: [Subject]   = []
     
     required init() {
-        super.init(nibName: "SettingsViewController", bundle: NSBundle.mainBundle())
+        super.init(nibName: "SettingsViewController", bundle: Bundle.main)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -62,7 +62,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         loadData()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableViewSettings.reloadData()
     }
@@ -74,11 +74,11 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     
     // MARK: - TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return titles.count + 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
@@ -111,14 +111,14 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         let defaultCellIdentifier = "Cell"
         let value1CellIdentifier = "Cell1"
 
         if indexPath.section == 0 {
             // profile avatar cell
-            cell = tableView.dequeueReusableCellWithIdentifier("ProfileAvatarTableViewCell") as? ProfileAvatarTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "ProfileAvatarTableViewCell") as? ProfileAvatarTableViewCell
             if cell == nil {
                 cell = ProfileAvatarTableViewCell()
             }
@@ -126,7 +126,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
                 // username cell
-                cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                 if cell == nil {
                     cell = SettingsTextFieldTableViewCell()
                 }
@@ -134,21 +134,21 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             }
             else {
                 if indexPath.row == 1 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsSwitchTableViewCell") as? SettingsSwitchTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SettingsSwitchTableViewCell") as? SettingsSwitchTableViewCell
                     if cell == nil {
                         cell = SettingsSwitchTableViewCell()
                     }
                     (cell as? SettingsSwitchTableViewCell)?.configureWithSetting("Private/Public", delegate: self, tag: 0, enable: networkController.currentUser?.isPrivate == 0)
                     
                 } else if indexPath.row == 2 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
                     (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("First Name", placeholder: "enter your name", value: networkController.currentUser?.firstName, isEdit: true, subItem: false)
                     
                 } else if indexPath.row == 3 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
@@ -157,28 +157,28 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                 
                 //Gender
                 else if indexPath.row == 4 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsGenderTableViewCell") as? SettingsGenderTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SettingsGenderTableViewCell") as? SettingsGenderTableViewCell
                     if cell == nil {
                         cell = SettingsGenderTableViewCell()
                     }
                     (cell as? SettingsGenderTableViewCell)?.configureWithSetting(self, gender: networkController.currentUser?.gender)
                     
                 } else if indexPath.row == 5 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
                     (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("Location", placeholder: "enter your location", value: Globals.currentAddress, isEdit: false, subItem: false)
                     
                 } else if indexPath.row == 6 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
                     (cell as? SettingsTextFieldTableViewCell)?.configureWithSetting("My Grades", placeholder: "select your grades", value: getGradeNames(), isEdit: false, subItem: true)
                     
                 } else if indexPath.row == 7 {
-                    cell = tableView.dequeueReusableCellWithIdentifier("SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
+                    cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTextFieldTableViewCell") as? SettingsTextFieldTableViewCell
                     if cell == nil {
                         cell = SettingsTextFieldTableViewCell()
                     }
@@ -187,33 +187,33 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                 }
             }
         } else if indexPath.section == 2 {
-            cell = tableView.dequeueReusableCellWithIdentifier("SettingsSwitchTableViewCell") as? SettingsSwitchTableViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: "SettingsSwitchTableViewCell") as? SettingsSwitchTableViewCell
             if cell == nil {
                 cell = SettingsSwitchTableViewCell()
             }
             (cell as? SettingsSwitchTableViewCell)?.configureWithSetting("Enable Push Notifications", delegate: self, tag: 1, enable: false)
         } else if indexPath.section == 3 {
-            cell = tableView.dequeueReusableCellWithIdentifier(value1CellIdentifier) as UITableViewCell?
+            cell = tableView.dequeueReusableCell(withIdentifier: value1CellIdentifier) as UITableViewCell?
             if (cell == nil) {
-                cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: value1CellIdentifier)
+                cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: value1CellIdentifier)
             }
             Utils.setFontFamilyForView(cell!, includeSubViews: true)
             cell?.detailTextLabel?.text = (myPODS[indexPath.row].isPrivate == 1) ? "Private" : "Public"
-            cell?.accessoryType = .DisclosureIndicator
+            cell?.accessoryType = .disclosureIndicator
             cell?.textLabel?.text = myPODS[indexPath.row].name
             cell?.textLabel?.font = UIFont(name: "Raleway-Regular", size: 15)
             Utils.setFontFamilyForView(cell!, includeSubViews: true)
         } else if indexPath.section == 4 {
-            cell = tableView.dequeueReusableCellWithIdentifier(defaultCellIdentifier)
+            cell = tableView.dequeueReusableCell(withIdentifier: defaultCellIdentifier)
             if (cell == nil) {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: defaultCellIdentifier)
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: defaultCellIdentifier)
             }
             cell?.textLabel?.text = dolphinItems[indexPath.row]
             cell?.textLabel?.font = UIFont(name: "Raleway-Regular", size: 15)
         } else if indexPath.section == 5 {
-            cell = tableView.dequeueReusableCellWithIdentifier(defaultCellIdentifier)
+            cell = tableView.dequeueReusableCell(withIdentifier: defaultCellIdentifier)
             if (cell == nil) {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: defaultCellIdentifier)
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: defaultCellIdentifier)
             }
             cell?.textLabel?.text = supportItems[indexPath.row]
             cell?.textLabel?.font = UIFont(name: "Raleway-Regular", size: 15)
@@ -222,12 +222,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         
 //        }
 //        cell?.contentView.userInteractionEnabled = false
-        cell?.backgroundColor = UIColor.whiteColor()
-        cell?.selectionStyle = .None
+        cell?.backgroundColor = UIColor.white
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 200
         } else {
@@ -236,7 +236,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     }
     
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 0
         } else {
@@ -244,22 +244,22 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Header
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
         let headerLabel = UILabel(frame: CGRect(x: 15, y: 10, width: self.view.frame.size.width, height: 30))
         headerView.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         headerLabel.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         headerLabel.text = titles[section - 1]
-        headerLabel.textColor = UIColor.grayColor()
-        headerLabel.font = headerLabel.font.fontWithSize(12)
+        headerLabel.textColor = UIColor.gray
+        headerLabel.font = headerLabel.font.withSize(12)
         headerView.addSubview(headerLabel)
         return headerView
     }
     
     // MARK: - TableView delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 3 {
             let podDetailsVC = PODDetailsViewController()
             let selectedPOD = myPODS[indexPath.row]
@@ -282,22 +282,22 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             
             //Like Us on Facebook.
             if indexPath.row == 0 {
-                UIApplication.sharedApplication().openURL(NSURL(string: Constants.FacebookURL)!)
+                UIApplication.shared.openURL(URL(string: Constants.FacebookURL)!)
             }
                 
                 //Follow us on Instagram
             else if indexPath.row == 1 {
-                UIApplication.sharedApplication().openURL(NSURL(string: Constants.InstagramURL)!)
+                UIApplication.shared.openURL(URL(string: Constants.InstagramURL)!)
             }
                 
                 //Follow us on Twitter
             else if indexPath.row == 2 {
-                UIApplication.sharedApplication().openURL(NSURL(string: Constants.TwitterURL)!)
+                UIApplication.shared.openURL(URL(string: Constants.TwitterURL)!)
             }
                 
                 //Rate our app
             else if indexPath.row == 3 {
-                UIApplication.sharedApplication().openURL(NSURL(string: Constants.iTunesURL)!)
+                UIApplication.shared.openURL(URL(string: Constants.iTunesURL)!)
             }
         }
             
@@ -306,7 +306,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             
             //Frequently Asked Questions.
             if indexPath.row == 0 {
-                UIApplication.sharedApplication().openURL(NSURL(string: Constants.FrequentlyAskedQuestionsURL)!)
+                UIApplication.shared.openURL(URL(string: Constants.FrequentlyAskedQuestionsURL)!)
             }
                 
                 //Email Support
@@ -316,12 +316,12 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                 
                 //Terms of Use
             else if indexPath.row == 2 {
-                UIApplication.sharedApplication().openURL(NSURL(string: Constants.TermsOfUseURL)!)
+                UIApplication.shared.openURL(URL(string: Constants.TermsOfUseURL)!)
             }
                 
                 //Privacy Policy
             else if indexPath.row == 3 {
-                UIApplication.sharedApplication().openURL(NSURL(string: Constants.PrivacyPolicyURL)!)
+                UIApplication.shared.openURL(URL(string: Constants.PrivacyPolicyURL)!)
             }
         }
     }
@@ -332,7 +332,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             let mailComposerVC = MFMailComposeViewController()
             mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
             mailComposerVC.setToRecipients([Constants.AdminEmail])
-            self.presentViewController(mailComposerVC, animated: true, completion: nil)
+            self.present(mailComposerVC, animated: true, completion: nil)
             
         } else {
             Utils.presentAlertMessage(Constants.Messages.UnsupportedEmailTitle,
@@ -342,8 +342,8 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: nil)
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Auxiliary methods
@@ -352,20 +352,20 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         var userNameChanged: Bool = false
         if networkController.currentUser?.isPrivate == 0 {
             // public
-            let cellUserName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1)) as? SettingsTextFieldTableViewCell
+            let cellUserName = tableViewSettings.cellForRow(at: IndexPath(row: 0, section: 1)) as? SettingsTextFieldTableViewCell
             if cellUserName?.textFieldValue.text != networkController.currentUser?.userName {
                 networkController.currentUser?.userName = cellUserName?.textFieldValue.text
                 userNameChanged = true
             }
-            let cellFirstName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 1)) as? SettingsTextFieldTableViewCell
+            let cellFirstName = tableViewSettings.cellForRow(at: IndexPath(row: 2, section: 1)) as? SettingsTextFieldTableViewCell
             networkController.currentUser?.firstName = cellFirstName?.textFieldValue.text
-            let cellLastName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 3, inSection: 1)) as? SettingsTextFieldTableViewCell
+            let cellLastName = tableViewSettings.cellForRow(at: IndexPath(row: 3, section: 1)) as? SettingsTextFieldTableViewCell
             networkController.currentUser?.lastName = cellLastName?.textFieldValue.text
             
-            let cellGender = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 4, inSection: 1)) as? SettingsGenderTableViewCell
+            let cellGender = tableViewSettings.cellForRow(at: IndexPath(row: 4, section: 1)) as? SettingsGenderTableViewCell
             networkController.currentUser?.gender = cellGender?.genderSegement.selectedSegmentIndex
 
-            let cellLocation = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 5, inSection: 1)) as? SettingsTextFieldTableViewCell
+            let cellLocation = tableViewSettings.cellForRow(at: IndexPath(row: 5, section: 1)) as? SettingsTextFieldTableViewCell
             networkController.currentUser?.location = cellLocation?.textFieldValue.text
             
             var encodedImage: String?
@@ -375,7 +375,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             }
             
             // call the api function to update the user info
-            SVProgressHUD.showWithStatus("Saving")
+            SVProgressHUD.show(withStatus: "Saving")
             networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil,
                                          deviceId: nil,
                                          firstName: networkController.currentUser?.firstName,
@@ -393,22 +393,22 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     // update the user modified
                     self.networkController.currentUser = user
                     if let imageURLToRemove = user?.userAvatarImageURL {
-                        SDImageCache.sharedImageCache().removeImageForKey(imageURLToRemove)
+                        SDImageCache.shared().removeImage(forKey: imageURLToRemove)
                     }
                     
                     // Store the apiToken
-                    let defaults = NSUserDefaults.standardUserDefaults()
-                    defaults.setObject(Globals.jsonToNSData((user?.toJson())!), forKey: "current_user")
+                    let defaults = UserDefaults.standard
+                    defaults.set(Globals.jsonToNSData((user?.toJson())! as AnyObject), forKey: "current_user")
                     defaults.synchronize()
                     SVProgressHUD.dismiss()
-                    self.navigationController?.popViewControllerAnimated(true)
+                    let _ = self.navigationController?.popViewController(animated: true)
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             }
@@ -416,7 +416,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         } else {
             // private
             
-            let cellUserName = tableViewSettings.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1)) as? SettingsTextFieldTableViewCell
+            let cellUserName = tableViewSettings.cellForRow(at: IndexPath(row: 0, section: 1)) as? SettingsTextFieldTableViewCell
             if cellUserName?.textFieldValue.text != networkController.currentUser?.userName {
                 networkController.currentUser?.userName = cellUserName?.textFieldValue.text
                 userNameChanged = true
@@ -429,23 +429,23 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             }
             
             // call the api function to update the user info
-            SVProgressHUD.showWithStatus("Saving")
+            SVProgressHUD.show(withStatus: "Saving")
             networkController.updateUser(userNameChanged ? networkController.currentUser?.userName : nil, deviceId: nil, firstName: nil, lastName: nil, avatarImage: encodedImage, email: nil, password: nil, gender: nil, city: nil, country: nil, zip: nil, location: nil, isPrivate: networkController.currentUser?.isPrivate, subjects: nil, grades: nil) { (user, error) -> () in
                 if error == nil {
                     // update the user modified
                     self.networkController.currentUser = user
                     if let imageURLToRemove = user?.userAvatarImageURL {
-                        SDImageCache.sharedImageCache().removeImageForKey(imageURLToRemove)
+                        SDImageCache.shared().removeImage(forKey: imageURLToRemove)
                     }
                     SVProgressHUD.dismiss()
-                    self.navigationController?.popViewControllerAnimated(true)
+                    let _ = self.navigationController?.popViewController(animated: true)
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             }
@@ -454,22 +454,22 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     }
     
     func registerCells() {
-        tableViewSettings.registerNib(UINib(nibName: "ProfileAvatarTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "ProfileAvatarTableViewCell")
-        tableViewSettings.registerNib(UINib(nibName: "SettingsTextFieldTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsTextFieldTableViewCell")
-        tableViewSettings.registerNib(UINib(nibName: "SettingsSwitchTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsSwitchTableViewCell")
-        tableViewSettings.registerNib(UINib(nibName: "SettingsGenderTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SettingsGenderTableViewCell")
+        tableViewSettings.register(UINib(nibName: "ProfileAvatarTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "ProfileAvatarTableViewCell")
+        tableViewSettings.register(UINib(nibName: "SettingsTextFieldTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "SettingsTextFieldTableViewCell")
+        tableViewSettings.register(UINib(nibName: "SettingsSwitchTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "SettingsSwitchTableViewCell")
+        tableViewSettings.register(UINib(nibName: "SettingsGenderTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "SettingsGenderTableViewCell")
 
     
     }
     
     func setAppearence() {
-        tableViewSettings.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        tableViewSettings.backgroundColor = UIColor.groupTableViewBackground
     }
     
     func loadData() {
         page = 0
         
-        SVProgressHUD.showWithStatus("Loading")
+        SVProgressHUD.show(withStatus: "Loading")
         networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0, sort_by: nil) { (pods, error) -> () in
             if error == nil {
                 
@@ -486,13 +486,13 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                 let errors: [String]? = error!["errors"] as? [String]
                 let alert: UIAlertController
                 if errors != nil && errors![0] != "" {
-                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
                 } else {
-                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .Alert)
+                    alert = UIAlertController(title: "Error", message: "Unknown error", preferredStyle: .alert)
                 }
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
 
                 SVProgressHUD.dismiss()
                 
@@ -505,19 +505,19 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     func onSelectImageTouchUpInside() {
         resignResponder()
         picker.delegate = self
-        let alert = UIAlertController(title: "Choose an image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: "Choose an image", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
         alert.view.tintColor = UIColor.blueDolphin()
-        let libButton = UIAlertAction(title: "Camera Roll", style: UIAlertActionStyle.Default) { (alert) -> Void in
-            self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            self.picker.navigationBar.translucent = false
+        let libButton = UIAlertAction(title: "Camera Roll", style: UIAlertActionStyle.default) { (alert) -> Void in
+            self.picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.picker.navigationBar.isTranslucent = false
             self.picker.navigationBar.barTintColor = UIColor.blueDolphin()
-            self.presentViewController(self.picker, animated: true, completion: nil)
+            self.present(self.picker, animated: true, completion: nil)
         }
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)){
-            let cameraButton = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default) { (alert) -> Void in
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+            let cameraButton = UIAlertAction(title: "Camera", style: UIAlertActionStyle.default) { (alert) -> Void in
                 print("Take Photo")
-                self.picker.sourceType = UIImagePickerControllerSourceType.Camera
-                self.presentViewController(self.picker, animated: true, completion: nil)
+                self.picker.sourceType = UIImagePickerControllerSourceType.camera
+                self.present(self.picker, animated: true, completion: nil)
             }
             alert.addAction(cameraButton)
         } else {
@@ -525,13 +525,13 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             
         }
         
-        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert) -> Void in
+        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (alert) -> Void in
             print("Cancel Pressed")
         }
         
         alert.addAction(libButton)
         alert.addAction(cancelButton)
-        self.presentViewController(alert, animated: true, completion: {
+        self.present(alert, animated: true, completion: {
             //alert.view.tintColor = UIColor.orangeSecondaryGoRun()
         })
     }
@@ -540,7 +540,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     
     // MARK: - SwitchTableViewCell delegate
     
-    func toggleSwitch(enabled: Bool, tag: Int) {
+    func toggleSwitch(_ enabled: Bool, tag: Int) {
         if tag == 0 {
             // Public/Private
             networkController.currentUser?.isPrivate = enabled ? 0 : 1
@@ -551,13 +551,13 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
     }
     
     // MARK: - SettingsGenderTableViewCellDelegate
-    func changedGender(gender: Int) {
+    func changedGender(_ gender: Int) {
         
     }
     
     // MARK: - Actions
     
-    func saveSettingsPressed(sender: AnyObject) {
+    func saveSettingsPressed(_ sender: AnyObject) {
         print("Save Pressed")
         updateUserInfo()
     }
@@ -565,40 +565,40 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
 
     // MARK: - ImagePickController delegate
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("didFinishPickingMediaWithInfo")
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         
         let cropController = RSKImageCropViewController(image: chosenImage)
         cropController.delegate = self
         navigationController?.pushViewController(cropController, animated: true)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("imagePickerControllerDidCancel")
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - RSKImageCropViewControllerDelegate
     
     // The original image has been cropped.
-    func imageCropViewController(controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
+    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
         networkController.currentUser?.userAvatarImageData = croppedImage;
-        navigationController?.popViewControllerAnimated(true)
+        let _ = navigationController?.popViewController(animated: true)
         tableViewSettings.reloadData()
         SVProgressHUD.dismiss()
     }
 
-    func imageCropViewControllerDidCancelCrop(controller: RSKImageCropViewController) {
-        navigationController?.popViewControllerAnimated(true)
+    func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
+        let _ = navigationController?.popViewController(animated: true)
     }
     
     
     
     // The original image will be cropped.
-    func imageCropViewController(controller: RSKImageCropViewController, willCropImage originalImage: UIImage)
+    func imageCropViewController(_ controller: RSKImageCropViewController, willCropImage originalImage: UIImage)
     {
         // Use when `applyMaskToCroppedImage` set to YES.
         SVProgressHUD.show()
@@ -628,20 +628,20 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         navigationController?.pushViewController(pickSubjectsVC, animated: true)
     }
     
-    func gradesDidSelected(grades: [Grade]) {
+    func gradesDidSelected(_ grades: [Grade]) {
         selectedGrades.removeAll()
         for item in grades {
             selectedGrades.append(item)
         }
-        tableViewSettings.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+        tableViewSettings.reloadSections(IndexSet(integer: 0), with: .fade)
     }
     
-    func subjectsDidSelected(subjects: [Subject]) {
+    func subjectsDidSelected(_ subjects: [Subject]) {
         selectedSubjects.removeAll()
         for item in subjects {
             selectedSubjects.append(item)
         }
-        tableViewSettings.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+        tableViewSettings.reloadSections(IndexSet(integer: 0), with: .fade)
     }
     
     func getSubjectNames() -> String {
@@ -651,7 +651,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
             subject_name.append(item.name!)
         }
 
-        return subject_name.joinWithSeparator(",")
+        return subject_name.joined(separator: ",")
     }
     
     func getGradeNames() -> String {
@@ -660,7 +660,7 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         for item in selectedGrades {
             grade_name.append(item.name!)
         }
-        return grade_name.joinWithSeparator(",")
+        return grade_name.joined(separator: ",")
     }
     
     func getSubjectIds() -> [String] {

@@ -15,7 +15,7 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
     let networkController = NetworkController.sharedInstance
     
     required init() {
-        super.init(nibName: "DealsListViewController", bundle: NSBundle.mainBundle())
+        super.init(nibName: "DealsListViewController", bundle: Bundle.main)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -27,19 +27,19 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
         
         setBackButton()
         title = "Dolphin Deals"
-        dealsCollectionView.registerNib(UINib(nibName: "DealCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "DealCollectionViewCell")
-        dealsCollectionView.registerNib(UINib(nibName: "DealCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "DealCollectionViewHeaderCell")
+        dealsCollectionView.register(UINib(nibName: "DealCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "DealCollectionViewCell")
+        dealsCollectionView.register(UINib(nibName: "DealCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "DealCollectionViewHeaderCell")
         dealsCollectionView.dataSource = self
         dealsCollectionView.delegate   = self
     }
  
     // MARK: - UICollectionViewDataSource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         } else {
@@ -48,13 +48,13 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
         }
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         var cell: DealCollectionViewCell?
         if indexPath.section == 0 {
-            cell = collectionView.dequeueReusableCellWithReuseIdentifier("DealCollectionViewHeaderCell", forIndexPath: indexPath) as? DealCollectionViewCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DealCollectionViewHeaderCell", for: indexPath) as? DealCollectionViewCell
         } else {
-            cell = collectionView.dequeueReusableCellWithReuseIdentifier("DealCollectionViewCell", forIndexPath: indexPath) as? DealCollectionViewCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DealCollectionViewCell", for: indexPath) as? DealCollectionViewCell
         }
         if cell == nil {
             cell = DealCollectionViewCell()
@@ -67,7 +67,7 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
         return cell!
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
             return CGSize(width: (self.view.frame.size.width) - 15, height: (self.view.frame.size.width / 2) - 15)
         } else {
@@ -75,13 +75,13 @@ class DealsListViewController : DolphinViewController, UICollectionViewDataSourc
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
     }
     
     // MARK: UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
 //        let dealDetailsVC = DealDetailsViewController()
 //        dealDetailsVC.deal = networkController.deals[indexPath.row];

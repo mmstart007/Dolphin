@@ -16,6 +16,21 @@ import FBSDKLoginKit
 import FBSDKShareKit
 import MessageUI
 import SVProgressHUD
+import PinterestSDK
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class InviteFriendsViewController : DolphinViewController, UITableViewDataSource, UITableViewDelegate, FriendToInviteTableViewCellDelegate, MFMessageComposeViewControllerDelegate, UISearchBarDelegate {
     
@@ -50,7 +65,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         self.init(nibName: "InviteFriendsViewController", bundle: nil)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if segmentedControl.selectedSegmentIndex == 0 {
@@ -62,7 +77,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.edgesForExtendedLayout = .None
+        self.edgesForExtendedLayout = UIRectEdge()
         title = "Invite Friends"
         setBackButton()
         setSearchRightButton()
@@ -84,24 +99,23 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         segmentedControl.frame = CGRect(x: 0, y: 0, width: headerView.frame.size.width, height: headerView.frame.size.height)
         segmentedControl.selectionIndicatorHeight = 4.0
         segmentedControl.backgroundColor = UIColor.blueDolphin()
-        //segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown
-        segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown
-        segmentedControl.selectionIndicatorColor = UIColor.whiteColor()
-        segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()];
-        segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.redColor()];
-        segmentedControl.addTarget(self, action: #selector(InviteFriendsViewController.segmentedControlChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        segmentedControl.selectionIndicatorLocation = .down
+        segmentedControl.selectionIndicatorColor = UIColor.white
+        segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white];
+        segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.red];
+        segmentedControl.addTarget(self, action: #selector(InviteFriendsViewController.segmentedControlChanged(_:)), for: UIControlEvents.valueChanged)
         headerView.addSubview(segmentedControl)
         segmentedControl.selectedSegmentIndex = 0
     }
     
     func initializeTableViewAndGestures() {
-        tableView.registerNib(UINib(nibName: "FriendToInviteTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "FriendToInviteTableViewCell")
+        tableView.register(UINib(nibName: "FriendToInviteTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "FriendToInviteTableViewCell")
         
-        signInLabel               = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width, height: 50))
-        signInLabel.textAlignment = .Center
+        signInLabel               = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
+        signInLabel.textAlignment = .center
         signInLabel.font = UIFont(name: "Raleway-Regular", size: 14)
         signInLabel.center.y      = self.tableView.center.y - 50.0
-        signInLabel.hidden        = true
+        signInLabel.isHidden        = true
         signInLabel.textColor     = UIColor.blueDolphin()
         self.view.addSubview(signInLabel)
         
@@ -110,9 +124,9 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         contactsTapGesture = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.openSettings))
         loginPinterestTapGesture = UITapGestureRecognizer(target: self, action: #selector(InviteFriendsViewController.loginWithPinterest))
         
-        loginFacebookTapGesture.enabled = false
-        loginTwitterTapGesture.enabled = false
-        contactsTapGesture.enabled = false
+        loginFacebookTapGesture.isEnabled = false
+        loginTwitterTapGesture.isEnabled = false
+        contactsTapGesture.isEnabled = false
         tableView.addGestureRecognizer(loginFacebookTapGesture)
         tableView.addGestureRecognizer(loginTwitterTapGesture)
         tableView.addGestureRecognizer(contactsTapGesture)
@@ -121,32 +135,32 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     // MARK: Segmented Control
     
-    func segmentedControlChanged(event: UIEvent) {
+    func segmentedControlChanged(_ event: UIEvent) {
         print("Event changed to \(segmentedControl.selectedSegmentIndex)")
-        signInLabel.hidden              = true
-        loginFacebookTapGesture.enabled = false
-        loginTwitterTapGesture.enabled  = false
-        contactsTapGesture.enabled      = false
-        loginPinterestTapGesture.enabled = false
+        signInLabel.isHidden              = true
+        loginFacebookTapGesture.isEnabled = false
+        loginTwitterTapGesture.isEnabled  = false
+        contactsTapGesture.isEnabled      = false
+        loginPinterestTapGesture.isEnabled = false
         
         if segmentedControl.selectedSegmentIndex == 0 {
             getContactsFromAddressBook()
         } else if segmentedControl.selectedSegmentIndex == 1 {
             self.tableView.reloadData()
-            if (FBSDKAccessToken.currentAccessToken() == nil) {
+            if (FBSDKAccessToken.current() == nil) {
                 signInLabel.text = "You need to log in to Facebook to invite friends \n Tap to login"
                 signInLabel.numberOfLines = 2
-                signInLabel.hidden = false
-                loginFacebookTapGesture.enabled = true
+                signInLabel.isHidden = false
+                loginFacebookTapGesture.isEnabled = true
             } else {
                 getFacebookFriendsList()
             }
         } else if segmentedControl.selectedSegmentIndex == 2 {
-            if let session = Twitter.sharedInstance().sessionStore.session() {
+            if Twitter.sharedInstance().sessionStore.session() != nil {
                 self.signInLabel.text = "You need to log in to Twitter to invite friends \n Tap to login"
                 self.signInLabel.numberOfLines = 2
-                self.signInLabel.hidden = false
-                self.loginTwitterTapGesture.enabled = true
+                self.signInLabel.isHidden = false
+                self.loginTwitterTapGesture.isEnabled = true
             } else {
                 getTwitterFollowingList()
             }
@@ -155,8 +169,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             if isLogginedPinterest == false {
                 self.signInLabel.text = "You need to log in to Pinterest to invite friends \n Tap to login"
                 self.signInLabel.numberOfLines = 2
-                self.signInLabel.hidden = false
-                loginPinterestTapGesture.enabled = true
+                self.signInLabel.isHidden = false
+                loginPinterestTapGesture.isEnabled = true
             } else {
                 self.getPinterestFriends()
             }
@@ -171,23 +185,23 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         let authorizationStatus = ABAddressBookGetAuthorizationStatus()
         
         switch authorizationStatus {
-        case .Denied, .Restricted:
+        case .denied, .restricted:
             signInLabel.text           = "Access to the address book wasn't granted. \n Please tap here to allow access and import contacts"
             signInLabel.numberOfLines = 2
-            signInLabel.hidden         = false
-            contactsTapGesture.enabled = true
+            signInLabel.isHidden         = false
+            contactsTapGesture.isEnabled = true
             print("Denied")
-        case .Authorized:
+        case .authorized:
             addressBookRef = ABAddressBookCreateWithOptions(nil, nil).takeRetainedValue()
             
             let allContacts = ABAddressBookCopyArrayOfAllPeople(addressBookRef).takeRetainedValue() as Array
             addressBookContacts.removeAll()
             for record in allContacts {
-                let currentContact: ABRecordRef = record
+                let currentContact: ABRecord = record
                 let currentContactNameTemp = ABRecordCopyCompositeName(currentContact)
                 var contactName = ""
                 if currentContactNameTemp != nil {
-                    let nameCFString : CFString = currentContactNameTemp.takeRetainedValue()
+                    let nameCFString : CFString = currentContactNameTemp!.takeRetainedValue()
                     contactName = nameCFString as String
                 }
                 
@@ -195,30 +209,30 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
                 var currentContactImage: UIImage? = nil
                 if ABPersonHasImageData(currentContact) {
                     if let imageData = ABPersonCopyImageDataWithFormat(currentContact, kABPersonImageFormatThumbnail)?.takeRetainedValue() {
-                        currentContactImage = UIImage(data: imageData)!
+                        currentContactImage = UIImage(data: imageData as Data)!
                     }
                 }
                 
                 //Phone Number
                 var arrPhones: [String] = []
-                let phones : ABMultiValueRef = ABRecordCopyValue(record, kABPersonPhoneProperty).takeUnretainedValue() as ABMultiValueRef
-                for(var numberIndex : CFIndex = 0; numberIndex < ABMultiValueGetCount(phones); numberIndex++)
+                let phones : ABMultiValue = ABRecordCopyValue(record, kABPersonPhoneProperty).takeUnretainedValue() as ABMultiValue
+                for numberIndex : CFIndex in (0 ..< ABMultiValueGetCount(phones))
                 {
                     let phoneUnmaganed = ABMultiValueCopyValueAtIndex(phones, numberIndex)
-                    var phoneNumber : String = phoneUnmaganed.takeUnretainedValue() as! String
-                    phoneNumber = phoneNumber.stringByReplacingOccurrencesOfString(
-                        "\\D", withString: "", options: .RegularExpressionSearch,
-                        range: phoneNumber.startIndex..<phoneNumber.endIndex)
+                    var phoneNumber : String = phoneUnmaganed!.takeUnretainedValue() as! String
+                    
+                    phoneNumber = phoneNumber.replacingOccurrences(of: "\\D", with: "", options: .regularExpression, range: nil)
+                    //phoneNumber = phoneNumber.replacingOccurrences(of: "\\D", with: "", options: .regularExpression, range: phoneNumber.characters.indices)
                     arrPhones.append(phoneNumber)
                 }
                 
                 //Email.
                 var arrEmails: [String] = []
-                let emails : ABMultiValueRef = ABRecordCopyValue(record, kABPersonEmailProperty).takeUnretainedValue() as ABMultiValueRef
-                for(var numberIndex : CFIndex = 0; numberIndex < ABMultiValueGetCount(emails); numberIndex++)
+                let emails : ABMultiValue = ABRecordCopyValue(record, kABPersonEmailProperty).takeUnretainedValue() as ABMultiValue
+                for numberIndex : CFIndex in (0 ..< ABMultiValueGetCount(emails))
                 {
                     let emailUnmaganed = ABMultiValueCopyValueAtIndex(emails, numberIndex)
-                    let email : NSString = emailUnmaganed.takeUnretainedValue() as! String
+                    let email : NSString = emailUnmaganed!.takeUnretainedValue() as! String as NSString
                     arrEmails.append(email as String)
                 }
                 
@@ -227,7 +241,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             }
             
             //Sort Address Book.
-            let sortedArray = addressBookContacts.sort { (element1, element2) -> Bool in
+            let sortedArray = addressBookContacts.sorted { (element1, element2) -> Bool in
                 return element1.userName < element2.userName
             }
             
@@ -238,7 +252,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             
             tableView.reloadData()
             print("Authorized")
-        case .NotDetermined:
+        case .notDetermined:
             promptForAddressBookRequestAccess()
             print("Not Determined")
         }
@@ -247,8 +261,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     func promptForAddressBookRequestAccess() {
         ABAddressBookRequestAccessWithCompletion(addressBookRef) {
-            (granted: Bool, error: CFError!) in
-            dispatch_async(dispatch_get_main_queue()) {
+            (granted, error) in
+            DispatchQueue.main.async {
                 if !granted {
                     self.getContactsFromAddressBook()
                     print("Just denied")
@@ -261,19 +275,19 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     }
     
     func openSettings() {
-        let url = NSURL(string: UIApplicationOpenSettingsURLString)
-        UIApplication.sharedApplication().openURL(url!)
+        let url = URL(string: UIApplicationOpenSettingsURLString)
+        UIApplication.shared.openURL(url!)
     }
     
     // MARK: Social Networks login
     
     func loginTwitterToGetFriends() {
-        if let session = Twitter.sharedInstance().sessionStore.session() {
-            Twitter.sharedInstance().logInWithCompletion { session, error in
+        if Twitter.sharedInstance().sessionStore.session() != nil {
+            Twitter.sharedInstance().logIn { session, error in
                 if (session != nil) {
                     print("signed in as \(session!.userName)");
-                    self.signInLabel.hidden = true
-                    self.loginTwitterTapGesture.enabled = false
+                    self.signInLabel.isHidden = true
+                    self.loginTwitterTapGesture.isEnabled = false
                     self.getTwitterFollowingList()
                 } else {
                     Utils.presentAlertMessage("Error", message: "Error signing in to Twitter", cancelActionText: "Ok", presentingViewContoller: self)
@@ -286,14 +300,14 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     func loginFacebookToGetFriends() {
         print("login gesture")
-        if (FBSDKAccessToken.currentAccessToken() == nil) {
+        if (FBSDKAccessToken.current() == nil) {
             let login = FBSDKLoginManager()
-            login.logInWithReadPermissions(["public_profile", "user_friends"], fromViewController: self, handler: { (result, error) -> Void in
+            login.logIn(withReadPermissions: ["public_profile", "user_friends"], from: self, handler: { (result, error) -> Void in
                 if error != nil {
                     Utils.presentAlertMessage("Error", message: "Error signing in to Facebook", cancelActionText: "Ok", presentingViewContoller: self)
-                } else if !result.isCancelled {
-                    self.signInLabel.hidden = true
-                    self.loginFacebookTapGesture.enabled = false
+                } else if !(result?.isCancelled)! {
+                    self.signInLabel.isHidden = true
+                    self.loginFacebookTapGesture.isEnabled = false
                     self.getFacebookFriendsList()
                 }
             })
@@ -312,26 +326,25 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     // MARK: Populate Lists
     func getFacebookFriendsList() {
-        if (FBSDKAccessToken.currentAccessToken() != nil) {
+        if (FBSDKAccessToken.current() != nil) {
             
             if(facebookFriends.count == 0) {
-                SVProgressHUD.showWithStatus("Loading...")
+                SVProgressHUD.show(withStatus: "Loading...")
             }
-            FBSDKGraphRequest.init(graphPath: "me/taggable_friends", parameters: ["fields": "name, picture"]).startWithCompletionHandler({ (connection, result, error) -> Void in
+            FBSDKGraphRequest.init(graphPath: "me/taggable_friends", parameters: ["fields": "name, picture"]).start(completionHandler: { (connection, result, error) -> Void in
                 
                 SVProgressHUD.dismiss()
                 if error == nil {
                     self.facebookFriends.removeAll()
-                    if let users = result["data"]!! as? [[String: AnyObject]] {
+                    if let users = (result as! [String: AnyObject])["data"]! as? [[String: AnyObject]] {
                         for friendInfo: [String: AnyObject] in users {
-                            let friendModel = FacebookFriend(name: friendInfo["name"] as! String!, imageURL: friendInfo["picture"]!["data"]!!["url"] as! String!, user_id: friendInfo["id"] as! String!)
+                            let friendModel = FacebookFriend(name: friendInfo["name"] as! String!, imageURL: (friendInfo["picture"] as! [String: AnyObject])["data"]!["url"] as! String!, user_id: friendInfo["id"] as! String!)
                             self.facebookFriends.append(friendModel)
                         }
                     }
                     
-                    
                     //Sort Facebook Friends.
-                    let sortedArray = self.facebookFriends.sort { (element1, element2) -> Bool in
+                    let sortedArray = self.facebookFriends.sorted { (element1, element2) -> Bool in
                         return element1.userName < element2.userName
                     }
                     
@@ -352,25 +365,25 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             let statusesShowEndpoint = "https://api.twitter.com/1.1/followers/list.json"
             let params = ["include_user_entities": "true", "count" : "200"]
             var clientError : NSError?
-            let request = client.URLRequestWithMethod("GET", URL: statusesShowEndpoint, parameters: params, error: &clientError)
+            let request = client.urlRequest(withMethod: "GET", url: statusesShowEndpoint, parameters: params, error: &clientError)
             
             if(twitterFriends.count == 0) {
-                SVProgressHUD.showWithStatus("Loading...")
+                SVProgressHUD.show(withStatus: "Loading...")
             }
             
             client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                 SVProgressHUD.dismiss()
                 if (connectionError == nil) {
-                    let json : NSDictionary = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    let json : NSDictionary = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
                     if let usersArray = json["users"] as? [[String: AnyObject]] {
                         self.twitterFriends.removeAll()
-                        for user: [String: AnyObject!] in usersArray {
+                        for user: [String: AnyObject?] in usersArray {
                             let twitterFriend = TwitterFriend(name: user["name"] as! String, imageURL: user["profile_image_url"] as! String, user_id: user["id_str"] as! String)
                             self.twitterFriends.append(twitterFriend)
                         }
                         
                         //Sort Twitter Friends.
-                        let sortedArray = self.twitterFriends.sort { (element1, element2) -> Bool in
+                        let sortedArray = self.twitterFriends.sorted { (element1, element2) -> Bool in
                             return element1.userName < element2.userName
                         }
                         
@@ -391,7 +404,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     // MARK: Pinterest.
     
     func checkPinterestToken() {
-        PDKClient.sharedInstance().silentlyAuthenticateWithSuccess({ (response) in
+        PDKClient.sharedInstance().silentlyAuthenticate(success: { (response) in
             self.isLogginedPinterest = true
         }) { (error) in
             self.isLogginedPinterest = false
@@ -400,39 +413,39 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     func loginWithPinterest() {
         
-        PDKClient.sharedInstance().authenticateWithPermissions(
-            [PDKClientReadPublicPermissions, PDKClientWritePublicPermissions, PDKClientReadRelationshipsPermissions, PDKClientWriteRelationshipsPermissions],
+        PDKClient.sharedInstance().authenticate(
+            withPermissions: [PDKClientReadPublicPermissions, PDKClientWritePublicPermissions, PDKClientReadRelationshipsPermissions, PDKClientWriteRelationshipsPermissions],
                                                                withSuccess: { (response) in
                                                                 
                                                                 self.isLogginedPinterest = true
-                                                                self.signInLabel.hidden = true
+                                                                self.signInLabel.isHidden = true
                                                                 self.getPinterestFriends()
             }) { (error) in
-                print(error.localizedDescription)
+                print(error?.localizedDescription as Any)
         }
     }
     
     func getPinterestFriends() {
-        PDKClient.sharedInstance().getAuthorizedUserFollowersWithFields(["id", "username", "first_name", "last_name", "bio", "image"], success: { (response) in
+        PDKClient.sharedInstance().getAuthorizedUserFollowers(withFields: ["id", "username", "first_name", "last_name", "bio", "image"], success: { (response) in
             self.pinterestFriends.removeAll()
-            let users = response.users()
-            for u in users {
+            let users = response?.users()
+            for u in users! {
                 self.pinterestFriends.append(u as! PDKUser)
             }
             self.tableView.reloadData()
 
             }) { (error) in
-                print(error)
+                print(error?.localizedDescription as Any)
         }
     }
     
     // MARK: TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segmentedControl.selectedSegmentIndex == 0 {
             if isSearch {
                 return searchAddressBookFriends.count
@@ -462,8 +475,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: FriendToInviteTableViewCell? = tableView.dequeueReusableCellWithIdentifier("FriendToInviteTableViewCell") as? FriendToInviteTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: FriendToInviteTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "FriendToInviteTableViewCell") as? FriendToInviteTableViewCell
         if cell == nil {
             cell = FriendToInviteTableViewCell()
         }
@@ -498,16 +511,16 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         }
         
         cell?.delegate = self
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
     
     // Mark: - Invite.
-    func inviteFriend(friend: AnyObject, type: Int) {
+    func inviteFriend(_ friend: AnyObject, type: Int) {
         
         switch type {
         case Constants.InviteType.Invite_Contact:
@@ -536,32 +549,32 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     
     
     //Contact.
-    func inviteContactFriend(friend: AddressBookContact) {
+    func inviteContactFriend(_ friend: AddressBookContact) {
         if (MFMessageComposeViewController.canSendText()) {
             let controller = MFMessageComposeViewController()
             controller.body = self.getInviteMessage()
             controller.recipients = friend.userPhone
             controller.messageComposeDelegate = self
-            self.presentViewController(controller, animated: true, completion: nil)
+            self.present(controller, animated: true, completion: nil)
         }
         else {
-            let alert = UIAlertController(title: Constants.Messages.UnsupportedSMSTitle, message: Constants.Messages.UnsupportedSMS, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+            let alert = UIAlertController(title: Constants.Messages.UnsupportedSMSTitle, message: Constants.Messages.UnsupportedSMS, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
-    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     //Facebook.
-    func inviteFacebookFriend(friend: FacebookFriend) {
+    func inviteFacebookFriend(_ friend: FacebookFriend) {
         
         let content = FBSDKAppInviteContent()
-        content.appLinkURL = NSURL(string: Constants.iTunesURL)
-        FBSDKAppInviteDialog.showFromViewController(self, withContent: content, delegate: nil)
+        content.appLinkURL = URL(string: Constants.iTunesURL)
+        FBSDKAppInviteDialog.show(from: self, with: content, delegate: nil)
         
         /*
         content.appLinkURL = [NSURL URLWithString:@"https://www.mydomain.com/myapplink"];
@@ -577,7 +590,7 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     }
     
     //Twitter.
-    func inviteTwitterFriend(friend: TwitterFriend) {
+    func inviteTwitterFriend(_ friend: TwitterFriend) {
         if let session = Twitter.sharedInstance().sessionStore.session() {
             let client = TWTRAPIClient(userID: session.userID)
            
@@ -587,26 +600,26 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             let statusesShowEndpoint = "https://api.twitter.com/1.1/direct_messages/new.json"
             let params = ["user_id": friend_user_id, "text" : text]
             var clientError : NSError?
-            let request = client.URLRequestWithMethod("POST", URL: statusesShowEndpoint, parameters: params, error: &clientError)
+            let request = client.urlRequest(withMethod: "POST", url: statusesShowEndpoint, parameters: params, error: &clientError)
             
-            SVProgressHUD.showWithStatus("Sending...")
+            SVProgressHUD.show(withStatus: "Sending...")
             client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
                 SVProgressHUD.dismiss()
                 if (connectionError == nil) {
-                    let json : NSDictionary = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    let json : NSDictionary = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
                     print("result: \(json)")
                     Utils.presentAlertMessage("Success", message: "Sent Invitation", cancelActionText: "Ok", presentingViewContoller: self)
                 }
                 else {
                     print("Error: \(connectionError)")
-                    Utils.presentAlertMessage("Error", message: (connectionError?.description)!, cancelActionText: "Ok", presentingViewContoller: self)
+                    Utils.presentAlertMessage("Error", message: (connectionError?.localizedDescription)!, cancelActionText: "Ok", presentingViewContoller: self)
                 }
             }
         }
     }
     
     //Instagram.
-    func invitePinterestFriend(friend: PDKUser) {
+    func invitePinterestFriend(_ friend: PDKUser) {
         
     }
     
@@ -616,13 +629,13 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         isSearch = true
         
         if searchBar == nil {
-            searchBar                    = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 40))
+            searchBar                    = UISearchBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
         }
         removeAllItemsFromNavBar()
         
         navigationItem.titleView     = searchBar
-        searchBar?.tintColor = UIColor.whiteColor()
-        UITextField.my_appearanceWhenContainedWithin([UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
+        searchBar?.tintColor = UIColor.white
+        UITextField.my_appearanceWhenContained(within: [UISearchBar.classForCoder()]).tintColor = UIColor.blueDolphin()
         searchBar?.becomeFirstResponder()
         searchBar?.showsCancelButton = true
         searchBar?.delegate          = self
@@ -633,18 +646,18 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         navigationItem.titleView           = nil
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterContentForSearchText(searchText)
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearch = false
         filterContentForSearchText("")
         removeSearchBar()
         searchBar.resignFirstResponder()
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         isSearch = false
         searchBar.resignFirstResponder()
     }
@@ -657,16 +670,16 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         setSearchRightButton()
     }
     
-    func filterContentForSearchText(searchText: String) {
+    func filterContentForSearchText(_ searchText: String) {
         
         //Address book.
         searchAddressBookFriends.removeAll()
         
         if searchText.characters.count == 0 {
-            searchAddressBookFriends.appendContentsOf(addressBookContacts)
+            searchAddressBookFriends.append(contentsOf: addressBookContacts)
         } else {
             searchAddressBookFriends = addressBookContacts.filter({( user : AddressBookContact) -> Bool in
-                let containInName = (user.userName?.lowercaseString.containsString(searchText.lowercaseString))!
+                let containInName = (user.userName?.lowercased().contains(searchText.lowercased()))!
                 return containInName
             })
         }
@@ -674,11 +687,11 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         //Facebook.
         searchFacebookFriends.removeAll()
         if searchText.characters.count == 0 {
-            searchFacebookFriends.appendContentsOf(facebookFriends)
+            searchFacebookFriends.append(contentsOf: facebookFriends)
         }
         else {
             searchFacebookFriends = facebookFriends.filter({( user : FacebookFriend) -> Bool in
-                let containInName = (user.userName?.lowercaseString.containsString(searchText.lowercaseString))!
+                let containInName = (user.userName?.lowercased().contains(searchText.lowercased()))!
                 return containInName
             })
         }
@@ -687,11 +700,11 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         //Twitter.
         searchTwitterFriends.removeAll()
         if searchText.characters.count == 0 {
-            searchTwitterFriends.appendContentsOf(twitterFriends)
+            searchTwitterFriends.append(contentsOf: twitterFriends)
         }
         else {
             searchTwitterFriends = twitterFriends.filter({( user : TwitterFriend) -> Bool in
-                let containInName = (user.userName?.lowercaseString.containsString(searchText.lowercaseString))!
+                let containInName = (user.userName?.lowercased().contains(searchText.lowercased()))!
                 return containInName
             })
         }
@@ -705,8 +718,8 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
     }
 
     func setSearchRightButton()  {
-        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(InviteFriendsViewController.searchButtonPressed))
-        rightButton.tintColor             = UIColor.whiteColor()
+        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(InviteFriendsViewController.searchButtonPressed))
+        rightButton.tintColor             = UIColor.white
         navigationItem.rightBarButtonItem = rightButton;
     }
 }

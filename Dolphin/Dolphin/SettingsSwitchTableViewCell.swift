@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingsSwitchTableViewCellDelegate {
-    func toggleSwitch(enabled: Bool, tag: Int)
+    func toggleSwitch(_ enabled: Bool, tag: Int)
 }
 
 class SettingsSwitchTableViewCell: UITableViewCell {
@@ -24,19 +24,19 @@ class SettingsSwitchTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func configureWithSetting(name: String, delegate: SettingsSwitchTableViewCellDelegate?, tag: Int, enable: Bool) {
+    func configureWithSetting(_ name: String, delegate: SettingsSwitchTableViewCellDelegate?, tag: Int, enable: Bool) {
         self.tag = tag
         self.delegate = delegate
         labelSettingName.text = name
-        switchSetting.on = enable
+        switchSetting.isOn = enable
 //        Utils.setFontFamilyForView(self, includeSubViews: true)
     }
     
     // MARK: - Actions
     
-    @IBAction func switchSettingValueChanged(sender: AnyObject) {
+    @IBAction func switchSettingValueChanged(_ sender: AnyObject) {
         if delegate != nil {
-            delegate?.toggleSwitch(switchSetting.on, tag: self.tag)
+            delegate?.toggleSwitch(switchSetting.isOn, tag: self.tag)
         }
     }
 

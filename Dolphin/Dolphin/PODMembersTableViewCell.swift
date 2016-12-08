@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol PODMembersTableViewCellDelegate {
-    optional func tapAddMember()
+    @objc optional func tapAddMember()
 }
 
 class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -26,13 +26,13 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func configureWithPOD(pod: POD) {
+    func configureWithPOD(_ pod: POD) {
         
         collectionViewMembers.delegate = self
         collectionViewMembers.dataSource = self
@@ -43,9 +43,9 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
             members = pod.users!
         }
         
-        emptyLable.hidden = true
+        emptyLable.isHidden = true
         if members.count == 0 {
-            emptyLable.hidden = false
+            emptyLable.isHidden = false
         }
         collectionViewMembers.reloadData()
     }
@@ -55,17 +55,17 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
     }
     
     func registerCells() {
-        collectionViewMembers.registerNib(UINib(nibName: "UserImagePODMemberCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "UserImagePODMemberCollectionViewCell")
+        collectionViewMembers.register(UINib(nibName: "UserImagePODMemberCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "UserImagePODMemberCollectionViewCell")
     
     }
     
     // MARK: CollectionView Datasource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (members.count > cols) {
             return cols;
         }
@@ -74,8 +74,8 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         }
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("UserImagePODMemberCollectionViewCell", forIndexPath: indexPath) as? UserImagePODMemberCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserImagePODMemberCollectionViewCell", for: indexPath) as? UserImagePODMemberCollectionViewCell
         if cell == nil {
             cell = UserImagePODMemberCollectionViewCell()
         }
@@ -93,22 +93,22 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
     
     // MARK: UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         let offset = 2;
         let width = (collectionView.frame.width - CGFloat(offset * (cols - 1))) / CGFloat(cols)
         return CGSize(width: width, height: width)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(15, 0, 0, 0);
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
     

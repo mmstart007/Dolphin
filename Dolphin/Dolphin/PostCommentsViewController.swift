@@ -9,6 +9,30 @@
 import Foundation
 import UIKit
 import SVProgressHUD
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class PostCommentsViewController : DolphinViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate,ChooseSourceTypeViewDelegate {
     
@@ -26,7 +50,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     
     var post: Post?
     var chosenImage: UIImage? = nil
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    let screenSize: CGRect = UIScreen.main.bounds
     var chooseSoureTypeView: ChooseSourceTypeView!
     var overlayView: UIView!
     
@@ -36,7 +60,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         self.loadComments(true)
     }
@@ -49,51 +73,51 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         super.viewDidLoad()
         
         setAppearance()
-        tableView.registerNib(UINib(nibName: "PostCommentOddTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentOddTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostCommentEvenTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentEvenTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostCommentImageTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentImageTableViewCell")
-        tableView.registerNib(UINib(nibName: "PostCommentImageLeftTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "PostCommentImageLeftTableViewCell")
-        tableView.separatorStyle = .None
+        tableView.register(UINib(nibName: "PostCommentOddTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCommentOddTableViewCell")
+        tableView.register(UINib(nibName: "PostCommentEvenTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCommentEvenTableViewCell")
+        tableView.register(UINib(nibName: "PostCommentImageTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCommentImageTableViewCell")
+        tableView.register(UINib(nibName: "PostCommentImageLeftTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "PostCommentImageLeftTableViewCell")
+        tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 10
-        self.ViewTypeParent.hidden = true
+        self.ViewTypeParent.isHidden = true
         addKeyboardObservers()
     }
     
     func setAppearance() {
-        self.edgesForExtendedLayout = .None
+        self.edgesForExtendedLayout = UIRectEdge()
         title = "Dolphin"
         setBackButton()
-        chosenImageContainer.hidden         = true
+        chosenImageContainer.isHidden         = true
         commentTextView.layer.cornerRadius  = 10
         commentTextView.layer.masksToBounds = true
         commentTextView.layer.borderWidth   = 1
-        commentTextView.layer.borderColor   = UIColor.lightGrayColor().CGColor
-        commentTextView.backgroundColor     = UIColor.lightTextColor()
+        commentTextView.layer.borderColor   = UIColor.lightGray.cgColor
+        commentTextView.backgroundColor     = UIColor.lightText
         commentTextView.delegate            = self
         commentTextView.text                = commentTextViewPlaceHolder
-        commentTextView.textColor           = UIColor.darkGrayColor()
+        commentTextView.textColor           = UIColor.darkGray
         let viewTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         view.addGestureRecognizer(viewTapRecognizer)
     }
     
     // MARK: - TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (post?.postComments!.count)!
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         
         let commentInfo: PostComment? = self.post!.postComments![indexPath.row]
         if indexPath.row % 2 == 1 {
             if(commentInfo?.postLink != nil || commentInfo?.postImage != nil)
             {
-                cell = tableView.dequeueReusableCellWithIdentifier("PostCommentImageTableViewCell") as? PostCommentImageTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentImageTableViewCell") as? PostCommentImageTableViewCell
                 if cell == nil {
                     cell = PostCommentImageTableViewCell()
                 }
@@ -103,7 +127,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
                 
             }
             else{
-                cell = tableView.dequeueReusableCellWithIdentifier("PostCommentEvenTableViewCell") as? PostCommentEvenTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentEvenTableViewCell") as? PostCommentEvenTableViewCell
                 if cell == nil {
                     cell = PostCommentEvenTableViewCell()
                 }
@@ -115,7 +139,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         } else {
             if(commentInfo?.postLink != nil || commentInfo?.postImage != nil)
             {
-                cell = tableView.dequeueReusableCellWithIdentifier("PostCommentImageLeftTableViewCell") as? PostCommentImageLeftTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentImageLeftTableViewCell") as? PostCommentImageLeftTableViewCell
                 if cell == nil {
                     cell = PostCommentImageLeftTableViewCell()
                 }
@@ -124,7 +148,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
                 (cell as? PostCommentImageLeftTableViewCell)?.mPost = self.post
             }
             else{
-                cell = tableView.dequeueReusableCellWithIdentifier("PostCommentOddTableViewCell") as? PostCommentOddTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentOddTableViewCell") as? PostCommentOddTableViewCell
                 if cell == nil {
                     cell = PostCommentOddTableViewCell()
                 }
@@ -135,11 +159,11 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
             }
         }
         
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if(self.post!.postComments?.count > 0)
         {
             let commentInfo: PostComment? = self.post!.postComments![indexPath.row]
@@ -161,7 +185,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         return UITableViewAutomaticDimension
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Adjust views of comment cells
         let commentInfo: PostComment? = self.post!.postComments![indexPath.row]
         
@@ -185,18 +209,18 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     }
     
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // Header for comments
         return 30
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Header
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
         let headerImage = UIImageView(frame: CGRect(x: self.view.frame.size.width * 3 / 8.0, y: 5, width: self.view.frame.size.width / 4.0, height: 20))
-        headerView.backgroundColor = UIColor.clearColor()
-        headerImage.backgroundColor = UIColor.clearColor()
-        headerImage.contentMode = .ScaleAspectFit
+        headerView.backgroundColor = UIColor.clear
+        headerImage.backgroundColor = UIColor.clear
+        headerImage.contentMode = .scaleAspectFit
         headerImage.image = UIImage(named: "CommentsTitleImage")
         headerView.addSubview(headerImage)
         return headerView
@@ -205,26 +229,26 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     // MARK: - Keyboard management
     
     func addKeyboardObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PostCommentsViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DolphinViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PostCommentsViewController.keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DolphinViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillAppear(sender: NSNotification) {
+    func keyboardWillAppear(_ sender: Foundation.Notification) {
         print("Keyboard appeared")
         if let userInfo = sender.userInfo {
-            if let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+            if let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                 writeCommentBottomConstraint.constant = keyboardSize.height
-                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
                     self.view.layoutIfNeeded()
                 })
             }
         }
     }
     
-    override func keyboardWillHide(notification: NSNotification) {
+    override func keyboardWillHide(_ notification: Foundation.Notification) {
         print("Keyboard hidden")
         writeCommentBottomConstraint.constant = 0
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.view.layoutIfNeeded()
         })
 
@@ -236,14 +260,14 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     
     // MARK UItextViewDelegate
     
-    func textViewDidBeginEditing(textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == commentTextViewPlaceHolder {
             textView.text = ""
         }
         textView.becomeFirstResponder()
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
             textView.text = commentTextViewPlaceHolder
         }
@@ -252,16 +276,16 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     
     // Photo actions
     
-    @IBAction func selectImageButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func selectImageButtonTouchUpInside(_ sender: AnyObject) {
         picker.delegate = self
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            self.ViewTypeParent?.frame = CGRect(x: 0, y: 0, width: (UIApplication.sharedApplication().keyWindow?.frame.size.width)!, height: (UIApplication.sharedApplication().keyWindow?.frame.size.height)!)
-        }) { (finished) -> Void in
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.ViewTypeParent.hidden = false
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            self.ViewTypeParent?.frame = CGRect(x: 0, y: 0, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: (UIApplication.shared.keyWindow?.frame.size.height)!)
+        }, completion: { (finished) -> Void in
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                self.ViewTypeParent.isHidden = false
                 self.ViewTypeCancel.alpha = 0.4
             })
-        }
+        }) 
         /*let alert = UIAlertController(title: "Lets get a picture", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         let libButton = UIAlertAction(title: "Select photo from library", style: UIAlertActionStyle.Default) { (alert) -> Void in
             self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
@@ -290,15 +314,15 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         self.presentViewController(alert, animated: true, completion: nil)*/
     }
     
-    @IBAction func removeImageFromCommentButtonTouchUpInside(sender: AnyObject) {
+    @IBAction func removeImageFromCommentButtonTouchUpInside(_ sender: AnyObject) {
         
         chosenImage = nil
         chosenImageView.image = nil
-        chosenImageContainer.hidden = true
+        chosenImageContainer.isHidden = true
     }
     
     //MARK: Images Delegates
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("didFinishPickingMediaWithInfo")
         chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         let screenWidth = (screenSize.width - 10)*2
@@ -307,28 +331,28 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         let intWidth :CGFloat? = CGFloat(screenWidth)
         let intHeight :CGFloat? = CGFloat((self.chosenImage?.size.height)!*radio!)
         
-        chosenImage = self.ResizeImage(chosenImage!, targetSize: CGSizeMake(intWidth!, intHeight!))
-        chosenImageContainer.hidden = false
+        chosenImage = self.ResizeImage(chosenImage!, targetSize: CGSize(width: intWidth!, height: intHeight!))
+        chosenImageContainer.isHidden = false
 
-        chosenImageContainer.hidden = false
+        chosenImageContainer.isHidden = false
         chosenImageView.image = chosenImage!
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("imagePickerControllerDidCancel")
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func selectedCamera() {
         self.closedDialog()
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            self.picker.sourceType = UIImagePickerControllerSourceType.camera
             self.picker.delegate   = self
             self.picker.allowsEditing = true
-            self.presentViewController(picker, animated: true, completion: nil)
+            self.present(picker, animated: true, completion: nil)
         }
         else {
             Utils.presentAlertMessage("Error", message: "Device has no camera", cancelActionText: "Ok", presentingViewContoller: self)
@@ -343,18 +367,18 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     func selectedPhotoGallery() {
         self.closedDialog()
         
-        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         self.picker.delegate   = self
         self.picker.allowsEditing = true
-        self.picker.navigationBar.tintColor = UIColor.whiteColor()
-        self.picker.navigationBar.barStyle = UIBarStyle.Black
-        self.presentViewController(picker, animated: true, completion: nil)
+        self.picker.navigationBar.tintColor = UIColor.white
+        self.picker.navigationBar.barStyle = UIBarStyle.black
+        self.present(picker, animated: true, completion: nil)
     }
     
     
-    func loadComments(showIndicator:Bool) {
+    func loadComments(_ showIndicator:Bool) {
         if showIndicator {
-            SVProgressHUD.showWithStatus("Loading")
+            SVProgressHUD.show(withStatus: "Loading")
         }
         
         networkController.getPostComments(String(post!.postId!)) { (postComments, error) -> () in
@@ -364,36 +388,36 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
                 
                 //Add Open History.
                 self.networkController.createPostOpen(String(self.post!.postId!), completionHandler: { (error) in
-                    print(error);
+                    print(error!);
                 })
                 
             } else {
                 let errors: [String]? = error!["errors"] as? [String]
-                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
             SVProgressHUD.dismiss()
         }
     }
     
-    @IBAction func viewTypeCancelTapped(sender: AnyObject) {
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+    @IBAction func viewTypeCancelTapped(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.ViewTypeCancel.alpha = 0
-        }) { (finished) -> Void in
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-            }) { (finished) -> Void in
-                self.ViewTypeParent.hidden = true
+        }, completion: { (finished) -> Void in
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+            }, completion: { (finished) -> Void in
+                self.ViewTypeParent.isHidden = true
                 //self.ViewTypeParent?.removeFromSuperview()
-            }
-        }
+            }) 
+        }) 
 
     }
-    @IBAction func viewTypeCancelPost(sender: AnyObject) {
+    @IBAction func viewTypeCancelPost(_ sender: AnyObject) {
         self.viewTypeCancelTapped(self)
     }
-    @IBAction func postCommentWedTapped(sender: AnyObject) {
+    @IBAction func postCommentWedTapped(_ sender: AnyObject) {
         let commentToSend = PostCommentRequest(text: commentTextView.text, image: nil ,type: "link",url: nil, imageWidth: 0, imageHeight: 0)
         let createLinkPostVC = CreateURLPostViewController()
         commentToSend.postCommentId = post!.postId!
@@ -403,36 +427,36 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         print("Post link button pressed")
     }
     @IBOutlet weak var postCommentPhotoTapped: UIButton!
-    @IBAction func postCommentTextTapped(sender: AnyObject) {
+    @IBAction func postCommentTextTapped(_ sender: AnyObject) {
         self.viewTypeCancelTapped(self)
     }
-    @IBAction func postCommentPhotoTapped(sender: AnyObject) {
+    @IBAction func postCommentPhotoTapped(_ sender: AnyObject) {
         self.viewTypeCancelTapped(self)
         self.overlayView = UIView()
         self.overlayView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.7)
-        self.overlayView.frame = (UIApplication.sharedApplication().keyWindow?.frame)!
-        UIApplication.sharedApplication().keyWindow?.addSubview(self.overlayView)
+        self.overlayView.frame = (UIApplication.shared.keyWindow?.frame)!
+        UIApplication.shared.keyWindow?.addSubview(self.overlayView)
         
         self.chooseSoureTypeView = ChooseSourceTypeView.instanceFromNib()
-        self.chooseSoureTypeView.frame = CGRectMake(0, 0, 300, 200)
-        self.chooseSoureTypeView.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height/2.0)
+        self.chooseSoureTypeView.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
+        self.chooseSoureTypeView.center = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height/2.0)
         self.chooseSoureTypeView.delegate = self
-        UIApplication.sharedApplication().keyWindow?.addSubview(self.chooseSoureTypeView!)
+        UIApplication.shared.keyWindow?.addSubview(self.chooseSoureTypeView!)
         
-        self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        UIView.animateWithDuration(0.1, animations: {
-            self.chooseSoureTypeView.transform = CGAffineTransformMakeScale(1.2, 1.2)
-            UIView.animateWithDuration(0.05, animations: {
-                self.chooseSoureTypeView.transform = CGAffineTransformIdentity
-            }) { (finished) in
-            }
-        }) { (finished) in
+        self.chooseSoureTypeView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+        UIView.animate(withDuration: 0.1, animations: {
+            self.chooseSoureTypeView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            UIView.animate(withDuration: 0.05, animations: {
+                self.chooseSoureTypeView.transform = CGAffineTransform.identity
+            }, completion: { (finished) in
+            }) 
+        }, completion: { (finished) in
             
-        }
+        }) 
 
     }
     
-    func ResizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+    func ResizeImage(_ image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
         
         let widthRatio  = targetSize.width  / image.size.width
@@ -441,28 +465,28 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         // Figure out what our orientation is, and use that to form the rectangle
         var newSize: CGSize
         if(widthRatio > heightRatio) {
-            newSize = CGSizeMake(size.width * heightRatio, size.height * heightRatio)
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
         } else {
-            newSize = CGSizeMake(size.width * widthRatio,  size.height * widthRatio)
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
         }
         
         // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
         
         // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.drawInRect(rect)
+        image.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         return newImage!
     }
     
-    @IBAction func postCommentTapped(sender: AnyObject) {
+    @IBAction func postCommentTapped(_ sender: AnyObject) {
         print("send message pressed")
         commentTextView.resignFirstResponder()
         if commentTextView.text != "" && commentTextView.text != "Write a comment..." {
-            SVProgressHUD.showWithStatus("Sending comment")
+            SVProgressHUD.show(withStatus: "Sending comment")
             var type : String? = "text"
             var intWidth :Int? = 0
             var intHeight : Int? = 0
@@ -481,7 +505,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
                 if error == nil {
                     if comment?.postCommentId != nil {
                         self.chosenImage = nil
-                        self.chosenImageContainer.hidden = true
+                        self.chosenImageContainer.isHidden = true
                         self.chosenImageContainer.subviews.forEach({ $0.removeFromSuperview() })
                         // add the comment returned locally
                         self.post?.postComments?.append(comment!)
@@ -491,9 +515,9 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
                         self.commentTextView.text = ""
                         // after a delay, scroll the table to the last comment
                         let delay = 0.1 * Double(NSEC_PER_SEC)
-                        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-                        dispatch_after(time, dispatch_get_main_queue(), {
-                            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.post!.postComments!.count - 1, inSection: 0), atScrollPosition: .Bottom, animated: true)
+                        let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
+                        DispatchQueue.main.asyncAfter(deadline: time, execute: {
+                            self.tableView.scrollToRow(at: IndexPath(row: self.post!.postComments!.count - 1, section: 0), at: .bottom, animated: true)
                         })
                     } else {
                         print("there was an error saving the post")
@@ -502,20 +526,20 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
                     
                 } else {
                     let errors: [String]? = error!["errors"] as? [String]
-                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .Alert)
-                    let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+                    let alert = UIAlertController(title: "Error", message: errors![0], preferredStyle: .alert)
+                    let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
                     alert.addAction(cancelAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.present(alert, animated: true, completion: nil)
                     SVProgressHUD.dismiss()
                 }
             })
             
         } else {
             var alert: UIAlertController
-            alert = UIAlertController(title: "Error", message: "The message can't be empty!", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: nil)
+            alert = UIAlertController(title: "Error", message: "The message can't be empty!", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

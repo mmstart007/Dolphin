@@ -16,9 +16,9 @@ class DolphinButton : UIButton {
         if let image = imageView?.image {
             
             let margin = 20 - image.size.width / 2
-            let titleRect = titleRectForContentRect(bounds)
+            let titleRect = self.titleRect(forContentRect: bounds)
             
-            contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+            contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
             imageEdgeInsets = UIEdgeInsetsMake(0, margin, 0, 0)
             titleEdgeInsets = UIEdgeInsetsMake(0, (bounds.width - titleRect.width -  image.size.width - margin) / 2, 0, 0)
         }

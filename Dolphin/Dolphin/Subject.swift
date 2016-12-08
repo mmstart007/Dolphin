@@ -28,8 +28,8 @@ class Subject : NSObject {
     
     func toJson() -> [String: AnyObject] {
         var retDic: [String: AnyObject] = [:]
-        retDic["id"] = self.id
-        retDic["name"] = self.name
+        retDic["id"] = self.id as AnyObject?
+        retDic["name"] = self.name as AnyObject?
         return retDic
     }
     

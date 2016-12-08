@@ -9,6 +9,30 @@
 import Foundation
 import UIKit
 import SDWebImage
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class PostDetailHeaderTableViewCell : UITableViewCell {
     
@@ -25,14 +49,14 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        self.contentView.userInteractionEnabled = false
-        postContent.userInteractionEnabled = true
+        self.contentView.isUserInteractionEnabled = false
+        postContent.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PostDetailHeaderTableViewCell.openWebPage))
         tapGesture.numberOfTapsRequired = 1
         postContent.addGestureRecognizer(tapGesture)
     }
     
-    func configureWithPost(post: Post) {
+    func configureWithPost(_ post: Post) {
         actualPost = post
         if post.postType?.name == "link" {
             postLabelTitle.text = post.postText
@@ -64,11 +88,11 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
             }
             
             if let postImage = actualPost!.postImage {
-                let manager = SDWebImageManager.sharedManager()
+                let manager = SDWebImageManager.shared()
                 
                 let urlString = convertURL(postImage.imageURL!)
                 
-                manager.downloadImageWithURL(NSURL(string: urlString), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                manager?.downloadImage(with: URL(string: urlString), options: .refreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
                         self.postImageView.image = image
                         
@@ -77,11 +101,11 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
                     }
                 })
             } else if let postLink = actualPost!.postLink {
-                let manager = SDWebImageManager.sharedManager()
+                let manager = SDWebImageManager.shared()
                 
                 let urlString = convertURL(postLink.imageURL!)
                 
-                manager.downloadImageWithURL(NSURL(string: urlString), options: .RefreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
+                manager?.downloadImage(with: URL(string: urlString), options: .refreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) -> Void in
                     if error == nil {
                         self.postImageView.image = image
                     } else {
@@ -95,10 +119,10 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
                 postImageView.image = UIImage(named: "PostImagePlaceholder")
             }
         }
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
     }
     
-    func adjustImageSize(image_width: CGFloat, image_height: CGFloat) {
+    func adjustImageSize(_ image_width: CGFloat, image_height: CGFloat) {
         if image_width == 0 || image_height == 0 {
             let real_width = postImageView.frame.size.width
             constraintHeightImageView.constant = real_width
@@ -118,16 +142,16 @@ class PostDetailHeaderTableViewCell : UITableViewCell {
         if actualPost!.postType?.name == "link" {
             let urlString = actualPost?.postLink?.url
             if(urlString != nil && urlString?.characters.count > 0)  {
-                let postURL = NSURL(string: urlString!)
-                if UIApplication.sharedApplication().canOpenURL(postURL!) {
-                    UIApplication.sharedApplication().openURL(postURL!)
+                let postURL = URL(string: urlString!)
+                if UIApplication.shared.canOpenURL(postURL!) {
+                    UIApplication.shared.openURL(postURL!)
                 }
             }
         }
     }
     
-    func convertURL(urlString: String) -> String {
-        if urlString.containsString("http") {
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
             return urlString
         } else {
             return Constants.RESTAPIConfig.Developement.BaseUrl + urlString

@@ -14,21 +14,21 @@ class DolphinTabBarViewController : UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Utils.setFontFamilyForView(self.view, includeSubViews: true)
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = UIRectEdge()
     }
     
     func setMenuLeftButton() {
         
-        let leftButton                   = UIBarButtonItem(image: UIImage(named: "MenuIcon"), style: UIBarButtonItemStyle.Plain, target: self.revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)))
-        leftButton.tintColor             = UIColor.whiteColor()
+        let leftButton                   = UIBarButtonItem(image: UIImage(named: "MenuIcon"), style: UIBarButtonItemStyle.plain, target: self.revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)))
+        leftButton.tintColor             = UIColor.white
         navigationItem.leftBarButtonItem = leftButton;
         
     }
     
     func setSearchRightButton() {
         
-        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: Selector("searchButtonPressed"))
-        rightButton.tintColor             = UIColor.whiteColor()
+        let rightButton                   = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: Selector(("searchButtonPressed")))
+        rightButton.tintColor             = UIColor.white
         navigationItem.rightBarButtonItem = rightButton;
         
     }

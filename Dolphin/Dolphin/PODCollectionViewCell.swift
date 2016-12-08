@@ -14,9 +14,9 @@ class PODCollectionViewCell : UICollectionViewCell {
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var podNameLabel: UILabel!
     
-    func configureWithPOD(pod: POD) {
-        podImageView.sd_setImageWithURL(NSURL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
-        podImageView.contentMode = .ScaleAspectFill
+    func configureWithPOD(_ pod: POD) {
+        podImageView.sd_setImage(with: URL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+        podImageView.contentMode = .scaleAspectFill
         self.podNameLabel.text   = pod.name
     }
     
@@ -26,11 +26,11 @@ class PODCollectionViewCell : UICollectionViewCell {
         podImageView.clipsToBounds           = true
         podImageView.layer.masksToBounds     = true
         self.podImageView.layer.borderWidth  = 4
-        self.podImageView.layer.borderColor  = UIColor.whiteColor().CGColor
+        self.podImageView.layer.borderColor  = UIColor.white.cgColor
         
-        self.layer.shadowColor = UIColor.blackColor().CGColor
+        self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 0.2
-        self.layer.shadowOffset = CGSizeMake(-2.0, 0)
+        self.layer.shadowOffset = CGSize(width: -2.0, height: 0)
         self.layer.shadowRadius = 2
         self.layer.cornerRadius = self.frame.size.width / 2.0
     }

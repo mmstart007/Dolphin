@@ -13,9 +13,9 @@ class DealDetailsCodeSectionTableViewCell: UITableViewCell {
     @IBOutlet weak var imageViewCode: UIImageView!
     @IBOutlet weak var textViewDescription: UITextView!
  
-    func configureWithDeal(deal: Deal) {
+    func configureWithDeal(_ deal: Deal) {
         if !deal.dealCodeUrl!.isEmpty {
-            imageViewCode.sd_setImageWithURL(NSURL(string: (deal.dealCodeUrl)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            imageViewCode.sd_setImage(with: URL(string: (deal.dealCodeUrl)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
         }
         backgroundColor = UIColor.lightGrayBackground()
         Utils.setFontFamilyForView(self, includeSubViews: true)

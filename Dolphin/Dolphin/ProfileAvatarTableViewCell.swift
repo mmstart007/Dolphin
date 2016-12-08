@@ -28,7 +28,7 @@ class ProfileAvatarTableViewCell: UITableViewCell {
         Utils.setFontFamilyForView(labelChangeImage, includeSubViews: true)
         let tapImageGesture = UITapGestureRecognizer(target: self, action: #selector(ProfileAvatarTableViewCell.selectImage(_:)))
         imageViewProfileAvatar.addGestureRecognizer(tapImageGesture)
-        imageViewProfileAvatar.userInteractionEnabled = true
+        imageViewProfileAvatar.isUserInteractionEnabled = true
     }
     
     override func layoutSubviews() {
@@ -38,12 +38,12 @@ class ProfileAvatarTableViewCell: UITableViewCell {
         imageViewProfileAvatar.clipsToBounds = true
     }
     
-    func configureWithImage(previousImageURL: String?, imageData: UIImage?, delegate: SettingsViewController) {
+    func configureWithImage(_ previousImageURL: String?, imageData: UIImage?, delegate: SettingsViewController) {
         self.delegate = delegate
         if imageData != nil {
             imageViewProfileAvatar.image = imageData
         } else if previousImageURL != nil {
-            imageViewProfileAvatar.sd_setImageWithURL(NSURL(string: previousImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
+            imageViewProfileAvatar.sd_setImage(with: URL(string: previousImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             imageViewProfileAvatar.image = UIImage(named: "UserPlaceholder")
         }
@@ -51,7 +51,7 @@ class ProfileAvatarTableViewCell: UITableViewCell {
     
     // MARK: - Actions
     
-    func selectImage(sender: AnyObject) {
+    func selectImage(_ sender: AnyObject) {
         delegate?.onSelectImageTouchUpInside()
     }
     

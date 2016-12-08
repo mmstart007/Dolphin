@@ -13,9 +13,9 @@ class Deal {
     var dealImage: String?
     var dealCodeUrl: String?
     var dealDescription: String?
-    var dealDate: NSDate?
+    var dealDate: Date?
     
-    convenience init (image: String, description: String, date: NSDate, code: String) {
+    convenience init (image: String, description: String, date: Date, code: String) {
         self.init()
         
         dealImage       = image

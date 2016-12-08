@@ -21,8 +21,8 @@ class WebViewController: DolphinViewController {
         title = siteLink
         
         //Load Web site.
-        let url = NSURL(string: siteLink!)
-        let requestObj = NSURLRequest(URL: url!)
+        let url = URL(string: siteLink!)
+        let requestObj = URLRequest(url: url!)
         webView.loadRequest(requestObj)
     }
 

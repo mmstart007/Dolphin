@@ -11,8 +11,8 @@ import SVProgressHUD
 import BEMCheckBox
 
 protocol PickerGradesOrSubjectsDelegate {
-    func gradesDidSelected(grades: [Grade])
-    func subjectsDidSelected(subjects: [Subject])
+    func gradesDidSelected(_ grades: [Grade])
+    func subjectsDidSelected(_ subjects: [Subject])
 }
 
 class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDelegate, UITableViewDataSource, BEMCheckBoxDelegate {
@@ -64,11 +64,11 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         let spacer = UIBarButtonItem()
         spacer.width = -10;
         
-        checkBoxAll = BEMCheckBox(frame: CGRectMake(0, 0, 30, 30))
-        checkBoxAll.tintColor = UIColor.whiteColor()
+        checkBoxAll = BEMCheckBox(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        checkBoxAll.tintColor = UIColor.white
         checkBoxAll.animationDuration = 0
-        checkBoxAll.onAnimationType = .Bounce
-        checkBoxAll.offAnimationType = .Bounce
+        checkBoxAll.onAnimationType = .bounce
+        checkBoxAll.offAnimationType = .bounce
         checkBoxAll.delegate = self
         let leftButton = UIBarButtonItem(customView: checkBoxAll)
         self.navigationItem.leftBarButtonItems = [spacer, leftButton];
@@ -92,7 +92,7 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         }
     }
     
-    func didTapCheckBox(checkBox: BEMCheckBox) {
+    func didTap(_ checkBox: BEMCheckBox) {
         if(checkBoxAll.on) {
             if areSubjects {
                 subjectsSelected.removeAll()
@@ -117,7 +117,7 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     
     func loadData()
     {
-        SVProgressHUD.showWithStatus("Loading...")
+        SVProgressHUD.show(withStatus: "Loading...")
         if(areSubjects) {
             
             //Load Subjects
@@ -161,11 +161,11 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     
     // MARK: TableView DataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if areSubjects {
             return subjects.count
         } else {
@@ -173,8 +173,8 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: SubjectOrGradeTableViewCell? = tableViewGradesOrSubjects.dequeueReusableCellWithIdentifier("SubjectOrGradeTableViewCell") as? SubjectOrGradeTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: SubjectOrGradeTableViewCell? = tableViewGradesOrSubjects.dequeueReusableCell(withIdentifier: "SubjectOrGradeTableViewCell") as? SubjectOrGradeTableViewCell
         if cell == nil {
             cell = SubjectOrGradeTableViewCell()
         }
@@ -186,30 +186,30 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
             cell?.configureWithGradeOrSubjectName(g.name!, checked: self.isSelectedGrade(g))
         }
         
-        cell?.selectionStyle = .None
+        cell?.selectionStyle = .none
         return cell!
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             
-            let alertController = UIAlertController(title: nil, message: "Are you sure to remove?", preferredStyle: .Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: { action -> Void in
+            let alertController = UIAlertController(title: nil, message: "Are you sure to remove?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { action -> Void in
                 
             })
             alertController.addAction(yesAction)
             
-            let noAction = UIAlertAction(title: "No", style: .Default, handler: nil)
+            let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
             alertController.addAction(noAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
-    func isSelectedSubject(s: Subject) ->Bool {
+    func isSelectedSubject(_ s: Subject) ->Bool {
         for item in subjectsSelected {
             if item.id == s.id {
                 return true
@@ -219,7 +219,7 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         return false
     }
 
-    func isSelectedGrade(g: Grade) ->Bool {
+    func isSelectedGrade(_ g: Grade) ->Bool {
         for item in gradesSelected {
             if item.id == g.id {
                 return true
@@ -229,13 +229,13 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         return false
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
     // MARK: Tableview delegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if areSubjects {
             if isSelectedSubject(subjects[indexPath.row]) {
                 deselectSubject(subjects[indexPath.row])
@@ -253,22 +253,22 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         tableViewGradesOrSubjects.reloadData()
     }
     
-    func deselectGrade(g: Grade) {
+    func deselectGrade(_ g: Grade) {
         var index = 0
         for item in gradesSelected {
             if item.id == g.id {
-                gradesSelected.removeAtIndex(index)
+                gradesSelected.remove(at: index)
                 return
             }
             index += 1
         }
     }
     
-    func deselectSubject(s: Subject) {
+    func deselectSubject(_ s: Subject) {
         var index = 0
         for item in subjectsSelected {
             if item.id == s.id {
-                subjectsSelected.removeAtIndex(index)
+                subjectsSelected.remove(at: index)
                 return
             }
             index += 1
@@ -277,7 +277,7 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
     
     // MARK: - Actions
     
-    func doneTouchUpInside(sender: AnyObject) {
+    func doneTouchUpInside(_ sender: AnyObject) {
         if areSubjects {
             delegate?.subjectsDidSelected(subjectsSelected)
         } else {
@@ -285,17 +285,17 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         }
         
         if fromSettings {
-            navigationController?.popViewControllerAnimated(true)
+            let _ = navigationController?.popViewController(animated: true)
         }
         else {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
 
     }
     
     // MARK: - Auxiliary methods
     func registerCells() {
-        tableViewGradesOrSubjects.registerNib(UINib(nibName: "SubjectOrGradeTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "SubjectOrGradeTableViewCell")
+        tableViewGradesOrSubjects.register(UINib(nibName: "SubjectOrGradeTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "SubjectOrGradeTableViewCell")
     }
     
     // MAKR: - Add Grade / Subject
@@ -309,19 +309,19 @@ class PickGradesOrSubjectsViewController: DolphinViewController, UITableViewDele
         }
         
         var inputTextField: UITextField?
-        let newPrompt = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        newPrompt.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
-        newPrompt.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+        let newPrompt = UIAlertController(title: nil, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        newPrompt.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+        newPrompt.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             // Now do whatever you want with inputTextField (remember to unwrap the optional)
             let name = inputTextField?.text
-            print(name)
+            print(name!)
 
         }))
-        newPrompt.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+        newPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = "Name"
             inputTextField = textField
         })
         
-        presentViewController(newPrompt, animated: true, completion: nil)
+        present(newPrompt, animated: true, completion: nil)
     }
 }

@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 @objc protocol PostDetailsTopicsAndViewsTableViewCellDelegate {
-    optional func tapTopic(topic: Topic?)
-    optional func likeButtonPressed()
+    @objc optional func tapTopic(_ topic: Topic?)
+    @objc optional func likeButtonPressed()
 }
 
 class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -28,23 +28,23 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell, UICollec
     
     override func awakeFromNib() {
          super.awakeFromNib()
-        collectionView?.registerNib(UINib(nibName: "TopicCollectionViewCell", bundle: NSBundle.mainBundle()), forCellWithReuseIdentifier: "TopicCollectionViewCell")
+        collectionView?.register(UINib(nibName: "TopicCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "TopicCollectionViewCell")
         let layout = LeftAlignCollectionViewLayout()
         layout.minimumInteritemSpacing = 5;
         layout.minimumLineSpacing = 4;
         collectionView.collectionViewLayout = layout
 
         likedImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PostDetailsTopicsAndViewsTableViewCellDelegate.likeButtonPressed)))
-        likedImageView.userInteractionEnabled = true
+        likedImageView.isUserInteractionEnabled = true
 
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
     }
     
     func likeButtonPressed() {
         self.delegate?.likeButtonPressed!()
     }
     
-    func configureWithPost(post: Post) {
+    func configureWithPost(_ post: Post) {
         self.post = post
         numberOfLikesLabel.text = "0"
         if (post.postNumberOfLikes != nil) {
@@ -63,42 +63,42 @@ class PostDetailsTopicsAndViewsTableViewCell : CustomFontTableViewCell, UICollec
     
     // MARK: CollectionView Datasource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (post?.postTopics!.count)!
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: TopicCollectionViewCell? = collectionView.dequeueReusableCellWithReuseIdentifier("TopicCollectionViewCell", forIndexPath: indexPath) as? TopicCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell: TopicCollectionViewCell? = collectionView.dequeueReusableCell(withReuseIdentifier: "TopicCollectionViewCell", for: indexPath) as? TopicCollectionViewCell
         if cell == nil {
             cell = TopicCollectionViewCell()
         }
-        cell?.configureWithName((post?.postTopics![indexPath.row].name!.uppercaseString)!, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
-        collectionView.userInteractionEnabled = true
+        cell?.configureWithName((post?.postTopics![indexPath.row].name!.uppercased())!, color: UIColor.topicsColorsArray()[indexPath.row % UIColor.topicsColorsArray().count])
+        collectionView.isUserInteractionEnabled = true
         return cell!
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let text = post?.postTopics![indexPath.row].name!.uppercaseString
-        let font = UIFont.systemFontOfSize(16)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        let text = post?.postTopics![indexPath.row].name!.uppercased()
+        let font = UIFont.systemFont(ofSize: 16)
         let textString = text! as NSString
         
         let textAttributes = [NSFontAttributeName: font]
-        var size = textString.boundingRectWithSize(CGSizeMake(topicsView.frame.size.width - 20, 35), options: .UsesLineFragmentOrigin, attributes: textAttributes, context: nil).size
+        var size = textString.boundingRect(with: CGSize(width: topicsView.frame.size.width - 20, height: 35), options: .usesLineFragmentOrigin, attributes: textAttributes, context: nil).size
         if size.width < topicsView.frame.size.width / 4 {
             size = CGSize(width: topicsView.frame.size.width / 4, height: size.height)
         }
         return size
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let topic = post?.postTopics![indexPath.row]
         self.delegate?.tapTopic!(topic)
     }
