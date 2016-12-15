@@ -15,7 +15,7 @@ protocol UpdateProtocol {
 }
 
 
-class PODsListViewController : UIViewController, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate,UpdateProtocol {
+class PODsListViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UpdateProtocol {
     
     let networkController = NetworkController.sharedInstance
     let kPageQuantity: Int = 10
@@ -288,11 +288,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
         return cell!
     }
     
-    private func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if searchText != nil && searchText != "" {
             (cell as? PODPreviewTableViewCell)!.addUserImages(filteredPODs[indexPath.row])
         } else {
@@ -303,7 +303,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UICollec
     
     // MARK: Tableview delegate
     
-    private func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("POD selected: " + String(indexPath.row))
         
         if (searchText == nil || searchText == "") {

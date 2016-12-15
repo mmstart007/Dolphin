@@ -243,8 +243,12 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         self.present(picker, animated: true, completion: nil)
     }
     
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    /*func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
+    } */
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {

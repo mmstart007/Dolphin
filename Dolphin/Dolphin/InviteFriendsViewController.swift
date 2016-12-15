@@ -71,7 +71,6 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
         if segmentedControl.selectedSegmentIndex == 0 {
             getContactsFromAddressBook()
         }
-        
     }
     
     override func viewDidLoad() {

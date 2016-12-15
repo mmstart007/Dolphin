@@ -12,10 +12,7 @@ import UITextView_Placeholder
 import SVProgressHUD
 //import KSTokenView
 
-class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettingsViewControllerDelegate, KSTokenViewDelegate {
-    
-    let tags: Array<String> = List.names()
-    let networkController = NetworkController.sharedInstance
+class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettingsViewControllerDelegate, KSTokenViewDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var postToFieldView: UIView!
     @IBOutlet weak var postTextView: UITextView!
@@ -27,6 +24,8 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     @IBOutlet weak var adjustVisitivilitySettingsIndicator: UIImageView!
     
     // if this var is set, I'm creating a text post from a POD
+    let tags: Array<String> = List.names()
+    let networkController = NetworkController.sharedInstance
     var pod: POD?
     var podsToShare: [POD] = []
     var isPresentMode = false
@@ -42,7 +41,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         setBackButton()
         title = "Write"
         setRightSystemButtonItem(.done, target: self, action: #selector(donePressed(_:)))
-        setupFields()
+        self.setupFields()
         
         if(mPost != nil)
         {
@@ -57,6 +56,11 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         
     }
     
+    // Background Tap Stack
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     func setupFields() {
         postTextView.placeholderColor = UIColor.lightGray
         postTextView.placeholder = "Write your moment..."
@@ -67,7 +71,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         postTagsTextView.placeholder      = ""
         postTagsTextView.maxTokenLimit    = 15
         postTagsTextView.style            = .squared
-        postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 70)
+        postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 88)
         postTagsTextView.font             = UIFont.systemFont(ofSize: 14)
         postTagsTextView.backgroundColor = UIColor.clear
 
@@ -219,6 +223,7 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
         visibilityLabel.text = visibilityString
     }
     
+    // MARK: - KSTokenViewDelegate.
     func tokenView(_ token: KSTokenView, performSearchWithString string: String, completion: ((_ results: Array<AnyObject>) -> Void)?) {
         var data: Array<String> = []
         for value: String in tags {
@@ -231,6 +236,13 @@ class CreateTextPostViewController : DolphinViewController, NewPostPrivacySettin
     
     func tokenView(_ token: KSTokenView, displayTitleForObject object: AnyObject) -> String {
         return object as! String
+    }
+    
+    // MARK: - UITextFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
     }
 }
 

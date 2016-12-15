@@ -11,7 +11,7 @@ import UIKit
 import SVProgressHUD
 
 
-class CreatePodViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageCropViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, SelectPODMembersDelegate {
+class CreatePodViewController : DolphinViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageCropViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate, UIScrollViewDelegate, SelectPODMembersDelegate {
     
     @IBOutlet weak var podImageView: UIImageView!
     @IBOutlet weak var cameraButton: UIButton!
@@ -20,6 +20,8 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     @IBOutlet weak var podNameTextField: UITextField!
     @IBOutlet weak var podDescriptionTextView: UITextView!
     @IBOutlet weak var switchIsPrivate: UISwitch!
+    @IBOutlet weak var constraintBottomSpaceOfScrollView: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewContainer: UIScrollView!
     
     let networkController = NetworkController.sharedInstance
     let picker = UIImagePickerController()
@@ -93,15 +95,18 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
                     }
                 });
             }
-
         }
         
 //        let tapViewGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
 //        self.view.addGestureRecognizer(tapViewGesture)
     }
 
-    // MARK: Select POD Image
+    // Background Tap Stack
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
+    // MARK: Select POD Image
     @IBAction func selectImage(_ sender: AnyObject) {
         
         resignResponder()
@@ -247,6 +252,12 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         leftCharactersLabel.text = String(format: "%li / %li", arguments: [textField.text!.characters.count, maxNameCharacters])
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
     // MARK: - Actions
     
     func saveSettingsPressed(_ sender: AnyObject) {
@@ -295,8 +306,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
                             self.present(alert, animated: true, completion: nil)
                         }
                     })
-                }
-                else{
+                } else {
                     var retDic = [String: AnyObject]()
                     
                     if let podId = podUpdate!.id {
@@ -307,8 +317,7 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
                     if let podId = podUpdate!.id {
                         podToSave.id = podId
                     }
-                    if(imageSelected != nil)
-                    {
+                    if(imageSelected != nil) {
                         podToSave.imageData = imageSelected
                         podToSave.image_width = Int(imageSelected!.size.width)
                         podToSave.image_height = Int(imageSelected!.size.height)
@@ -381,4 +390,22 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         membersCollectionView.reloadData()
     }
     
+    // MARK: - Keyboard Stack.
+    override func keyboardWillShow(_ notification: Foundation.Notification) {
+        
+        if let keyboardSize = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
+            self.constraintBottomSpaceOfScrollView.constant = keyboardSize.height
+            updateViewConstraints()
+            self.scrollViewContainer.setContentOffset(CGPoint(x: 0, y: 80), animated: true)
+        }
+    }
+    
+    override func keyboardWillHide(_ notification: Foundation.Notification) {
+        self.constraintBottomSpaceOfScrollView.constant = 0
+        updateViewConstraints()
+    }
+    
 }
+
+
+

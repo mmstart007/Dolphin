@@ -31,8 +31,6 @@
 		36129FA41CA5999C00446503 /* AFDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36129FA31CA5999C00446503 /* AFDateExtension.swift */; };
 		36129FA71CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36129FA51CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift */; };
 		36129FA81CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36129FA61CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib */; };
-		36129FAA1CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36129FA91CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift */; };
-		36129FAC1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36129FAB1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib */; };
 		36154C231CAAF69F00BE457B /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36154C221CAAF69F00BE457B /* Subject.swift */; };
 		36154C251CAAF6A800BE457B /* Grade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36154C241CAAF6A800BE457B /* Grade.swift */; };
 		3615B6FC1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */; };
@@ -231,8 +229,6 @@
 		36129FA31CA5999C00446503 /* AFDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFDateExtension.swift; sourceTree = "<group>"; };
 		36129FA51CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateImagePostAddDescriptionViewController.swift; sourceTree = "<group>"; };
 		36129FA61CA5BC7200446503 /* CreateImagePostAddDescriptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateImagePostAddDescriptionViewController.xib; sourceTree = "<group>"; };
-		36129FA91CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostAddDescriptionTableViewCell.swift; sourceTree = "<group>"; };
-		36129FAB1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatePostAddDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		36154C221CAAF69F00BE457B /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		36154C241CAAF6A800BE457B /* Grade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grade.swift; sourceTree = "<group>"; };
 		3615B6FB1C19C5A4006BB8B4 /* CreateURLPostChooseImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateURLPostChooseImageViewController.swift; sourceTree = "<group>"; };
@@ -469,8 +465,6 @@
 				361F508B1C65389D00153B6C /* NewPostPrivacySettingsVisibilityCell.xib */,
 				361F508D1C693AA500153B6C /* NewPostPrivacySettingsShareToPODCell.swift */,
 				361F508F1C693ABA00153B6C /* NewPostPrivacySettingsShareToPODCell.xib */,
-				36129FA91CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift */,
-				36129FAB1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib */,
 				AA7DE0301D6A939500CA736C /* ChooseSourceTypeView.swift */,
 				AA7DE0321D6A93AF00CA736C /* ChooseSourceTypeView.xib */,
 			);
@@ -1078,7 +1072,6 @@
 				361F50881C65339000153B6C /* NewPostPrivacySettingsViewController.xib in Resources */,
 				36E9982A1C28C154007FCF64 /* PostDetailsTopicsAndViewsTableViewCell.xib in Resources */,
 				3668B2FF1C6A7A7900469FF9 /* DealCollectionViewCell.xib in Resources */,
-				36129FAC1CA5C54100446503 /* CreatePostAddDescriptionTableViewCell.xib in Resources */,
 				3650E0B81C6D206700BB9301 /* CreatePodViewController.xib in Resources */,
 				362D4BDE1C1F336100F065E5 /* CreateImagePostViewController.xib in Resources */,
 				AA7253631D6D94730050DF7D /* SettingsTextFieldTableViewCell.xib in Resources */,
@@ -1206,7 +1199,6 @@
 				368798661C29E1260088AC24 /* LoginViewController.swift in Sources */,
 				3642C3C01CCA7DEC00BA3BE9 /* NSURL+DolphinExtensions.swift in Sources */,
 				360EA4B81C0F70F800692668 /* PopularTrendingTopicsTableViewCell.swift in Sources */,
-				36129FAA1CA5C4BD00446503 /* CreatePostAddDescriptionTableViewCell.swift in Sources */,
 				3687989D1C2B482C0088AC24 /* CustomFontTableViewCell.swift in Sources */,
 				3650E0C21C6D4D6700BB9301 /* UserImageCollectionViewCell.swift in Sources */,
 				F89DF7BA1D4908610052FCBF /* OtherProfileViewController.swift in Sources */,
@@ -1423,7 +1415,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "04a6ac62-1ab6-4f07-863b-57c14e34babf";
+				PROVISIONING_PROFILE = "59be4640-b47c-4614-8e14-b5d7bb9faf56";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1476,8 +1468,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = DolphinLaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Roque (UUV65RY822)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Roque (UUV65RY822)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Menlo Ed, Inc (3R2S97YZLA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Menlo Ed, Inc (3R2S97YZLA)";
 				DEVELOPMENT_TEAM = 3R2S97YZLA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1501,8 +1493,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "027b75c8-1e50-48ee-9226-7a2b6efe61c3";
-				PROVISIONING_PROFILE_SPECIFIER = DophinDevProvision_1128;
+				PROVISIONING_PROFILE = "2bba2788-b9ac-43a6-8faf-cf248aaa9c83";
+				PROVISIONING_PROFILE_SPECIFIER = Dolphin_adhoc_1124;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Dolphin-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

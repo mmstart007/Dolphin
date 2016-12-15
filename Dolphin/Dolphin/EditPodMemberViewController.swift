@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class EditPodMemberViewController: DolphinViewController, PODMemberToAddTableViewCellDelegate, SelectPODMembersDelegate {
+class EditPodMemberViewController: DolphinViewController, PODMemberToAddTableViewCellDelegate, SelectPODMembersDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
 
@@ -38,8 +38,7 @@ class EditPodMemberViewController: DolphinViewController, PODMemberToAddTableVie
     }
 
     // MARK: - TableView DataSource
-    
-    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
@@ -47,7 +46,7 @@ class EditPodMemberViewController: DolphinViewController, PODMemberToAddTableVie
         return (pod?.users!.count)!
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "PODMemberToAddTableViewCell") as? PODMemberToAddTableViewCell
         if cell == nil {
             cell = PODMemberToAddTableViewCell()
@@ -58,7 +57,7 @@ class EditPodMemberViewController: DolphinViewController, PODMemberToAddTableVie
         return cell!
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     

@@ -191,6 +191,7 @@ class CreateURLPostViewController : DolphinViewController, UITextFieldDelegate, 
     
     func webViewDidStartLoad(_ webView: UIWebView) {
         print("Started Loading")
+        SVProgressHUD.show()
         isLoadingPage = true
         setRefreshButton(isLoadingPage)
     }

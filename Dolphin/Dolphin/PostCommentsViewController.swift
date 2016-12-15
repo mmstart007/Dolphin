@@ -80,7 +80,7 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 10
         self.ViewTypeParent.isHidden = true
-        addKeyboardObservers()
+
     }
     
     func setAppearance() {
@@ -228,14 +228,9 @@ class PostCommentsViewController : DolphinViewController, UINavigationController
     
     // MARK: - Keyboard management
     
-    func addKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(PostCommentsViewController.keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(DolphinViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
-    func keyboardWillAppear(_ sender: Foundation.Notification) {
+    override func keyboardWillShow(_ notification: Foundation.Notification) {
         print("Keyboard appeared")
-        if let userInfo = sender.userInfo {
+        if let userInfo = notification.userInfo {
             if let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                 writeCommentBottomConstraint.constant = keyboardSize.height
                 UIView.animate(withDuration: 0.25, animations: { () -> Void in

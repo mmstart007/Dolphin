@@ -8,27 +8,94 @@
 
 import UIKit
 import SVProgressHUD
+import SDWebImage
 
-class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionViewController {
+class CreateURLPostAddDescriptionViewController: DolphinViewController, UITextFieldDelegate, UITextViewDelegate, KSTokenViewDelegate {
 
     var postImageURL: String?
     var postURL: String?
     
-    // MARK: - Actions
-    
-    override func postButtonTouchUpInside() {
+    @IBOutlet weak var imageViewPostImage: UIImageView!
+    @IBOutlet weak var textFieldPostTitle: UITextField!
+    @IBOutlet weak var textViewDescription: UITextView!
+    @IBOutlet weak var postTagsTextView: KSTokenView!
+    @IBOutlet weak var scrollViewContainer: UIScrollView!
+    @IBOutlet weak var constraintBottomSpaceOfScrollView: NSLayoutConstraint!
 
-        let cellInfo = tableViewPostDetails.cellForRow(at: IndexPath(row: 0, section: 0)) as? CreatePostAddDescriptionTableViewCell
+    // if this var is set, I'm creating a text post from a POD
+    let tags: Array<String> = List.names()
+    let networkController = NetworkController.sharedInstance
+    var podId: Int?
+    var mPost : Post?
+    var comment : PostCommentRequest?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        //Hide Keyboard
-        cellInfo?.textViewDescription.resignFirstResponder()
-        cellInfo?.textFieldPostTitle.resignFirstResponder()
-        cellInfo?.postTagsTextView.resignFirstResponder()
+        setBackButton()
+        setRightButtonItemWithText("Post", target: self, action: #selector(self.postButtonTouchUpInside))
+        self.edgesForExtendedLayout     = UIRectEdge()
+        title                           = "Add description"
+        textViewDescription.placeholder = "Write your moment..."
+        if(mPost != nil)
+        {
+            textFieldPostTitle.text = mPost?.postHeader
+        }
+        configureWithImage(true, postImage: nil, postURL: postURL, postImageURL: postImageURL)
+    }
+    
+    func configureWithImage(_ isLink: Bool, postImage: UIImage?, postURL: String?, postImageURL: String?) {
         
+        postTagsTextView.delegate         = self
+        
+        postTagsTextView.promptText       = ""
+        postTagsTextView.placeholder      = ""
+        postTagsTextView.maxTokenLimit    = 8//default is -1 for unlimited number of tokens
+        postTagsTextView.style            = .rounded
+        postTagsTextView.searchResultSize = CGSize(width: postTagsTextView.frame.width, height: 88)
+        postTagsTextView.font             = UIFont.systemFont(ofSize: 14)
+        postTagsTextView.backgroundColor = UIColor.clear
+        for view in postTagsTextView.subviews {
+            if view.isKind(of: UITextField.self) {
+                
+                let textField = view as? UITextField
+                textField?.borderStyle = .none
+                
+            }
+        }
+        
+        if(mPost != nil)
+        {
+            textFieldPostTitle.text = self.mPost?.postHeader
+        }
+        
+        if isLink {
+            let manager = SDWebImageManager.shared()
+            _ = manager?.downloadImage(with: URL(string: postImageURL!), options: .refreshCached, progress: nil, completed: { (image, error, cacheType, finished, imageUrl) in
+                if error == nil {
+                    self.imageViewPostImage.image = image
+                } else {
+                    self.imageViewPostImage.image = UIImage(named: "PostImagePlaceholder")
+                }
+            })
+        } else {
+            imageViewPostImage.image = postImage!
+        }
+        if isLink {
+            textFieldPostTitle.text = postURL
+            textFieldPostTitle.isUserInteractionEnabled = false
+        } else {
+            textFieldPostTitle.isUserInteractionEnabled = true
+        }
+    }
+    
+    // MARK: - Actions
+    func postButtonTouchUpInside() {
+
         //Get Info.
-        let description = ""//cellInfo?.textViewDescription.text
+        let description = textViewDescription.text
         
-        let topicsStringArray = cellInfo?.postTagsTextView.tokens()
+        let topicsStringArray = postTagsTextView.tokens()
         var topics: [Topic] = []
         if topicsStringArray != nil {
             for t in topicsStringArray! {
@@ -39,7 +106,7 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
         var imageWidth:Float = 0
         var imageHeight:Float = 0
         
-        if let postImage = cellInfo?.imageViewPostImage.image {
+        if let postImage = imageViewPostImage.image {
             imageWidth = Float(postImage.size.width)
             imageHeight = Float(postImage.size.height)
         }
@@ -147,7 +214,45 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
         }*/
     }
     
+    // MARK: - KSTokenView Delegate
+    func tokenView(_ token: KSTokenView, performSearchWithString string: String, completion: ((_ results: Array<AnyObject>) -> Void)?) {
+        var data: Array<String> = []
+        for value: String in tags {
+            if value.lowercased().range(of: string.lowercased()) != nil {
+                data.append(value)
+            }
+        }
+        completion!(data as Array<AnyObject>)
+    }
     
+    func tokenView(_ token: KSTokenView, displayTitleForObject object: AnyObject) -> String {
+        return object as! String
+    }
+    
+    // MARK: - Keyboard Stack.
+    override func keyboardWillShow(_ notification: Foundation.Notification) {
+        
+        if let keyboardSize = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
+            self.constraintBottomSpaceOfScrollView.constant = keyboardSize.height
+            updateViewConstraints()
+            self.scrollViewContainer.setContentOffset(CGPoint(x: 0, y: 250), animated: true)
+        }
+    }
+    
+    override func keyboardWillHide(_ notification: Foundation.Notification) {
+        self.constraintBottomSpaceOfScrollView.constant = 0
+        updateViewConstraints()
+    }
+    
+    // MARK: - UITextField Delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    /*
+    // MARK: - UITableView Datasource.
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: CreatePostAddDescriptionTableViewCell?
         if indexPath.section == 0 {
@@ -167,5 +272,5 @@ class CreateURLPostAddDescriptionViewController: CreateImagePostAddDescriptionVi
         cell?.contentView.isUserInteractionEnabled = false
         cell?.selectionStyle = .none
         return cell!
-    }
+    } */
 }

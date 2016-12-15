@@ -1142,25 +1142,24 @@ class NetworkController: NSObject {
             //print(response.data)     // server data
             //print(response.result)   // result of response serialization
             
-//            switch response.result {
-//            case .success(let data):
-//                let jsonData = JSON(data)
-//                if jsonData["error"] != JSON.null {
-//                    completionHandler(nil, data as AnyObject?)
-//                } else {
-//                    completionHandler(data as AnyObject?, nil)
-//                }
-//                
-//                break
-//            case .failure(_):
-//                let dic = ["errors": [String(response.result.error!.localizedDescription)]]
-//                completionHandler(nil, dic as AnyObject?)
-//
-//                break
-//            }
+            switch response.result {
+            case .success(let data):
+                let jsonData = JSON(data)
+                if jsonData["errors"] != JSON.null {
+                    completionHandler(nil, data as AnyObject?)
+                } else {
+                    completionHandler(data as AnyObject?, nil)
+                }
+                
+                break
+            case .failure(_):
+                let dic = ["errors": [String(response.result.error!.localizedDescription)]]
+                completionHandler(nil, dic as AnyObject?)
+
+                break
+            }
             
-            
-            var errorJson: AnyObject? = nil
+            /*var errorJson: AnyObject? = nil
             do {
                 errorJson = try JSONSerialization.jsonObject(with: response.data!, options: .allowFragments) as AnyObject?
             } catch {
@@ -1185,7 +1184,7 @@ class NetworkController: NSObject {
                 } else {
                     completionHandler(nil, errorJson)
                 }
-            }
+            } */
         })
         
         /*Alamofire.request(requestMethod, urlString!, parameters: params, encoding: encoding, headers: headers)

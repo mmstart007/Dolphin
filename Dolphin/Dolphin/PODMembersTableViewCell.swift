@@ -89,8 +89,6 @@ class PODMembersTableViewCell: UITableViewCell, UICollectionViewDelegateFlowLayo
         return cell!
     }
     
-    
-    
     // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

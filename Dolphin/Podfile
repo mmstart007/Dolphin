@@ -29,5 +29,6 @@ target 'Dolphin' do
     pod 'SSKeychain'
     pod 'SwiftyJSON'
     pod 'PinterestSDK' #, :git => 'goldstar0415@github.com:pinterest/ios-pdk.git'
+    #pod 'KSTokenView', '~> 3.0'
     #pod 'KSTokenView'
 end

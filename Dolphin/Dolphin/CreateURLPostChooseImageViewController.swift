@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import SVProgressHUD
 
-class CreateURLPostChooseImageViewController : DolphinViewController, UICollectionViewDataSource {
+class CreateURLPostChooseImageViewController : DolphinViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     let networkController = NetworkController.sharedInstance
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var photoCollectionView: UICollectionView!
     
     var imageURLs: [String]?
     var urlLoaded: String?
@@ -34,9 +34,9 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackButton()
+        self.setBackButton()
         title = "Pick an Image"
-        collectionView.register(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
+        photoCollectionView.register(UINib(nibName: "CreatePostChooseImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "CreatePostChooseImageCollectionViewCell")
     }
     
     // MARK: - CollectionView Datasource
@@ -68,8 +68,7 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
     }
     
     // MARK: - CollectionView delegate
-    
-    private func collectionView(_ collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedImageURL = imageURLs![indexPath.row]
         let addDescriptionVC = CreateURLPostAddDescriptionViewController()
         addDescriptionVC.postImageURL = selectedImageURL
@@ -79,9 +78,10 @@ class CreateURLPostChooseImageViewController : DolphinViewController, UICollecti
         self.comment?.postImageUrl = selectedImageURL
         addDescriptionVC.comment = self.comment
         navigationController?.pushViewController(addDescriptionVC, animated: true)
-        
-        
     }
-
-    
 }
+
+
+
+
+
