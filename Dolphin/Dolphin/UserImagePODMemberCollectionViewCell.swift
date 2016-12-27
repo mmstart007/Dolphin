@@ -19,19 +19,18 @@ class UserImagePODMemberCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        imageViewUserAvatar.layer.cornerRadius = imageViewUserAvatar.frame.size.width / 2
-//        imageViewUserAvatar.layer.masksToBounds = true
+        //imageViewUserAvatar.layer.cornerRadius = imageViewUserAvatar.frame.size.width / 2
+        //imageViewUserAvatar.layer.masksToBounds = true
     }
     
     func configureAsUser(_ imageUrl: String) {
-        let url : URL = URL(string: imageUrl)!
+        let url : URL = URL(string: self.convertURL(imageUrl))!
         imageViewUserAvatar.backgroundColor = UIColor.white
         imageViewUserAvatar.sd_setImage(with: url, placeholderImage: UIImage(named: "UserPlaceholder"))
         imageViewUserAvatar.contentMode = .scaleAspectFill
         imageViewUserAvatar.subviews.forEach { subview in
             subview.removeFromSuperview()
         }
-
     }
     
     func configureAsMoreUsers(_ count: Int) {
@@ -42,8 +41,8 @@ class UserImagePODMemberCollectionViewCell: UICollectionViewCell {
         let otherUsersLabel = UILabel(frame: CGRect(x: 0, y: 0, width: imageViewUserAvatar.frame.size.width, height: imageViewUserAvatar.frame.size.width))
         otherUsersLabel.backgroundColor = UIColor.lightGray
         otherUsersLabel.textColor = UIColor.lightText
-//        otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
-//        otherUsersLabel.layer.masksToBounds = true
+        //otherUsersLabel.layer.cornerRadius = otherUsersLabel.frame.size.width / 2.0
+        //otherUsersLabel.layer.masksToBounds = true
         otherUsersLabel.text = String(format: "+%li", arguments: [count])
         otherUsersLabel.textAlignment = .center
         otherUsersLabel.font = UIFont.systemFont(ofSize: 16)
@@ -51,4 +50,12 @@ class UserImagePODMemberCollectionViewCell: UICollectionViewCell {
         imageViewUserAvatar.image = nil
     }
 
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
+    
 }

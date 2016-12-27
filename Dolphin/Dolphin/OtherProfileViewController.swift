@@ -142,7 +142,7 @@ class OtherProfileViewController: DolphinViewController, UICollectionViewDelegat
             headerView.nameLabel.text = selectedUser.userName
             headerView.usernameLabel.text = selectedUser.userEmail
             if let userImageUrl = selectedUser?.userAvatarImageURL {
-                headerView.avatarImageView.sd_setImage(with: URL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+                headerView.avatarImageView.sd_setImage(with: URL(string: self.convertURL(userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
             } else {
                 headerView.avatarImageView.image = UIImage(named: "PostImagePlaceholder")
             }
@@ -174,4 +174,11 @@ class OtherProfileViewController: DolphinViewController, UICollectionViewDelegat
         navigationController?.pushViewController(postDetailsVC, animated: true)
     }
 
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
 }

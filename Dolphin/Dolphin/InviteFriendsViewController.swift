@@ -470,7 +470,6 @@ class InviteFriendsViewController : DolphinViewController, UITableViewDataSource
             } else {
                 return pinterestFriends.count
             }
-            
         }
     }
     

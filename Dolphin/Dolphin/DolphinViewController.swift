@@ -110,7 +110,7 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
                 var aRect = self.view.frame
                 aRect.size.height -= keyboardSize.height;
                 let activeViewAbsoluteFrame = activeView.convert(activeView.frame, to: nil)
-//                let distance = (UIScreen.mainScreen().bounds.height - keyboardSize.height) - (activeViewAbsoluteFrame.origin.y + activeViewAbsoluteFrame.size.height)
+                //let distance = (UIScreen.mainScreen().bounds.height - keyboardSize.height) - (activeViewAbsoluteFrame.origin.y + activeViewAbsoluteFrame.size.height)
                 if !aRect.contains(activeViewAbsoluteFrame.origin) {
                     parentScrollView?.scrollRectToVisible(activeViewAbsoluteFrame, animated: true)
                 }
@@ -119,7 +119,6 @@ class DolphinViewController : DolphinCustomFontViewController, BSKeyboardControl
     }
     
     func keyboardWillHide(_ notification: Foundation.Notification) {
-        
         let contentInsets = UIEdgeInsets.zero
         parentScrollView?.contentInset = contentInsets
         parentScrollView?.scrollIndicatorInsets = contentInsets

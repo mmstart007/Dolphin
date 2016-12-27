@@ -95,7 +95,6 @@ class PostTableViewCell : UITableViewCell {
         
         self.backgroundColor = UIColor(red: 244.0/255.0, green: 244.0/255.0, blue: 244.0/255.0, alpha: 1.0)
         
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.didTapUser))
         postuserImageView.addGestureRecognizer(tapGesture)
         
@@ -141,7 +140,7 @@ class PostTableViewCell : UITableViewCell {
         self.cellIndexPath = indexPath
         
         if let userImageUrl = post.postUser?.userAvatarImageURL {
-            postuserImageView.sd_setImage(with: URL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+            postuserImageView.sd_setImage(with: URL(string: self.convertURL(userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             postuserImageView.image = UIImage(named: "PostImagePlaceholder")
         }

@@ -76,7 +76,7 @@ class SidebarViewController : UIViewController, UITableViewDelegate, UITableView
             }
             
             if user.userAvatarImageURL != nil {
-                userImageView.sd_setImage(with: URL(string: user.userAvatarImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
+                userImageView.sd_setImage(with: URL(string: self.convertURL(user.userAvatarImageURL!)), placeholderImage: UIImage(named: "UserPlaceholder"))
             }
         }
     }
@@ -217,4 +217,11 @@ class SidebarViewController : UIViewController, UITableViewDelegate, UITableView
         }
     }
 
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
 }

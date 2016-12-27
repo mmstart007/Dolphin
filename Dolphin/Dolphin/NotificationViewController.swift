@@ -2,7 +2,7 @@
 //  NotificationViewController.swift
 //  Dolphin
 //
-//  Created by Joachim on 8/30/16.
+//  Created by Ninth Coast on 8/30/16.
 //  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 
@@ -140,7 +140,7 @@ class NotificationViewController: DolphinViewController, UITableViewDataSource, 
         
         cell?.configureCell(notifications[indexPath.row])
         cell?.selectionStyle = .none
-//        cell?.delegate = self
+        //cell?.delegate = self
         return cell!
     }
     
@@ -169,7 +169,5 @@ class NotificationViewController: DolphinViewController, UITableViewDataSource, 
             
             return
         }
-
     }
-
 }

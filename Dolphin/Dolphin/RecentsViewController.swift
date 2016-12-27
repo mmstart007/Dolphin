@@ -2,7 +2,7 @@
 //  RecentsViewController.swift
 //  Dolphin
 //
-//  Created by Joachim on 5/25/16.
+//  Created by Ninth Coast on 5/25/16.
 //  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 

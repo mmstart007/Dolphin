@@ -96,7 +96,8 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
         //let data = NSData(contentsOfURL: NSURL(string: pod.imageURL!)!)
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
             let urlString = self.convertURL(pod.imageURL!)
-            let data = try? Data(contentsOf: URL(string: urlString)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+            self.podImageView.sd_setImage(with: URL(string: (urlString)), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            /*let data = try? Data(contentsOf: URL(string: urlString)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
             DispatchQueue.main.async(execute: {
                 if(data != nil)
                 {
@@ -104,7 +105,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
                 } else{
                     self.podImageView.sd_setImage(with: URL(string: (pod.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
                 }
-            });
+            }); */
         }
         
         podImageView.contentMode = .scaleAspectFill
@@ -169,7 +170,7 @@ class PODPreviewTableViewCell : CustomFontTableViewCell {
                     // Sow image of user in POD
                     let index = count! - i - 1
                     let userAvatarImageView = UIImageView(frame: CGRect(x: x, y: 0, width: w, height: w))
-                    userAvatarImageView.sd_setImage(with: URL(string: (pod.users![index].userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+                    userAvatarImageView.sd_setImage(with: URL(string: self.convertURL((pod.users![index].userAvatarImageURL)!)), placeholderImage: UIImage(named: "UserPlaceholder"))
                     userAvatarImageView.layer.cornerRadius  = userAvatarImageView.frame.size.width / 2.0
                     userAvatarImageView.layer.masksToBounds = true
                     userAvatarImageView.contentMode         = .scaleAspectFill

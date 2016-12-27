@@ -20,12 +20,12 @@ class GridPostCell: UICollectionViewCell {
 
     func configurePost(_ p: Post) {
         if let image = p.postImage {
-            self.photoImageView.sd_setImage(with: URL(string: (image.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            self.photoImageView.sd_setImage(with: URL(string: self.convertURL(image.imageURL!)), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             self.photoImageView.isHidden = false
             self.titleLabel.isHidden = true
         }
         else if let linkImage = p.postLink {
-            self.photoImageView.sd_setImage(with: URL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            self.photoImageView.sd_setImage(with: URL(string: self.convertURL(linkImage.imageURL!)), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             self.photoImageView.isHidden = false
             self.titleLabel.isHidden = true
         }
@@ -33,6 +33,14 @@ class GridPostCell: UICollectionViewCell {
             self.titleLabel.text = p.postHeader
             self.photoImageView.isHidden = true
             self.titleLabel.isHidden = false
+        }
+    }
+    
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
         }
     }
 }

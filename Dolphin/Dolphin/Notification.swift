@@ -2,7 +2,7 @@
 //  Notification.swift
 //  Dolphin
 //
-//  Created by Joachim on 9/1/16.
+//  Created by Ninth Coast on 9/1/16.
 //  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 

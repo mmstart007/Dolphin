@@ -158,11 +158,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let characterSet: CharacterSet = CharacterSet(charactersIn: "<>")
-        let deviceTokenString: String = (deviceToken.description as NSString)
-            .trimmingCharacters(in: characterSet)
-            .replacingOccurrences( of: " ", with: "") as String
+        var deviceTokenString: String = ""
+        for i in 0..<deviceToken.count {
+            deviceTokenString += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
+        }
+        
         Globals.currentDeviceToken = deviceTokenString
+        
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

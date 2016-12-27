@@ -2,7 +2,7 @@
 //  LeftAlignCollectionViewLayout.swift
 //  Dolphin
 //
-//  Created by Joachim on 6/3/16.
+//  Created by Ninth Coast on 6/3/16.
 //  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 

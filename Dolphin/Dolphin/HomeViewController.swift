@@ -68,7 +68,6 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         if navigationController!.viewControllers[0].isKind(of: LoginViewController.self) {
             navigationController?.setViewControllers([self], animated: true)
         }
-        
     }
     
     override func viewDidLoad() {
@@ -82,7 +81,6 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         
         self.delegate = self
     }
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -111,7 +109,6 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
         let controller3 = UIViewController()
         let controller4 = PopularViewController()
         let controller5 = PODsListViewController()
-        
         
         controller1.tabBarItem = UITabBarItem(title: "Recent",
             image: UIImage(named:"TabbarLatestIcon")!.withRenderingMode(.alwaysOriginal),
@@ -317,7 +314,7 @@ class HomeViewController : DolphinTabBarViewController, UISearchBarDelegate, UIT
     }
     
     func filterContentForSearchText(_ searchText: String) {
-        selectedViewController?.perform(Selector(("filterResults:")), with: searchText)
+        let _ = selectedViewController?.perform(Selector(("filterResults:")), with: searchText)
     }
     
     func hideSearchField() {

@@ -43,7 +43,7 @@ class ProfileAvatarTableViewCell: UITableViewCell {
         if imageData != nil {
             imageViewProfileAvatar.image = imageData
         } else if previousImageURL != nil {
-            imageViewProfileAvatar.sd_setImage(with: URL(string: previousImageURL!), placeholderImage: UIImage(named: "UserPlaceholder"))
+            imageViewProfileAvatar.sd_setImage(with: URL(string: self.convertURL(previousImageURL!)), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             imageViewProfileAvatar.image = UIImage(named: "UserPlaceholder")
         }
@@ -55,8 +55,12 @@ class ProfileAvatarTableViewCell: UITableViewCell {
         delegate?.onSelectImageTouchUpInside()
     }
     
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
     
-
-    
-
 }

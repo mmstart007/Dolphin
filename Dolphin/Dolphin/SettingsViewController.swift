@@ -682,4 +682,13 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
         
         return grade_ids
     }
+
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
+    
 }

@@ -2,7 +2,7 @@
 //  WebViewController.swift
 //  Dolphin
 //
-//  Created by Joachim on 5/24/16.
+//  Created by Ninth Coast on 5/24/16.
 //  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 

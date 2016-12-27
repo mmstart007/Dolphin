@@ -2,7 +2,7 @@
 //  EditPodMemberViewController.swift
 //  Dolphin
 //
-//  Created by Joachim on 7/28/16.
+//  Created by Ninth Coast on 7/28/16.
 //  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 

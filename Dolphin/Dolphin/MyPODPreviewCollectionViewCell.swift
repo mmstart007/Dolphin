@@ -79,7 +79,7 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         if pod != nil {
             //podImageView.layer.cornerRadius  = 5
             podImageView.layer.masksToBounds = true
-            podImageView.sd_setImage(with: URL(string: pod!.imageURL!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+            podImageView.sd_setImage(with: URL(string: self.convertURL(pod!.imageURL!)), placeholderImage: UIImage(named: "PostImagePlaceholder"))
             podTitleLabel.text = pod!.name
             if let lastPostDate = pod?.lastPostDate {
                 lastPostDateLabel.text = lastPostDate.formattedAsTimeAgo()
@@ -135,4 +135,11 @@ class MyPODPreviewCollectionViewCell : CustomFontCollectionViewCell {
         
     }
     
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
 }

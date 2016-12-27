@@ -2,7 +2,7 @@
 //  NotificationTableViewCell.swift
 //  Dolphin
 //
-//  Created by Joachim on 9/1/16.
+//  Created by Ninth Coast on 9/1/16.
 //  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 
@@ -28,7 +28,7 @@ class NotificationTableViewCell: UITableViewCell {
     func configureCell(_ notification: Notification!) {
         
         if let userImageUrl = notification.sender?.userAvatarImageURL {
-            self.avatarImageView.sd_setImage(with: URL(string: (userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
+            self.avatarImageView.sd_setImage(with: URL(string: self.convertURL(userImageUrl)), placeholderImage: UIImage(named: "UserPlaceholder"))
         } else {
             self.avatarImageView.image = UIImage(named: "UserPlaceholder")
         }
@@ -80,11 +80,19 @@ class NotificationTableViewCell: UITableViewCell {
             }
         }
         
-        let longestWordRange = (self.titleLabel.text! as NSString).range(of: (notification.sender?.userName)!)
-        let attributedString = NSMutableAttributedString(string: self.titleLabel.text!, attributes: [NSFontAttributeName : UIFont(name: Constants.Fonts.Raleway_Regular, size: 14.0)!])
-        attributedString.setAttributes([NSFontAttributeName : UIFont(name: Constants.Fonts.Raleway_Bold, size: 14.0)! , NSForegroundColorAttributeName : UIColor.black], range: longestWordRange)
-        self.titleLabel.attributedText = attributedString
-
+        if let tmpText = self.titleLabel.text, !tmpText.isEmpty {
+            let longestWordRange = (self.titleLabel.text! as NSString).range(of: (notification.sender?.userName)!)
+            let attributedString = NSMutableAttributedString(string: self.titleLabel.text!, attributes: [NSFontAttributeName : UIFont(name: Constants.Fonts.Raleway_Regular, size: 14.0)!])
+            attributedString.setAttributes([NSFontAttributeName : UIFont(name: Constants.Fonts.Raleway_Bold, size: 14.0)! , NSForegroundColorAttributeName : UIColor.black], range: longestWordRange)
+            self.titleLabel.attributedText = attributedString
+        }
     }
     
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
 }

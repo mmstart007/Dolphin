@@ -37,8 +37,23 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 class PostDetailsViewController : DolphinViewController, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,ImageCropViewControllerDelegate, PostDetailsTopicsAndViewsTableViewCellDelegate,ChooseSourceTypeViewDelegate {
 
+    @IBOutlet weak var firstActionButton: UIButton!
+    @IBOutlet weak var secondActionButton: UIButton!
+    @IBOutlet weak var thirdActionButton: UIButton!
+    @IBOutlet weak var fourthActionButton: UIButton!
+    @IBOutlet weak var fifthActionButton: UIButton!
+    @IBOutlet weak var sixthActionButton: UIButton!
+    @IBOutlet weak var actionMenuBackground: UIView!
+
     @IBOutlet weak var ViewTypeCancel: UIButton!
     @IBOutlet weak var ViewTypeParent: UIView!
+    
+    @IBOutlet weak var writeCommentBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak var chosenImageContainer: UIView!
+    @IBOutlet weak var chosenImageView: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
+    
     let networkController = NetworkController.sharedInstance
     let commentTextViewPlaceHolder: String! = "Write a comment..."
     let picker = UIImagePickerController()
@@ -52,24 +67,10 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     var chooseSoureTypeView: ChooseSourceTypeView!
     var overlayView: UIView!
     let screenSize: CGRect = UIScreen.main.bounds
-    
-    @IBOutlet weak var actionMenuBackground: UIView!
-    @IBOutlet weak var writeCommentBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var commentTextView: UITextView!
-    @IBOutlet weak var chosenImageContainer: UIView!
-    @IBOutlet weak var chosenImageView: UIImageView!
-    @IBOutlet weak var firstActionButton: UIButton!
-    @IBOutlet weak var secondActionButton: UIButton!
-    @IBOutlet weak var thirdActionButton: UIButton!
-    @IBOutlet weak var fourthActionButton: UIButton!
-    @IBOutlet weak var fifthActionButton: UIButton!
-    @IBOutlet weak var sixthActionButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
-    
+
     convenience init() {
         self.init(nibName: "PostDetailsViewController", bundle: nil)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,8 +87,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 10
         
-//        addKeyboardObservers()
-        
+        self.addKeyboardObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,14 +162,15 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             
             navigationItem.rightBarButtonItems = [actionBarButton]
         }
-//        let customViewLikeButton    = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-//        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Normal)
-//        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Highlighted)
-//        customViewLikeButton.addTarget(self, action: #selector(likeButtonPressed), forControlEvents: .TouchUpInside)
-//        let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
-
-        //navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
         
+        /*let customViewLikeButton    = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Normal)
+        customViewLikeButton.setImage(UIImage(named: "LikeNavBarIcon"), forState: .Highlighted)
+        customViewLikeButton.addTarget(self, action: #selector(likeButtonPressed), forControlEvents: .TouchUpInside)
+        let likeBarButton           = UIBarButtonItem(customView: customViewLikeButton)
+
+        navigationItem.rightBarButtonItems = [actionBarButton, commentBarButton, likeBarButton]
+        */
     }
     
     func editButtonPressed() {
@@ -493,7 +494,6 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         return cell!
     }
     
-    
     private func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         if(indexPath.section == 2)
         {
@@ -545,7 +545,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                 }
             }
         } else if indexPath.section == 1 {
-//            (cell as? PostDetailsTopicsAndViewsTableViewCell)!.collectionView.setContentOffset(CGPoint(x: self.contentOffset, y: 0), animated: false)
+            //(cell as? PostDetailsTopicsAndViewsTableViewCell)!.collectionView.setContentOffset(CGPoint(x: self.contentOffset, y: 0), animated: false)
         }
     }
     
@@ -584,6 +584,10 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
     }
     
     // MARK: Keyboard management
+    func addKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
     
     override func keyboardWillShow(_ notification: Foundation.Notification) {
         print("Keyboard appeared")
@@ -604,9 +608,8 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
             self.view.layoutIfNeeded()
         })
     }
-
     
-    // MARK UItextViewDelegate
+    // MARK - UItextView Delegate
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == commentTextViewPlaceHolder {

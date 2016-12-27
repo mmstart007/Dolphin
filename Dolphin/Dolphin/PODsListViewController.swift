@@ -74,6 +74,33 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UITableV
         loadData(false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if segmentedControl.selectedSegmentIndex == 0 {
+            allPODstableView.reloadData()
+        } else {
+            myPODsCollectionView.reloadData()
+        }
+        let parent = self.parent as? HomeViewController
+        if (searchText == nil || searchText == "") {
+            parent?.removeSearchBar()
+            parent?.setSearchRightButton()
+            self.parent?.navigationItem.titleView = segmentedControl
+        } else {
+            parent?.searchBar?.becomeFirstResponder()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchText = ""
+        self.parent?.navigationItem.titleView = nil
+    }
+    
     func updatePodUI() {
         //
         networkController.getPOD(podSelected!.id!, completionHandler: { (pod, error) -> () in
@@ -115,7 +142,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UITableV
             }
         })
     }
-
+    
     
     func deletedPod(_ pod: POD) {
         var index = 0;
@@ -126,7 +153,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UITableV
             }
             index += 1
         }
-
+        
         index = 0;
         for item in myPods {
             if item.id == pod.id {
@@ -164,36 +191,8 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UITableV
         myPODsCollectionView.reloadData()
     }
     
-    
     func refreshView() {
         loadData(false)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if segmentedControl.selectedSegmentIndex == 0 {
-            allPODstableView.reloadData()
-        } else {
-            myPODsCollectionView.reloadData()
-        }
-        let parent = self.parent as? HomeViewController
-        if (searchText == nil || searchText == "") {
-            parent?.removeSearchBar()
-            parent?.setSearchRightButton()
-            self.parent?.navigationItem.titleView = segmentedControl
-        } else {
-            parent?.searchBar?.becomeFirstResponder()
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        searchText = ""
-        self.parent?.navigationItem.titleView = nil
     }
     
     func newPodCreated(_ notification: Foundation.Notification) {
@@ -393,7 +392,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UITableV
 
         return cellSize
 
-/*        if (searchText == nil || searchText == "") && indexPath.row == 0 {
+        /*if (searchText == nil || searchText == "") && indexPath.row == 0 {
             return cellSize
         } else if (searchText == nil || searchText == ""){
             let selectedPOD = allPods[indexPath.row - 1]
@@ -401,8 +400,11 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UITableV
         } else {
             let selectedPOD = filteredPODs[indexPath.row]
             return self.getCellSize(selectedPOD)
-        }
-*/
+        } */
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     }
     
     func getCellSize(_ pod: POD) -> CGSize {
@@ -419,10 +421,6 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UITableV
             
             return CGSize(width: real_width, height: real_height)
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     }
     
     // MARK: Search Posts

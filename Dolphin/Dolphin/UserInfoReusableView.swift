@@ -21,5 +21,4 @@ class UserInfoReusableView: UICollectionReusableView {
         avatarImageView.layer.masksToBounds = true
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width/2.0
     }
-    
 }

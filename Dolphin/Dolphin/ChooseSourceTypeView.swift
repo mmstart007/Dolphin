@@ -2,7 +2,7 @@
 //  ChooseSourceTypeView.swift
 //  Dolphin
 //
-//  Created by Joachim on 8/22/16.
+//  Created by Ninth Coast on 8/22/16.
 //  Copyright © 2016 Ninth Coast. All rights reserved.
 //
 

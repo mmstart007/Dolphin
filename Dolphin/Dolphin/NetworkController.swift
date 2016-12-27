@@ -1059,7 +1059,6 @@ class NetworkController: NSObject {
                 completionHandler(savedPostComment, error)
             }
         }
-        
     }
     
     func createCommentUpdate(_ postId: Int, postComment: PostCommentRequest, completionHandler: @escaping (PostComment?, AnyObject?) -> ()) -> () {
@@ -1076,7 +1075,6 @@ class NetworkController: NSObject {
                 completionHandler(savedPostComment, error)
             }
         }
-        
     }
     
     
@@ -1109,6 +1107,7 @@ class NetworkController: NSObject {
      :param: completionHandler Block that will be executed when the invocation is done
      */
     func performRequest(_ type: MethodType, authenticated: Bool, method: ApiMethod, urlParams: [CVarArg]?, params: [String: AnyObject]?, jsonEconding: Bool, completionHandler: @escaping (AnyObject?, AnyObject?) -> ()) -> () {
+        
         let urlString: String? = prepareRequestURL(method, urlParams: urlParams)
         
         var requestMethod: HTTPMethod!

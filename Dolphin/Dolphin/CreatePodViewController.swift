@@ -97,8 +97,8 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
             }
         }
         
-//        let tapViewGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
-//        self.view.addGestureRecognizer(tapViewGesture)
+        //let tapViewGesture = UITapGestureRecognizer(target: self, action: "resignResponder")
+        //self.view.addGestureRecognizer(tapViewGesture)
     }
 
     // Background Tap Stack
@@ -148,7 +148,6 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         navigationController?.pushViewController(cropController!, animated: true)
         dismiss(animated: true, completion: nil)
     }
-    
     
     func didTapPodImageView() {
         if self.imageOriginalSelected != nil {
@@ -283,14 +282,14 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
                     networkController.createPOD(podToSave, completionHandler: { (pod, error) -> () in
                         if error == nil {
                         
-                        if pod?.id != nil {
-                            // everything worked ok
-                            NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: Constants.Notifications.CreatedPod), object: nil, userInfo: ["pod":pod!])
-                            let _ = self.navigationController?.popToRootViewController(animated: true)
-                        } else {
-                            // there was an error saving the post
-                        }
-                        SVProgressHUD.dismiss()
+                            if pod?.id != nil {
+                                // everything worked ok
+                                NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: Constants.Notifications.CreatedPod), object: nil, userInfo: ["pod":pod!])
+                                let _ = self.navigationController?.popToRootViewController(animated: true)
+                            } else {
+                                // there was an error saving the post
+                            }
+                            SVProgressHUD.dismiss()
                         
                         } else {
                             SVProgressHUD.dismiss()
@@ -392,7 +391,6 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
     
     // MARK: - Keyboard Stack.
     override func keyboardWillShow(_ notification: Foundation.Notification) {
-        
         if let keyboardSize = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size {
             self.constraintBottomSpaceOfScrollView.constant = keyboardSize.height
             updateViewConstraints()
