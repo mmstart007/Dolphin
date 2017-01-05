@@ -42,7 +42,7 @@ class PostCommentEvenTableViewCell : CustomFontTableViewCell {
     
     func configureWithPostComment(_ comment: PostComment) {
         self.mComment = comment
-        postCommentUserImageView.sd_setImage(with: URL(string: (comment.postCommentUser?.userAvatarImageURL)!), placeholderImage: UIImage(named: "UserPlaceholder"))
+        postCommentUserImageView.sd_setImage(with: URL(string: self.convertURL((comment.postCommentUser?.userAvatarImageURL)!)), placeholderImage: UIImage(named: "UserPlaceholder"))
         self.layer.cornerRadius                               = 5
         postCommentTextView.text                              = comment.postCommentText
         postCommentTextView.textContainer.lineFragmentPadding = 0
@@ -137,6 +137,14 @@ class PostCommentEvenTableViewCell : CustomFontTableViewCell {
                 }
             })
             
+        }
+    }
+
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
         }
     }
 }

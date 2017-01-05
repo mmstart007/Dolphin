@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class PostComment : NSObject {
     
@@ -26,26 +27,26 @@ class PostComment : NSObject {
         self.postCommentImage = image
     }
     
-    convenience init(jsonObject: AnyObject) {
+    convenience init(jsonObject: JSON) {
         self.init()
         
-        let postJsonObject       = jsonObject as? [String: AnyObject]
+        let postJsonObject       = jsonObject
         
-        if let imageJson = postJsonObject!["image"] as? [String: AnyObject] {
-            self.postImage = Image(jsonObject: imageJson as AnyObject)
-        }
+        //if let imageJson = postJsonObject["image"] {
+            self.postImage = Image(jsonObject: postJsonObject["image"])
+        //}
         
-        if let linkJson = postJsonObject!["link"] as? [String: AnyObject] {
-            self.postLink = Link(jsonObject: linkJson as AnyObject)
-        }
+        //if let linkJson = postJsonObject!["link"] as? [String: AnyObject] {
+            self.postLink = Link(jsonObject: postJsonObject["link"])
+        //}
         
-        self.postCommentLikeCount       = postJsonObject!["likes_count"] as? Int
-        self.postCommentIsLike       = postJsonObject!["is_liked"] as? Int
-        self.postCommentId       = postJsonObject!["id"] as? Int
-        self.postCommentUser     = User(jsonObject: postJsonObject!["user"] as! [String: AnyObject] as AnyObject)
-        self.postCommentText     = postJsonObject!["body"] as? String
-        let dateString           = postJsonObject!["created_at"] as? String
-        self.postCommentDate     = Date(timeIntervalSince1970: Double(dateString!)!)
+        self.postCommentLikeCount       = postJsonObject["likes_count"].intValue
+        self.postCommentIsLike       = postJsonObject["is_liked"].intValue
+        self.postCommentId       = postJsonObject["id"].intValue
+        self.postCommentUser     = User(jsonObject: postJsonObject["user"])
+        self.postCommentText     = postJsonObject["body"].stringValue
+        let dateString           = postJsonObject["created_at"].stringValue
+        self.postCommentDate     = Date(timeIntervalSince1970: Double(dateString)!)
         
     }
     

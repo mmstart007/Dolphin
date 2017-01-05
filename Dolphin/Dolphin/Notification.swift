@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Notification : NSObject {
     
@@ -21,32 +22,40 @@ class Notification : NSObject {
     var pod: POD?
     var post: Post?
     
-    convenience init(jsonObject: AnyObject) {
+    convenience init(jsonObject: JSON) {
         self.init()
         
-        self.notification_id        = jsonObject["notification_id"] as? Int
-        if let createdAtString         = jsonObject["created_at"] as? String {
-            self.created_at             = Date(timeIntervalSince1970: Double(createdAtString)!)
+        self.notification_id        = jsonObject["notification_id"].intValue
+        if let createdAtString         = jsonObject["created_at"].double {
+            self.created_at             = Date(timeIntervalSince1970: createdAtString) //Double(createdAtString)!)
         }
         
-        self.is_read                = jsonObject["is_read"] as? Bool
-        self.object_id              = jsonObject["object_id"] as? Int
-        self.receiver_id            = jsonObject["receiver_id"] as? Int
-        self.type                   = jsonObject["type"] as? Int
-        self.user_id                = jsonObject["user_id"] as? Int
-        if let userJson = jsonObject["user"] as? [String: AnyObject] {
-            self.sender  = User(jsonObject: userJson as AnyObject)
-        }
-
-        if let postJson = jsonObject["post"] as? [String: AnyObject] {
-            self.post  = Post(jsonObject: postJson as AnyObject)
-        }
+        self.is_read                = jsonObject["is_read"].boolValue
+        self.object_id              = jsonObject["object_id"].intValue
+        self.receiver_id            = jsonObject["receiver_id"].intValue
+        self.type                   = jsonObject["type"].intValue
+        self.user_id                = jsonObject["user_id"].intValue
         
-        if let podJson = jsonObject["pod"] as? [String: AnyObject] {
-            self.pod  = POD(jsonObject: podJson as AnyObject)
+        let userJson = jsonObject["user"].arrayValue
+        if userJson.count > 0 {
+            for users in userJson {
+                self.sender  = User(jsonObject: users)
+            }
+        }
+        let postJson = jsonObject["post"].arrayValue
+        if  postJson.count > 0 {
+            for posts in userJson {
+                self.post  = Post(jsonObject: posts)
+            }
+        }
+        let podJson = jsonObject["pod"].arrayValue
+        if podJson.count > 0 {
+            for pods in podJson {
+                self.pod  = POD(jsonObject: pods)
+            }
         }
     }
-    
+
 //    func toJson() -> [String: AnyObject] {
 //        var retDic: [String: AnyObject] = [:]
 //        retDic["id"] = self.id

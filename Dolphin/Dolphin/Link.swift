@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Link : NSObject {
     
@@ -23,14 +24,14 @@ class Link : NSObject {
         self.imageURL = imageURL
     }
     
-    convenience init(jsonObject: AnyObject) {
+    convenience init(jsonObject: JSON) {
         self.init()
         
-        self.id       = jsonObject["id"] as? Int
-        self.url      = jsonObject["url"] as? String
-        self.imageURL = jsonObject["image_url"] as? String
-        self.imageWidth = jsonObject["image_width"] as? CGFloat
-        self.imageHeight = jsonObject["image_height"] as? CGFloat
+        self.id       = jsonObject["id"].intValue
+        self.url      = jsonObject["url"].stringValue
+        self.imageURL = jsonObject["image_url"].stringValue
+        self.imageWidth = CGFloat(jsonObject["image_width"].floatValue)
+        self.imageHeight = CGFloat(jsonObject["image_height"].floatValue)
     }
     
     

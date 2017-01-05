@@ -449,7 +449,6 @@ class SettingsViewController: DolphinViewController, UITableViewDelegate, UITabl
                     SVProgressHUD.dismiss()
                 }
             }
-            
         }
     }
     

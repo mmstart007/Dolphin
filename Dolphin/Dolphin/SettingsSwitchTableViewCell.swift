@@ -29,7 +29,7 @@ class SettingsSwitchTableViewCell: UITableViewCell {
         self.delegate = delegate
         labelSettingName.text = name
         switchSetting.isOn = enable
-//        Utils.setFontFamilyForView(self, includeSubViews: true)
+        //Utils.setFontFamilyForView(self, includeSubViews: true)
     }
     
     // MARK: - Actions

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class POD : NSObject {
     
@@ -53,32 +54,35 @@ class POD : NSObject {
         return colors[color]
     }
     
-    convenience init(jsonObject: AnyObject) {
+    convenience init(jsonObject: JSON) {
         self.init()
         
-        let podJsonObject = jsonObject as? [String: AnyObject]
-        if let ownerJson = podJsonObject!["owner"] as? [String: AnyObject] {
-            self.owner  = User(jsonObject: ownerJson as AnyObject)
-        }
-        self.users = (jsonObject["users"] as? [[String: AnyObject]])?.map({ (actual) -> User in
-            User(jsonObject: actual as AnyObject)
+        //let podJsonObject = jsonObject as? [String: AnyObject]
+        //if let ownerJson = jsonObject["owner"] { //as? [String: AnyObject] {
+            self.owner  = User(jsonObject: jsonObject["owner"])
+        //}
+        self.users = jsonObject["users"].array?.map({ (elem) -> User in
+            User(jsonObject: elem)
         })
         
+        /*self.users = jsonObject["users"].array.map({ (actual) -> User in
+            User(jsonObject: actual)
+        }) */
         
-        self.id              = podJsonObject!["id"] as? Int
-        self.name            = podJsonObject!["name"] as? String
-        self.descriptionText = podJsonObject!["description"] as? String
-        self.imageURL        = podJsonObject!["image_url"] as? String
-        self.isPrivate       = podJsonObject!["is_private"] as? Int
-        self.image_width     = podJsonObject!["image_width"] as? Int
-        self.image_height    = podJsonObject!["image_height"] as? Int
-        self.total_unread    = podJsonObject!["total_unread"] as? Int
+        self.id              = jsonObject["id"].intValue
+        self.name            = jsonObject["name"].stringValue
+        self.descriptionText = jsonObject["description"].stringValue
+        self.imageURL        = jsonObject["image_url"].stringValue
+        self.isPrivate       = jsonObject["is_private"].intValue
+        self.image_width     = jsonObject["image_width"].intValue
+        self.image_height    = jsonObject["image_height"].intValue
+        self.total_unread    = jsonObject["total_unread"].intValue
         
-        if let lastPostsJson = podJsonObject!["last_post"] as? [AnyObject] {
+        if let lastPostsJson = jsonObject["last_post"].array { // as? [AnyObject] {
             if lastPostsJson.count > 0 {
-                if let lastPostJson = lastPostsJson[0] as? [String: AnyObject] {
-                    let dateString = lastPostJson["created_at"] as? String
-                    self.lastPostDate     = Date(timeIntervalSince1970: Double(dateString!)!)
+                if let lastPostJson = lastPostsJson.first { // as? [String: AnyObject] {
+                    let dateString = lastPostJson["created_at"].stringValue
+                    self.lastPostDate     = Date(timeIntervalSince1970: Double(dateString)!)
                 }
             }
         }

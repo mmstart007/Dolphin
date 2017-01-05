@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Like : NSObject {
     
@@ -15,15 +16,15 @@ class Like : NSObject {
     var likeUser: User?
     var likePost: Post?
     
-    convenience init(jsonObject: AnyObject) {
+    convenience init(jsonObject: JSON) {
         self.init()
         
-        let likeJsonObject       = jsonObject as? [String: AnyObject]
-        self.likeUser            = User(jsonObject: likeJsonObject!["user"] as! [String: AnyObject] as AnyObject)
-        self.id                  = likeJsonObject!["id"] as? Int
-        self.likePost            = Post(jsonObject: likeJsonObject!["post"] as! [String: AnyObject] as AnyObject)
-        let dateString           = likeJsonObject!["created_at"] as? String
-        self.likeDate            = Date(timeIntervalSince1970: Double(dateString!)!)
+        let likeJsonObject       = jsonObject
+        self.likeUser            = User(jsonObject: likeJsonObject["user"])
+        self.id                  = likeJsonObject["id"].intValue
+        self.likePost            = Post(jsonObject: likeJsonObject["post"])
+        let dateString           = likeJsonObject["created_at"].stringValue
+        self.likeDate            = Date(timeIntervalSince1970: Double(dateString)!)
     }    
     
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class User : NSObject {
     
@@ -42,35 +43,35 @@ class User : NSObject {
         self.location           = location
     }
     
-    convenience init(jsonObject: AnyObject) {
+    convenience init(jsonObject: JSON) {
         self.init()
         
-        self.userEmail          = jsonObject["email"] as? String
-        self.userName           = jsonObject["username"] as? String
-        self.firstName          = jsonObject["first_name"] as? String
-        self.lastName           = jsonObject["last_name"] as? String
-        self.location           = jsonObject["location"] as? String
-        self.isPrivate          = jsonObject["is_private"] as? Int
-        self.id                 = jsonObject["id"] as? Int
-        self.userAvatarImageURL = jsonObject["avatar_image_url"] as? String
-        self.gender             = jsonObject["gender"] as? Int
-        self.city               = jsonObject["city"] as? String
-        self.country            = jsonObject["country"] as? String
-        self.zip                = jsonObject["zip"] as? String
+        self.userEmail          = jsonObject["email"].stringValue
+        self.userName           = jsonObject["username"].stringValue
+        self.firstName          = jsonObject["first_name"].stringValue
+        self.lastName           = jsonObject["last_name"].stringValue
+        self.location           = jsonObject["location"].stringValue
+        self.isPrivate          = jsonObject["is_private"].intValue
+        self.id                 = jsonObject["id"].intValue
+        self.userAvatarImageURL = jsonObject["avatar_image_url"].stringValue
+        self.gender             = jsonObject["gender"].intValue
+        self.city               = jsonObject["city"].stringValue
+        self.country            = jsonObject["country"].stringValue
+        self.zip                = jsonObject["zip"].stringValue
 
-        let arrayGrades         = jsonObject["grades"] as? [NSDictionary]
-        if(arrayGrades != nil)
+        //let arrayGrades         = jsonObject["grades"] // as? [NSDictionary]
+        if let arrayGrades = jsonObject["grades"].array
         {
-            for item in arrayGrades! {
+            for item in arrayGrades {
                 let g = Grade(jsonObject: item)
                 self.grades?.append(g)
             }
         }
         
-        let arraySubjects        = jsonObject["subjects"] as? [NSDictionary]
-        if(arraySubjects != nil)
+        //let arraySubjects        = jsonObject["subjects"].array // as? [NSDictionary]
+        if let arraySubjects = jsonObject["subjects"].array
         {
-            for item in arraySubjects! {
+            for item in arraySubjects {
                 let s = Subject(jsonObject: item)
                 self.subjects?.append(s)
             }

@@ -84,14 +84,14 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
             }
             
             DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
-                let data = try? Data(contentsOf: URL(string: self.podUpdate!.imageURL!)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                let data = try? Data(contentsOf: URL(string: self.convertURL(self.podUpdate!.imageURL!))!) //make sure your image in this url does exist, otherwise unwrap in a if let check
                 DispatchQueue.main.async(execute: {
                     if(data != nil)
                     {
                         self.podImageView.image = UIImage(data: data!)
                     }
                     else{
-                        self.podImageView.sd_setImage(with: URL(string: (self.podUpdate!.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))
+                        self.podImageView.sd_setImage(with: URL(string: self.convertURL((self.podUpdate!.imageURL)!)), placeholderImage: UIImage(named: "PostImagePlaceholder"))
                     }
                 });
             }
@@ -403,6 +403,13 @@ class CreatePodViewController : DolphinViewController, UIImagePickerControllerDe
         updateViewConstraints()
     }
     
+    func convertURL(_ urlString: String) -> String {
+        if urlString.contains("http") {
+            return urlString
+        } else {
+            return Constants.RESTAPIConfig.Developement.BaseUrl + urlString
+        }
+    }
 }
 
 

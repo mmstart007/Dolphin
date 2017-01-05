@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 open class Globals: NSObject {
     
@@ -30,7 +31,7 @@ open class Globals: NSObject {
     }
     
     // Convert from JSON to nsdata
-    open static func jsonToNSData(_ json: AnyObject) -> Data?{
+    open static func jsonToNSData(_ json: AnyObject) -> Data? {
         do {
             return try JSONSerialization.data(withJSONObject: json, options: JSONSerialization.WritingOptions.prettyPrinted)
         } catch let myJSONError {

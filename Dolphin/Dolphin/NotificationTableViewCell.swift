@@ -42,7 +42,7 @@ class NotificationTableViewCell: UITableViewCell {
         
         // Like
         if notification.type == 0 {
-            if notification.post?.postHeader != nil || (notification.post?.postHeader?.isEmpty)! {
+            if notification.sender?.userName != nil {
                 self.titleLabel.text = (notification.sender?.userName)! + " liked your post: \"" + (notification.post?.postHeader)! + "\""
                 print("Like..............")
             }
@@ -50,7 +50,7 @@ class NotificationTableViewCell: UITableViewCell {
         
         //Comment.
         else if notification.type == 1 {
-            if notification.post?.postHeader != nil || (notification.post?.postHeader?.isEmpty)! {
+            if notification.sender?.userName != nil {
                 self.titleLabel.text = (notification.sender?.userName)! + " commented your post: \"" + (notification.post?.postHeader)! + "\""
                 print("Comment..............")
             }
@@ -58,7 +58,7 @@ class NotificationTableViewCell: UITableViewCell {
         
         //Join
         else if notification.type == 2 {
-            if notification.pod?.name != nil || (notification.pod?.name?.isEmpty)! {
+            if notification.sender?.userName != nil {
                 self.titleLabel.text = (notification.sender?.userName)! + " joined as a member in your pod: \"" + (notification.pod?.name)! + "\""
                 print("Join..............")
             }
@@ -66,7 +66,7 @@ class NotificationTableViewCell: UITableViewCell {
         
         //Withdraw
         else if notification.type == 3 {
-            if notification.pod?.name != nil || (notification.pod?.name?.isEmpty)! {
+            if notification.sender?.userName != nil {
                 self.titleLabel.text = (notification.sender?.userName)! + " withdrew as a member in your pod: \"" + (notification.pod?.name)! + "\""
                 print("Withdraw..............")
             }
@@ -74,7 +74,7 @@ class NotificationTableViewCell: UITableViewCell {
         
         //Added you
         else if notification.type == 4 {
-            if notification.pod?.name != nil || (notification.pod?.name?.isEmpty)! {
+            if notification.sender?.userName != nil {
                 self.titleLabel.text = (notification.sender?.userName)! + " added you as a member in this pod: \"" + (notification.pod?.name)! + "\""
                 print("Added you..............")
             }

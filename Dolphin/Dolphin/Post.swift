@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Post : NSObject {
     
@@ -65,40 +66,40 @@ class Post : NSObject {
             self.postComments         = comments
     }
     
-    convenience init(jsonObject: AnyObject) {
+    convenience init(jsonObject: JSON) {
         self.init()
         
-        let postJsonObject = jsonObject as? [String: AnyObject]
-        if let userJson = postJsonObject!["user"] as? [String: AnyObject] {
-            self.postUser  = User(jsonObject: userJson as AnyObject)
-        }
-        if let imageJson = postJsonObject!["image"] as? [String: AnyObject] {
-            self.postImage = Image(jsonObject: imageJson as AnyObject)
-        }
-        if let typeJson = postJsonObject!["type"] as? [String: AnyObject] {
-            self.postType = PostType(jsonObject: typeJson as AnyObject)
-        }
-        if let linkJson = postJsonObject!["link"] as? [String: AnyObject] {
-            self.postLink = Link(jsonObject: linkJson as AnyObject)
-        }
+        //let postJsonObject = jsonObject as? [String: AnyObject]
+        //if let userJson = postJsonObject!["user"] as? [String: AnyObject] {
+            self.postUser  = User(jsonObject: jsonObject["user"])
+        //}
+        //if let imageJson = postJsonObject!["image"] as? [String: AnyObject] {
+            self.postImage = Image(jsonObject: jsonObject["image"])
+        //}
+        //if let typeJson = postJsonObject!["type"] as? [String: AnyObject] {
+            self.postType = PostType(jsonObject: jsonObject["type"])
+        //}
+        //if let linkJson = postJsonObject!["link"] as? [String: AnyObject] {
+            self.postLink = Link(jsonObject: jsonObject["link"])
+        //}
         self.postTopics = []
-        if let topicsJsonArray = postJsonObject!["topics"] as? [[String: AnyObject]] {
+        if let topicsJsonArray = jsonObject["topics"].array {
             for elem in topicsJsonArray {
-                self.postTopics?.append(Topic(jsonObject: elem as AnyObject))
+                self.postTopics?.append(Topic(jsonObject: elem))
             }
         }
-        if let likeIt = postJsonObject!["is_liked"] as? Int {
-            self.isLikedByUser = likeIt == 1
-        }
+        //if let likeIt = jsonObject["is_liked"].intValue {
+            self.isLikedByUser = jsonObject["is_liked"] == 1
+        //}
         
-        self.postNumberOfLikes    = postJsonObject!["likes_count"] as? Int
-        self.postNumberOfComments = postJsonObject!["comments_count"] as? Int
-        self.postText             = postJsonObject!["body"] as? String
-        self.postHeader           = postJsonObject!["title"] as? String
-        self.postId               = postJsonObject!["id"] as? Int
-        self.postImageUrl         = postJsonObject!["image_url"] as? String
-        let dateString            = postJsonObject!["created_at"] as? String
-        self.postDate             = Date(timeIntervalSince1970: Double(dateString!)!)
+        self.postNumberOfLikes    = jsonObject["likes_count"].intValue
+        self.postNumberOfComments = jsonObject["comments_count"].intValue
+        self.postText             = jsonObject["body"].stringValue
+        self.postHeader           = jsonObject["title"].stringValue
+        self.postId               = jsonObject["id"].intValue
+        self.postImageUrl         = jsonObject["image_url"].stringValue
+        let dateString            = jsonObject["created_at"].stringValue
+        self.postDate             = Date(timeIntervalSince1970: Double(dateString)!)
         self.postComments         = []
         
     }

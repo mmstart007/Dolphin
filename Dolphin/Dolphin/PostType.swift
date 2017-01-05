@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class PostType : NSObject {
     
@@ -19,11 +20,11 @@ class PostType : NSObject {
         self.name = name
     }
     
-    convenience init(jsonObject: AnyObject) {
+    convenience init(jsonObject: JSON) {
         self.init()
         
-        self.id   = jsonObject["id"] as? Int
-        self.name = jsonObject["name"] as? String
+        self.id   = jsonObject["id"].intValue
+        self.name = jsonObject["name"].stringValue
     }
     
     

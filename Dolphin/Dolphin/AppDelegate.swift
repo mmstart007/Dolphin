@@ -14,6 +14,7 @@ import OAuthSwift
 import SVProgressHUD
 import FBSDKCoreKit
 import PinterestSDK
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -81,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //User.
         if let userData = defaults.object(forKey: "current_user") {
             let json = Globals.nsdataToJSON(userData as! Data)
-            let user = User(jsonObject: json!)
+            let user = User(jsonObject: JSON(json!))
             networkController.currentUser = user
         }
         

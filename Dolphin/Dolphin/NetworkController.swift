@@ -114,12 +114,15 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["login": loginParams as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .Login, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                retToken = result!["token"] as? String
-                let retUser = result!["user"] as? [String: AnyObject]
-                retUserId = retUser!["id"] as? Int
+                
+                let jsonObject = JSON(result!)
+                
+                retToken = jsonObject["token"].stringValue
+                let retUser = jsonObject["user"]
+                retUserId = jsonObject["id"].intValue
                 self.token = retToken
                 self.currentUserId = retUserId
-                self.currentUser = User(jsonObject: retUser! as AnyObject)
+                self.currentUser = User(jsonObject: retUser)
                 completionHandler(self.currentUser, retToken, retUserId, nil)
             } else {
                 completionHandler(self.currentUser, retToken, retUserId, error)
@@ -140,12 +143,15 @@ class NetworkController: NSObject {
         let parameters = ["user": userInfo]
         performRequest(MethodType.POST, authenticated: false, method: .User, urlParams: nil, params: parameters as [String : AnyObject]?, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                retToken = (result!["api_token"] as? String)!
-                let retUser = result!["user"] as? [String: AnyObject]
-                retUserId = retUser!["id"] as? Int
+                
+                let jsonObject = JSON(result!)
+                
+                retToken = jsonObject["api_token"].stringValue
+                let retUser = jsonObject["user"]
+                retUserId = jsonObject["id"].intValue
                 self.token = retToken
                 self.currentUserId = retUserId
-                self.currentUser = User(jsonObject: retUser! as AnyObject)
+                self.currentUser = User(jsonObject: retUser)
                 completionHandler(self.currentUser, retToken, retUserId, nil)
             } else {
                 completionHandler(nil, retToken, retUserId, error)
@@ -220,8 +226,8 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["user": updateValues as AnyObject]
         performRequest(MethodType.PATCH, authenticated: true, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let userRet = result!["user"] as? [String: AnyObject] {
-                    userUpdated = User(jsonObject: userRet as AnyObject)
+                if let userRet = result!["user"] {
+                    userUpdated = User(jsonObject: userRet as! JSON)
                 }
                 completionHandler(userUpdated, nil)
             } else {
@@ -260,9 +266,10 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["filter": filters as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .FilterUser, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let usersJsonArray = result!["users"] as? [AnyObject]
-                if usersJsonArray?.count > 0 {
-                    for elem in usersJsonArray! {
+                let jsonObject = JSON(result!)
+                let usersJsonArray = jsonObject["users"].arrayValue
+                if usersJsonArray.count > 0 {
+                    for elem in usersJsonArray {
                         users.append(User(jsonObject: elem))
                     }
                 }
@@ -277,8 +284,9 @@ class NetworkController: NSObject {
         let urlParameters : [CVarArg] = [userId]
         performRequest(MethodType.GET, authenticated: true, method: .GetUserById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let userJson = result!["user"] as? [String: AnyObject]
-                let user = User(jsonObject: userJson! as AnyObject)
+                let jsonObject = JSON(result!)
+                let userJson = jsonObject["user"]
+                let user = User(jsonObject: userJson)
                 completionHandler(user, nil)
             } else {
                 completionHandler(nil, error)
@@ -292,7 +300,8 @@ class NetworkController: NSObject {
         let urlParameters : [CVarArg] = [userId]
         performRequest(MethodType.GET, authenticated: true, method: .GetUserLikes, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let userLikesJsonArray = result!["likes"] as? [AnyObject]
+                let jsonObject = JSON(result!)
+                let userLikesJsonArray = jsonObject["likes"].array
                 for elem in userLikesJsonArray! {
                     userLikes.append(Like(jsonObject: elem))
                 }
@@ -309,9 +318,10 @@ class NetworkController: NSObject {
         let urlParameters : [CVarArg] = [userId, postId]
         performRequest(MethodType.GET, authenticated: true, method: .GetUserLikePost, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let userLikeJsonArray = result!["likes"] as? [[String: AnyObject]]
-                let userLikeJson = userLikeJsonArray![0]
-                userLikePost = userLikeJson["id"] != nil
+                let jsonObject = JSON(result!)
+                let userLikeJsonArray = jsonObject["likes"].arrayValue
+                let userLikeJson = userLikeJsonArray[0]
+                userLikePost = userLikeJson["id"].boolValue
                 completionHandler(userLikePost, nil)
             } else {
                 completionHandler(userLikePost, error)
@@ -326,7 +336,8 @@ class NetworkController: NSObject {
         let urlParameters : [CVarArg] = [userId]
         performRequest(MethodType.GET, authenticated: true, method: .GetUserComments, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let userCommentsJsonArray = result!["comments"] as? [AnyObject]
+                let jsonObject = JSON(result!)
+                let userCommentsJsonArray = jsonObject["comments"].array
                 for elem in userCommentsJsonArray! {
                     userComments.append(PostComment(jsonObject: elem))
                 }
@@ -343,7 +354,8 @@ class NetworkController: NSObject {
         var subjects: [Subject] = []
         performRequest(MethodType.GET, authenticated: true, method: .GetSubjects, urlParams: nil, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let arraySubjects = result as? [AnyObject]
+                let jsonObject = JSON(result!)
+                let arraySubjects = jsonObject.array
                 for elem in arraySubjects! {
                     subjects.append(Subject(jsonObject: elem))
                 }
@@ -358,7 +370,8 @@ class NetworkController: NSObject {
         var grades: [Grade ] = []
         performRequest(MethodType.GET, authenticated: true, method: .GetGrades, urlParams: nil, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let arraySubjects = result as? [AnyObject]
+                let jsonObject = JSON(result!)
+                let arraySubjects = jsonObject.array
                 for elem in arraySubjects! {
                     grades.append(Grade(jsonObject: elem))
                 }
@@ -379,8 +392,9 @@ class NetworkController: NSObject {
         print(parameters!)
         performRequest(MethodType.PATCH, authenticated: true, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let retUser = result!["user"] as? [String: AnyObject]
-                self.currentUser = User(jsonObject: retUser! as AnyObject)
+                let jsonObject = JSON(result!)
+                let retUser = jsonObject["user"]
+                self.currentUser = User(jsonObject: retUser)
                 completionHandler(self.currentUser, nil)
             } else {
                 completionHandler(self.currentUser, error)
@@ -394,9 +408,13 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["post": post.toJson() as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .CreatePost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let postJson = result!["post"] as? [[String: AnyObject]] {
-                    savedPost = Post(jsonObject: postJson[0] as AnyObject)
+                let jsonObject = JSON(result!)
+                if jsonObject["post"].arrayValue.count > 0 {
+                    savedPost = Post(jsonObject: jsonObject["post"].arrayValue.first!)
                 }
+                /*if let postJson = jsonObject["post"] as? [[String: AnyObject]] {
+                    savedPost = Post(jsonObject: postJson.first as! JSON)
+                } */
                 completionHandler(savedPost, nil)
             } else {
                 completionHandler(savedPost, error)
@@ -418,9 +436,13 @@ class NetworkController: NSObject {
         
         performRequest(MethodType.PATCH, authenticated: true, method: .CreatePost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let postJson = result!["post"] as? [[String: AnyObject]] {
-                    savedPost = Post(jsonObject: postJson[0] as AnyObject)
+                let jsonObject = JSON(result!)
+                if jsonObject["post"].arrayValue.count > 0 {
+                    savedPost = Post(jsonObject: jsonObject["post"].arrayValue.first!)
                 }
+                /*if let postJson = result!["post"] as? [[String: AnyObject]] {
+                    savedPost = Post(jsonObject: postJson[0] as! JSON)
+                } */
                 completionHandler(savedPost, nil)
             } else {
                 completionHandler(savedPost, error)
@@ -429,12 +451,17 @@ class NetworkController: NSObject {
     }
     
     func getPostById(_ postId: String, completionHandler: @escaping (Post?, AnyObject?) -> ()) -> () {
+        var avedPost: Post?
         let urlParameters : [CVarArg] = [postId]
         performRequest(MethodType.GET, authenticated: true, method: .PostById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let postJson = result!["post"] as? [[String: AnyObject]]
-                let post = Post(jsonObject: postJson![0] as AnyObject)
-                completionHandler(post, nil)
+                let jsonObject = JSON(result!)
+                if jsonObject["post"].arrayValue.count > 0 {
+                    avedPost = Post(jsonObject: jsonObject["post"].arrayValue.first!)
+                }
+                /*let postJson = result!["post"] as? [[String: AnyObject]]
+                let post = Post(jsonObject: postJson![0] as! JSON) */
+                completionHandler(avedPost, nil)
             } else {
                 completionHandler(nil, error)
             }
@@ -507,9 +534,10 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["filter": filters as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let postJsonArray = result!["posts"] as? [[AnyObject]]
-                if postJsonArray?.count > 0 {
-                    for elem in postJsonArray! {
+                let jsonObject = JSON(result!)
+                let postJsonArray = jsonObject["posts"].arrayValue
+                if postJsonArray.count > 0 {
+                    for elem in postJsonArray {
                         posts.append(Post(jsonObject: elem[0]))
                     }
                 }
@@ -561,9 +589,10 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["filter": filters as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let postJsonArray = result!["posts"] as? [[AnyObject]]
-                if postJsonArray?.count > 0 {
-                    for elem in postJsonArray! {
+                let jsonObject = JSON(result!)
+                let postJsonArray = jsonObject["posts"].arrayValue
+                if postJsonArray.count > 0 {
+                    for elem in postJsonArray {
                         posts.append(Post(jsonObject: elem[0]))
                     }
                 }
@@ -593,9 +622,10 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["filter": filters as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPost, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let postJsonArray = result!["posts"] as? [[AnyObject]]
-                if postJsonArray?.count > 0 {
-                    for elem in postJsonArray! {
+                let jsonObject = JSON(result!)
+                let postJsonArray = jsonObject["posts"].arrayValue
+                if postJsonArray.count > 0 {
+                    for elem in postJsonArray {
                         posts.append(Post(jsonObject: elem[0]))
                     }
                 }
@@ -605,14 +635,14 @@ class NetworkController: NSObject {
             }
         }
     }
-
     
     func getPostComments(_ postId: String, completionHandler: @escaping ([PostComment], AnyObject?) -> ()) -> () {
         var postComments: [PostComment] = []
         let urlParameters : [CVarArg] = [postId]
         performRequest(MethodType.GET, authenticated: true, method: .PostComments, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let postCommentsJsonArray = result!["comments"] as? [AnyObject]
+                let jsonObject = JSON(result!)
+                let postCommentsJsonArray = jsonObject["comments"].array
                 for elem in postCommentsJsonArray! {
                     postComments.append(PostComment(jsonObject: elem))
                 }
@@ -621,16 +651,15 @@ class NetworkController: NSObject {
                 completionHandler(postComments, error)
             }
         }
-        
     }
-    
     
     func getPostLikes(_ postId: String, completionHandler: @escaping ([Like], AnyObject?) -> ()) -> () {
         var postLikes: [Like] = []
         let urlParameters : [CVarArg] = [postId]
         performRequest(MethodType.GET, authenticated: true, method: .PostLikes, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                let postLikesJsonArray = result!["likes"] as? [AnyObject]
+                let jsonObject = JSON(result!)
+                let postLikesJsonArray = jsonObject["likes"].array
                 for elem in postLikesJsonArray! {
                     postLikes.append(Like(jsonObject: elem))
                 }
@@ -639,7 +668,6 @@ class NetworkController: NSObject {
                 completionHandler(postLikes, error)
             }
         }
-        
     }
     
     func deletePost(_ postId: String, completionHandler: @escaping (AnyObject?) -> ()) -> () {
@@ -671,15 +699,18 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["topic": topic.toJson() as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .CreateTopic, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let topicJson = result!["topic"] as? [[String: AnyObject]] {
-                    savedTopic = Topic(jsonObject: topicJson[0] as AnyObject)
+                let jsonObject = JSON(result!)
+                if jsonObject["topic"].arrayValue.count > 0 {
+                    savedTopic = Topic(jsonObject: jsonObject["topic"].arrayValue.first!)
                 }
+                /*if let topicJson = result!["topic"] as? [[String: AnyObject]] {
+                    savedTopic = Topic(jsonObject: topicJson[0] as JSON)
+                } */
                 completionHandler(savedTopic, nil)
             } else {
                 completionHandler(savedTopic, error)
             }
         }
-        
     }
     
     func deleteTopic(_ topicId: String, completionHandler: @escaping (AnyObject?) -> ()) -> () {
@@ -691,7 +722,6 @@ class NetworkController: NSObject {
                 completionHandler(error)
             }
         }
-        
     }
     
     func getTopicByUser(_ userId: String, completionHandler: @escaping ([Topic], AnyObject?) -> ()) -> () {
@@ -700,7 +730,8 @@ class NetworkController: NSObject {
 
         performRequest(MethodType.GET, authenticated: true, method: .TopicByUser, urlParams: urlParameters, params: nil, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let podsJsonArray = result!["topics"] as? [AnyObject]
+                let jsonObject = JSON(result!)
+                let podsJsonArray = jsonObject["topics"].array
                 if podsJsonArray?.count > 0 {
                     for elem in podsJsonArray! {
                         topics.append(Topic(jsonObject: elem))
@@ -732,7 +763,8 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["filter": filters as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .FilterTopic, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let topicJsonArray = result!["topics"] as? [AnyObject]
+                let jsonObject = JSON(result!)
+                let topicJsonArray = jsonObject["topics"].array
                 if topicJsonArray?.count > 0 {
                     for elem in topicJsonArray! {
                         topics.append(Topic(jsonObject: elem))
@@ -763,7 +795,7 @@ class NetworkController: NSObject {
         }
         
         filters["user_id"] = self.currentUserId as AnyObject?
-//        filters["user_id"] = 261
+        //filters["user_id"] = 276 as AnyObject?
         let parameters : [String : AnyObject]? = ["filter": filters as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .FilterNotification, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
@@ -771,7 +803,8 @@ class NetworkController: NSObject {
                 let notificationJsonArray = json["notifications"].arrayValue
                 if notificationJsonArray.count > 0 {
                     for elem in notificationJsonArray {
-                        notifications.append(Notification(jsonObject: elem.first as AnyObject))
+                        notifications.append(Notification(jsonObject: elem[0] as JSON))
+                        //notifications.append((elem.first as AnyObject) as! Notification)
                     }
                 }
                 completionHandler(notifications, nil)
@@ -816,9 +849,13 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["like": "" as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .PostLikes, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let likeJson = result!["like"] as? [[String: AnyObject]] {
-                    savedLike = Like(jsonObject: likeJson[0] as AnyObject)
+                let jsonObject = JSON(result!)
+                if jsonObject["like"].arrayValue.count > 0 {
+                    savedLike = Like(jsonObject: jsonObject["like"].arrayValue.first!)
                 }
+                /*if let likeJson = result!["like"] as? [[String: AnyObject]] {
+                    savedLike = Like(jsonObject: likeJson[0] as AnyObject)
+                } */
                 completionHandler(savedLike, nil)
             } else {
                 completionHandler(savedLike, error)
@@ -846,8 +883,8 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["pod": pod.toJson() as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let podJson = result!["pod"] as? [String: AnyObject] {
-                    savedPOD = POD(jsonObject: podJson as AnyObject)
+                if let podJson = result!["pod"] {
+                    savedPOD = POD(jsonObject: podJson as! JSON)
                 }
                 completionHandler(savedPOD, nil)
             } else {
@@ -862,8 +899,8 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["pod": pod.toJson() as AnyObject]
         performRequest(MethodType.PATCH, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let podJson = result!["pod"] as? [String: AnyObject] {
-                    savedPOD = POD(jsonObject: podJson as AnyObject)
+                if let podJson = result!["pod"] {
+                    savedPOD = POD(jsonObject: podJson as! JSON)
                 }
                 completionHandler(savedPOD, nil)
             } else {
@@ -920,9 +957,10 @@ class NetworkController: NSObject {
         print(parameters!)
         performRequest(MethodType.PATCH, authenticated: true, method: .CreatePOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let podJson = result!["pod"] as? [String: AnyObject] {
-                    savedPOD = POD(jsonObject: podJson as AnyObject)
-                }
+                let jsonObject = JSON(result!)
+                //if let podJson = jsonObject["pod"] {
+                    savedPOD = POD(jsonObject: jsonObject["pod"])
+                //}
                 completionHandler(savedPOD, nil)
             } else {
                 
@@ -936,9 +974,10 @@ class NetworkController: NSObject {
         let urlParameters : [CVarArg] = [String(podId)]
         performRequest(MethodType.GET, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                if let podJson = result!["pod"] as? [String: AnyObject] {
-                    savedPOD = POD(jsonObject: podJson as AnyObject)
-                }
+                let jsonObject = JSON(result!)
+                //if let podJson = jsonObject["pod"] {
+                    savedPOD = POD(jsonObject: jsonObject["pod"])
+                //}
                 completionHandler(savedPOD, nil)
             } else {
                 
@@ -982,9 +1021,10 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["filter": filters as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .FilterPOD, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                let podsJsonArray = result!["pods"] as? [AnyObject]
-                if podsJsonArray?.count > 0 {
-                    for elem in podsJsonArray! {
+                let jsonObject = JSON(result!)
+                let podsJsonArray = jsonObject["pods"].arrayValue
+                if podsJsonArray.count > 0 {
+                    for elem in podsJsonArray {
                         pods.append(POD(jsonObject: elem))
                     }
                 }
@@ -999,9 +1039,10 @@ class NetworkController: NSObject {
        let urlParameters : [CVarArg] = [podId]
         performRequest(MethodType.GET, authenticated: true, method: .PODById, urlParams: urlParameters, params: nil, jsonEconding: false) { (result, error) -> () in
             if error == nil {
-                print(result!["pod"]!!)
-                let podJson = result!["pod"] as? [String: AnyObject]
-                let pod = POD(jsonObject: podJson! as AnyObject)
+                let jsonObject = JSON(result!)
+                print(jsonObject)
+                let podJson = jsonObject["pod"]
+                let pod = POD(jsonObject: podJson)
                 completionHandler(pod, nil)
             } else {
                 completionHandler(nil, error)
@@ -1051,9 +1092,13 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["comment": postComment.toJson() as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .PostComments, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let postJson = result!["comment"] as? [[String: AnyObject]] {
-                    savedPostComment = PostComment(jsonObject: postJson[0] as AnyObject)
+                let jsonObject = JSON(result!)
+                if jsonObject["comment"].arrayValue.count > 0 {
+                    savedPostComment = PostComment(jsonObject: jsonObject["comment"].arrayValue.first!)
                 }
+                /*if let postJson = result!["comment"] as? [[String: AnyObject]] {
+                    savedPostComment = PostComment(jsonObject: postJson[0] as AnyObject)
+                } */
                 completionHandler(savedPostComment, nil)
             } else {
                 completionHandler(savedPostComment, error)
@@ -1067,9 +1112,13 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["comment": postComment.toJson() as AnyObject]
         performRequest(MethodType.POST, authenticated: true, method: .PostComments, urlParams: urlParameters, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let postJson = result!["comment"] as? [[String: AnyObject]] {
-                    savedPostComment = PostComment(jsonObject: postJson[0] as AnyObject)
+                let jsonObject = JSON(result!)
+                if jsonObject["comment"].arrayValue.count > 0 {
+                    savedPostComment = PostComment(jsonObject: jsonObject["comment"].arrayValue.first!)
                 }
+                /*if let postJson = result!["comment"] as? [[String: AnyObject]] {
+                    savedPostComment = PostComment(jsonObject: postJson[0] as AnyObject)
+                } */
                 completionHandler(savedPostComment, nil)
             } else {
                 completionHandler(savedPostComment, error)
@@ -1105,7 +1154,7 @@ class NetworkController: NSObject {
      :param: urlParams         Group of params to add in the URL
      :param: params            Parameters for the Request
      :param: completionHandler Block that will be executed when the invocation is done
-     */
+    */
     func performRequest(_ type: MethodType, authenticated: Bool, method: ApiMethod, urlParams: [CVarArg]?, params: [String: AnyObject]?, jsonEconding: Bool, completionHandler: @escaping (AnyObject?, AnyObject?) -> ()) -> () {
         
         let urlString: String? = prepareRequestURL(method, urlParams: urlParams)
