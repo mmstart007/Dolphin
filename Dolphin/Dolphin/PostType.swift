@@ -14,16 +14,16 @@ class PostType : NSObject {
     var id: Int?
     var name: String?
     
-    convenience init(name: String) {
-        self.init()
+    init(name: String) {
+        //self.init()
         
         self.name = name
     }
     
-    convenience init(jsonObject: JSON) {
-        self.init()
+    init(jsonObject: JSON) {
+        //self.init()
         
-        self.id   = jsonObject["id"].intValue
-        self.name = jsonObject["name"].stringValue
+        id   = jsonObject["id"].intValue
+        name = jsonObject["name"].stringValue
     }
 }

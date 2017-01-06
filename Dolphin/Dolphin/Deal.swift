@@ -15,8 +15,8 @@ class Deal {
     var dealDescription: String?
     var dealDate: Date?
     
-    convenience init (image: String, description: String, date: Date, code: String) {
-        self.init()
+    init (image: String, description: String, date: Date, code: String) {
+        //self.init()
         
         dealImage       = image
         dealDescription = description

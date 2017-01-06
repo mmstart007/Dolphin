@@ -16,8 +16,8 @@ class Like : NSObject {
     var likeUser: User?
     var likePost: Post?
     
-    convenience init(jsonObject: JSON) {
-        self.init()
+    init(jsonObject: JSON) {
+        //self.init()
         
         let likeJsonObject       = jsonObject
         self.likeUser            = User(jsonObject: likeJsonObject["user"])

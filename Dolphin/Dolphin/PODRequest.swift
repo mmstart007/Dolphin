@@ -21,9 +21,9 @@ class PODRequest : NSObject {
     var image_height : Int?
     
     
-    convenience init(name: String?, description: String?, isPrivate: Int?, users: [User], imageData: UIImage?, image_width: Int?, image_height: Int?) {
+    init(name: String?, description: String?, isPrivate: Int?, users: [User], imageData: UIImage?, image_width: Int?, image_height: Int?) {
         
-        self.init()
+        //self.init()
         
         self.name            = name
         self.descriptionText = description

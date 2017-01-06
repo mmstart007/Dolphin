@@ -21,24 +21,19 @@ class PostComment : NSObject {
     var postImage: Image?
     var postLink: Link?
     
-    convenience init(text: String, image: UIImage?) {
-        self.init()
+    init(text: String, image: UIImage?) {
+        //self.init()
         self.postCommentText = text
         self.postCommentImage = image
     }
     
-    convenience init(jsonObject: JSON) {
-        self.init()
+    init(jsonObject: JSON) {
+        //self.init()
         
         let postJsonObject       = jsonObject
         
-        //if let imageJson = postJsonObject["image"] {
-            self.postImage = Image(jsonObject: postJsonObject["image"])
-        //}
-        
-        //if let linkJson = postJsonObject!["link"] as? [String: AnyObject] {
-            self.postLink = Link(jsonObject: postJsonObject["link"])
-        //}
+        self.postImage = Image(jsonObject: postJsonObject["image"])
+        self.postLink = Link(jsonObject: postJsonObject["link"])
         
         self.postCommentLikeCount       = postJsonObject["likes_count"].intValue
         self.postCommentIsLike       = postJsonObject["is_liked"].intValue

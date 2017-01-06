@@ -28,9 +28,9 @@ class POD : NSObject {
     var isMyFeed : Bool?
 
     
-    convenience init(name: String?, description: String?, imageURL: String?, isPrivate: Int?, owner: User?, users: [User]?, postsCount: Int?, usersCount: Int?, imageData: UIImage?, image_width: Int?, image_height: Int?,total_unread: Int?) {
+    init(name: String?, description: String?, imageURL: String?, isPrivate: Int?, owner: User?, users: [User]?, postsCount: Int?, usersCount: Int?, imageData: UIImage?, image_width: Int?, image_height: Int?,total_unread: Int?) {
 
-        self.init()
+        //self.init()
         
         self.name            = name
         self.descriptionText = description
@@ -54,35 +54,29 @@ class POD : NSObject {
         return colors[color]
     }
     
-    convenience init(jsonObject: JSON) {
-        self.init()
+    init(jsonObject: JSON) {
+        //self.init()
         
-        //let podJsonObject = jsonObject as? [String: AnyObject]
-        //if let ownerJson = jsonObject["owner"] { //as? [String: AnyObject] {
-            self.owner  = User(jsonObject: jsonObject["owner"])
-        //}
-        self.users = jsonObject["users"].array?.map({ (elem) -> User in
+        owner  = User(jsonObject: jsonObject["owner"])
+
+        users = jsonObject["users"].array?.map({ (elem) -> User in
             User(jsonObject: elem)
         })
         
-        /*self.users = jsonObject["users"].array.map({ (actual) -> User in
-            User(jsonObject: actual)
-        }) */
-        
-        self.id              = jsonObject["id"].intValue
-        self.name            = jsonObject["name"].stringValue
-        self.descriptionText = jsonObject["description"].stringValue
-        self.imageURL        = jsonObject["image_url"].stringValue
-        self.isPrivate       = jsonObject["is_private"].intValue
-        self.image_width     = jsonObject["image_width"].intValue
-        self.image_height    = jsonObject["image_height"].intValue
-        self.total_unread    = jsonObject["total_unread"].intValue
+        id              = jsonObject["id"].intValue
+        name            = jsonObject["name"].stringValue
+        descriptionText = jsonObject["description"].stringValue
+        imageURL        = jsonObject["image_url"].stringValue
+        isPrivate       = jsonObject["is_private"].intValue
+        image_width     = jsonObject["image_width"].intValue
+        image_height    = jsonObject["image_height"].intValue
+        total_unread    = jsonObject["total_unread"].intValue
         
         if let lastPostsJson = jsonObject["last_post"].array { // as? [AnyObject] {
             if lastPostsJson.count > 0 {
                 if let lastPostJson = lastPostsJson.first { // as? [String: AnyObject] {
                     let dateString = lastPostJson["created_at"].stringValue
-                    self.lastPostDate     = Date(timeIntervalSince1970: Double(dateString)!)
+                    lastPostDate     = Date(timeIntervalSince1970: Double(dateString)!)
                 }
             }
         }

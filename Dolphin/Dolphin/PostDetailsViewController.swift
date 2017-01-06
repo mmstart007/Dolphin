@@ -445,7 +445,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
         } else {
             let commentInfo: PostComment? = self.post!.postComments![indexPath.row]
             if indexPath.row % 2 == 1 {
-                if(commentInfo?.postLink != nil || commentInfo?.postImage != nil)
+                if(commentInfo?.postLink != nil || commentInfo?.postImage != nil), commentInfo?.postCommentImage != nil
                 {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentImageTableViewCell") as? PostCommentImageTableViewCell
                     if cell == nil {
@@ -456,7 +456,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     (cell as? PostCommentImageTableViewCell)?.mPost = self.post
 
                 }
-                else{
+                if commentInfo?.postCommentImage == nil {
                     cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentEvenTableViewCell") as? PostCommentEvenTableViewCell
                     if cell == nil {
                         cell = PostCommentEvenTableViewCell()
@@ -477,15 +477,14 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     (cell as? PostCommentImageLeftTableViewCell)?.controller = self
                     (cell as? PostCommentImageLeftTableViewCell)?.mPost = self.post
                 }
-                else{
-                cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentOddTableViewCell") as? PostCommentOddTableViewCell
-                if cell == nil {
-                    cell = PostCommentOddTableViewCell()
-                }
-                
-                (cell as? PostCommentOddTableViewCell)?.configureWithPostComment(post!.postComments![indexPath.row])
-                (cell as? PostCommentOddTableViewCell)?.controller = self
-                (cell as? PostCommentOddTableViewCell)?.mPost = self.post
+                if commentInfo?.postCommentImage == nil {
+                    cell = tableView.dequeueReusableCell(withIdentifier: "PostCommentOddTableViewCell") as? PostCommentOddTableViewCell
+                    if cell == nil {
+                        cell = PostCommentOddTableViewCell()
+                    }
+                    (cell as? PostCommentOddTableViewCell)?.configureWithPostComment(post!.postComments![indexPath.row])
+                    (cell as? PostCommentOddTableViewCell)?.controller = self
+                    (cell as? PostCommentOddTableViewCell)?.mPost = self.post
                 }
             }
         }
@@ -533,7 +532,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     (cell as? PostCommentImageTableViewCell)?.adjustCellViews()
                 }
                 else {
-                (cell as? PostCommentEvenTableViewCell)?.adjustCellViews()
+                    (cell as? PostCommentEvenTableViewCell)?.adjustCellViews()
                 }
             } else {
                 if(commentInfo?.postLink != nil || commentInfo?.postImage != nil)
@@ -541,7 +540,7 @@ class PostDetailsViewController : DolphinViewController, UITableViewDataSource, 
                     (cell as? PostCommentImageLeftTableViewCell)?.adjustCellViews()
                 }
                 else{
-                (cell as? PostCommentOddTableViewCell)?.adjustCellViews()
+                    (cell as? PostCommentOddTableViewCell)?.adjustCellViews()
                 }
             }
         } else if indexPath.section == 1 {

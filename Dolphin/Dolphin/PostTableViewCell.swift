@@ -161,7 +161,7 @@ class PostTableViewCell : UITableViewCell {
         triangleView!.color           = cellPost!.postColor()
         
         //Adjust image size.
-        if let image = post.postImage {
+        if post.postType?.name?.lowercased() == "image", let image = post.postImage {
             postTitle.text = post.postHeader
             postContent.text = ""
             
@@ -175,7 +175,7 @@ class PostTableViewCell : UITableViewCell {
         }
 
         //Link Image
-        else if let linkImage = post.postLink {
+        else if post.postType?.name?.lowercased() == "link", let linkImage = post.postLink {
             postTitle.text = post.postText
             postContent.text = post.postLink?.url
             self.postImageView.sd_setImage(with: URL(string: (linkImage.imageURL)!), placeholderImage: UIImage(named: "PostImagePlaceholder"))

@@ -29,8 +29,8 @@ class User : NSObject {
     var country: String?
     var zip: String?
     
-    convenience init(deviceId: String?, userName: String?, imageURL: String?, email: String?, password: String?, gender: Int?, city: String?, country: String?, zip: String?, location: String?) {
-        self.init()
+    init(deviceId: String?, userName: String?, imageURL: String?, email: String?, password: String?, gender: Int?, city: String?, country: String?, zip: String?, location: String?) {
+        //self.init()
         self.deviceId           = deviceId
         self.userName           = userName
         self.userAvatarImageURL = imageURL
@@ -43,23 +43,22 @@ class User : NSObject {
         self.location           = location
     }
     
-    convenience init(jsonObject: JSON) {
-        self.init()
+    init(jsonObject: JSON) {
+        //self.init()
         
-        self.userEmail          = jsonObject["email"].stringValue
-        self.userName           = jsonObject["username"].stringValue
-        self.firstName          = jsonObject["first_name"].stringValue
-        self.lastName           = jsonObject["last_name"].stringValue
-        self.location           = jsonObject["location"].stringValue
-        self.isPrivate          = jsonObject["is_private"].intValue
-        self.id                 = jsonObject["id"].intValue
-        self.userAvatarImageURL = jsonObject["avatar_image_url"].stringValue
-        self.gender             = jsonObject["gender"].intValue
-        self.city               = jsonObject["city"].stringValue
-        self.country            = jsonObject["country"].stringValue
-        self.zip                = jsonObject["zip"].stringValue
+        userEmail          = jsonObject["email"].stringValue
+        userName           = jsonObject["username"].stringValue
+        firstName          = jsonObject["first_name"].stringValue
+        lastName           = jsonObject["last_name"].stringValue
+        location           = jsonObject["location"].stringValue
+        isPrivate          = jsonObject["is_private"].intValue
+        id                 = jsonObject["id"].intValue
+        userAvatarImageURL = jsonObject["avatar_image_url"].stringValue
+        gender             = jsonObject["gender"].intValue
+        city               = jsonObject["city"].stringValue
+        country            = jsonObject["country"].stringValue
+        zip                = jsonObject["zip"].stringValue
 
-        //let arrayGrades         = jsonObject["grades"] // as? [NSDictionary]
         if let arrayGrades = jsonObject["grades"].array
         {
             for item in arrayGrades {
@@ -68,7 +67,6 @@ class User : NSObject {
             }
         }
         
-        //let arraySubjects        = jsonObject["subjects"].array // as? [NSDictionary]
         if let arraySubjects = jsonObject["subjects"].array
         {
             for item in arraySubjects {

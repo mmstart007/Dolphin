@@ -24,8 +24,8 @@ class PostRequest : NSObject {
     var postHeader: String?
     var postText: String?
     
-    convenience init(image: Image?, imageData: UIImage?, imageWidth: Float?, imageHeight: Float?, type: String?,topics: [Topic]?, link: Link?, imageUrl: String?, title: String?, text: String?, PODId: Int?, PostId : Int?) {
-        self.init()
+    init(image: Image?, imageData: UIImage?, imageWidth: Float?, imageHeight: Float?, type: String?,topics: [Topic]?, link: Link?, imageUrl: String?, title: String?, text: String?, PODId: Int?, PostId : Int?) {
+        //self.init()
         
         self.postPODId            = PODId
         self.postImage            = image

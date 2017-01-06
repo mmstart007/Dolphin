@@ -19,8 +19,8 @@ class PostCommentRequest : NSObject {
     var postImageHeight: Int?
     var postImageUrl: String?
     
-    convenience init(text: String, image: UIImage?, type : String?, url : String?, imageWidth: Int?, imageHeight: Int?) {
-        self.init()
+    init(text: String, image: UIImage?, type : String?, url : String?, imageWidth: Int?, imageHeight: Int?) {
+        //self.init()
         self.postCommentText = text
         self.postCommentImage = image
         self.type = type

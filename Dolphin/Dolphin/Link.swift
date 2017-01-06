@@ -17,21 +17,21 @@ class Link : NSObject {
     var imageWidth: CGFloat?
     var imageHeight: CGFloat?
     
-    convenience init(url: String, imageURL: String) {
-        self.init()
+    init(url: String, imageURL: String) {
+        //self.init()
         
         self.url = url
         self.imageURL = imageURL
     }
     
-    convenience init(jsonObject: JSON) {
-        self.init()
+    init(jsonObject: JSON) {
+        //self.init()
         
-        self.id       = jsonObject["id"].intValue
-        self.url      = jsonObject["url"].stringValue
-        self.imageURL = jsonObject["image_url"].stringValue
-        self.imageWidth = CGFloat(jsonObject["image_width"].floatValue)
-        self.imageHeight = CGFloat(jsonObject["image_height"].floatValue)
+        id       = jsonObject["id"].intValue
+        url      = jsonObject["url"].stringValue
+        imageURL = jsonObject["image_url"].stringValue
+        imageWidth = CGFloat(jsonObject["image_width"].floatValue)
+        imageHeight = CGFloat(jsonObject["image_height"].floatValue)
     }
     
     
