@@ -99,7 +99,9 @@ class Post : NSObject {
         self.postId               = jsonObject["id"].intValue
         self.postImageUrl         = jsonObject["image_url"].stringValue
         let dateString            = jsonObject["created_at"].stringValue
-        self.postDate             = Date(timeIntervalSince1970: Double(dateString)!)
+        if !dateString.isEmpty || dateString != "" {
+            self.postDate             = Date(timeIntervalSince1970: Double(dateString)!)
+        }
         self.postComments         = []
         
     }

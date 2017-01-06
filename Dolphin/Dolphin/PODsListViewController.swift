@@ -574,7 +574,7 @@ class PODsListViewController : UIViewController, UITableViewDataSource, UITableV
         if !pullToRefresh {
             SVProgressHUD.show(withStatus: "Loading")
         }
-        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 100, page: 0, sort_by: nil) { (pods, error) -> () in
+        networkController.filterPOD(nil, userId: networkController.currentUserId, fromDate: nil, toDate: nil, quantity: 10, page: 0, sort_by: nil) { (pods, error) -> () in
             
             if error == nil {
                 self.isDataLoaded = true

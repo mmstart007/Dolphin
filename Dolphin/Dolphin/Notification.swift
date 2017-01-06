@@ -36,24 +36,14 @@ class Notification : NSObject {
         self.type                   = jsonObject["type"].intValue
         self.user_id                = jsonObject["user_id"].intValue
         
-        let userJson = jsonObject["user"].arrayValue
-        if userJson.count > 0 {
-            for users in userJson {
-                self.sender  = User(jsonObject: users)
-            }
-        }
-        let postJson = jsonObject["post"].arrayValue
-        if  postJson.count > 0 {
-            for posts in userJson {
-                self.post  = Post(jsonObject: posts)
-            }
-        }
-        let podJson = jsonObject["pod"].arrayValue
-        if podJson.count > 0 {
-            for pods in podJson {
-                self.pod  = POD(jsonObject: pods)
-            }
-        }
+        let userJson = jsonObject["user"]
+        self.sender  = User(jsonObject: userJson)
+        
+        let postJson = jsonObject["post"]
+        self.post  = Post(jsonObject: postJson)
+
+        let podJson = jsonObject["pod"]
+        self.pod  = POD(jsonObject: podJson)
     }
 
 //    func toJson() -> [String: AnyObject] {

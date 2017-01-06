@@ -26,6 +26,4 @@ class PostType : NSObject {
         self.id   = jsonObject["id"].intValue
         self.name = jsonObject["name"].stringValue
     }
-    
-    
 }

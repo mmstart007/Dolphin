@@ -119,7 +119,7 @@ class NetworkController: NSObject {
                 
                 retToken = jsonObject["token"].stringValue
                 let retUser = jsonObject["user"]
-                retUserId = jsonObject["id"].intValue
+                retUserId = retUser["id"].intValue
                 self.token = retToken
                 self.currentUserId = retUserId
                 self.currentUser = User(jsonObject: retUser)
@@ -306,8 +306,10 @@ class NetworkController: NSObject {
             if error == nil {
                 let jsonObject = JSON(result!)
                 let userLikesJsonArray = jsonObject["likes"].array
-                for elem in userLikesJsonArray! {
-                    userLikes.append(Like(jsonObject: elem))
+                if userLikesJsonArray?.count > 0 {
+                    for elem in userLikesJsonArray! {
+                        userLikes.append(Like(jsonObject: elem))
+                    }
                 }
                 completionHandler(userLikes, nil)
             } else {
@@ -807,7 +809,7 @@ class NetworkController: NSObject {
                 let notificationJsonArray = json["notifications"].arrayValue
                 if notificationJsonArray.count > 0 {
                     for elem in notificationJsonArray {
-                        notifications.append(Notification(jsonObject: elem[0] as JSON))
+                        notifications.append(Notification(jsonObject: elem[0]))
                         //notifications.append((elem.first as AnyObject) as! Notification)
                     }
                 }

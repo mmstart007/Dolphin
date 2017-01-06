@@ -143,7 +143,6 @@ class LoginViewController : UIViewController, UIGestureRecognizerDelegate, UITex
                     defaults.set(token, forKey: "api_token")
                     // Store the currentUserId
                     defaults.set(userId, forKey: "current_user_id")
-                    //defaults.set(user, forKey: "current_user")
                     defaults.set(Globals.jsonToNSData((user?.toJson())! as AnyObject), forKey: "current_user")
                     self.navigationController?.isNavigationBarHidden = false
                     self.navigationController?.pushViewController((UIApplication.shared.delegate as! AppDelegate).homeViewController, animated: true)

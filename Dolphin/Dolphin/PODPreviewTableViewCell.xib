@@ -32,7 +32,7 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5sV-Ob-Dme" userLabel="User LastPostView">
-                            <rect key="frame" x="10" y="10" width="33" height="33"/>
+                            <rect key="frame" x="10" y="10" width="25" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="5sV-Ob-Dme" secondAttribute="height" multiplier="1:1" id="hC6-cT-3EK"/>
                             </constraints>
@@ -73,7 +73,7 @@
                         <constraint firstItem="5sV-Ob-Dme" firstAttribute="top" secondItem="5TA-ya-ZMf" secondAttribute="top" constant="10" id="6wS-GB-knq"/>
                         <constraint firstItem="Tjl-gT-txv" firstAttribute="top" secondItem="5TA-ya-ZMf" secondAttribute="top" constant="5" id="Ikw-kb-kgn"/>
                         <constraint firstItem="5sV-Ob-Dme" firstAttribute="width" secondItem="5sV-Ob-Dme" secondAttribute="height" multiplier="1:1" id="Oge-eA-nH7"/>
-                        <constraint firstItem="5sV-Ob-Dme" firstAttribute="width" secondItem="5TA-ya-ZMf" secondAttribute="height" multiplier="33:197" id="PcE-z5-5gg"/>
+                        <constraint firstItem="5sV-Ob-Dme" firstAttribute="width" secondItem="5TA-ya-ZMf" secondAttribute="height" multiplier="33:197" constant="-8" id="PcE-z5-5gg"/>
                         <constraint firstAttribute="bottom" secondItem="plW-oq-N1n" secondAttribute="bottom" constant="4" id="UfM-wU-7Ne"/>
                         <constraint firstAttribute="trailing" secondItem="uJf-hC-DQj" secondAttribute="trailing" id="V10-VN-mB1"/>
                         <constraint firstItem="plW-oq-N1n" firstAttribute="leading" secondItem="FwN-DZ-ZhN" secondAttribute="trailing" constant="6" id="Zvh-VR-thy"/>
