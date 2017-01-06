@@ -226,8 +226,12 @@ class NetworkController: NSObject {
         let parameters : [String : AnyObject]? = ["user": updateValues as AnyObject]
         performRequest(MethodType.PATCH, authenticated: true, method: .User, urlParams: nil, params: parameters, jsonEconding: true) { (result, error) -> () in
             if error == nil {
-                if let userRet = result!["user"] {
-                    userUpdated = User(jsonObject: userRet as! JSON)
+                let jsonObject = JSON(result!)
+                let userRet = jsonObject["user"].arrayValue
+                if userRet.count > 0 {
+                    for elem in userRet {
+                        userUpdated = User(jsonObject: elem)
+                    }
                 }
                 completionHandler(userUpdated, nil)
             } else {
