@@ -1438,7 +1438,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Dolphin/Dolphin.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Roque (UUV65RY822)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Roque (UUV65RY822)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3R2S97YZLA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1462,7 +1462,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "027b75c8-1e50-48ee-9226-7a2b6efe61c3";
+				PROVISIONING_PROFILE = "523faa1c-2601-4780-a85d-07bd1df3b39c";
 				PROVISIONING_PROFILE_SPECIFIER = DophinDevProvision_1128;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Dolphin-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1480,7 +1480,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Dolphin/Dolphin.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Roque (UUV65RY822)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Roque (UUV65RY822)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 3R2S97YZLA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1504,7 +1504,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.menloed.Dolphin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "027b75c8-1e50-48ee-9226-7a2b6efe61c3";
+				PROVISIONING_PROFILE = "523faa1c-2601-4780-a85d-07bd1df3b39c";
 				PROVISIONING_PROFILE_SPECIFIER = DophinDevProvision_1128;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Dolphin-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
